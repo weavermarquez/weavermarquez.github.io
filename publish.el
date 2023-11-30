@@ -27,7 +27,7 @@
 
 ;; Defaults to localhost:8000
 (if (string= (getenv "ENV") "prod")
-    (setq weblorg-default-url "https://emacs.love/weblorg-template"))
+    (setq weblorg-default-url "https://weavermarquez.github.io"))
 (if (string= (getenv "ENV") "local")
     (setq weblorg-default-url "http://localhost:8000"))
 
