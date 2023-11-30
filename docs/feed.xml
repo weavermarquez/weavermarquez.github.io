@@ -12,29 +12,29 @@
   <channel>
     <title>Simple Blog</title>
     <atom:link
-      href="http://localhost:8000/feed.xml"
+      href="https://weavermarquez.github.io/feed.xml"
       rel="self" type="application/rss+xml" />
-    <link>http://localhost:8000/</link>
+    <link>https://weavermarquez.github.io/</link>
     <description><![CDATA[]]></description>
     <language>en</language>
-    <pubDate>Wed, 19 Aug 2020 00:00:00 -0600</pubDate>
-    <lastBuildDate>Wed, 29 Nov 2023 18:52:06 -0700</lastBuildDate>
+    <pubDate>Wed, 19 Aug 2020 00:00:00 +0000</pubDate>
+    <lastBuildDate>Thu, 30 Nov 2023 02:01:45 +0000</lastBuildDate>
     <generator>weblorg 0.1.0 (https://emacs.love/weblorg)</generator>
     <webMaster>web@master (Blog Author)</webMaster>
     <image>
-      <url>http://localhost:8000/media/img/8bitme.png</url>
+      <url>https://weavermarquez.github.io/media/img/8bitme.png</url>
       <title>Blog Author</title>
-      <link>http://localhost:8000/</link>
+      <link>https://weavermarquez.github.io/</link>
     </image>
 
     
     <item>
       <title>Welcome to weblorg</title>
-      <link>http://localhost:8000/posts/welcome-to-weblorg.html</link>
+      <link>https://weavermarquez.github.io/posts/welcome-to-weblorg.html</link>
       <author>Guilherme Guerra</author>
-      <guid isPermaLink="false">http://localhost:8000/posts/welcome-to-weblorg.html</guid>
+      <guid isPermaLink="false">https://weavermarquez.github.io/posts/welcome-to-weblorg.html</guid>
       
-        <pubDate>Wed, 19 Aug 2020 00:00:00 -0600</pubDate>
+        <pubDate>Wed, 19 Aug 2020 00:00:00 +0000</pubDate>
       
       <description><![CDATA[<p>
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit.  Donec hendrerit tempor tellus.  Donec pretium posuere tellus.  Proin quam nisl, tincidunt et, mattis eget, convallis nec, purus.  Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.  Nulla posuere.  Donec vitae dolor.  Nullam tristique diam non turpis.  Cras placerat accumsan nulla.  Nullam rutrum.  Nam xcvestibulum accumsan nisl.
@@ -57,11 +57,11 @@ You can do markups on your post just follow this cheatsheet
     
     <item>
       <title>Down the Rabbit-Hole</title>
-      <link>http://localhost:8000/posts/down-the-rabbit-hole.html</link>
+      <link>https://weavermarquez.github.io/posts/down-the-rabbit-hole.html</link>
       <author>Carroll, Lewis</author>
-      <guid isPermaLink="false">http://localhost:8000/posts/down-the-rabbit-hole.html</guid>
+      <guid isPermaLink="false">https://weavermarquez.github.io/posts/down-the-rabbit-hole.html</guid>
       
-        <pubDate>Sun, 26 Nov 1865 00:00:00 -0733</pubDate>
+        <pubDate>Sun, 26 Nov 1865 00:00:00 +0000</pubDate>
       
       <description><![CDATA[<p>
 Before we start with some prose, take a look at the <a href="https://orgmode.org/">Org-Mode</a> website!
