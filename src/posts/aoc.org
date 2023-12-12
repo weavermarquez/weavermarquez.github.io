@@ -1,5 +1,5 @@
 #+title: Walerie's Advent of Code 2023
-#+setupfile: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+, #+setupfile: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 #+property: header-args :noweb yes
 #+link: advent https://adventofcode.com/2023/day/
 
