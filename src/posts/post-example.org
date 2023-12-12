@@ -12,21 +12,11 @@ You can do markups on your post just follow this cheatsheet
 - /italic/ `/italic/`
 ** Testing some extra features
 
-org-special-block-extras
-
-#+begin_feedback
-Hello, this is some feedback!
-#+end_feedback
-
-[[feedback:walerie][Oh, and some more feedback in link form.]]
-
-literate programming with org babel
-
 #+begin_src python :results output :export both
 print("owo")
 #+end_src
 
-And below, the RESULTS have not been deleted, thohugh both have =:export both=
+And below, the RESULTS have not been deleted, though both have =:export both=
 
 #+begin_src python :results output :export both
 print("uwu")
