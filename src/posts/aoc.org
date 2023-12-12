@@ -1,0 +1,445 @@
+#+title: Walerie's Advent of Code 2023
+#+setupfile: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+property: header-args :noweb yes
+#+link: advent https://adventofcode.com/2023/day/
+
+* COMMENT Random Elisp stuff
+#+begin_example
+(s-left 1 Cs) :: (-first-item)
+(s-right 1 Cs) :: (-last-item)
+(-sum list) ::  (-map #'+ list)
+(-filter PRED LIST) filters out elements.
+#+end_example
+
+The guy on telegram recommends
+- [X] Dash ::  list library
+- [X] S :: string manip library
+- [ ] fn :: function
+- [X] f :: file
+- [X] ht :: hash table
+- [ ] a :: assoc lists
+- [X] async :: async
+- [ ] ts :: timestamps
+- [ ] pcre2el :: sane regex
+- [ ] memoize :: caching
+
+#+begin_src elisp
+(directory-files ".")
+#+end_src
+
+Check to see if a feature exists in this emacs that you can =require=
+#+begin_src elisp
+(featurep 'bs)
+#+end_src
+* Intro
+With literate programming, we can have the best of all worlds! When working with org mode's literate programming mode, we work with a single document that fulfills multiple roles:
+- developing by /evaluating/ :: source blocks interspersed with prose for bite-sized, REPL driven development
+- writing by /exporting/ :: to a readable article of the thought process
+- deployment by /tangling/ :: source blocks into a standalone source file!
+
+* Day One: Idealized Example <2023-12-11 Mon>
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no :var problem="1.txt"
+:end:
+** Preamble
+This section presents an idealized example of the literate programming workflow - I solved Day One and then wrote this section. Frankly, I'm trying to convince myself that this is worth doing.
+
+Firstly, in my source file, we have some Header Properties that are shared across all source blocks, unless I have declared otherwise. Notice the ~problem="1.txt"~ part. I declare this so that all my source blocks can access the file, and as I'm writing, run them like unit tests without having to have all this boilerplate.
+#+begin_example
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no :var problem="1.txt"
+:header-args:emacs-lisp: :tangle no :var problem="1.txt"
+:end:
+#+end_example
+
+For convenience, we also have ~sample(s)~, which retrieve a sample of the problem file. In our case it's call_sample() as well as call_samples[:results raw](). I want to adjust this code so that we have the option to return something random. Thankfully, we can still choose which file to draw from.
+
+
+This will be useful if I need to quickly check if a function works on a single example, before turning it into a list-friendly version.
+
+#+NAME: sample
+#+begin_src emacs-lisp :exports code
+(-first-item (s-lines (s-trim (f-read problem))))
+#+end_src
+
+#+NAME: samples
+#+begin_src emacs-lisp :var quantity=5 :results raw :exports code
+(cl-subseq (s-lines (s-trim (f-read problem))) 0 5)
+#+end_src
+
+#+RESULTS: samples
+| Game 1: 1 green, 2 blue; 15 blue, 12 red, 2 green; 4 red, 6 blue; 10 blue, 8 red; 3 red, 12 blue; 1 green, 12 red, 8 blue | Game 2: 5 green, 2 red, 18 blue; 18 blue, 6 red, 9 green; 6 blue, 3 green; 6 green, 1 red, 9 blue; 19 blue, 2 green, 6 red | Game 3: 16 red, 10 green; 12 red, 6 blue, 9 green; 10 green, 5 blue; 10 green, 16 red; 5 red, 8 green, 8 blue | Game 4: 9 blue, 20 green; 1 red, 3 blue, 10 green; 7 blue, 18 green; 4 blue, 20 green; 8 blue, 1 green, 1 red; 1 green | Game 5: 3 green, 8 red; 1 blue, 10 red; 6 red, 4 green; 8 red, 1 blue, 3 green; 1 blue, 4 green, 3 red; 1 green, 1 blue, 4 red | Game 6: 7 green, 15 red, 11 blue; 2 red, 12 blue; 11 red, 11 green | Game 7: 14 green, 10 blue, 4 red; 3 red, 11 green, 14 blue; 1 red, 2 green, 11 blue; 9 green, 1 red; 6 red, 6 blue, 9 green | Game 8: 1 red, 6 green, 3 blue; 4 green; 4 red, 3 green, 1 blue; 2 red, 10 green, 3 blue; 2 green, 6 red, 3 blue | Game 9: 2 green, 8 red, 3 blue; 2 green, 4 blue, 2 red; 2 green, 5 blue, 2 red | Game 10: 9 green, 1 blue; 2 blue, 12 green, 3 red; 2 red, 3 blue, 1 green; 3 blue, 8 green; 4 blue, 4 red, 1 green; 5 green, 4 blue | Game 11: 5 red, 2 blue, 2 green; 3 blue, 2 green, 8 red; 6 red, 1 green | Game 12: 8 blue, 7 green; 2 green, 2 red, 7 blue; 4 green, 1 red, 20 blue; 5 green, 13 blue, 2 red | Game 13: 1 blue, 11 green, 13 red; 6 blue, 13 red, 19 green; 5 blue, 6 green, 6 red | Game 14: 12 blue, 1 red, 15 green; 16 green; 1 red, 18 blue, 15 green; 14 blue; 12 blue, 1 red, 8 green; 4 blue, 16 green | Game 15: 6 blue, 3 green; 1 red, 1 blue, 2 green; 3 green, 4 blue, 7 red |
+(Game 1: 1 green, 2 blue; 15 blue, 12 red, 2 green; 4 red, 6 blue; 10 blue, 8 red; 3 red, 12 blue; 1 green, 12 red, 8 blue Game 2: 5 green, 2 red, 18 blue; 18 blue, 6 red, 9 green; 6 blue, 3 green; 6 green, 1 red, 9 blue; 19 blue, 2 green, 6 red Game 3: 16 red, 10 green; 12 red, 6 blue, 9 green; 10 green, 5 blue; 10 green, 16 red; 5 red, 8 green, 8 blue Game 4: 9 blue, 20 green; 1 red, 3 blue, 10 green; 7 blue, 18 green; 4 blue, 20 green; 8 blue, 1 green, 1 red; 1 green Game 5: 3 green, 8 red; 1 blue, 10 red; 6 red, 4 green; 8 red, 1 blue, 3 green; 1 blue, 4 green, 3 red; 1 green, 1 blue, 4 red Game 6: 7 green, 15 red, 11 blue; 2 red, 12 blue; 11 red, 11 green Game 7: 14 green, 10 blue, 4 red; 3 red, 11 green, 14 blue; 1 red, 2 green, 11 blue; 9 green, 1 red; 6 red, 6 blue, 9 green Game 8: 1 red, 6 green, 3 blue; 4 green; 4 red, 3 green, 1 blue; 2 red, 10 green, 3 blue; 2 green, 6 red, 3 blue Game 9: 2 green, 8 red, 3 blue; 2 green, 4 blue, 2 red; 2 green, 5 blue, 2 red Game 10: 9 green, 1 blue; 2 blue, 12 green, 3 red; 2 red, 3 blue, 1 green; 3 blue, 8 green; 4 blue, 4 red, 1 green; 5 green, 4 blue Game 11: 5 red, 2 blue, 2 green; 3 blue, 2 green, 8 red; 6 red, 1 green Game 12: 8 blue, 7 green; 2 green, 2 red, 7 blue; 4 green, 1 red, 20 blue; 5 green, 13 blue, 2 red Game 13: 1 blue, 11 green, 13 red; 6 blue, 13 red, 19 green; 5 blue, 6 green, 6 red Game 14: 12 blue, 1 red, 15 green; 16 green; 1 red, 18 blue, 15 green; 14 blue; 12 blue, 1 red, 8 green; 4 blue, 16 green Game 15: 6 blue, 3 green; 1 red, 1 blue, 2 green; 3 green, 4 blue, 7 red)
+(nqninenmvnpsz874 8twofpmpxkvvdnpdnlpkhseven4ncgkb six8shdkdcdgseven8xczqrnnmthreecckfive qlcnz54dd75nine7jfnlfgz 7vrdhggdkqbnltlgpkkvsdxn2mfpghkntzrhtjgtxr)
+
+
+I want to ensure that my tangled code is still following some good elisp coding principles, which means I should:
+- encapsulate things into functions
+- write a docstring
+- etc etc.
+** Sketching out the solution
+Let's construct the basic outline of a solution! Here are two source blocks, which are actually the same. The first block shows how I'm able to reuse this code, while the second more accurately reflects /your/ perspective if you were to write something similar.
+
+#+NAME: d1a-outline
+#+begin_src emacs-lisp :noweb strip-export
+(defun day-one-a (problem)
+  "Returns the solution for AOC23 Day 1 Part A."
+  (interactive)
+  (if (file-readable-p problem)
+      <<d1a-happy-path>>
+    <<d1-throw-path>>))
+#+end_src
+
+#+NAME: d1a-outline-alt
+#+begin_src emacs-lisp :noweb no-export
+(defun day-one-a (problem)
+  "Returns the solution for AOC23 Day 1 Part A."
+  (interactive)
+  (if (file-readable-p problem)
+      <<d1a-happy-path>>
+    <<d1-throw-path>>))
+#+end_src
+
+So, we've defined two paths: the /happy-path/ and the /throw-path/.
+Here's the /throw-path/, where I simply warn the user that the input file for that day isn't available.
+
+#+NAME: d1-throw-path
+#+begin_src emacs-lisp
+(display-warning :warning "Grab the file and save it!")
+#+end_src
+
+
+Here's an example of some intermediary code to pretend I used this process as I was solving the problem. Consider these functions below acting on the input:
+
+*INPUT* call_samples[:results ]().
+
+#+NAME: d1-regexp
+#+begin_src emacs-lisp :exports both
+(--map (s-replace-regexp "[a-z]" "" it ) <<samples>>)
+#+end_src
+
+#+RESULTS: d1-regexp
+| 874 | 84 | 88 | 54757 | 72 |
+
+#+RESULTS:
+: 874
+
+#+begin_src emacs-lisp :exports both
+(-map (-lambda (Cs) (+ (* 10 (string-to-number (s-left 1 Cs))) (string-to-number (s-right 1 Cs)))) <<d1-regexp>>)
+#+end_src
+
+#+RESULTS:
+| 84 | 84 | 88 | 57 | 72 |
+
+Sweet! Okay, let's put this all together into a single function.
+#+NAME: d1a-happy-path
+#+begin_src emacs-lisp :exports code
+(let* ((lines (s-lines (s-trim (f-read problem))))
+       (numbers (--map (s-replace-regexp "[a-z]" "" it) lines))
+       (addables (-map (-lambda (Cs) (+ (* 10 (string-to-number (s-left 1 Cs))) (string-to-number (s-right 1 Cs)))) numbers)))
+  (-sum addables))
+#+end_src
+
+And the full solution for Part A:
+#+NAME: d1a
+#+begin_src emacs-lisp :tangle tangles/day-1.el :exports both
+<<d1a-outline>>
+(day-one-a problem)
+#+end_src
+
+** Making Adjustments for Part B
+Yay!! We did it for part A! Now part B. There's a lot of edge cases we need to consider.
+Now personally, I'd like it if I could highlight particular parts of a source block, or extract specific pieces of a code block using noweb.
+
+#+NAME: d1b-outline
+#+begin_src emacs-lisp :noweb strip-export :export none
+(defun day-one-b (problem)
+  "Returns the solution for AOC23 Day 1 Part B."
+  (interactive)
+  (if (file-readable-p problem)
+      <<d1b-happy-path>>
+    <<d1-throw-path>>))
+#+end_src
+
+Our solution almost works already, except we need to replace all word-numbers with numbers.
+#+NAME: d1b-happy-path-outine
+#+begin_src emacs-lisp :var problem="1.txt" :exports code :noweb no-tangle
+(let* ((lines (s-lines (s-trim (f-read problem))))
+       (preprocess <<d1b-replace-words>>) ;; We're going to add something here
+       (numbers (--map (s-replace-regexp "[a-z]" "" it) preprocess))
+       (addables (-map (-lambda (Cs) (+ (* 10 (string-to-number (s-left 1 Cs))) (string-to-number (s-right 1 Cs)))) numbers)))
+  (-sum addables))
+#+end_src
+
+And independent of the solution, we'll need a function that handles the bulk of this new logic for us:
+#+NAME: d1b-fun-replacements
+#+begin_src emacs-lisp
+(defun replace-written-numbers (line)
+  (let* ((temp (s-replace-all '(("oneight" . "18")
+                               ("twone" . "21")
+                               ("threeight" . "38")
+                               ("fiveight" . "58")
+                               ("sevenine" . "79")
+                               ("eightwo" . "82")
+                               ("eighthree" . "83")
+                               ("nineight" . "98"))
+                              line))
+    (numbers (s-replace-all '(("one" . "1")
+                              ("two" . "2")
+                              ("three" . "3")
+                              ("four" . "4")
+                              ("five" . "5")
+                              ("six" . "6")
+                              ("seven" . "7")
+                              ("eight" . "8")
+                              ("nine" . "9"))
+                            temp)))
+    numbers))
+#+end_src
+
+Okay, let's patch this in to our happy path. Here's a demonstration -- again, on the input:
+
+#+NAME: d1b-replace-words
+#+begin_src emacs-lisp :var lines=samples :export code :results raw
+(-map #'replace-written-numbers lines)
+#+end_src
+
+
+Okay, let's put this together into a full happy-path.
+#+NAME: d1b-happy-path
+#+begin_src emacs-lisp :var problem="1.txt" :exports code
+(let* ((lines (s-lines (s-trim (f-read problem))))
+       (preprocess (-map #'replace-written-numbers lines))
+       (numbers (--map (s-replace-regexp "[a-z]" "" it) preprocess))
+       (addables (-map (-lambda (Cs) (+ (* 10 (string-to-number (s-left 1 Cs))) (string-to-number (s-right 1 Cs)))) numbers)))
+  (-sum addables))
+#+end_src
+
+
+And finally, the full solution to Part B.
+#+NAME: d1b
+#+begin_src emacs-lisp :tangle tangles/day-1.el :var problem="1.txt" :exports both
+<<d1b-fun-replacements>>
+<<d1b-outline>>
+(day-one-b problem)
+#+end_src
+
+** COMMENT Original Day One
+#+begin_src emacs-lisp
+(require 's)
+(require 'f)
+(require 'dash)
+#+end_src
+-----
+=PART ONE=
+#+begin_src emacs-lisp
+(defun day-one-a ()
+  (let* ((lines (s-lines (s-trim (f-read input))))
+         (numbers (--map (s-replace-regexp "[a-z]" "" it) lines))
+         (fuse (-lambda (Cs) (+ (* 10 (string-to-number (s-left 1 Cs))) (string-to-number (s-right 1 Cs)))))
+         (addables (-map fuse numbers)))
+    (-sum addables)))
+
+(day-one-a)
+#+end_src
+-----
+=Part 2=
+Turns out numbers are written down as words as well. So, do the same except you can't just filter out letters immediately.
+#+begin_src emacs-lisp
+(defun replace-written-numbers (line)
+  (let* ((temp (s-replace-all '(("oneight" . "18")
+                               ("twone" . "21")
+                               ("threeight" . "38")
+                               ("fiveight" . "58")
+                               ("sevenine" . "79")
+                               ("eightwo" . "82")
+                               ("eighthree" . "83")
+                               ("nineight" . "98"))
+                              line))
+    (numbers (s-replace-all '(("one" . "1")
+                              ("two" . "2")
+                              ("three" . "3")
+                              ("four" . "4")
+                              ("five" . "5")
+                              ("six" . "6")
+                              ("seven" . "7")
+                              ("eight" . "8")
+                              ("nine" . "9"))
+                            temp)))
+    numbers))
+#+end_src
+#+begin_src emacs-lisp
+(let* ((lines (s-lines (s-trim (f-read "./1.txt"))))
+       (preprocess (-map #'replace-written-numbers lines))
+       (numbers (--map (s-replace-regexp "[a-z]" "" it) preprocess))
+       (fuse (-lambda (Cs) (+ (* 10 (string-to-number (s-left 1 Cs))) (string-to-number (s-right 1 Cs)))))
+       (addables (-map fuse numbers)))
+  (-sum addables))
+#+end_src
+
+** COMMENT Arthur Millers Solution
+#+begin_src emacs-lisp
+(require 's)
+(require 'f)
+
+;; task 1
+
+(defun digit-p (c)
+  (and (> c ?0)
+       (<= c ?9)))
+
+(defun aocd1-sum-values (lines)
+  (-sum
+   (-map (lambda (line)
+           (let ((digits (-filter #'digit-p (string-to-list line))))
+             (string-to-number (string (-first-item digits) (-last-item digits)))))
+         lines)))
+
+(let ((lines (s-lines (s-trim (f-read "./day-one-in.txt")))))
+  (aocd1-sum-values lines))
+#+end_src
+#+begin_src emacs-lisp
+(defun replace-written-numbers (input)
+  (with-temp-buffer
+    (insert input)
+    (let ((start 1))
+      (while (< start (point-max))
+        (format-replace-strings
+         '(("oneight" . "18")
+           ("twone" . "21")
+           ("threeight" . "38")
+           ("fiveight" . "58")
+           ("sevenine" . "79")
+           ("eightwo" . "82")
+           ("eighthree" . "83")
+           ("nineight" . "98"))
+         nil start (min (+ 10 start) (point-max)))
+        (format-replace-strings
+         '(("one" . "1")
+           ("two" . "2")
+           ("three" . "3")
+           ("four" . "4")
+           ("five" . "5")
+           ("six" . "6")
+           ("seven" . "7")
+           ("eight" . "8")
+           ("nine" . "9"))
+         nil start (min (+ 5 start) (point-max)))
+        (setq start (1+ start))))
+    (buffer-string)))
+
+(let ((lines (s-lines (s-trim (f-read "./day-one-in.txt")))))
+  (aocd1-sum-values (-map #'replace-written-numbers lines)))
+#+end_src
+
+#+RESULTS:
+: 55701
+* Day Two: First Contact with Reality
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no :var problem="2.txt"
+:end:
+** Sketching the solution
+Damn Walerie, back at it again with the org mode!
+#+NAME: d2a-outline
+#+begin_src emacs-lisp :noweb strip-export
+(defun day-two-a (problem)
+  "Returns the solution for AOC23 Day 2 Part A."
+  (interactive)
+  (if (file-readable-p problem)
+      <<d2a-happy-path>>
+    <<d1-throw-path>>))
+#+end_src
+
+#+NAME: d2a-happy-path-outline
+#+begin_src emacs-lisp :var problem="1.txt" :exports code :noweb no-tangle
+(let* ((lines (s-lines (s-trim (f-read problem))))
+       (addables <<d2a-game-to-addables>>))
+  (-sum addables)) ;; Do something
+#+end_src
+
+One thing that's pretty sweet is using the header args to refer to a sample. Check it! /Note: I'm going to need to move the ~samples~ code block into its own file, so that I don't have to always put in the file. Maybe that's just me being lazy, though./
+#+begin_src emacs-lisp :var lines=samples("2.txt")
+(print lines)
+#+end_src
+
+#+NAME: d2a-game-to-addables
+#+begin_src emacs-lisp :var lines=samples()
+(--remove #'impossible-game lines)
+#+end_src
+
+
+#+begin_src emacs-lisp
+(defun impossible-game (game)
+  "Return t if the game is impossible; nil if it is possible.
+   Constraints: only 12 red cubes, 13 green cubes, and 14 blue cubes."
+  ; A game has 3 rounds.
+  ; A round has N colors.
+  ; For each
+  ; Check each round to see if any of the quantities are greater than the threshold.
+)
+#+end_src
+
+#+begin_src emacs-lisp
+(s-less? "10" "12")
+#+end_src
+
+#+RESULTS:
+: t
+
+#+begin_src emacs-lisp
+(s-less? "20" "12")
+#+end_src
+
+#+RESULTS:
+
+** Solution
+#+begin_src emacs-lisp :tangle tangles/day-2.el
+<<d2a-outline>>
+(day-two-a)
+#+end_src
+
+** COMMENT An Elispy Imperative Buffer approach
+
+#+begin_src emacs-lisp :eval no
+(defun aoc-2023-2 ()
+  (interactive)
+  (let ((p1 0) (p2 0))
+    (with-temp-buffer
+      (insert-file-contents-literally "/home/arthur/repos/AOC2023/2")
+      (while (search-forward "game" nil t)
+        (re-search-forward "[0-9]+")
+        (let ((r 0) (g 0) (b 0)
+              (i (string-to-number (match-string 0))))
+          (while (re-search-forward "[0-9]+" (line-end-position) t)
+            (let ((n (string-to-number (match-string 0)))
+                  (c (read (current-buffer))))
+              (pcase c
+                ('red   (and (> n 12) (setq i 0)))
+                ('green (and (> n 13) (setq i 0)))
+                ('blue  (and (> n 14) (setq i 0))))
+              (pcase c
+                ('red   (and (> n r) (setq r n)))
+                ('green (and (> n g) (setq g n)))
+                ('blue  (and (> n b) (setq b n))))))
+          (setq p1 (+ p1 i) p2 (+ p2 (* r g b))))))
+    (message "Part I: %s, Part II: %s" p1 p2)))
+#+end_src
+
+** COMMENT A Functional Approach with modern Elisp tools
+https://klibert.pl/posts/advent-of-code-2023-day-2.html
+
+=b= is a buffer manip utility library
+#+begin_src emacs-lisp
+(require 'b)
+(require 'cl-lib)
+(require 'map)
+(require 'dash)
+
+(defconst aoc-games-played-input
+  (-> "day-two-in.txt" get-buffer b-string-no-properties s-trim s-lines))
+#+end_src
+
+
+#+begin_src
+(length aoc-games-played-input)
+#+end_src
