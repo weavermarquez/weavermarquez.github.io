@@ -1,0 +1,319 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Crafter Q&amp;A: Emacs, Guix, and more! - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Crafter Q&amp;A: Emacs, Guix, and more!</h1><p class="site-post-meta">July 14, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/SxoxLFavv1w" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org4f15266">
+<ul class="org-ul">
+<li><p>
+Submit your <b>EmacsConf 2023</b> proposals!
+</p>
+
+<p>
+<a href="https://emacsconf.org/2023/cfp/">https://emacsconf.org/2023/cfp/</a>
+</p></li>
+
+<li>Probably no streams on July 28, August 4, August 11.  Will keep you posted!</li>
+</ul>
+</div>
+<h2><a id="crafter-qampa" class="anchor" href="#crafter-qampa">¶</a>Crafter Q&amp;A!</h2><div class="outline-text-2" id="text-org5580f2f">
+<p>
+Today I&rsquo;ll be answering your burning questions about topics relevant to our community:
+</p>
+
+<ul class="org-ul">
+<li>Emacs</li>
+<li>Emacs Lisp</li>
+<li>Guix</li>
+<li>Guile Scheme</li>
+<li>Linux in general</li>
+<li>&#x2026; and more!</li>
+</ul>
+</div>
+
+<h3><a id="questions" class="anchor" href="#questions">¶</a>Questions</h3><h4><a id="does-exwm-work-with-wayland" class="anchor" href="#does-exwm-work-with-wayland">¶</a>Does EXWM work with Wayland?</h4><div class="outline-text-4" id="text-orgd388469">
+<p>
+No, but someone is working on an EXWM-like window manager for Wayland called ewx
+</p>
+
+<p>
+<a href="http://perma-curious.eu/repo-ewx/">http://perma-curious.eu/repo-ewx/</a>
+</p>
+</div>
+
+<h4><a id="eglot-or-lsp-mode" class="anchor" href="#eglot-or-lsp-mode">¶</a>eglot or lsp-mode?</h4><div class="outline-text-4" id="text-org0478435">
+<p>
+I use eglot, but I&rsquo;ve used lsp-mode.
+</p>
+
+<ul class="org-ul">
+<li>Eglot is more minimal and better integrated with Emacs UI, also built-in as of Emacs 29</li>
+<li>lsp-mode is more featureful, more UI, also integrates with dap-mode for debugging</li>
+</ul>
+</div>
+
+<h4><a id="learn-vim-first-and-use-evil-or-learn-ldquovanillardquo-emacs" class="anchor" href="#learn-vim-first-and-use-evil-or-learn-ldquovanillardquo-emacs">¶</a>Learn Vim first and use Evil or learn &ldquo;vanilla&rdquo; Emacs?</h4><div class="outline-text-4" id="text-org32ac8e9">
+<ul class="org-ul">
+<li>Use Vim and Evil/Emacs if you know you like the Vim style of editing</li>
+<li>Otherwise, try vanilla Emacs bindings and see if you like them or can live with them because your Emacs experience may be easier</li>
+</ul>
+</div>
+
+<h4><a id="what-do-you-think-about-emacs-application-framework" class="anchor" href="#what-do-you-think-about-emacs-application-framework">¶</a>What do you think about Emacs Application Framework?</h4><div class="outline-text-4" id="text-orgc78c38b">
+<p>
+I haven&rsquo;t used it yet, but I can see how it&rsquo;d be useful.  However, I don&rsquo;t personally see a need for it when most of what I need to do can either be done natively in Emacs or in a standalone web browser.
+</p>
+</div>
+
+<h4><a id="do-you-feel-that-emacs-is-slow--thoughts-on-commercial-emacs" class="anchor" href="#do-you-feel-that-emacs-is-slow--thoughts-on-commercial-emacs">¶</a>Do you feel that Emacs is slow?  Thoughts on Commercial Emacs?</h4><div class="outline-text-4" id="text-org2c34428">
+<p>
+I don&rsquo;t think Emacs is particularly slow, especially after native-comp got merged.  Commercial Emacs is a good idea from a clean-slate problem solving standpoint, but probably won&rsquo;t be worthwhile for the average to use unless it solves a specific problem you have.
+</p>
+</div>
+
+<h4><a id="org-roam-capture-window-behavior" class="anchor" href="#org-roam-capture-window-behavior">¶</a>Org Roam capture window behavior</h4><div class="outline-text-4" id="text-org19e7568">
+<p>
+It looks like to prevent <code>org-roam-capture</code> from breaking window configuration, you may have to use advice to hack <code>delete-other-windows</code> to not delete the windows during an <code>org-capture</code> (or some other dirty hack)
+</p>
+</div>
+
+<h4><a id="how-to-reload-changed-files-from-a-onedrive-folder" class="anchor" href="#how-to-reload-changed-files-from-a-onedrive-folder">¶</a>How to reload changed files from a OneDrive folder?</h4><div class="outline-text-4" id="text-orgd628948">
+<p>
+I use <code>global-auto-revert-mode</code> to automatically revert buffers when the file on disk has changed.
+</p>
+
+<p>
+But!  Some programs, like OneDrive, might edit files in a way where Emacs can&rsquo;t detect that the file was changed.
+</p>
+</div>
+
+<h4><a id="does-guix-need-something-like-nix-flakes" class="anchor" href="#does-guix-need-something-like-nix-flakes">¶</a>Does Guix need something like Nix Flakes?</h4><div class="outline-text-4" id="text-org469c449">
+<p>
+Yes!  It does not exist yet, but someone should write it!
+</p>
+</div>
+
+<h4><a id="are-we-headed-back-to-old-school-lisp-machines" class="anchor" href="#are-we-headed-back-to-old-school-lisp-machines">¶</a>Are we headed back to old-school Lisp machines?</h4><div class="outline-text-4" id="text-orgfb6a90e">
+<p>
+Probably not :) But you should check this project out:
+</p>
+
+<p>
+<a href="https://tumbleweed.nu/lm-3/">https://tumbleweed.nu/lm-3/</a>
+</p>
+
+<p>
+Emacs is probably as good as it&rsquo;s going to get for most people, in my opinion!
+</p>
+</div>
+
+<h4><a id="mobile-access-to-org-files" class="anchor" href="#mobile-access-to-org-files">¶</a>Mobile access to Org Files</h4><div class="outline-text-4" id="text-org216e57f">
+<ul class="org-ul">
+<li>Organice: <a href="https://organice.200ok.ch/">https://organice.200ok.ch/</a></li>
+<li>Orgzly: <a href="https://orgzly.com/">https://orgzly.com/</a></li>
+<li>Orgro: <a href="https://orgro.org/">https://orgro.org/</a></li>
+</ul>
+
+<p>
+I&rsquo;ve used Termux to run Emacs in terminal mode to have full Org Mode functionality.
+</p>
+
+<p>
+There&rsquo;s also an official Emacs build for Android now, but it&rsquo;s still a little bit rough.
+</p>
+
+<p>
+<a href="https://f-droid.org/packages/org.gnu.emacs/">https://f-droid.org/packages/org.gnu.emacs/</a>
+</p>
+</div>
+
+<h4><a id="what-was-my-verdict-on-meow" class="anchor" href="#what-was-my-verdict-on-meow">¶</a>What was my verdict on Meow?</h4><div class="outline-text-4" id="text-orge4c8471">
+<p>
+It&rsquo;s cool!  I think it&rsquo;s interesting to have everything basically be &ldquo;visual mode&rdquo; so that you can see exactly the range of text that will be affected by the editing command you use next.
+</p>
+
+<p>
+It can be hard to migrate to it from Evil because they do certain things differently.
+</p>
+
+<p>
+I really did like the region selection bindings for things like paragraphs, functions, etc.  Evil also can do this but I think Meow makes it more obvious that you should use it most of the time.
+</p>
+</div>
+
+<h4><a id="can-you-use-stumpwm-wayland-emacs-and-guix-together" class="anchor" href="#can-you-use-stumpwm-wayland-emacs-and-guix-together">¶</a>Can you use StumpWM, Wayland, Emacs, and Guix together?</h4><div class="outline-text-4" id="text-org13ff3c3">
+<p>
+Use Mahogany for a StumpWM-like WM in Wayland: <a href="https://github.com/stumpwm/mahogany">https://github.com/stumpwm/mahogany</a>
+</p>
+
+<p>
+This does not seem to be packaged in Guix (yet!) but, this is probably what you would use.
+</p>
+</div>
+
+<h4><a id="what-got-you-into-system-crafting-emacs-free-software-etc" class="anchor" href="#what-got-you-into-system-crafting-emacs-free-software-etc">¶</a>What got you into System Crafting, Emacs, Free Software, etc</h4><div class="outline-text-4" id="text-orgaddf3dc">
+<p>
+Linux was the start of everything.  Started using Slackware in 1996 or 1997.  Using Linux means you&rsquo;re using GNU!
+</p>
+
+<p>
+I didn&rsquo;t start using Emacs until much later, maybe 2006 briefly, and then in 2013 I started using it much more regularly.  Org Mode might have been the thing that brought me in the door, but then learning how customizable it is made me want to stay.
+</p>
+
+<p>
+The thing that keeps me in Emacs is the fact that it feels dependable forever.  And that&rsquo;s because it&rsquo;s two things: extensible with a Lisp, and also Free Software.
+</p>
+</div>
+
+<h4><a id="whatrsquos-your-opinion-on-racket" class="anchor" href="#whatrsquos-your-opinion-on-racket">¶</a>What&rsquo;s your opinion on Racket?</h4><div class="outline-text-4" id="text-org04d7428">
+<p>
+It&rsquo;s cool!  It&rsquo;s nice that it has so many useful libraries built in.  It&rsquo;s great that you can generate standalone executables using <code>raco</code>.
+</p>
+
+<p>
+However, I don&rsquo;t like the fact that they&rsquo;re so focused on language-oriented programming.  It&rsquo;s also not really a Scheme, it&rsquo;s built with Scheme but they have gone their own direction on certain things.
+</p>
+
+<p>
+I want to use a Scheme that&rsquo;s focused on writing practical applications.  Guile Scheme is great for practical work, and it&rsquo;s already being used in awesome projects like GNU Guix!
+</p>
+</div>
+
+<h4><a id="do-you-think-guile-emacs-is-the-future-of-emacs" class="anchor" href="#do-you-think-guile-emacs-is-the-future-of-emacs">¶</a>Do you think Guile Emacs is the future of Emacs?</h4><div class="outline-text-4" id="text-orgb663430">
+<p>
+I wish it was!  But I think there&rsquo;s a lot of inertia in making this happen.  I don&rsquo;t think it will ever replace GNU Emacs.
+</p>
+
+<p>
+<a href="https://www.emacswiki.org/emacs/GuileEmacs">https://www.emacswiki.org/emacs/GuileEmacs</a>
+<a href="https://emacsninja.com/posts/state-of-emacs-lisp-on-guile.html">https://emacsninja.com/posts/state-of-emacs-lisp-on-guile.html</a>
+</p>
+</div>
+
+<h4><a id="why-do-i-prefer-qutebrowser-or-nyxt-to-firefox" class="anchor" href="#why-do-i-prefer-qutebrowser-or-nyxt-to-firefox">¶</a>Why do I prefer Qutebrowser or Nyxt to Firefox?</h4><div class="outline-text-4" id="text-orgf93857e">
+<p>
+Keyboard-driven navigation, better customizability, easier integration with external programs, more minimal UI, etc.  Also, easier to customize with plain text files.
+</p>
+</div>
+
+<h4><a id="how-do-you-do-incremental-completion-in-vertico" class="anchor" href="#how-do-you-do-incremental-completion-in-vertico">¶</a>How do you do incremental completion in Vertico</h4><div class="outline-text-4" id="text-orgfb941a2">
+<p>
+Make sure you&rsquo;re using Orderless: <a href="https://github.com/oantolin/orderless">https://github.com/oantolin/orderless</a>
+</p>
+</div>
+
+<h4><a id="can-i-watch-anime-or-read-manga-from-emacs" class="anchor" href="#can-i-watch-anime-or-read-manga-from-emacs">¶</a>Can I watch anime or read manga from Emacs?</h4><div class="outline-text-4" id="text-org943b093">
+<p>
+Try out these two packages:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/vedang/pdf-tools">https://github.com/vedang/pdf-tools</a></li>
+<li><a href="https://depp.brause.cc/nov.el/">https://depp.brause.cc/nov.el/</a></li>
+<li><a href="https://github.com/isamert/empv.el">https://github.com/isamert/empv.el</a></li>
+</ul>
+</div>
+
+<h4><a id="any-thoughts-on-nix-vs-guix" class="anchor" href="#any-thoughts-on-nix-vs-guix">¶</a>Any thoughts on Nix vs Guix?</h4><div class="outline-text-4" id="text-org621c636">
+<p>
+Guix gives me so much more power than Nix because it&rsquo;s using a real programming language (Scheme), and also it&rsquo;s using a language that is really effective for creating domain-specific languages.
+</p>
+
+<p>
+Guix is incredibly powerful because it&rsquo;s Scheme, I don&rsquo;t think I can do the things with Nix that I do with Guix.
+</p>
+</div>
+
+<h4><a id="do-you-play-games-on-guix" class="anchor" href="#do-you-play-games-on-guix">¶</a>Do you play games on Guix?</h4><div class="outline-text-4" id="text-org59c19b4">
+<p>
+I have, but I don&rsquo;t really do PC gaming very often.
+</p>
+
+<p>
+I install Steam via Flatpak and it works quite well!
+</p>
+
+<p>
+There&rsquo;s also Steam inside of the Nonguix repo which should work fine.
+</p>
+
+<p>
+There&rsquo;s a Guix channel called Guix Gaming Channels with some games packaged for Guix:
+</p>
+
+<p>
+<a href="https://gitlab.com/guix-gaming-channels/games">https://gitlab.com/guix-gaming-channels/games</a>
+</p>
+</div>
+
+<h4><a id="is-there-a-way-to-preview-files-in-the-file-picker" class="anchor" href="#is-there-a-way-to-preview-files-in-the-file-picker">¶</a>Is there a way to preview files in the file picker?</h4><div class="outline-text-4" id="text-org83fbea8">
+<p>
+Try the consult package, it has live-preview for some selection commands:
+</p>
+
+<p>
+<a href="https://github.com/minad/consult#live-previews">https://github.com/minad/consult#live-previews</a>
+</p>
+</div>
+
+<h4><a id="does-emacs-work-well-as-a-terminal-emulator" class="anchor" href="#does-emacs-work-well-as-a-terminal-emulator">¶</a>Does Emacs work well as a terminal emulator?</h4><div class="outline-text-4" id="text-org99e4d19">
+<p>
+It&rsquo;s ok!  <code>ansi-term</code> is probably the best built-in terminal emulator, otherwise try <code>vterm</code> (can be a little harder to set up due to the native code component).
+</p>
+</div>
+
+<h4><a id="guix-ruins-emacs-package-management" class="anchor" href="#guix-ruins-emacs-package-management">¶</a>Guix ruins Emacs package management</h4><div class="outline-text-4" id="text-org0cd5f7d">
+<p>
+I disagree!  I actually think that managing Emacs packages with Guix makes Emacs a lot more reliable.
+</p>
+</div>
+
+<h4><a id="does-guix-violate-the-filesystem-hierarchy-standard" class="anchor" href="#does-guix-violate-the-filesystem-hierarchy-standard">¶</a>Does Guix violate the Filesystem Hierarchy Standard?</h4><div class="outline-text-4" id="text-orga94a4d1">
+<p>
+Yes, but you can replicate it when you need to by using
+</p>
+
+<p>
+<code>guix shell container -F</code>
+</p>
+</div>
+
+<h4><a id="you-should-use-scheme-to-make-your-website" class="anchor" href="#you-should-use-scheme-to-make-your-website">¶</a>You should use Scheme to make your website!</h4><div class="outline-text-4" id="text-orgb0a235b">
+<p>
+I use Emacs Lisp to make my website!
+</p>
+
+<p>
+<a href="https://codeberg.org/SystemCrafters/systemcrafters-site/src/branch/master/publish.el">https://codeberg.org/SystemCrafters/systemcrafters-site/src/branch/master/publish.el</a>
+</p>
+
+<p>
+You should also try Haunt for Guile: <a href="https://dthompson.us/manuals/haunt/index.html">https://dthompson.us/manuals/haunt/index.html</a>
+</p>
+</div>
+
+<h4><a id="can-i-use-guix-on-a-macbook-with-nvidia-chipset" class="anchor" href="#can-i-use-guix-on-a-macbook-with-nvidia-chipset">¶</a>Can I use Guix on a MacBook with NVIDIA chipset?</h4><div class="outline-text-4" id="text-org47a5587">
+<p>
+Probably, if it&rsquo;s still Intel-based.
+</p>
+
+<p>
+Check out the Nonguix repo for proprietary firmware and drivers including NVIDIA:
+</p>
+
+<p>
+<a href="https://gitlab.com/nonguix/nonguix">https://gitlab.com/nonguix/nonguix</a>
+</p>
+</div>
+
+<h4><a id="what-single-piece-of-advice-would-you-give-someone-who-wants-to-get-into-system-crafting" class="anchor" href="#what-single-piece-of-advice-would-you-give-someone-who-wants-to-get-into-system-crafting">¶</a>What single piece of advice would you give someone who wants to get into System Crafting?</h4><div class="outline-text-4" id="text-org6943e30">
+<p>
+Install Linux, preferrably something like Ubuntu.  Debian might be an option now with the latest release.  Linux Mint, elementaryOS, etc.
+</p>
+
+<ul class="org-ul">
+<li>OR -</li>
+</ul>
+
+<p>
+Install and use Emacs and then go from there!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

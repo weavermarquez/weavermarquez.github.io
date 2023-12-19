@@ -1,0 +1,113 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>A Rough Introduction to Guile Scheme - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">A Rough Introduction to Guile Scheme</h1><p class="site-post-meta">September  2, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/vgFLtW_6Ui4" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgfca593b">
+<ul class="org-ul">
+<li>Next week I will be streaming on this channel around <b>7AM to 9AM UTC</b> on Monday and Wednesday!  We&rsquo;ll be working on improvements to my Scheme-inspired programming language <a href="https://github.com/mesche-lang/compiler">Mesche</a>.</li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="a-rough-introduction-to-guile-scheme" class="anchor" href="#a-rough-introduction-to-guile-scheme">¶</a>A Rough Introduction to Guile Scheme</h2><div class="outline-text-2" id="text-orgb8f0f5c">
+<p>
+Today we&rsquo;re going to discuss the language Scheme through the lens of Guile Scheme!  This will mainly be geared toward those who have some experience with Lisp languages like Emacs Lisp or Common Lisp already.  If there&rsquo;s enough interest, I&rsquo;ll be happy to create a video series going more in depth!
+</p>
+
+<p>
+I&rsquo;ll give you a rough (unprepared) walkthrough of the following topics:
+</p>
+
+<ul class="org-ul">
+<li>Basic language characteristics</li>
+<li>Defining variables and functions</li>
+<li>Setting variables</li>
+<li><code>let</code> expressions</li>
+<li>Looping constructs and higher-order functions</li>
+<li>Interacting with the environment (console and file I/O)</li>
+<li>Modules, importing, and exporting</li>
+<li>Macros</li>
+<li>Continuations</li>
+</ul>
+</div>
+
+<h2><a id="the-code-we-wrote" class="anchor" href="#the-code-we-wrote">¶</a>The code we wrote</h2><div class="outline-text-2" id="text-org358db19">
+<pre>(<span class="org-keyword">define-module</span> (<span class="org-type">system-crafters</span> guile-demo)
+  <span class="org-builtin">#:export</span> (find find-x))
+
+(<span class="org-keyword">define</span> <span class="org-function-name">my-var</span> 15)
+
+(set! my-var 20)
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">find</span> value lst)
+  (<span class="org-keyword">if</span> (pair? lst)
+      (<span class="org-keyword">begin</span>
+        (display (string-append <span class="org-string">"Looking at: "</span>
+                                (number-&gt;string (car lst))
+                                <span class="org-string">"\n"</span>))
+        (<span class="org-keyword">if</span> (equal? (car lst) value)
+            (<span class="org-keyword">begin</span> (display <span class="org-string">"Found it!\n"</span>)
+                   (car lst))
+            (find value (cdr lst))))
+      #f))
+
+(<span class="org-keyword">let</span> <span class="org-function-name">find-loop</span> ((value 5)
+                (lst '(1 2 3 4 5)))
+  (<span class="org-keyword">if</span> (pair? lst)
+      (<span class="org-keyword">begin</span>
+        (display (string-append <span class="org-string">"Looking at: "</span>
+                                (number-&gt;string (car lst))
+                                <span class="org-string">"\n"</span>))
+        (<span class="org-keyword">if</span> (equal? (car lst) value)
+            (<span class="org-keyword">begin</span> (display <span class="org-string">"Found it!\n"</span>)
+                   (car lst))
+            (find-loop value (cdr lst))))
+      #f))
+
+(<span class="org-keyword">define</span> <span class="org-function-name">find-x</span> (<span class="org-keyword">lambda</span> (value lst)
+                 (<span class="org-keyword">if</span> (pair? lst)
+                     (<span class="org-keyword">begin</span>
+                       (display (string-append <span class="org-string">"Looking at: "</span>
+                                               (number-&gt;string (car lst))
+                                               <span class="org-string">"\n"</span>))
+                       (<span class="org-keyword">if</span> (equal? (car lst) value)
+                           (<span class="org-keyword">begin</span> (display <span class="org-string">"Found it!\n"</span>)
+                                  (car lst))
+                           (find value (cdr lst))))
+                     #f)))
+
+(<span class="org-keyword">letrec</span> ([even? (<span class="org-keyword">lambda</span> (n) (<span class="org-keyword">or</span> (zero? n) (odd? (- n 1))))]
+         [odd? (<span class="org-keyword">lambda</span> (n) (<span class="org-keyword">and</span> (not (zero? n)) (even? (- n 1))))])
+  (even? 4))
+
+(<span class="org-keyword">let</span> ((x 5)
+      (y (+ x 1)))
+  (display (number-&gt;string y)))
+
+((<span class="org-keyword">lambda</span> (x y)
+   (display (number-&gt;string y)))
+ 5
+ (+ x 1))
+
+(<span class="org-keyword">let*</span> ((x 5)
+       (y (+ x 1)))
+  y)
+
+((<span class="org-keyword">lambda</span> (x)
+   ((<span class="org-keyword">lambda</span> (y)
+      y)
+    (+ x 1)))
+ 5)
+
+(<span class="org-keyword">define</span> <span class="org-function-name">my-map</span> (<span class="org-keyword">lambda</span> (func lst)))
+
+(find-x 3 '(1 2 3 4 5 6))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Loading modules</span>
+(use-modules (ice-9 textual-ports)
+             (ice-9 command-line))
+
+(with-input-from-file <span class="org-string">"guile.scm"</span>
+  (<span class="org-keyword">lambda</span> ()
+    (display (get-string-n (current-input-port) 20))))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

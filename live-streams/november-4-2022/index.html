@@ -1,0 +1,51 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Crafting a Configuration Site Generator in Emacs - Part 2 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Crafting a Configuration Site Generator in Emacs - Part 2</h1><p class="site-post-meta">November  4, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/MvNIUnep22g" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org3aa7a44">
+<ul class="org-ul">
+<li><p>
+I&rsquo;ve been hacking a lot on <a href="https://github.com/mesche-lang/mesche">Mesche</a> this week to prepare for the GitHub Game Off competition that&rsquo;s going on right now.
+</p>
+
+<p>
+Starting tomorrow, I&rsquo;ll be streaming my work on it pretty regularly on the <b>Flux Harmonic</b> <a href="https://youtube.com/FluxHarmonicLive">YouTube</a> and <a href="https://twitch.tv/FluxHarmonicLive">Twitch</a> channels (FluxHarmonicLive on both), come check it out!  First stream will be tomorrow.
+</p></li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="crafting-a-configuration-site-generator-in-emacs---part-2" class="anchor" href="#crafting-a-configuration-site-generator-in-emacs---part-2">¶</a>Crafting a Configuration Site Generator in Emacs - Part 2</h2><div class="outline-text-2" id="text-org3ae7bb9">
+<p>
+This week we&rsquo;ll continue where we left off building the <code>dotweaver.el</code> package that will generate a website from a repository of source code files.
+</p>
+
+<p>
+<a href="https://github.com/daviwil/dotweaver.el">https://github.com/daviwil/dotweaver.el</a>
+Inspired by HAWK: <a href="https://migrev-dolseg.com/hawk/README.html">https://migrev-dolseg.com/hawk/README.html</a>
+</p>
+</div>
+
+<h3><a id="desired-features" class="anchor" href="#desired-features">¶</a>Desired Features</h3><div class="outline-text-3" id="text-orgbd71353">
+<p>
+To recap, here&rsquo;s the set of features we&rsquo;d like to have:
+</p>
+
+<ul class="org-ul">
+<li>Use the same syntax highlighting as I do in my configuration (or at least a specific Emacs theme)</li>
+<li>Linkable line numbers</li>
+<li><i>Possibly</i> generate &ldquo;permalink&rdquo; folders for older commits</li>
+<li>Some basic method of formatting the contents of comments in code files, including links to other files</li>
+<li>Basic file tree pages and header/footer for navigation</li>
+<li>Possibly extract defined function names to generate a table of contents</li>
+<li>It should also be good for generating literate documentation sites for code projects!</li>
+</ul>
+</div>
+
+
+<h3><a id="progress-last-time" class="anchor" href="#progress-last-time">¶</a>Progress Last Time</h3><div class="outline-text-3" id="text-org989d7df">
+<ul class="org-ul">
+<li>Basic HTML page generation using the current color theme</li>
+<li>Initial logic for generating files for the whole site, but not fully working yet</li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

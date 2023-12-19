@@ -1,0 +1,293 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Installing the GNU Guix Package Manager - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Installing the GNU Guix Package Manager</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/Xy0YgnXFt1M" allowfullscreen></iframe></div><div id="content">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgf20bc7b">
+<p>
+Today I&rsquo;m going to show you how you can install the GNU Guix package manager on your existing Linux system so that you can start learning the basics of how to use it.
+</p>
+
+<p>
+In the Guix manual this is called installing on a &ldquo;foreign distribution&rdquo;, basically a Linux distribution that is not Guix itself.
+</p>
+
+<p>
+Even if you don&rsquo;t intend to install Guix as a full distribution in the future, it can still be a very useful as an alternative package manager and development environment tool!
+</p>
+
+<p>
+However, if you do want to try Guix as a system distribution in the future, one benefit of installing it as a package manager is that you can use it to build a custom installation image!  This is really only necessary if your computer&rsquo;s hardware requires firmware blobs that don&rsquo;t come with the Linux Libre kernel.
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="supported-linux-distributions" class="anchor" href="#supported-linux-distributions">¶</a>Supported Linux distributions</h2><div class="outline-text-2" id="text-org982fa1f">
+<p>
+The Guix installer supports distributions with the following init systems:
+</p>
+
+<ul class="org-ul">
+<li>systemd (Ubuntu, Debian, Arch, Fedora, openSUSE&#x2026;  most of them)</li>
+<li>OpenRC (Gentoo, Alpine, Parabola, Artix)</li>
+<li>sysv-init (Not commonly used)</li>
+<li>upstart (Not commonly used)</li>
+</ul>
+
+<p>
+The installer will still work if you don&rsquo;t use one of these init systems but you will have to run the <code>guix-daemon</code> yourself!
+</p>
+
+<p>
+It is necessary to run the <code>guix-daemon</code> service <i>somehow</i> because this service is used for building and installing packages from Guix into the <code>/gnu/store</code> path.
+</p>
+</div>
+
+<h2><a id="running-the-installer-script" class="anchor" href="#running-the-installer-script">¶</a>Running the installer script</h2><div class="outline-text-2" id="text-org33aae1c">
+<p>
+Let&rsquo;s install GNU Guix!
+</p>
+
+<p>
+The installation process is simple, you just download <code>guix-install.sh</code> to the <code>/tmp</code> directory, make it executable, and run it:
+</p>
+
+<pre><span class="org-builtin">cd</span> /tmp
+wget https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh
+chmod +x guix-install.sh
+sudo ./guix-install.sh</pre>
+
+<p>
+It&rsquo;s not necessary to use <code>wget</code> for this, you can just download the script from <a href="https://git.savannah.gnu.org/cgit/guix.git/plain/etc/guix-install.sh">this link</a> using your browser.
+</p>
+
+<p>
+Once you start running the script, it will likely prompt you to download and install a GPG key that the Guix binaries are signed with.  Run this command to download and install the key (you must have <code>gpg</code> installed!):
+</p>
+
+<pre>wget <span class="org-string">'https://sv.gnu.org/people/viewgpg.php?user_id=15145'</span> -qO - | sudo -i gpg --import -</pre>
+
+<p>
+It will also ask you a question about downloading pre-built package binaries, answer <b>YES</b> to this unless you want to build all packages from source!
+</p>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/html_node/Binary-Installation.html">Guix Manual: Binary Installation</a>
+</p>
+</div>
+
+<h2><a id="installing-a-package" class="anchor" href="#installing-a-package">¶</a>Installing a package</h2><div class="outline-text-2" id="text-org7622d94">
+<p>
+Now that Guix is installed, let&rsquo;s try installing a program to see if it works!
+</p>
+
+<pre>guix install emacs</pre>
+
+<p>
+Notice that we didn&rsquo;t use <code>sudo</code> on this command! Guix enables every user to install packages in a user profile in their home directory.
+</p>
+
+<p>
+Guix will download the precompiled binary package for Emacs 27.1!
+</p>
+
+<p>
+Other things to notice:
+</p>
+
+<ul class="org-ul">
+<li><code>setlocale</code> warnings</li>
+<li>Substitute downloads</li>
+<li>It installs a lot of dependencies!  Your Guix install is a blank slate, it doesn&rsquo;t use your distro&rsquo;s dependencies</li>
+</ul>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/html_node/Invoking-guix-package.html">Guix Manual: Invoking guix package</a>
+</p>
+</div>
+
+<h2><a id="ensuring-your-guix-profile-gets-loaded" class="anchor" href="#ensuring-your-guix-profile-gets-loaded">¶</a>Ensuring your Guix profile gets loaded</h2><div class="outline-text-2" id="text-orgf119e84">
+<p>
+Now let&rsquo;s try to run Emacs:
+</p>
+
+<pre>emacs</pre>
+
+<p>
+It doesn&rsquo;t work!
+</p>
+
+<p>
+To make sure you can easily access all the applications you install with Guix, you&rsquo;ll want to make sure that your Guix &ldquo;profile&rdquo; gets loaded as part of your shell environment!
+</p>
+
+<p>
+Make sure these lines are in your <code>~/.bash_profile</code>, <code>~/.zprofile</code> or generally the file your preferred shell uses to configure the environment:
+</p>
+
+<pre><span class="org-variable-name">GUIX_PROFILE</span>=<span class="org-string">"$HOME/.guix-profile"</span>
+. <span class="org-string">"$GUIX_PROFILE/etc/profile"</span></pre>
+
+<p>
+Now once you log in your environment will be set up with all the paths needed to run applications from Guix!
+</p>
+
+<p>
+For now, we can run these lines directly in the shell to activate the Guix profile and then try running <code>emacs</code> again.
+</p>
+
+<p>
+It works!
+</p>
+
+<p>
+Let&rsquo;s take a look at this folder briefly.
+</p>
+</div>
+
+<h2><a id="pulling-the-latest-guix" class="anchor" href="#pulling-the-latest-guix">¶</a>Pulling the Latest Guix</h2><div class="outline-text-2" id="text-org329eb27">
+<p>
+The first time you install Guix on your distribution, it actually won&rsquo;t have the latest package definitions since it comes bundled with an older set.  At the time of this recording, Guix actually has the latest version of Emacs, 27.2, but we only got 27.1!
+</p>
+
+<p>
+To bring things up to date you can run the following command:
+</p>
+
+<pre>guix pull</pre>
+
+<p>
+It might take a while to run the first time, so be patient!
+</p>
+</div>
+
+<h3><a id="important-adding-another-guix_profile" class="anchor" href="#important-adding-another-guix_profile">¶</a>Important! Adding another GUIX_PROFILE</h3><div class="outline-text-3" id="text-org94bdbe9">
+<p>
+One <b>very important</b> message gets printed out at the end of this very first <code>pull</code> operation!  We need to update our login profile (<code>~/.bash_profile</code>) to add another <code>GUIX_PROFILE</code> path:
+</p>
+
+<pre><span class="org-variable-name">GUIX_PROFILE</span>=<span class="org-string">"$HOME/.config/guix/current"</span>
+. <span class="org-string">"$GUIX_PROFILE/etc/profile"</span></pre>
+
+<p>
+This is necessary because a new build of the <code>guix</code> command has been installed in this path!
+</p>
+
+<p>
+Just to clarify, you are adding these lines <b>in addition to</b> the lines you already added before!  We are now using two separate Guix &ldquo;profiles&rdquo;, one for your installed applications and the other for your personal build of the <code>guix</code> command which gets updated with <code>guix pull</code>.
+</p>
+</div>
+
+<h2><a id="upgrading-packages" class="anchor" href="#upgrading-packages">¶</a>Upgrading Packages</h2><div class="outline-text-2" id="text-orge2d1a8a">
+<p>
+Now let&rsquo;s run <code>guix pull</code> one more time just to make sure things are up to date!
+</p>
+
+<p>
+This command syncs the latest package definitions from all the channels you have configured and then prints out an abbreviated list of everything that is new or updated since your last <code>pull</code>.
+</p>
+
+<p>
+To see the full list of updates, run:
+</p>
+
+<pre>guix pull --news</pre>
+
+<p>
+Keep in mind that this doesn&rsquo;t mean all of these packages are installed on your system!  It is informing you about the packages that are added or updated to the package repositories that you are currently using (the main Guix channel by default).
+</p>
+
+<p>
+After pulling, you can update all of the packages you have installed by running the following command:
+</p>
+
+<pre>guix upgrade</pre>
+
+<p>
+Depending on when you watch this video, you might notice that Emacs is being upgraded from 27.1 to 27.2!
+</p>
+
+<p>
+<b>NOTE:</b> I mentioned in the video that I wasn&rsquo;t sure if <code>guix upgrade emacs</code> would work.  It does!
+</p>
+
+<p>
+If you&rsquo;re itching to learn more, check out this section of the Guix manual for some other commands you can try:
+</p>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/html_node/Getting-Started.html">Guix Manual: Getting Started</a>
+</p>
+</div>
+
+<h2><a id="setting-the-locale-correctly" class="anchor" href="#setting-the-locale-correctly">¶</a>Setting the locale correctly</h2><div class="outline-text-2" id="text-orga633439">
+<p>
+As we saw while installing the <code>emacs</code> package, <code>guix</code> will repeatedly write out warnings about <code>setlocale: LC_ALL: cannot change locale</code>.  You can fix this issue by running this command (as <b>sudo</b>!):
+</p>
+
+<pre>sudo guix install glibc-locales
+sudo vim /root/.profile</pre>
+
+<p>
+Now edit the file <code>/root/.profile</code> with your preferred text editor (as sudo) and add the following line:
+</p>
+
+<pre><span class="org-variable-name">GUIX_LOCPATH</span>=$<span class="org-variable-name">HOME</span>/.guix-profile/lib/locale</pre>
+
+<p>
+Now you shouldn&rsquo;t see the <code>setlocale</code> warning anymore when you install packages!
+</p>
+</div>
+
+<h2><a id="upgrading-guix" class="anchor" href="#upgrading-guix">¶</a>Upgrading Guix</h2><div class="outline-text-2" id="text-orgb6d68de">
+<p>
+As we talked about before, Guix needs the <code>guix-daemon</code> to be running as a system service so that it can build and install all your packages correctly.  Sometimes this daemon and the <code>guix</code> tools will need to be updated!
+</p>
+
+<p>
+You might also be surprised to know that at this point, your user profile&rsquo;s <code>guix</code> and the system (root) <code>guix</code> are not the same version!  You&rsquo;ll need to periodically update the root user&rsquo;s Guix profile to keep things in sync.
+</p>
+
+<p>
+To do this, you can run the following command:
+</p>
+
+<pre>sudo -i guix pull</pre>
+
+<p>
+Once the pull operation is completed, you should restart the <code>guix-daemon</code> service using the appropriate command for your init system:
+</p>
+
+<p>
+<b>systemd</b>
+</p>
+
+<pre>sudo systemctl restart guix-daemon.service</pre>
+
+<p>
+<b>OpenRC</b>
+</p>
+
+<pre>sudo rc-service guix-daemon restart</pre>
+
+<p>
+<b>Shepherd</b>
+</p>
+
+<pre>sudo herd restart guix-daemon</pre>
+
+<p>
+For other init systems, consult your documentation for instructions on how to restart a service!
+</p>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/html_node/Upgrading-Guix.html">Guix Manual: Upgrading Guix</a>
+</p>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgffef13a">
+<p>
+In the next video, I&rsquo;m going to teach you everything you need to know about using the Guix package manager so that you can use it for installing and managing your day to day programs.  I&rsquo;ll also show you some of the special features of using Guix that you can&rsquo;t get from your distro&rsquo;s package manager!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

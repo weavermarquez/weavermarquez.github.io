@@ -1,0 +1,135 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Configuring Emacs with Only the UI? - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Configuring Emacs with Only the UI?</h1><p class="site-post-meta">February  4, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/76jp8qkLZC8" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgb1f57c9">
+<ul class="org-ul">
+<li>I&rsquo;ll be shutting down the System Crafters Store next week (it will be back!)</li>
+<li>Slackware 15 released: <a href="http://www.slackware.com/announce/15.0.php">http://www.slackware.com/announce/15.0.php</a></li>
+</ul>
+</div>
+
+<h2><a id="irsquod-love-your-opinion" class="anchor" href="#irsquod-love-your-opinion">¶</a>I&rsquo;d love your opinion!</h2><div class="outline-text-2" id="text-org61608c1">
+<p>
+I&rsquo;m interested to try and publish a eBook on a topic that you all would find valuable, something related to what we talk about on this channel.
+</p>
+
+<p>
+What would you be interested to read about in an eBook?
+</p>
+
+<ul class="org-ul">
+<li>Emacs</li>
+<li>Programming</li>
+<li>Workflow / productivity</li>
+<li>Building &ldquo;crafting&rdquo; skills</li>
+</ul>
+
+<p>
+What format?
+</p>
+
+<ul class="org-ul">
+<li>epub</li>
+<li>pdf</li>
+<li>info</li>
+</ul>
+</div>
+<h2><a id="using-the-customize-ui-to-build-an-emacs-configuration" class="anchor" href="#using-the-customize-ui-to-build-an-emacs-configuration">¶</a>Using the Customize UI to Build an Emacs Configuration</h2><div class="outline-text-2" id="text-org560c2c0">
+<p>
+Mickey Petersen of Mastering Emacs fame wrote a blog post recently titled &ldquo;Bad Emacs Advice&rdquo;:
+</p>
+
+<p>
+<a href="https://www.masteringemacs.org/article/bad-emacs-advice">https://www.masteringemacs.org/article/bad-emacs-advice</a>
+</p>
+
+<p>
+Today we&rsquo;re going to experiment with <code>M-x customize</code> and see if we how much of Emacs we can configure using the UI alone!
+</p>
+
+<p>
+We&rsquo;ll start from a blank configuration and build up from there.
+</p>
+
+<p>
+We&rsquo;ll also take a look at the resulting configuration file to see what it contains!
+</p>
+</div>
+
+<h3><a id="configuration-goals" class="anchor" href="#configuration-goals">¶</a>Configuration Goals</h3><div class="outline-text-3" id="text-org055e4a5">
+<ul class="org-ul">
+<li>Set theme and font</li>
+<li>Add hooks to configure modes</li>
+<li>Tweak some Org Mode settings</li>
+<li>Set up the tab bar</li>
+<li>Customizing the mode line</li>
+<li>Install and set up evil-mode</li>
+<li>Install and configure community packages like Vertico and Marginalia</li>
+<li>Test that the configuration can successfully initialize a new Emacs install</li>
+</ul>
+
+<p>
+What else?
+</p>
+</div>
+
+<h3><a id="conclusions" class="anchor" href="#conclusions">¶</a>Conclusions</h3><div class="outline-text-3" id="text-orga1b73cf">
+<ul class="org-ul">
+<li>Customize system can write out your init.el file to be loaded again on future sessions</li>
+<li>You can add custom elisp inside of the file</li>
+<li>You can move the generated customization code into another file by setting the <code>custom-file</code> variable, just make sure to call <code>load</code> on that file!</li>
+<li>Not sure how to load a package by default so that it gets activated correctly (i.e. Vertico)</li>
+</ul>
+</div>
+
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org5d54a16">
+<p>
+<b>init.el:</b>
+</p>
+
+<pre>(<span class="org-keyword">setq</span> custom-file (expand-file-name (concat user-emacs-directory <span class="org-string">"custom.el"</span>)))
+(load custom-file)
+
+(message <span class="org-string">"Config is loaded!"</span>)</pre>
+
+<p>
+<b>custom.el:</b>
+</p>
+
+<pre>(custom-set-variables
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">custom-set-variables was added by Custom.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If you edit it by hand, you could mess it up, so be careful.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">Your init file should contain only one such instance.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If there is more than one, they won't work right.</span>
+ '(after-save-hook
+  '(rmail-after-save-hook cvs-mark-buffer-changed
+                  (<span class="org-keyword">lambda</span> nil
+                    (message <span class="org-string">"You saved!"</span>))))
+ '(custom-enabled-themes '(modus-vivendi))
+ '(custom-theme-directory <span class="org-string">"~/.config/emacs/"</span>)
+ '(display-time-mode t)
+ '(evil-mode t)
+ '(marginalia-mode t)
+ '(modus-themes-bold-constructs t)
+ '(modus-themes-completions 'opinionated)
+ '(modus-themes-headings '((1 background)))
+ '(org-todo-keywords '((sequence <span class="org-string">"TODO"</span> <span class="org-string">"NOWAY"</span> <span class="org-string">"|"</span> <span class="org-string">"MAYBE"</span> <span class="org-string">"DONE"</span>)))
+ '(package-selected-packages '(embark evil marginalia vertico))
+ '(tab-bar-close-button-show 'selected)
+ '(tab-bar-format
+  '(tab-bar-format-history tab-bar-format-tabs tab-bar-separator tab-bar-format-add-tab tab-bar-format-align-right tab-bar-format-global))
+ '(tab-bar-mode t)
+ '(tab-width 3)
+ '(vertico-count 7)
+ '(vertico-cycle t)
+ '(vertico-grid-mode nil)
+ '(vertico-mode t))
+(custom-set-faces
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">custom-set-faces was added by Custom.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If you edit it by hand, you could mess it up, so be careful.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">Your init file should contain only one such instance.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If there is more than one, they won't work right.</span>
+ '(default ((t (<span class="org-builtin">:inherit</span> nil <span class="org-builtin">:extend</span> nil <span class="org-builtin">:stipple</span> nil <span class="org-builtin">:box</span> nil <span class="org-builtin">:strike-through</span> nil <span class="org-builtin">:overline</span> nil <span class="org-builtin">:underline</span> nil <span class="org-builtin">:slant</span> normal <span class="org-builtin">:weight</span> normal <span class="org-builtin">:height</span> 200 <span class="org-builtin">:width</span> normal <span class="org-builtin">:foundry</span> <span class="org-string">"PfEd"</span> <span class="org-builtin">:family</span> <span class="org-string">"JetBrains Mono"</span>))))
+ '(tab-bar ((t (<span class="org-builtin">:inherit</span> nil <span class="org-builtin">:background</span> <span class="org-string">"RoyalBlue1"</span>))))
+ '(tab-bar-tab ((t (<span class="org-builtin">:inherit</span> bold <span class="org-builtin">:background</span> <span class="org-string">"sky blue"</span> <span class="org-builtin">:box</span> (<span class="org-builtin">:line-width</span> (2 . 2) <span class="org-builtin">:color</span> <span class="org-string">"#0e0e0e"</span>))))))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

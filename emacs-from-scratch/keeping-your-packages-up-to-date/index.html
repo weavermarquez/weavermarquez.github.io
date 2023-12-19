@@ -1,0 +1,100 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Keeping Your Emacs Packages Up to Date - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Keeping Your Emacs Packages Up to Date</h1><p class="site-post-meta"></p><div id="content"><ul class="org-ul">
+<li><a href="https://youtu.be/dtjq68F2dXw">Watch the video</a> on YouTube!</li>
+<li>Check out the <a href="https://github.com/daviwil/emacs-from-scratch/blob/4e921ccbe603d5fdd9c7f16c2418ac7322c8ab71/Emacs.org#automatic-package-updates">final code</a> on GitHub</li>
+<li>Episode 11 of the <a href="../">Emacs From Scratch</a> series</li>
+</ul>
+
+<h2><a id="a-question-yoursquoll-eventually-ask-yourselfx2026" class="anchor" href="#a-question-yoursquoll-eventually-ask-yourselfx2026">¶</a>A question you&rsquo;ll eventually ask yourself&#x2026;</h2><div class="outline-text-2" id="text-org92bcf64">
+<p>
+&ldquo;How do I update my packages?&rdquo;
+</p>
+
+<p>
+Emacs won&rsquo;t remind you!  You have to remember to do it and initiate the process yourself.
+</p>
+
+<p>
+Luckily it&rsquo;s pretty easy!
+</p>
+</div>
+
+<h2><a id="the-package-listing" class="anchor" href="#the-package-listing">¶</a>The package listing</h2><div class="outline-text-2" id="text-org2214249">
+<p>
+Unfortunately there isn&rsquo;t a simple command you can use that will run the update process for you.
+</p>
+
+<p>
+We&rsquo;ll have to start up the package menu with <code>M-x list-packages</code>
+</p>
+
+<p>
+This view shows you all available packages and everything you have installed!  We will talk more about it in a future video.
+</p>
+</div>
+
+<h2><a id="initiating-an-upgrade" class="anchor" href="#initiating-an-upgrade">¶</a>Initiating an upgrade</h2><div class="outline-text-2" id="text-orga780c0b">
+<p>
+For now, the important thing to know is that you can mark all packages for upgrading using the <code>U</code> key (capital &rsquo;u&rsquo;).  This will mark all packages with updates so that they will be upgraded.
+</p>
+
+<p>
+You can also mark individual packages for upgrade using <code>u</code> (lower-case &rsquo;u&rsquo;).
+</p>
+
+<p>
+Once you&rsquo;ve marked packages for upgrade, press <code>x</code> (lower-case &rsquo;x&rsquo;) to initiate the upgrade!
+</p>
+
+<p>
+After this completes, you should restart Emacs to make sure you load the latest versions of all your packages.
+</p>
+</div>
+
+<h2><a id="updating-your-packages-automatically" class="anchor" href="#updating-your-packages-automatically">¶</a>Updating your packages automatically</h2><div class="outline-text-2" id="text-orgba31d2d">
+<p>
+There&rsquo;s a useful package called <code>auto-package-update</code> which will help you configure Emacs to automatically upgrade your packages on a regular basis!
+</p>
+
+<p>
+<a href="https://github.com/rranelli/auto-package-update.el">auto-package-update.el</a> on GitHub
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">auto-package-update</span>
+  <span class="org-builtin">:custom</span>
+  (auto-package-update-interval 7)
+  (auto-package-update-prompt-before-update t)
+  (auto-package-update-hide-results t)
+  <span class="org-builtin">:config</span>
+  (auto-package-update-maybe)
+  (auto-package-update-at-time <span class="org-string">"09:00"</span>))</pre>
+
+<p>
+You can also use <code>M-x auto-package-update-now</code> to update right now!
+</p>
+</div>
+
+<h2><a id="should-i-update-my-packages-automatically" class="anchor" href="#should-i-update-my-packages-automatically">¶</a>Should I update my packages automatically?</h2><div class="outline-text-2" id="text-org1c7b904">
+<p>
+It depends!
+</p>
+
+<p>
+Package updates can possibly break your configuration.  That doesn&rsquo;t mean you should be afraid to update, though.
+</p>
+
+<p>
+It is possible that you could back up your package folder using the <code>auto-package-update-before-hook</code>.  If you&rsquo;re interested in an approach for this, let me know in the comments!
+</p>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orge51d780">
+<p>
+In a future video, I&rsquo;ll go more in depth on Emacs&rsquo; built-in package manager, <code>package.el</code>.
+</p>
+
+<p>
+I&rsquo;m also planning to make videos on alternative package managers like <code>straight.el</code> so that you have even more options on how you can manage your configuration!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

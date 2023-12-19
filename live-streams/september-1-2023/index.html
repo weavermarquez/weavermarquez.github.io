@@ -1,0 +1,93 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>How to Develop New Guile Libraries - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">How to Develop New Guile Libraries</h1><p class="site-post-meta">September  1, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/o-keXs2Uh7w" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org6e15b73">
+<ul class="org-ul">
+<li><p>
+Crafted Emacs has a new co-maintainer and RC1 coming soon!
+</p>
+
+<p>
+Welcome to new co-maintainer Stefan Thesing!  Stefan has been helping out a <b>lot</b> on Crafted Emacs documentation lately, so we&rsquo;re excited to have him on board.
+</p>
+
+<p>
+ Check out Jeff Bowman's post with more news here:
+<a href="https://write.as/jeffbowman/crafted-emacs-update-for-august-and-another-new-teammate">https://write.as/jeffbowman/crafted-emacs-update-for-august-and-another-new-teammate</a>
+</p></li>
+
+<li><p>
+GNU 40 Year Anniversary Event
+</p>
+
+<p>
+<a href="https://www.gnu.org/gnu40/">https://www.gnu.org/gnu40/</a>
+</p></li>
+</ul>
+</div>
+<h2><a id="creating-a-new-guile-scheme-library" class="anchor" href="#creating-a-new-guile-scheme-library">¶</a>Creating a new Guile Scheme library</h2><div class="outline-text-2" id="text-orgd7ed23b">
+<p>
+Today we&rsquo;re going to experiment with using Guile Hall and Guix to create a new Guile Scheme library from scratch!  Guile Hall is a tool that can create a complete Guile project even with its own Guix packaging configuration.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://gitlab.com/a-sassmannshausen/guile-hall">https://gitlab.com/a-sassmannshausen/guile-hall</a></li>
+<li><a href="https://rednosehacker.com/hall-a-project-manager-for-the-guile-programming-language">https://rednosehacker.com/hall-a-project-manager-for-the-guile-programming-language</a></li>
+</ul>
+</div>
+
+<h3><a id="our-project" class="anchor" href="#our-project">¶</a>Our Project</h3><div class="outline-text-3" id="text-org854217f">
+<p>
+To test out the development workflow with these tools, we&rsquo;ll write a simple URL route handling library like you might see in a minimal web programming framework (think Express.js, Flask, etc).
+</p>
+
+<pre>/api/things
+/api/things/{thingId}/doSomething
+/api/widgets/{widgetId}</pre>
+
+<p>
+The goal will be to produce a simple library with basic tests and then consume it from a Guile Scheme script inside of a <code>guix shell</code> which has our Guile library installed!
+</p>
+</div>
+
+<h3><a id="steps-to-use-hall-for-a-project" class="anchor" href="#steps-to-use-hall-for-a-project">¶</a>Steps to use Hall for a project:</h3><div class="outline-text-3" id="text-orgbb2c0dd">
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Creating a project</span>
+<span class="org-builtin">cd</span> ~/projects
+hall init --author <span class="org-string">"Your Name"</span> project-name -x
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Initializing the project build</span>
+<span class="org-builtin">cd</span> project-name
+hall build -x
+guix shell -Df guix.scm -- autoreconf -vfi &amp;&amp; ./configure &amp;&amp; make check
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Building the project for development</span>
+guix shell -Df guix.scm -- make check</pre>
+
+<p>
+NOTE: The <code>guix.scm</code> file that is written out for <code>--type local</code> is wrong by default!  Change <code>source</code> to <code>(local-file "project-name-0.1.tar.gz")</code>
+</p>
+
+<p>
+To use your library as a Guix package:
+</p>
+
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Make the local tarball</span>
+guix shell -Df guix.scm -- make dist
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Run a guix shell with the library installed</span>
+guix shell -f guix.scm guile <span class="org-comment-delimiter"># </span><span class="org-comment">The guile part is needed!</span></pre>
+
+<p>
+Now you can load up your module in an arbitrary script!
+</p>
+</div>
+
+<h3><a id="the-final-code" class="anchor" href="#the-final-code">¶</a>The final code</h3><div class="outline-text-3" id="text-org17d6d50">
+<p>
+Check out the code we created at this repository:
+</p>
+
+<p>
+<a href="https://codeberg.org/daviwil/guile-routes-demo">https://codeberg.org/daviwil/guile-routes-demo</a>
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

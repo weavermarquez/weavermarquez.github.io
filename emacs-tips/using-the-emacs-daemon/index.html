@@ -1,0 +1,266 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Unlock the Power of the Daemon with emacsclient - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Unlock the Power of the Daemon with emacsclient</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/ZjCRxAMPdNc" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-is-the-emacs-daemon" class="anchor" href="#what-is-the-emacs-daemon">¶</a>What is the Emacs daemon?</h2><div class="outline-text-2" id="text-org23e2ca0">
+<p>
+Emacs can be run in a server mode:
+</p>
+
+<ul class="org-ul">
+<li>Pay Emacs startup cost only once per boot/login!</li>
+<li>Buffers persist across Emacs frames, can close Emacs window and reopen later</li>
+<li>Execute arbitrary commands and expressions from the command line</li>
+</ul>
+
+<p>
+Manual:
+<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html#Emacs-Server">https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html#Emacs-Server</a>
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="starting-the-daemon" class="anchor" href="#starting-the-daemon">¶</a>Starting the daemon</h2><div class="outline-text-2" id="text-org225cb0a">
+<p>
+The easiest way to get started is to use the following command inside of a running Emacs session
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Enable server mode (daemon) for this Emacs session</span>
+(server-start)</pre>
+
+<p>
+However, this is <b>very</b> different in practice than running Emacs as a real daemon!  We&rsquo;ll show why in a bit.
+</p>
+
+<pre>emacs --daemon
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">OR run as a foreground process (can be helpful to diagnose errors)</span>
+
+emacs --fg-daemon</pre>
+
+<p>
+You can also have independent daemons:
+</p>
+
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Start daemon named 'my-other-daemon'</span>
+emacs --daemon=my-other-daemon</pre>
+</div>
+
+<h2><a id="trying-it-out" class="anchor" href="#trying-it-out">¶</a>Trying it out</h2><div class="outline-text-2" id="text-org028161a">
+<p>
+Let&rsquo;s try running the Emacs daemon and see how it differs from running Emacs normally.
+</p>
+
+<p>
+Run Emacs normally first to get a sense of the startup time.
+</p>
+
+<pre>emacs</pre>
+
+<p>
+Now run it as a daemon and notice how fast <code>emacsclient</code> creates a new frame:
+</p>
+
+<pre>emacs --fg-daemon
+
+emacsclient -c</pre>
+
+<p>
+Notice anything different about the UI?
+</p>
+
+<p>
+<b>TIP</b>: You can find the list of active daemon names (sockets) by looking in the directory stored in the <code>server-socket-dir</code> variable in Emacs!
+</p>
+</div>
+
+<h3><a id="killing-the-emacs-daemon" class="anchor" href="#killing-the-emacs-daemon">¶</a>Killing the Emacs daemon</h3><div class="outline-text-3" id="text-org83a24fe">
+<p>
+To kill the Emacs daemon, send the <code>(kill-emacs)</code> command to it:
+</p>
+
+<pre>emacsclient -e <span class="org-string">"(kill-emacs)"</span></pre>
+</div>
+
+<h2><a id="adjusting-configuration-for-the-daemon" class="anchor" href="#adjusting-configuration-for-the-daemon">¶</a>Adjusting configuration for the daemon</h2><div class="outline-text-2" id="text-orgda01943">
+<p>
+We have to make some tweaks to ensure
+</p>
+</div>
+
+<h3><a id="donrsquot-use-codewindow-systemcode-to-check-for-your-os" class="anchor" href="#donrsquot-use-codewindow-systemcode-to-check-for-your-os">¶</a>Don&rsquo;t use <code>window-system</code> to check for your OS</h3><div class="outline-text-3" id="text-org2c361d9">
+<p>
+Use the <code>system-type</code> variable instead!  <code>window-system</code> will be <code>nil</code> when your configuration loads in the daemon.
+</p>
+
+<pre>(<span class="org-keyword">pcase</span> system-type
+  ('gnu/linux <span class="org-string">"It's Linux!"</span>)
+  ('windows-nt <span class="org-string">"It's Windows!"</span>)
+  ('darwin <span class="org-string">"It's macOS!"</span>))</pre>
+</div>
+
+<h3><a id="checking-if-config-is-being-loaded-in-the-daemon" class="anchor" href="#checking-if-config-is-being-loaded-in-the-daemon">¶</a>Checking if config is being loaded in the daemon</h3><div class="outline-text-3" id="text-org6dd2fc1">
+<p>
+If you want to check if your config is being loaded up in the daemon, use the <code>daemonp</code> function.  <b>Useful tip</b>: <code>daemonp</code> will return the name of the daemon if you gave it one with the <code>--daemon=name</code> parameter!  This can allow you to skip loading certain sections of your config for a particular daemon name.
+</p>
+
+<pre>(<span class="org-keyword">if</span> (daemonp)
+    (message <span class="org-string">"Loading in the daemon!"</span>)
+    (message <span class="org-string">"Loading in regular Emacs!"</span>))</pre>
+</div>
+
+<h3><a id="configuring-the-ui-for-new-frames" class="anchor" href="#configuring-the-ui-for-new-frames">¶</a>Configuring the UI for new frames</h3><div class="outline-text-3" id="text-orgdd38a5f">
+<p>
+One common issue when using Emacs as a daemon is that fonts seem to not work correctly when starting a new frame using <code>emacsclient</code>.  If you run <code>set-face-attribute</code> in the frame, the font will be applied to future frames too.
+</p>
+
+<p>
+Fixing this requires some tweaks to configuration:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/set-font-faces</span> ()
+  (message <span class="org-string">"Setting faces!"</span>)
+  (set-face-attribute 'default nil <span class="org-builtin">:font</span> <span class="org-string">"Fira Code Retina"</span> <span class="org-builtin">:height</span> efs/default-font-size)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Set the fixed pitch face</span>
+  (set-face-attribute 'fixed-pitch nil <span class="org-builtin">:font</span> <span class="org-string">"Fira Code Retina"</span> <span class="org-builtin">:height</span> efs/default-font-size)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Set the variable pitch face</span>
+  (set-face-attribute 'variable-pitch nil <span class="org-builtin">:font</span> <span class="org-string">"Cantarell"</span> <span class="org-builtin">:height</span> efs/default-variable-font-size <span class="org-builtin">:weight</span> 'regular))
+
+(<span class="org-keyword">if</span> (daemonp)
+    (add-hook 'after-make-frame-functions
+              (<span class="org-keyword">lambda</span> (frame)
+                <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq doom-modeline-icon t)</span>
+                (<span class="org-keyword">with-selected-frame</span> frame
+                  (efs/set-font-faces))))
+    (efs/set-font-faces))</pre>
+
+<p>
+In <b>Emacs 27</b> you can use <code>server-after-make-frame-hook</code> so that your function only gets called once!
+</p>
+
+<p>
+Another useful pair of variables:
+</p>
+
+<ul class="org-ul">
+<li><code>initial-frame-alist</code>: Frame parameters to set on the first frame</li>
+<li><code>default-frame-alist</code>: Frame parameters to apply to every frame</li>
+</ul>
+
+<p>
+These can both be used to configure UI elements that don&rsquo;t work well when configuration is loaded in the daemon.
+</p>
+
+<p>
+Manual: <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Frame-Parameters.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Frame-Parameters.html</a>
+</p>
+</div>
+
+<h3><a id="fixing-doom-modeline-icons" class="anchor" href="#fixing-doom-modeline-icons">¶</a>Fixing doom-modeline icons</h3><div class="outline-text-3" id="text-orge8361a0">
+<p>
+doom-modeline needs some help to figure out that icons can be used.  Add this to your configuration:
+</p>
+
+<pre>(setq doom-modeline-icon t)</pre>
+</div>
+
+<h2><a id="using-emacsclient" class="anchor" href="#using-emacsclient">¶</a>Using emacsclient</h2><div class="outline-text-2" id="text-orgb0d4f75">
+<p>
+Manual:
+<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/emacsclient-Options.html#emacsclient-Options">https://www.gnu.org/software/emacs/manual/html_node/emacs/emacsclient-Options.html#emacsclient-Options</a>
+</p>
+</div>
+
+<h3><a id="important-arguments" class="anchor" href="#important-arguments">¶</a>Important arguments</h3><div class="outline-text-3" id="text-orgfd4dfed">
+<ul class="org-ul">
+<li><code>-c</code> / <code>--create-frame</code> - Create a new frame (don&rsquo;t pass this if you want to reuse the same open frame)</li>
+<li><code>-n</code> / <code>--no-wait</code> - Don&rsquo;t wait for the Emacs frame to close</li>
+<li><code>-e</code> / <code>--eval</code> - Evaluate an Emacs Lisp expression within the daemon</li>
+<li><code>-u</code> / <code>--suppress-output</code> - Suppress output from Emacs (useful when running in a script)</li>
+<li><code>-s</code> / <code>--socket-name=name</code> - Use a named daemon (<code>emacs --daemon=name</code>)</li>
+<li><code>-a</code> / <code>--alternate-editor=name</code> - If Emacs daemon isn&rsquo;t running, use this command instead</li>
+<li><code>filename</code> - Open a file in the current frame (or a new one if <code>-c</code> is passed)</li>
+</ul>
+</div>
+
+<h3><a id="opening-files-from-the-command-line" class="anchor" href="#opening-files-from-the-command-line">¶</a>Opening files from the command line</h3><div class="outline-text-3" id="text-orgc6a733e">
+<p>
+To open a new Emacs frame for a file without waiting for emacsclient to exit:
+</p>
+
+<pre>emacsclient -c -n ~/.emacs.d/Emacs.org</pre>
+
+<p>
+Set <code>EDITOR</code> to <code>emacsclient</code> in your shell&rsquo;s profile (<code>.bash_profile</code>, <code>.zsh_profile</code>, etc)
+</p>
+
+<pre><span class="org-builtin">export</span> <span class="org-variable-name">EDITOR</span>=<span class="org-string">"emacsclient -c -a emacs"</span></pre>
+
+<p>
+Test this by using <code>git commit</code> (use <code>C-x #</code> to confirm your edit and close the frame!)
+</p>
+</div>
+
+<h3><a id="evaluating-expressions" class="anchor" href="#evaluating-expressions">¶</a>Evaluating expressions</h3><div class="outline-text-3" id="text-orgbe1129e">
+<p>
+This makes it easy to integrate other programs with Emacs!
+</p>
+
+<pre>emacsclient -e <span class="org-string">"(buffer-name)"</span></pre>
+
+<p>
+You can also run interactive commands to cause something to happen in the active Emacs frame:
+</p>
+
+<pre>emacsclient -e <span class="org-string">"(counsel-switch-buffer)"</span>
+
+emacsclient -e <span class="org-string">"(read-string \"Enter a string: \")"</span></pre>
+</div>
+
+<h3><a id="automating-emacs-in-shell-scripts" class="anchor" href="#automating-emacs-in-shell-scripts">¶</a>Automating Emacs in shell scripts</h3><div class="outline-text-3" id="text-orgafc2a2e">
+<p>
+Example: <a href="file:///home/runner/.dotfiles/.bin/sync-dotfiles">My <code>sync-dotfiles</code> script</a> (<a href="https://github.com/daviwil/dotfiles/blob/master/.bin/sync-dotfiles#L15">Web</a>)
+</p>
+
+<pre>emacsclient -u -e <span class="org-string">"(org-save-all-org-buffers)"</span> -a <span class="org-string">"echo 'Emacs is not currently running'"</span></pre>
+</div>
+
+<h3><a id="offloading-tasks-to-another-daemon" class="anchor" href="#offloading-tasks-to-another-daemon">¶</a>Offloading tasks to another daemon</h3><div class="outline-text-3" id="text-orgcff548b">
+<p>
+I don&rsquo;t necessarily recommend this approach, but it is possible!
+</p>
+
+<pre>emacs --daemon=worker
+emacsclient -f worker -u -e <span class="org-string">"(org-babel-tangle-file \"~/.emacs.d/Emacs.org\")"</span></pre>
+
+<p>
+I&rsquo;d recommend checking out the <code>async</code> package if you want to do things like this, though:
+</p>
+
+<p>
+<a href="https://github.com/jwiegley/emacs-async/">https://github.com/jwiegley/emacs-async/</a>
+</p>
+
+<p>
+We&rsquo;ll cover it in another video.
+</p>
+</div>
+
+<h2><a id="running-emacs-at-startup" class="anchor" href="#running-emacs-at-startup">¶</a>Running Emacs at Startup</h2><div class="outline-text-2" id="text-orge1f2b04">
+<p>
+Emacs comes with a <code>systemd</code> unit file:
+</p>
+
+<pre>sudo systemctl --user enable emacs</pre>
+
+<p>
+If you&rsquo;re allergic to <code>systemd</code> (or just want another way to run at login), you can possibly add it to the startup configuration for your desktop environment, profile script, etc.
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

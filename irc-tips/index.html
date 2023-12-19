@@ -1,0 +1,90 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:36 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>IRC Tips and Configurations - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">IRC Tips and Configurations</h1><p class="site-post-meta"></p><div id="content"><p>
+The System Crafters community calls <a href="https://libera.chat">Libera.Chat</a> IRC home!  This page provides some useful tips for chatting with us there.
+</p>
+
+<p>
+<b>NOTE:</b> This page is under construction, please feel free to <a href="https://codeberg.org/SystemCrafters/systemcrafters-site/_edit/master/content/community.org">send a pull request</a> with additions or changes!
+</p>
+
+<h2><a id="what-is-irc" class="anchor" href="#what-is-irc">¶</a>What is IRC?</h2><div class="outline-text-2" id="text-org04c0bcb">
+<p>
+<a href="https://en.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a> (Internet Relay Chat) is a battle-tested group chat protocol which has existed since the late 1980s.  The major advantage of IRC is that it is a simple text-based protocol which is very easy to work with, especially for writing clients and bots.
+</p>
+
+<p>
+The System Crafters community started on Discord, migrated to a combination of Matrix + IRC, and now we&rsquo;ve landed solely on IRC because it is the only truly dependable (and craftable) protocol.
+</p>
+
+<p>
+This page is intended to make the IRC transition easier for folks who haven&rsquo;t used IRC before!
+</p>
+</div>
+
+<h2><a id="recommended-irc-clients" class="anchor" href="#recommended-irc-clients">¶</a>Recommended IRC Clients</h2><div class="outline-text-2" id="text-org6778df2">
+<p>
+The two most interesting IRC clients will be the ones that are built in to Emacs: ERC and rcirc.  Members of the community also use other clients like <code>irssi</code>.
+</p>
+</div>
+
+<h3><a id="erc-emacs" class="anchor" href="#erc-emacs">¶</a>ERC (Emacs)</h3><div class="outline-text-3" id="text-orgf11b4a4">
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/erc.html">ERC</a> is the most polished built-in IRC client for Emacs.
+</p>
+
+<p>
+You can check out a couple of System Crafters videos for usage and configuration tips:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://systemcrafters.net/chatting-with-emacs/irc-basics-with-erc/">Chatting in IRC using Emacs and ERC</a></li>
+<li><a href="https://systemcrafters.net/live-streams/june-04-2021/">Improving the IRC experience in ERC</a></li>
+</ul>
+</div>
+
+<h3><a id="rcirc-emacs" class="anchor" href="#rcirc-emacs">¶</a>rcirc (Emacs)</h3><div class="outline-text-3" id="text-org677afee">
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/rcirc.html">rcirc</a> is a minimalistic IRC client for Emacs.
+</p>
+</div>
+
+<h3><a id="irssi-terminal" class="anchor" href="#irssi-terminal">¶</a>irssi (Terminal)</h3><div class="outline-text-3" id="text-org3a1c65b">
+<p>
+<a href="https://irssi.org/">irssi</a> is probably the most famous terminal-based IRC client.
+</p>
+</div>
+
+<h3><a id="revolution-irc-android" class="anchor" href="#revolution-irc-android">¶</a>Revolution IRC (Android)</h3><div class="outline-text-3" id="text-org5d5cc7a">
+<p>
+<a href="https://github.com/MCMrARM/revolution-irc">Revolution IRC</a> (<a href="https://play.google.com/store/apps/details?id=io.mrarm.irc">Play Store</a>, <a href="https://f-droid.org/packages/io.mrarm.irc/">F-Droid</a>) is an IRC client for Android.
+</p>
+</div>
+
+<h3><a id="palaver-ios" class="anchor" href="#palaver-ios">¶</a>Palaver (iOS)</h3><div class="outline-text-3" id="text-orgddcaea8">
+<p>
+<a href="https://palaverapp.com/">Palaver</a> (App Store) is an IRC client for iOS.
+</p>
+</div>
+
+<h2><a id="using-libera-chat" class="anchor" href="#using-libera-chat">¶</a>Using Libera Chat</h2><h3><a id="registering-an-account-with-nickserv" class="anchor" href="#registering-an-account-with-nickserv">¶</a>Registering an account with NickServ</h3><div class="outline-text-3" id="text-orgd462a93">
+<p>
+Consult the Libera.Chat documentation for <a href="https://libera.chat/guides/registration">nickname registration</a> until we write more focused documentation for this page (<b>help wanted!</b>).
+</p>
+</div>
+
+<h3><a id="cloaking-your-host-details" class="anchor" href="#cloaking-your-host-details">¶</a>Cloaking your host details</h3><div class="outline-text-3" id="text-org97cf542">
+<p>
+By default, your IP address will be exposed to other IRC users when you connect.  To avoid this, you can request a &ldquo;cloak&rdquo; for your hostname by requesting a user cloak.  After you have registered with <code>NickServ</code>, follow the instructions on this page:
+</p>
+
+<p>
+<a href="https://libera.chat/guides/cloaks#requesting-a-self-service-user-cloak">Libera.Chat: Requesting a self-service user cloak</a>
+</p>
+</div>
+
+<h2><a id="irc-rules-and-etiquette" class="anchor" href="#irc-rules-and-etiquette">¶</a>IRC Rules and Etiquette</h2><div class="outline-text-2" id="text-orge65c9e1">
+<p>
+[To be written.]
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

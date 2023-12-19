@@ -1,0 +1,732 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Streamline Your E-mail Management with mu4e - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Streamline Your E-mail Management with mu4e</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/yZRyEhi4y44" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="mu4e-is-an-excellent-e-mail-client" class="anchor" href="#mu4e-is-an-excellent-e-mail-client">¶</a>mu4e is an excellent e-mail client</h2><div class="outline-text-2" id="text-org4986ce7">
+<p>
+<a href="https://www.djcbsoftware.nl/code/mu/mu4e.html">https://www.djcbsoftware.nl/code/mu/mu4e.html</a>
+</p>
+
+<ul class="org-ul">
+<li>Emacs interface for the <code>mu</code> mail indexer</li>
+<li>Highly efficient for keyboard users</li>
+<li>Syncs your e-mail in the background using an external program</li>
+<li>Powerful search interface</li>
+<li>Can manage multiple e-mail accounts</li>
+</ul>
+
+<p>
+Today we&rsquo;ll cover syncing your e-mail and how you can read and manage it all with mu4e.
+</p>
+
+<p>
+Future episodes will cover topics like multiple e-mail accounts, composing e-mail, Org Mode integration, and more.
+</p>
+
+<p>
+<b>IMPORTANT NOTE</b>: I&rsquo;m using Ubuntu 20 for this demonstration, it has an older mu4e version (1.2.0).  Some things may be different in the newest version, I will discuss difference where appropriate.
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="syncing-your-mail" class="anchor" href="#syncing-your-mail">¶</a>Syncing your mail</h2><h3><a id="configuring-mbsync" class="anchor" href="#configuring-mbsync">¶</a>Configuring mbsync</h3><div class="outline-text-3" id="text-orgbf2f714">
+<p>
+Today we&rsquo;ll sync a Gmail account since they&rsquo;re pretty common.  In another episode we&rsquo;ll show a more traditional IMAP account too.
+</p>
+
+<p>
+We&rsquo;ll use a program called <code>isync</code> (in practice it&rsquo;s <code>mbsync</code>!) to sync our mail.  You can also use a program called <code>offlineimap</code>, it&rsquo;s a bit slower but it works on Windows too.  We&rsquo;ll cover it in another video.
+</p>
+
+<p>
+Install it:
+</p>
+
+<pre>sudo apt install isync</pre>
+
+<p>
+Set up an initial configuration at <code>~/.mbsyncrc</code>:
+</p>
+
+<pre>IMAPAccount gmail
+Host imap.gmail.com
+User systemcrafters.test@gmail.com
+PassCmd <span class="org-string">"cat ~/.oh-no-insecure-password"</span>
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Subfolders Verbatim
+Path ~/Mail/
+Inbox ~/Mail/Inbox
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">With mbsync 1.4.0 and later: Use 'Far' instead of 'Master', and</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">'Near' instead of 'Slave'.</span>
+Channel gmail
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns * ![Gmail]* <span class="org-string">"[Gmail]/Sent Mail"</span> <span class="org-string">"[Gmail]/Starred"</span> <span class="org-string">"[Gmail]/All Mail"</span> <span class="org-string">"[Gmail]/Trash"</span>
+Create Both
+SyncState *</pre>
+
+<p>
+<b>NOTE</b>: Be careful of how you manage whitespace between lines in this file, the spaces define groupings!
+</p>
+
+<p>
+Settings you may need to change:
+</p>
+
+<ul class="org-ul">
+<li><code>PassCmd</code> - We&rsquo;re getting the contents of a plain text file here, you might want to use gpg!</li>
+<li><code>Pass</code> - If you want to use plaintext password (not recommended!), doesn&rsquo;t need quotation marks</li>
+<li><code>CertificateFile</code> - This location can vary based on your Linux distribution!</li>
+<li><code>Patterns</code> - Defines which folders will be synced<br />
+<b>NOTE</b>: Non-English users might need to pay extra attention to the <code>Patterns</code> line since Gmail <i>renames</i> the IMAP folders based on the selected user interface language one uses in the Gmail web interface. 
+In Dutch e.g. the <i>folder</i> <code>[Gmail]/Starred</code> would need to be changed to <code>[Gmail]/Met ster</code>. Changing the <code>Patterns</code> line to <code>*</code> and running the command <code>mbsync --list gmail</code> might give some insight into which <i>folders</i> are available. Unfortunately the mapping does not appear to be one to one, e.g. the <i>label</i> <code>Sent</code> is shown as <code>Verzonden</code> in Dutch while <code>mbsync</code> reports <code>[Gmail]/Verzonden berichten</code> as the name of the IMAP folder. Furthermore similar changes need to be made to the <code>mu4e</code> configuration below.</li>
+</ul>
+
+<p>
+For the security conscious:
+</p>
+
+<ul class="org-ul">
+<li>Use GPG to decrypt an encrypted password file: <code>gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.passwords/gmail.gpg</code></li>
+<li>Use the Password Store program to simplify this: <code>pass Mail/MyGmail</code></li>
+</ul>
+</div>
+
+<h3><a id="enable-imap-for-your-gmail-account" class="anchor" href="#enable-imap-for-your-gmail-account">¶</a>Enable IMAP for your Gmail account</h3><div class="outline-text-3" id="text-orgaea13ff">
+<p>
+IMAP e-mail access is not enabled on your Gmail account by default!  Follow these steps to enable it:
+</p>
+
+<p>
+<a href="https://support.google.com/mail/answer/7126229?hl=en">https://support.google.com/mail/answer/7126229?hl=en</a>
+</p>
+
+<p>
+Make sure to configure these settings!
+</p>
+
+<ul class="org-ul">
+<li>&ldquo;Auto-expunge off&rdquo;</li>
+<li>&ldquo;Move the message to the trash&rdquo;</li>
+</ul>
+</div>
+
+<h3><a id="enable-access-for-mbsync" class="anchor" href="#enable-access-for-mbsync">¶</a>Enable access for mbsync</h3><div class="outline-text-3" id="text-orgcddba4c">
+<p>
+This can go one of two ways:
+</p>
+</div>
+
+<h4><a id="you-have-two-factor-authentication-turned-on" class="anchor" href="#you-have-two-factor-authentication-turned-on">¶</a>You have two-factor authentication turned on:</h4><div class="outline-text-4" id="text-orgfe80dfc">
+<p>
+If you have two-factor authentication turned on, you will need to create an App Password to access your account.  More details can be found at this link:
+</p>
+
+<p>
+<a href="https://support.google.com/accounts/answer/185833">https://support.google.com/accounts/answer/185833</a>
+</p>
+</div>
+
+<h4><a id="no-two-factor-authentication-enable-ldquoless-secure-appsrdquo-for-your-google-account" class="anchor" href="#no-two-factor-authentication-enable-ldquoless-secure-appsrdquo-for-your-google-account">¶</a>No two-factor authentication: enable &ldquo;Less secure apps&rdquo; for your Google account</h4><div class="outline-text-4" id="text-org3597ed7">
+<p>
+If you don&rsquo;t have two-factor authentication turned on, Google will still automatically block &ldquo;less secure&rdquo; apps like <code>isync</code> from accessing your mail over IMAP.  Give access to mbsync by going to the following page:
+</p>
+
+<p>
+<a href="https://myaccount.google.com/lesssecureapps">https://myaccount.google.com/lesssecureapps</a>
+</p>
+</div>
+
+<h3><a id="start-the-initial-sync" class="anchor" href="#start-the-initial-sync">¶</a>Start the initial sync</h3><div class="outline-text-3" id="text-org0ed85bf">
+<p>
+You might receive a scary e-mail from Google the first time you run this, just open it and confirm that it was you who tried to use the account!
+</p>
+
+<pre>mbsync -a</pre>
+
+<p>
+<b>NOTE</b>: <code>mbsync</code> won&rsquo;t create the base maildir for you, you&rsquo;ll have to create it: <code>mkdir ~/Mail</code>
+</p>
+</div>
+
+<h2><a id="setting-up-mu-to-index-the-mailbox" class="anchor" href="#setting-up-mu-to-index-the-mailbox">¶</a>Setting up mu to index the mailbox</h2><div class="outline-text-2" id="text-org76ee07d">
+<p>
+Install it on Ubuntu via the <code>mu4e</code> package (it&rsquo;s actually the dependency <code>maildir-utils</code> but we need <code>mu4e</code> anyway):
+</p>
+
+<pre>sudo apt install mu4e</pre>
+
+<p>
+Run the initial index, providing your e-mail address so it knows how to identify you:
+</p>
+
+<ul class="org-ul">
+<li><p>
+When using a <code>mu</code> version prior to version 1.4.0:
+</p>
+
+<pre>mu index --maildir=~/Mail --my-address=systemcrafters.test@gmail.com</pre></li>
+
+<li><p>
+When using <code>mu</code> version 1.4.0 or later:
+</p>
+
+<p>
+Later versions of <code>mu</code> require a separate command for initialization
+(<code>mu init</code>).  The indexation step ( <code>mu index</code>) is subsequently
+simpler.
+</p>
+
+<pre>mu init --maildir=~/Mail --my-address=systemcrafters.test@gmail.com
+mu index</pre></li>
+</ul>
+
+<p>
+<b>NOTE</b>: You will need to use <code>--my-address</code> for every e-mail address you use in a multiple account setup.
+</p>
+
+<p>
+Indexing could take a while depending on how much e-mail you have, but it&rsquo;s quite fast in general.
+</p>
+</div>
+
+<h2><a id="setting-up-mu4e" class="anchor" href="#setting-up-mu4e">¶</a>Setting up mu4e</h2><div class="outline-text-2" id="text-org6a401a1">
+<p>
+Before we do this though, turn off <code>evil-collection</code> for <code>mu4e</code>.
+</p>
+
+<p>
+<b>NOTE</b>: I&rsquo;m only doing this to show the normal Emacs bindings, don&rsquo;t do this if you want to use Evil bindings!
+</p>
+
+<pre>(delete 'mu4e evil-collection-mode-list)
+(delete 'mu4e-conversation evil-collection-mode-list)</pre>
+
+<p>
+Add the initial <code>mu4e</code> configuration:
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">mu4e</span>
+  <span class="org-builtin">:ensure</span> nil
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">:load-path "/usr/share/emacs/site-lisp/mu4e/"</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">:defer 20 ; Wait until 20 seconds after startup</span>
+  <span class="org-builtin">:config</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">This is set to 't' to avoid mail syncing issues when using mbsync</span>
+  (<span class="org-keyword">setq</span> mu4e-change-filenames-when-moving t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Refresh mail using isync every 10 minutes</span>
+  (<span class="org-keyword">setq</span> mu4e-update-interval (* 10 60))
+  (<span class="org-keyword">setq</span> mu4e-get-mail-command <span class="org-string">"mbsync -a"</span>)
+  (<span class="org-keyword">setq</span> mu4e-maildir <span class="org-string">"~/Mail"</span>)
+
+  (<span class="org-keyword">setq</span> mu4e-drafts-folder <span class="org-string">"/[Gmail]/Drafts"</span>)
+  (<span class="org-keyword">setq</span> mu4e-sent-folder   <span class="org-string">"/[Gmail]/Sent Mail"</span>)
+  (<span class="org-keyword">setq</span> mu4e-refile-folder <span class="org-string">"/[Gmail]/All Mail"</span>)
+  (<span class="org-keyword">setq</span> mu4e-trash-folder  <span class="org-string">"/[Gmail]/Trash"</span>)
+
+  (<span class="org-keyword">setq</span> mu4e-maildir-shortcuts
+      '((<span class="org-string">"/Inbox"</span>             . ?i)
+        (<span class="org-string">"/[Gmail]/Sent Mail"</span> . ?s)
+        (<span class="org-string">"/[Gmail]/Trash"</span>     . ?t)
+        (<span class="org-string">"/[Gmail]/Drafts"</span>    . ?d)
+        (<span class="org-string">"/[Gmail]/All Mail"</span>  . ?a))))</pre>
+
+<p>
+<b>NOTE</b>: In the stream, I had trouble getting mail to sync in other folders.  The problem was that I had configured the folder names wrong with mu4e!  I was using <code>/[Gmail].Trash</code> where it should have been <code>/[Gmail]/Trash</code>.  Simple explanation for an annoying problem!
+</p>
+
+<p>
+<b>IMPORTANT NOTE</b>: As of mu4e 1.3.7, <code>mu4e-maildir-shortcuts</code> now has a new format!  Here is the equivalent:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mu4e-maildir-shortcuts
+    '((<span class="org-builtin">:maildir</span> <span class="org-string">"/Inbox"</span>    <span class="org-builtin">:key</span> ?i)
+      (<span class="org-builtin">:maildir</span> <span class="org-string">"/[Gmail]/Sent Mail"</span> <span class="org-builtin">:key</span> ?s)
+      (<span class="org-builtin">:maildir</span> <span class="org-string">"/[Gmail]/Trash"</span>     <span class="org-builtin">:key</span> ?t)
+      (<span class="org-builtin">:maildir</span> <span class="org-string">"/[Gmail]/Drafts"</span>    <span class="org-builtin">:key</span> ?d)
+      (<span class="org-builtin">:maildir</span> <span class="org-string">"/[Gmail]/All Mail"</span>  <span class="org-builtin">:key</span> ?a))))</pre>
+
+<p>
+More Gmail configuration tips: <a href="https://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html">https://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html</a>
+</p>
+</div>
+
+<h2><a id="managing-your-e-mail" class="anchor" href="#managing-your-e-mail">¶</a>Managing your e-mail</h2><h3><a id="reading-mail" class="anchor" href="#reading-mail">¶</a>Reading mail</h3><div class="outline-text-3" id="text-org22c097d">
+<p>
+Run <code>mu4e</code>, see the landing page.
+</p>
+
+<p>
+When reading mail, you start out in the Headers buffer.  When you select an email with <code>RET</code>, the View buffer is displayed in a window below the Headers buffer window.
+</p>
+</div>
+
+<h4><a id="headers-mode" class="anchor" href="#headers-mode">¶</a>Headers Mode</h4><div class="outline-text-4" id="text-org58fa4c8">
+<p>
+Key Bindings:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Evil</th>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><b>Movement</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-n</code></td>
+<td class="org-left"><code>j</code></td>
+<td class="org-left"><code>next-line</code></td>
+<td class="org-left">Moves to the next header line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-p</code></td>
+<td class="org-left"><code>k</code></td>
+<td class="org-left"><code>previous-line</code></td>
+<td class="org-left">Moves to the previous header line</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[[</code></td>
+<td class="org-left"><code>[[</code></td>
+<td class="org-left"><code>mu4e-headers-prev-unread</code></td>
+<td class="org-left">Moves to previous unread message</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>]]</code></td>
+<td class="org-left"><code>]]</code></td>
+<td class="org-left"><code>mu4e-headers-next-unread</code></td>
+<td class="org-left">Moves to next unread message</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>j</code></td>
+<td class="org-left"><code>J</code></td>
+<td class="org-left"><code>mu4e~headers-jump-to-maildir</code></td>
+<td class="org-left">Jump to another mail directory</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><b>Toggles</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>P</code></td>
+<td class="org-left"><code>zt</code></td>
+<td class="org-left"><code>mu4e-headers-toggle-threading</code></td>
+<td class="org-left">Toggles threaded message display</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>W</code></td>
+<td class="org-left"><code>zr</code></td>
+<td class="org-left"><code>mu4e-headers-toggle-include-related</code></td>
+<td class="org-left">Toggles related message display</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><b>Marking</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>d</code></td>
+<td class="org-left"><code>d</code></td>
+<td class="org-left"><code>mu4e-headers-mark-for-trash</code></td>
+<td class="org-left">Marks message for deletion</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>m</code></td>
+<td class="org-left"><code>m</code></td>
+<td class="org-left"><code>mu4e-headers-mark-for-move</code></td>
+<td class="org-left">Marks message for move to folder</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>+</code></td>
+<td class="org-left"><code>+</code></td>
+<td class="org-left"><code>mu4e-headers-mark-for-flag</code></td>
+<td class="org-left">Marks message for flagging</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left"><code>-</code></td>
+<td class="org-left"><code>mu4e-headers-mark-for-unflag</code></td>
+<td class="org-left">Marks message for unflagging</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%</code></td>
+<td class="org-left"><code>%</code></td>
+<td class="org-left"><code>mu4e-headers-mark-pattern</code></td>
+<td class="org-left">Marks based on a regex pattern</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>u</code></td>
+<td class="org-left"><code>u</code></td>
+<td class="org-left"><code>mu4e-headers-mark-for-unmark</code></td>
+<td class="org-left">Removes mark for message</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>U</code></td>
+<td class="org-left"><code>U</code></td>
+<td class="org-left"><code>mu4e-mark-unmark-all</code></td>
+<td class="org-left">Unmarks all marks in the view</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>x</code></td>
+<td class="org-left"><code>x</code></td>
+<td class="org-left"><code>mu4e-mark-execute-all</code></td>
+<td class="org-left">Executes all marks in the view</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><b>Searching</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>s</code></td>
+<td class="org-left"><code>s</code></td>
+<td class="org-left"><code>mu4e-headers-search</code></td>
+<td class="org-left">Search all e-mails</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>S</code></td>
+<td class="org-left"><code>S</code></td>
+<td class="org-left"><code>mu4e-headers-search-edit</code></td>
+<td class="org-left">Edit current search (useful!)</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>/</code></td>
+<td class="org-left"><code>/</code></td>
+<td class="org-left"><code>mu4e-headers-search-narrow</code></td>
+<td class="org-left">Narrow down the current results</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>b</code></td>
+<td class="org-left"><code>b</code></td>
+<td class="org-left"><code>mu4e-headers-search-bookmark</code></td>
+<td class="org-left">Select a bookmark to search with</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>B</code></td>
+<td class="org-left"><code>B</code></td>
+<td class="org-left"><code>mu4e-headers-search-bookmark-edit</code></td>
+<td class="org-left">Edit bookmark before search</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>g</code></td>
+<td class="org-left"><code>gr</code></td>
+<td class="org-left"><code>mu4e-rerun-search</code></td>
+<td class="org-left">Rerun the current search</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><b>Composing</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C</code></td>
+<td class="org-left"><code>C</code>, <code>cc</code></td>
+<td class="org-left"><code>mu4e-compose-new</code></td>
+<td class="org-left">Compose a new e-mail</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>R</code></td>
+<td class="org-left"><code>R</code>, <code>cr</code></td>
+<td class="org-left"><code>mu4e-compose-reply</code></td>
+<td class="org-left">Compose a reply to selected email</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>F</code></td>
+<td class="org-left"><code>F</code>, <code>cf</code></td>
+<td class="org-left"><code>mu4e-compose-forward</code></td>
+<td class="org-left">Compose a forward for selected email</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>E</code></td>
+<td class="org-left"><code>E</code>, <code>ce</code></td>
+<td class="org-left"><code>mu4e-compose-edit</code></td>
+<td class="org-left">Edit selected draft message</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><b>Other Actions</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>q</code></td>
+<td class="org-left"><code>q</code></td>
+<td class="org-left"><code>mu4e~headers-quit-buffer</code></td>
+<td class="org-left">Quit the headers view</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Controlling the number of messages visible:
+</p>
+
+<ul class="org-ul">
+<li><code>mu4e-headers-results-limit</code>: The number of messages to display in mail listings (default 500)</li>
+<li><code>mu4e-headers-full-search</code>: If <code>t</code>, shows all messages, ignoring limit</li>
+</ul>
+
+<p>
+You can toggle <code>mu4e-headers-full-search</code> with <code>M-x mu4e-headers-toggle-full-search</code>!
+</p>
+</div>
+
+<h4><a id="view-mode" class="anchor" href="#view-mode">¶</a>View Mode</h4><div class="outline-text-4" id="text-org68ab19e">
+<p>
+Many of the same keybindings work!  Marking keys work on the currently viewed message.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Evil</th>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><b>Movement</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-n</code></td>
+<td class="org-left"><code>j</code></td>
+<td class="org-left"><code>next-line</code></td>
+<td class="org-left">Moves to the next line in message</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>C-p</code></td>
+<td class="org-left"><code>k</code></td>
+<td class="org-left"><code>previous-line</code></td>
+<td class="org-left">Moves to the previous line in message</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>n</code></td>
+<td class="org-left"><code>C-j</code></td>
+<td class="org-left"><code>mu4e-view-headers-next</code></td>
+<td class="org-left">Moves to next email in header list</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>p</code></td>
+<td class="org-left"><code>C-k</code></td>
+<td class="org-left"><code>mu4e-view-headers-prev</code></td>
+<td class="org-left">Moves to previous email in header list</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>[[</code></td>
+<td class="org-left"><code>[[</code></td>
+<td class="org-left"><code>mu4e-headers-prev-unread</code></td>
+<td class="org-left">Moves to previous unread message</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>]]</code></td>
+<td class="org-left"><code>]]</code></td>
+<td class="org-left"><code>mu4e-headers-next-unread</code></td>
+<td class="org-left">Moves to next unread message</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2><a id="syncing-e-mail" class="anchor" href="#syncing-e-mail">¶</a>Syncing e-mail</h2><div class="outline-text-2" id="text-org327baf8">
+<p>
+Run <code>M-x mu4e-update-mail-and-index</code> to sync and index your e-mail at any time (bind it to a key!)
+</p>
+
+<p>
+To auto-sync your mail at an interval, add this to <code>mu4e</code> config:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Run mu4e in the background to sync mail periodically</span>
+(mu4e t)</pre>
+
+<p>
+When doing this, it&rsquo;s also good to <code>:defer</code> your <code>mu4e</code> config so that it doesn&rsquo;t run immediately at startup:
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">mu4e</span>
+  <span class="org-builtin">:ensure</span> nil
+  <span class="org-builtin">:defer</span> 20 <span class="org-comment-delimiter">; </span><span class="org-comment">Wait until 20 seconds after startup</span>
+  <span class="org-builtin">:config</span>
+
+  ... the rest ...</pre>
+</div>
+
+<h2><a id="search-queries" class="anchor" href="#search-queries">¶</a>Search queries</h2><div class="outline-text-2" id="text-org751d707">
+<ul class="org-ul">
+<li><code>something</code> - General text search for &ldquo;something&rdquo;</li>
+<li><code>from:stallman</code> - Emails from a particular sender</li>
+<li><code>date:today..now</code> - Date range</li>
+<li><code>flag:attach</code> - Emails with an attachment</li>
+<li><code>"maildir:/Inbox"</code> - Search in a specific mail directory</li>
+</ul>
+
+<p>
+You can also use logic statements like <code>and</code> , <code>not</code>:
+</p>
+
+<p>
+<code>"maildir:/Inbox" and from:eli and docs</code>
+</p>
+
+<p>
+Documentation: <a href="https://www.djcbsoftware.nl/code/mu/mu4e/Queries.html">https://www.djcbsoftware.nl/code/mu/mu4e/Queries.html</a>
+</p>
+</div>
+
+<h3><a id="bookmarking-queries" class="anchor" href="#bookmarking-queries">¶</a>Bookmarking queries</h3><div class="outline-text-3" id="text-orgbae61d1">
+<p>
+You can create your own bookmarked queries!
+</p>
+
+<p>
+Run these from anywhere in Emacs with <code>M-x mu4e-headers-search-bookmark</code>
+</p>
+
+<p>
+In mu4e 1.2.0:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mu4e-bookmarks
+  '((<span class="org-string">"flag:unread AND NOT flag:trashed"</span> <span class="org-string">"Unread messages"</span>      ?i)
+    (<span class="org-string">"date:today..now"</span>                  <span class="org-string">"Today's messages"</span>     ?t)
+    (<span class="org-string">"from:stallman"</span>                    <span class="org-string">"The Boss"</span>             ?s)
+    (<span class="org-string">"date:7d..now"</span>                     <span class="org-string">"Last 7 days"</span>          ?w)
+    (<span class="org-string">"mime:image/*"</span>                     <span class="org-string">"Messages with images"</span> ?p)))</pre>
+
+<p>
+As of mu4e 1.3.7:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mu4e-bookmarks
+  '((<span class="org-builtin">:name</span> <span class="org-string">"Unread messages"</span> <span class="org-builtin">:query</span> <span class="org-string">"flag:unread AND NOT flag:trashed"</span> <span class="org-builtin">:key</span> ?i)
+    (<span class="org-builtin">:name</span> <span class="org-string">"Today's messages"</span> <span class="org-builtin">:query</span> <span class="org-string">"date:today..now"</span> <span class="org-builtin">:key</span> ?t)
+    (<span class="org-builtin">:name</span> <span class="org-string">"The Boss"</span> <span class="org-builtin">:query</span> <span class="org-string">"from:stallman"</span> <span class="org-builtin">:key</span> ?s)
+    (<span class="org-builtin">:name</span> <span class="org-string">"Last 7 days"</span> <span class="org-builtin">:query</span> <span class="org-string">"date:7d..now"</span> <span class="org-builtin">:hide-unread</span> t <span class="org-builtin">:key</span> ?w)
+    (<span class="org-builtin">:name</span> <span class="org-string">"Messages with images"</span> <span class="org-builtin">:query</span> <span class="org-string">"mime:image/*"</span> <span class="org-builtin">:key</span> ?p)))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

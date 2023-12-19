@@ -1,0 +1,143 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Teach Emacs to Keep Your Folders Clean - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Teach Emacs to Keep Your Folders Clean</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/XZjyJG-sFZI" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="have-you-noticed-these-files-before" class="anchor" href="#have-you-noticed-these-files-before">¶</a>Have you noticed these files before?</h2><div class="outline-text-2" id="text-org021f304">
+<ul class="org-ul">
+<li><code>Emacs.org~</code></li>
+<li><code>#Emacs.org#</code></li>
+<li><code>.#Emacs.org</code></li>
+<li><code>~/.emacs.d/.lsp-session-v1</code></li>
+<li><code>~/.emacs.d/transient/</code></li>
+<li><code>~/.emacs.d/projectile-bookmarks.eld</code></li>
+</ul>
+
+<p>
+Emacs and the packages we use create a lot of &ldquo;temporary&rdquo; files for various reasons.
+</p>
+
+<p>
+Let&rsquo;s keep our folders clean!
+</p>
+
+<p>
+An example configuration can be found <a href="https://github.com/daviwil/emacs-from-scratch/blob/a57d99ba80276926a2b68521f9a9d23dc173a628/Emacs.org">here</a>.
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="backup-files" class="anchor" href="#backup-files">¶</a>Backup Files</h2><div class="outline-text-2" id="text-orgc719bd8">
+<p>
+Everyone sees these files, they get created when you edit a file and save it.  (This <a href="https://stackoverflow.com/questions/56915816/emacs-does-not-backup-files-in-git-repo/56916567#56916567">doesn&rsquo;t happen</a> in VC-controlled repos, though!)
+</p>
+
+<pre>(<span class="org-keyword">setq</span> backup-directory-alist `((<span class="org-string">"."</span> . ,(expand-file-name <span class="org-string">"tmp/backups/"</span> user-emacs-directory))))</pre>
+
+<p>
+<b>NOTE:</b> You&rsquo;ll have to clean up any previous backup files that were created!
+</p>
+
+<p>
+You can also turn off this behavior entirely:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> make-backup-files nil)</pre>
+
+<p>
+More info: <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Backup.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Backup.html</a>
+</p>
+</div>
+
+<h2><a id="auto-save-files" class="anchor" href="#auto-save-files">¶</a>Auto Save Files</h2><div class="outline-text-2" id="text-orgad476cd">
+<p>
+<code>auto-save-mode</code> will create temporary files in the same folder as edited files: <code>#Emacs.org#</code>
+</p>
+
+<p>
+You can change this using <code>auto-save-file-name-transforms</code>:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">auto-save-mode doesn't create the path automatically!</span>
+(make-directory (expand-file-name <span class="org-string">"tmp/auto-saves/"</span> user-emacs-directory) t)
+
+(<span class="org-keyword">setq</span> auto-save-list-file-prefix (expand-file-name <span class="org-string">"tmp/auto-saves/sessions/"</span> user-emacs-directory)
+      auto-save-file-name-transforms `((<span class="org-string">".*"</span> ,(expand-file-name <span class="org-string">"tmp/auto-saves/"</span> user-emacs-directory) t)))</pre>
+
+<p>
+More info: <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Save-Files.html#Auto-Save-Files">https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Save-Files.html#Auto-Save-Files</a>
+</p>
+</div>
+
+<h2><a id="lock-files" class="anchor" href="#lock-files">¶</a>Lock Files</h2><div class="outline-text-2" id="text-orgb7a328f">
+<p>
+These are the files that look like <code>.#Emacs.org</code>.  They appear when you have unsaved changes to a file in a buffer!
+</p>
+
+<p>
+Unfortunately these can&rsquo;t be moved, but they can be disabled:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> create-lockfiles nil)</pre>
+
+<p>
+I don&rsquo;t recommend setting this across your whole configuration but it can be useful in certain projects where these files cause trouble.  Use directory-local variables for this!
+</p>
+
+<p>
+More information: <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html</a>
+</p>
+</div>
+
+<h2><a id="files-created-by-packages" class="anchor" href="#files-created-by-packages">¶</a>Files created by packages</h2><div class="outline-text-2" id="text-orgcb1443f">
+<p>
+Projectile, <code>lsp-mode</code>, and other packages create their own files to store variables and state!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> projectile-known-projects-file (expand-file-name <span class="org-string">"tmp/projectile-bookmarks.eld"</span> user-emacs-directory)
+      lsp-session-file (expand-file-name <span class="org-string">"tmp/.lsp-session-v1"</span> user-emacs-directory))</pre>
+</div>
+
+<h2><a id="an-easy-fix" class="anchor" href="#an-easy-fix">¶</a>An easy fix</h2><div class="outline-text-2" id="text-org904ed31">
+<p>
+Many files are created relative to <code>user-emacs-directory</code> already!  We can change it in our config:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> user-emacs-directory (expand-file-name <span class="org-string">"~/.cache/emacs"</span>))</pre>
+
+<p>
+<b>NOTE:</b> You will need to move all of your current transient files to this new location!
+</p>
+
+<p>
+However, this isn&rsquo;t 100% reliable; you&rsquo;ll need to chase down the files created by modes and packages you use.
+</p>
+</div>
+
+<h2><a id="no-littering" class="anchor" href="#no-littering">¶</a>No Littering!</h2><div class="outline-text-2" id="text-orgbf5f35f">
+<p>
+One community-maintained solution for this is the package <code>no-littering</code>:
+</p>
+
+<p>
+<a href="https://github.com/emacscollective/no-littering">https://github.com/emacscollective/no-littering</a>
+</p>
+
+<p>
+Even if you don&rsquo;t want to use it, the <a href="https://github.com/emacscollective/no-littering/blob/master/no-littering.el">settings it applies</a> are very useful to learn what you might want to set!
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">no-littering</span>)</pre>
+
+<p>
+<b>NOTE:</b> You need to use this very early in your configuration otherwise it won&rsquo;t work as expected!
+</p>
+
+<p>
+Now you can add the <code>var/</code> and <code>etc/</code> folders in your <code>user-emacs-directory</code> to your <code>.gitignore</code>!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,112 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>The Latest in Emacs Completions - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">The Latest in Emacs Completions</h1><p class="site-post-meta">February 17, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/-MhSXU6Tx28" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org0761ae7">
+<ul class="org-ul">
+<li><p>
+There is an (official?) build of Emacs 29 for Android 🤯
+</p>
+
+<p>
+<a href="https://f-droid.org/packages/org.gnu.emacs/">https://f-droid.org/packages/org.gnu.emacs/</a>
+<a href="https://git.savannah.gnu.org/cgit/emacs.git/log/?h=feature/android">https://git.savannah.gnu.org/cgit/emacs.git/log/?h=feature/android</a>
+</p>
+
+<p>
+Also try Orgro: <a href="https://f-droid.org/en/packages/com.madlonkay.orgro/">https://f-droid.org/en/packages/com.madlonkay.orgro/</a>
+</p></li>
+
+<li>Should I attempt a real sequel to the original Emacs From Scratch, live streamed?</li>
+</ul>
+</div>
+
+<h2><a id="the-latest-in-emacs-completions" class="anchor" href="#the-latest-in-emacs-completions">¶</a>The Latest in Emacs Completions</h2><div class="outline-text-2" id="text-org0cfb6bb">
+<p>
+Today we&rsquo;re going to experiment with the latest advancements in Emacs completion / selection systems, including a look at improvements that are coming in Emacs 29!
+</p>
+
+<p>
+<b>Let me know if I&rsquo;m missing anything!</b>  I&rsquo;m not fully up to date on all the changes!
+</p>
+</div>
+
+<h3><a id="built-in-emacs-29-completions" class="anchor" href="#built-in-emacs-29-completions">¶</a>Built-in Emacs 29 Completions</h3><div class="outline-text-3" id="text-orgd94e108">
+<p>
+Let&rsquo;s start by consulting a couple of sources:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://git.savannah.gnu.org/cgit/emacs.git/tree/etc/NEWS.29">The Emacs 29 NEWS file</a> (press <code>C-h n</code>)!</li>
+<li><a href="https://www.scss.tcd.ie/~sulimanm/posts/default-emacs-completion.html">Mohamed Suliman&rsquo;s blog post</a> about Emacs 29 improvements</li>
+</ul>
+
+<p>
+Things to try:
+</p>
+
+<ul class="org-ul">
+<li><code>icomplete-vertical-mode</code></li>
+<li><code>fido-mode</code> / <code>fido-vertical-mode</code></li>
+</ul>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">basic-completion-style</span> ()
+  (<span class="org-keyword">setq</span> completion-auto-wrap t
+        completion-auto-select 'second-tab
+        completion-auto-help 'always
+        completion-show-help nil
+        completions-format 'one-column
+        completions-max-height 10))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">icomplete-vertical-style</span> ()
+  (<span class="org-keyword">setq</span> completion-auto-wrap t
+        completion-auto-help nil
+        completions-max-height 15
+        completion-styles '(initials flex)
+        icomplete-in-buffer t
+        max-mini-window-height 10)
+
+  (icomplete-mode 1)
+  (icomplete-vertical-mode 1))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">fido-style</span> ()
+  (<span class="org-keyword">setq</span> completion-auto-wrap t
+        completion-auto-help nil
+        completions-max-height 15
+        completion-styles '(flex)
+        icomplete-in-buffer t
+        max-mini-window-height 10)
+
+  (fido-mode 1)
+  (fido-vertical-mode 1))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Bind C-r to show minibuffer history entries</span>
+(keymap-set minibuffer-mode-map <span class="org-string">"C-r"</span> #'minibuffer-complete-history)</pre>
+</div>
+
+<h3><a id="vertico-10-improvements" class="anchor" href="#vertico-10-improvements">¶</a>Vertico 1.0 Improvements</h3><div class="outline-text-3" id="text-org871048d">
+<p>
+<a href="https://github.com/minad/vertico">Vertico 1.0</a>
+</p>
+
+<pre>(vertico-mode 1)
+(marginalia-mode 1)
+
+(<span class="org-keyword">require</span> '<span class="org-constant">orderless</span>)
+(<span class="org-keyword">setq</span> completion-styles '(orderless basic)
+      completion-category-overrides '((file (styles basic partial-completion))))
+
+(<span class="org-keyword">require</span> '<span class="org-constant">vertico-quick</span>)
+(keymap-set vertico-map <span class="org-string">"M-q"</span> #'vertico-quick-insert)
+(keymap-set vertico-map <span class="org-string">"C-q"</span> #'vertico-quick-exit)
+
+(global-set-key <span class="org-string">"\M-R"</span> #'vertico-repeat)
+(add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+
+(keymap-set vertico-map <span class="org-string">"DEL"</span> #'vertico-directory-delete-char)
+(keymap-set vertico-map <span class="org-string">"M-DEL"</span> #'vertico-directory-delete-word)
+
+(vertico-mouse-mode 1)
+
+(<span class="org-keyword">require</span> '<span class="org-constant">vertico-posframe</span>)
+(vertico-posframe-mode 1)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

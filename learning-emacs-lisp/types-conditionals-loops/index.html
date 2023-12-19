@@ -1,0 +1,771 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Types, Conditionals, and Loops in Emacs Lisp - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Types, Conditionals, and Loops in Emacs Lisp</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/XXpgzyeYh_4" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org1d5befc">
+<p>
+We&rsquo;ll get a sense for the basic data types of the language and how we can use them!
+</p>
+
+<ul class="org-ul">
+<li>True and false</li>
+<li>Numbers</li>
+<li>Characters</li>
+<li>Sequences</li>
+<li>Strings</li>
+<li>Lists</li>
+<li>Arrays</li>
+<li>Combining expressions with logic operators</li>
+<li>Conditional logic</li>
+<li>Loops</li>
+</ul>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="follow-along-with-ielm" class="anchor" href="#follow-along-with-ielm">¶</a>Follow along with IELM!</h2><div class="outline-text-2" id="text-org69d06c1">
+<p>
+You can open up an interactive Emacs Lisp REPL in Emacs by running <code>M-x ielm.</code>
+</p>
+
+<p>
+I&rsquo;ll be using the following snippet for evaluating code in the REPL:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/ielm-send-line-or-region</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">unless</span> (use-region-p)
+    (forward-line 0)
+    (set-mark-command nil)
+    (forward-line 1))
+  (backward-char 1)
+  (<span class="org-keyword">let</span> ((text (buffer-substring-no-properties (region-beginning)
+                                              (region-end))))
+    (<span class="org-keyword">with-current-buffer</span> <span class="org-string">"*ielm*"</span>
+      (insert text)
+      (ielm-send-input))
+
+    (deactivate-mark)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/show-ielm</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (select-window (split-window-vertically -10))
+  (ielm)
+  (text-scale-set 1))
+
+(define-key org-mode-map (kbd <span class="org-string">"C-c C-e"</span>) 'efs/ielm-send-line-or-region)
+(define-key org-mode-map (kbd <span class="org-string">"C-c E"</span>) 'efs/show-ielm)</pre>
+</div>
+
+<h2><a id="true-and-false" class="anchor" href="#true-and-false">¶</a>True and false</h2><div class="outline-text-2" id="text-org4af8575">
+<p>
+Normally a language would have a &ldquo;boolean&rdquo; type for expressing &ldquo;true&rdquo; and &ldquo;false&rdquo;.
+</p>
+
+<p>
+In Emacs Lisp, we have <code>t</code> and <code>nil</code> which serve the same purpose.
+</p>
+
+<p>
+They are symbols!
+</p>
+
+<pre>(type-of t)   <span class="org-comment-delimiter">;; </span><span class="org-comment">symbol</span>
+(type-of nil) <span class="org-comment-delimiter">;; </span><span class="org-comment">symbol</span></pre>
+
+<p>
+These symbols are used to provide &ldquo;yes&rdquo; and &ldquo;no&rdquo; answers for expressions in the language.
+</p>
+
+<p>
+There are many &ldquo;predicates&rdquo; for the different types which return <code>t</code> or <code>nil</code>, we will cover them when talking about each type.
+</p>
+</div>
+
+<h2><a id="equality" class="anchor" href="#equality">¶</a>Equality</h2><div class="outline-text-2" id="text-org22eb71f">
+<p>
+One of the most basic operations you would do on any type is check whether two values are the same!
+</p>
+
+<p>
+There are a few ways to do that in Emacs Lisp:
+</p>
+
+<ul class="org-ul">
+<li><code>eq</code> - Are the two parameters the same object?</li>
+<li><code>eql</code> - Are the two parameters same object or same number?</li>
+<li><code>equal</code> - Are the two parameters equivalent?</li>
+<li>Type-specific equality predicates</li>
+</ul>
+
+<pre>(<span class="org-keyword">setq</span> test-val '(1 2 3))
+
+(eq 1 1)                  <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(eq 3.1 3.1)              <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(eq <span class="org-string">"thing"</span> <span class="org-string">"thing"</span>)      <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(eq '(1 2 3) '(1 2 3))    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(eq test-val test-val)    <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(eql 1 1)                 <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(eql 3.1 3.1)             <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(eql <span class="org-string">"thing"</span> <span class="org-string">"thing"</span>)     <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(eql '(1 2 3) '(1 2 3))   <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(eql test-val test-val)   <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(equal 1 1)               <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(equal 3.1 3.1)           <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(equal <span class="org-string">"thing"</span> <span class="org-string">"thing"</span>)   <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(equal '(1 2 3) '(1 2 3)) <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(equal test-val test-val) <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span></pre>
+
+<p>
+A general rule is that you should use <code>equal</code> for most equality checks or use a type-specific equality check.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Equality-Predicates.html#Equality-Predicates">Emacs Lisp Manual: Equality Predicates</a>
+</p>
+</div>
+
+<h2><a id="numbers" class="anchor" href="#numbers">¶</a>Numbers</h2><div class="outline-text-2" id="text-org275db42">
+<p>
+There are two main types of numbers in Emacs Lisp:
+</p>
+
+<ul class="org-ul">
+<li>Integers - Whole numbers</li>
+<li>Floating point numbers - Numbers with a decimal</li>
+</ul>
+
+<pre>1
+3.14159
+
+-1
+-3.14159
+
+1.
+1.0
+
+-0</pre>
+</div>
+
+<h3><a id="operations" class="anchor" href="#operations">¶</a>Operations</h3><div class="outline-text-3" id="text-orgee7c4cf">
+<p>
+You can perform mathematical operations on these numbers:
+</p>
+
+<pre>(+ 5 5)  <span class="org-comment-delimiter">;; </span><span class="org-comment">10</span>
+(- 5 5)  <span class="org-comment-delimiter">;; </span><span class="org-comment">0</span>
+(* 5 5)  <span class="org-comment-delimiter">;; </span><span class="org-comment">25</span>
+(/ 5 5)  <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Nesting arithmetic!</span>
+(* (+ 3 2)
+   (- 10 5))  <span class="org-comment-delimiter">;; </span><span class="org-comment">25</span>
+
+(% 11 5)      <span class="org-comment-delimiter">;; </span><span class="org-comment">1 - integer remainder</span>
+(mod 11.1 5)  <span class="org-comment-delimiter">;; </span><span class="org-comment">1.099 - float remainder</span>
+
+(1+ 5)   <span class="org-comment-delimiter">;; </span><span class="org-comment">6</span>
+(1- 5)   <span class="org-comment-delimiter">;; </span><span class="org-comment">4</span></pre>
+
+<p>
+You can also convert between integers and floats:
+</p>
+
+<ul class="org-ul">
+<li><code>truncate</code> - Rounds float to integer by moving toward zero</li>
+<li><code>round</code> - Rounds to the nearest integer</li>
+<li><code>floor</code> - Rounds float to integer by subtracting</li>
+<li><code>ceiling</code> - Round up to the next integer</li>
+</ul>
+
+<pre>(truncate 1.2)   <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span>
+(truncate -1.2)  <span class="org-comment-delimiter">;; </span><span class="org-comment">-1</span>
+
+(floor 1.2)      <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span>
+(floor -1.2)     <span class="org-comment-delimiter">;; </span><span class="org-comment">-2</span>
+
+(ceiling 1.2)    <span class="org-comment-delimiter">;; </span><span class="org-comment">2</span>
+(ceiling 1.0)    <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span>
+
+(round 1.5)      <span class="org-comment-delimiter">;; </span><span class="org-comment">2</span>
+(round 1.4)      <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span></pre>
+
+<p>
+See also:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Rounding-Operations.html#Rounding-Operations">Floating point rounding operations</a></li>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Bitwise-Operations.html#Bitwise-Operations">Bitwise operations</a></li>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Math-Functions.html#Math-Functions">Standard mathematical functions</a></li>
+</ul>
+</div>
+
+<h3><a id="predicates" class="anchor" href="#predicates">¶</a>Predicates</h3><div class="outline-text-3" id="text-org7c6c52d">
+<p>
+These predicates will help you identify the number types in code:
+</p>
+
+<pre>(integerp 1)     <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(integerp 1.1)   <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(integerp <span class="org-string">"one"</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(floatp 1)       <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(floatp 1.1)     <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(floatp <span class="org-string">"one"</span>)   <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(numberp 1)      <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(numberp 1.1)    <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(numberp <span class="org-string">"one"</span>)  <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(zerop 1)        <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(zerop 0)        <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(zerop 0.0)      <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span></pre>
+</div>
+
+<h3><a id="comparisons" class="anchor" href="#comparisons">¶</a>Comparisons</h3><div class="outline-text-3" id="text-org13ee45b">
+<p>
+You can compare two numeric values (even integers against floats):
+</p>
+
+<pre>(= 1 1)     <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(= 1 1.0)   <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(= 1 1 1
+   1 1 1)   <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(&lt; 1 2)     <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(&gt; 1 2)     <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(&gt; 1 1)     <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(&gt; 1.2 1)   <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(&gt;= 1 1)     <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(&lt;= -1 -1.0) <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(max 1 5 2 7)  <span class="org-comment-delimiter">;; </span><span class="org-comment">7</span>
+(min -1 3 2 4) <span class="org-comment-delimiter">;; </span><span class="org-comment">-1</span></pre>
+</div>
+
+<h2><a id="characters" class="anchor" href="#characters">¶</a>Characters</h2><div class="outline-text-2" id="text-org7a7518c">
+<p>
+Characters are really just integers that are interpreted as characters:
+</p>
+
+<pre>?A   <span class="org-comment-delimiter">;; </span><span class="org-comment">65</span>
+?a   <span class="org-comment-delimiter">;; </span><span class="org-comment">97</span>
+
+?\n  <span class="org-comment-delimiter">;; </span><span class="org-comment">10</span>
+?\t  <span class="org-comment-delimiter">;; </span><span class="org-comment">9</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Unicode</span>
+?\N{U+E0}    <span class="org-comment-delimiter">;; </span><span class="org-comment">224</span>
+?\u00e0      <span class="org-comment-delimiter">;; </span><span class="org-comment">224</span>
+?\U000000E0  <span class="org-comment-delimiter">;; </span><span class="org-comment">224</span>
+?\N{LATIN SMALL LETTER A WITH GRAVE} <span class="org-comment-delimiter">;; </span><span class="org-comment">224</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Control and meta char syntax</span>
+?\C-c        <span class="org-comment-delimiter">;; </span><span class="org-comment">3</span>
+(kbd <span class="org-string">"C-c"</span>)  <span class="org-comment-delimiter">;; </span><span class="org-comment">"^C"</span>
+?\M-x        <span class="org-comment-delimiter">;; </span><span class="org-comment">134217848</span>
+(kbd <span class="org-string">"M-x"</span>)  <span class="org-comment-delimiter">;; </span><span class="org-comment">[134217848]</span></pre>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Character-Type.html#Character-Type">Emacs Lisp Manual: Character Type</a>
+</p>
+</div>
+
+<h3><a id="comparisons" class="anchor" href="#comparisons">¶</a>Comparisons</h3><div class="outline-text-3" id="text-org921af57">
+<pre>(char-equal ?A ?A)
+(char-equal ?A 65)
+(char-equal ?A ?a)
+
+case-fold-search
+(<span class="org-keyword">setq</span> case-fold-search nil)
+(<span class="org-keyword">setq</span> case-fold-search t)</pre>
+</div>
+
+<h2><a id="sequences" class="anchor" href="#sequences">¶</a>Sequences</h2><div class="outline-text-2" id="text-orga2ad422">
+<p>
+In Emacs Lisp, strings, lists, and arrays are all considered sequences
+</p>
+
+<pre>(sequencep <span class="org-string">"Sequence?"</span>)     <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(sequencep <span class="org-string">""</span>)              <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(sequencep '(1 2 3))        <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(sequencep '())             <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(sequencep [1 2 3])         <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(sequencep [])              <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(sequencep 22)              <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(sequencep ?A)              <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">What do you expect?</span>
+(sequencep nil)</pre>
+
+<p>
+You can get the length of any sequence with <code>length</code>:
+</p>
+
+<pre>(length <span class="org-string">"Hello!"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">6</span>
+(length '(1 2 3))    <span class="org-comment-delimiter">;; </span><span class="org-comment">3</span>
+(length [5 4 3 2])   <span class="org-comment-delimiter">;; </span><span class="org-comment">4</span>
+(length nil)         <span class="org-comment-delimiter">;; </span><span class="org-comment">0</span></pre>
+
+<p>
+You can get an element of any sequence at a zero-based index with <code>elt</code>:
+</p>
+
+<pre>(elt <span class="org-string">"Hello!"</span> 1)   <span class="org-comment-delimiter">;; </span><span class="org-comment">?e</span>
+(elt <span class="org-string">"Hello!"</span> -1)  <span class="org-comment-delimiter">;; </span><span class="org-comment">error -out of range</span>
+
+(elt '(3 2 1) 2)  <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span>
+(elt '(3 2 1) 3)  <span class="org-comment-delimiter">;; </span><span class="org-comment">nil - out of range</span>
+(elt '(3 2 1) -1)  <span class="org-comment-delimiter">;; </span><span class="org-comment">3</span>
+(elt '(3 2 1) -2)  <span class="org-comment-delimiter">;; </span><span class="org-comment">3</span>
+(elt '(3 2 1) -6)  <span class="org-comment-delimiter">;; </span><span class="org-comment">3 - seems to always return first element</span>
+
+(elt [1 2 3 4] 2)   <span class="org-comment-delimiter">;; </span><span class="org-comment">3</span>
+(elt [1 2 3 4] 5)   <span class="org-comment-delimiter">;; </span><span class="org-comment">error - out of range</span>
+(elt [1 2 3 4] -1)  <span class="org-comment-delimiter">;; </span><span class="org-comment">error - out of range</span></pre>
+</div>
+
+<h2><a id="strings" class="anchor" href="#strings">¶</a>Strings</h2><div class="outline-text-2" id="text-org4c27fd0">
+<p>
+Strings are arrays of characters:
+</p>
+
+<pre><span class="org-string">"Hello!"</span>
+
+<span class="org-string">"Hello \</span>
+<span class="org-string"> System Crafters!"</span>
+
+<span class="org-string">"Hello \\ System Crafters!"</span>
+
+(make-string 5 ?!)            <span class="org-comment-delimiter">;; </span><span class="org-comment">!!!!!</span>
+(string ?H ?e ?l ?l ?o ?!)    <span class="org-comment-delimiter">;; </span><span class="org-comment">"Hello!"</span></pre>
+</div>
+
+<h3><a id="predicates" class="anchor" href="#predicates">¶</a>Predicates</h3><div class="outline-text-3" id="text-org3ffc94b">
+<pre>(stringp <span class="org-string">"Test!"</span>)           <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(stringp 1)                 <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(stringp nil)               <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(string-or-null-p <span class="org-string">"Test"</span>)   <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(string-or-null-p nil)      <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(char-or-string-p ?A)       <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(char-or-string-p 65)       <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(char-or-string-p <span class="org-string">"A"</span>)      <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(arrayp <span class="org-string">"Array?"</span>)           <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(sequencep <span class="org-string">"Sequence?"</span>)     <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(listp <span class="org-string">"List?"</span>)             <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span></pre>
+</div>
+
+<h3><a id="comparisons" class="anchor" href="#comparisons">¶</a>Comparisons</h3><div class="outline-text-3" id="text-orgd1f218e">
+<p>
+You can compare strings for equivalence or for sorting:
+</p>
+
+<ul class="org-ul">
+<li><code>string=</code> or <code>string-equal</code></li>
+<li><code>string&lt;</code> or <code>string-lessp</code></li>
+<li><code>string&gt;</code> or <code>string-greaterp</code></li>
+</ul>
+
+<pre>(string= <span class="org-string">"Hello"</span> <span class="org-string">"Hello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(string= <span class="org-string">"HELLO"</span> <span class="org-string">"Hello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(string&lt;  <span class="org-string">"Hello"</span> <span class="org-string">"Hello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(string&lt;  <span class="org-string">"Mello"</span> <span class="org-string">"Yello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(string&lt;  <span class="org-string">"Hell"</span>  <span class="org-string">"Hello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(string&gt;  <span class="org-string">"Hello"</span> <span class="org-string">"Hello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(string&gt;  <span class="org-string">"Mello"</span> <span class="org-string">"Yello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(string&gt;  <span class="org-string">"Hell"</span>  <span class="org-string">"Hello"</span>)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span></pre>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Text-Comparison.html#Text-Comparison">Emacs Lisp Manual: Text Comparison</a>
+</p>
+</div>
+
+<h3><a id="operations" class="anchor" href="#operations">¶</a>Operations</h3><div class="outline-text-3" id="text-org8400214">
+<pre>(substring <span class="org-string">"Hello!"</span> 0 4)    <span class="org-comment-delimiter">;; </span><span class="org-comment">Hell</span>
+(substring <span class="org-string">"Hello!"</span> 1)      <span class="org-comment-delimiter">;; </span><span class="org-comment">ello!</span>
+
+(concat <span class="org-string">"Hello "</span> <span class="org-string">"System"</span> <span class="org-string">" "</span> <span class="org-string">"Crafters"</span> <span class="org-string">"!"</span>)
+(concat)
+
+(split-string <span class="org-string">"Hello System Crafters!"</span>)
+(split-string <span class="org-string">"Hello System Crafters!"</span> <span class="org-string">"s"</span>)
+(split-string <span class="org-string">"Hello System Crafters!"</span> <span class="org-string">"S"</span>)
+
+(split-string <span class="org-string">"Hello System Crafters!"</span> <span class="org-string">"[ !]"</span>)
+(split-string <span class="org-string">"Hello System Crafters!"</span> <span class="org-string">"[ !]"</span> t)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Default splitting pattern is [ \f\t\n\r\v]+</span>
+
+(<span class="org-keyword">setq</span> case-fold-search nil)
+(<span class="org-keyword">setq</span> case-fold-search t)</pre>
+</div>
+
+<h3><a id="formatting" class="anchor" href="#formatting">¶</a>Formatting</h3><div class="outline-text-3" id="text-org90bba79">
+<p>
+You can create a string from existing values using <code>format</code>:
+</p>
+
+<pre>(format <span class="org-string">"Hello %d %s!"</span> 100 <span class="org-string">"System Crafters"</span>)
+(format <span class="org-string">"Here's a list: %s"</span> '(1 2 3))</pre>
+
+<p>
+There are many more format specifications, mainly for number representations, consult the manual for more info:
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Formatting-Strings.html#Formatting-Strings">Emacs Lisp Manual: Formatting Strings</a>
+</p>
+</div>
+
+<h3><a id="writing-messages" class="anchor" href="#writing-messages">¶</a>Writing messages</h3><div class="outline-text-3" id="text-orga6634b3">
+<p>
+As you&rsquo;ve already seen, you can write messages to the echo area (minibuffer) and <code>*Messages*</code> buffer using the <code>message</code> function:
+</p>
+
+<pre>(message <span class="org-string">"This is %d"</span> 5)</pre>
+
+<p>
+It uses the same formatting specifications as <code>format!</code>
+</p>
+</div>
+
+<h2><a id="lists" class="anchor" href="#lists">¶</a>Lists</h2><div class="outline-text-2" id="text-org6a7f3b1">
+<p>
+The list is possibly the most useful data type in Emacs Lisp.
+</p>
+</div>
+
+<h3><a id="cons-cells" class="anchor" href="#cons-cells">¶</a>Cons Cells</h3><div class="outline-text-3" id="text-orga1692bb">
+<p>
+Lists are built out of something called &ldquo;cons cells&rdquo;.  They enable you to chain together list elements using the &ldquo;cons&rdquo; container.
+</p>
+
+<p>
+You can think of a &ldquo;cons&rdquo; like a pair or &ldquo;tuple&rdquo; with values that can be accessed with <code>car</code> and <code>cdr</code>:
+</p>
+
+<ul class="org-ul">
+<li><code>car</code> - Get the first value in the cons</li>
+<li><code>cdr</code> - Get the second value in the cons</li>
+</ul>
+
+<pre>(cons 1 2)  <span class="org-comment-delimiter">;; </span><span class="org-comment">'(1 . 2)</span>
+'(1 . 2)    <span class="org-comment-delimiter">;; </span><span class="org-comment">'(1 . 2)</span>
+
+(car '(1 . 2))  <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span>
+(cdr '(1 . 2))  <span class="org-comment-delimiter">;; </span><span class="org-comment">2</span>
+
+(<span class="org-keyword">setq</span> some-cons '(1 . 2))
+
+(setcar some-cons 3)
+some-cons              <span class="org-comment-delimiter">;; </span><span class="org-comment">'(3 . 2)</span>
+
+(setcdr some-cons 4)
+some-cons              <span class="org-comment-delimiter">;; </span><span class="org-comment">'(3 . 4)</span></pre>
+</div>
+
+<h3><a id="building-lists-from-cons" class="anchor" href="#building-lists-from-cons">¶</a>Building lists from cons</h3><div class="outline-text-3" id="text-orgfdb2349">
+<p>
+There are two ways to build a list from cons cells:
+</p>
+
+<pre>(cons 1 (cons 2 (cons 3 (cons 4 nil))))
+(cons 1 '(2 3 4))
+
+(cons '(1 2 3) '(4 5 6))
+
+(append '(1 2 3) 4)
+(append '(1 2 3) '(4))</pre>
+</div>
+
+<h3><a id="predicates" class="anchor" href="#predicates">¶</a>Predicates</h3><div class="outline-text-3" id="text-org3194a54">
+<pre>(listp '(1 2 3))
+(listp 1)
+
+(listp nil)       <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+(cons 1 nil)
+(append '(1) nil)
+
+(listp (cons 1 2))
+(listp (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
+(consp (cons 1 (cons 2 (cons 3 (cons 4 nil)))))</pre>
+</div>
+
+<h3><a id="alists" class="anchor" href="#alists">¶</a>Alists</h3><div class="outline-text-3" id="text-org23b417e">
+<p>
+Association lists (or &ldquo;alists&rdquo;) are lists containing cons pairs for the purpose of storing named values:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> some-alist '((one . 1)
+                   (two . 2)
+                   (three . 3)))
+
+(alist-get 'one   some-alist)  <span class="org-comment-delimiter">;; </span><span class="org-comment">1</span>
+(alist-get 'two   some-alist)  <span class="org-comment-delimiter">;; </span><span class="org-comment">2</span>
+(alist-get 'three some-alist)  <span class="org-comment-delimiter">;; </span><span class="org-comment">3</span>
+(alist-get 'four  some-alist)  <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(assq 'one   some-alist)  <span class="org-comment-delimiter">;; </span><span class="org-comment">'(one . 1)</span>
+(rassq 1     some-alist)  <span class="org-comment-delimiter">;; </span><span class="org-comment">'(one . 1)</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">There is no alist-set!</span>
+(<span class="org-keyword">setf</span> (alist-get 'one some-alist) 5)
+(alist-get 'one some-alist)  <span class="org-comment-delimiter">;; </span><span class="org-comment">5</span></pre>
+</div>
+
+<h3><a id="plists" class="anchor" href="#plists">¶</a>Plists</h3><div class="outline-text-3" id="text-org89c33f1">
+<p>
+A property list (or &ldquo;plist&rdquo;) is another way to do key/value pairs with a flat list:
+</p>
+
+<pre>(plist-get '(one 1 two 2) 'one)
+(plist-get '(one 1 two 2) 'two)
+
+(plist-put '(one 1 two 2) 'three 3)</pre>
+</div>
+
+<h2><a id="arrays" class="anchor" href="#arrays">¶</a>Arrays</h2><div class="outline-text-2" id="text-orgf839342">
+<p>
+Arrays are sequences of values that are arranged contiguously in memory.  They are much faster to access!
+</p>
+
+<p>
+The most obvious form of array is a &ldquo;vector&rdquo;, a list with square brackets.  Strings are also arrays!
+</p>
+
+<p>
+We know how to access elements in arrays, but you can set them with <code>aset</code>:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> some-array [1 2 3 4])
+(aset some-array 1 5)
+some-array
+
+(<span class="org-keyword">setq</span> some-string <span class="org-string">"Hello!"</span>)
+(aset some-string 0 ?M)
+some-string</pre>
+
+<p>
+We can set all values in an array using <code>fillarray</code>
+</p>
+
+<pre>(<span class="org-keyword">setq</span> some-array [1 2 3])
+(fillarray some-array 6)
+some-array</pre>
+</div>
+
+<h2><a id="logic-expressions" class="anchor" href="#logic-expressions">¶</a>Logic Expressions</h2><div class="outline-text-2" id="text-orgd1fcfa1">
+<p>
+Logic expressions allow you to combine expressions using logical operators (<code>and</code>, <code>or</code>)
+</p>
+
+<p>
+You can think of this as operations on the &ldquo;truthiness&rdquo; or &ldquo;falsiness&rdquo; of expressions!
+</p>
+</div>
+
+<h3><a id="what-is-true" class="anchor" href="#what-is-true">¶</a>What is true?</h3><div class="outline-text-3" id="text-org86e8a1b">
+<p>
+When evaluating expressions, everything except the value <code>nil</code> and the empty list <code>'()</code> is considered <code>t</code>!
+</p>
+
+<pre>(<span class="org-keyword">if</span> t        'true 'false)  <span class="org-comment-delimiter">;; </span><span class="org-comment">true</span>
+(<span class="org-keyword">if</span> 5        'true 'false)  <span class="org-comment-delimiter">;; </span><span class="org-comment">true</span>
+(<span class="org-keyword">if</span> <span class="org-string">"Emacs"</span>  'true 'false)  <span class="org-comment-delimiter">;; </span><span class="org-comment">true</span>
+(<span class="org-keyword">if</span> <span class="org-string">""</span>       'true 'false)  <span class="org-comment-delimiter">;; </span><span class="org-comment">true</span>
+(<span class="org-keyword">if</span> nil      'true 'false)  <span class="org-comment-delimiter">;; </span><span class="org-comment">false</span>
+(<span class="org-keyword">if</span> '()      'true 'false)  <span class="org-comment-delimiter">;; </span><span class="org-comment">false</span></pre>
+</div>
+
+<h3><a id="logic-operators" class="anchor" href="#logic-operators">¶</a>Logic operators</h3><div class="outline-text-3" id="text-org6dbd362">
+<p>
+Emacs provides the following logic operators:
+</p>
+
+<ul class="org-ul">
+<li><code>not</code> - Inverts the truth value of the argument</li>
+<li><code>and</code> - Returns the last value if all expressions are truthy</li>
+<li><code>or</code> - Returns the first value that is truthy (short-circuits)</li>
+<li><code>xor</code> - Returns the first value that is truthy (doesn&rsquo;t short-circuit)</li>
+</ul>
+
+<pre>(not t)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(not 3)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(not nil)  <span class="org-comment-delimiter">;; </span><span class="org-comment">t</span>
+
+(<span class="org-keyword">and</span> t t t t 'foo)   <span class="org-comment-delimiter">;; </span><span class="org-comment">'foo</span>
+(<span class="org-keyword">and</span> t t t 'foo t)   <span class="org-comment-delimiter">;; </span><span class="org-comment">'t</span>
+(<span class="org-keyword">and</span> 1 2 3 4 5)      <span class="org-comment-delimiter">;; </span><span class="org-comment">5</span>
+(<span class="org-keyword">and</span> nil 'something) <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(<span class="org-keyword">or</span>  nil 'something) <span class="org-comment-delimiter">;; </span><span class="org-comment">'something</span>
+(<span class="org-keyword">or</span>  nil 'something t) <span class="org-comment-delimiter">;; </span><span class="org-comment">'something</span>
+(<span class="org-keyword">or</span> (- 3 3) (+ 2 0)) <span class="org-comment-delimiter">;; </span><span class="org-comment">0</span></pre>
+</div>
+
+<h2><a id="conditional-expressions" class="anchor" href="#conditional-expressions">¶</a>Conditional expressions</h2><h3><a id="the-codeifcode-expression" class="anchor" href="#the-codeifcode-expression">¶</a>The <code>if</code> expression</h3><div class="outline-text-3" id="text-orgf57cff5">
+<p>
+As we saw before, the <code>if</code> expression evaluates an expression and based on the result, picks one of two &ldquo;branches&rdquo; to evaluate next.
+</p>
+
+<p>
+The &ldquo;true&rdquo; branch is a single expression, the &ldquo;false&rdquo; branch can be multiple expressions:
+</p>
+
+<pre>(<span class="org-keyword">if</span> t 5
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">You can add an arbitrary number of forms in the "false" branch</span>
+  (message <span class="org-string">"Doing some extra stuff here"</span>)
+  (+ 2 2))</pre>
+
+<p>
+You can use <code>progn</code> to enable multiple expressions in the &ldquo;true&rdquo; branch:
+</p>
+
+<pre>(<span class="org-keyword">if</span> t
+  (<span class="org-keyword">progn</span>
+    (message <span class="org-string">"Hey, it's true!"</span>)
+    5)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">You can add an arbitrary number of forms in the "false" branch</span>
+  (message <span class="org-string">"Doing some extra stuff here"</span>)
+  (+ 2 2))</pre>
+
+<p>
+Since this is an expression, it returns the value of the last form evaluated inside of it:
+</p>
+
+<pre>(<span class="org-keyword">if</span> t 5
+  (message <span class="org-string">"Doing some extra stuff here"</span>)
+  (+ 2 2))
+
+(<span class="org-keyword">if</span> nil 5
+  (message <span class="org-string">"Doing some extra stuff here"</span>)
+  (+ 2 2))</pre>
+
+<p>
+You can use <code>if</code> expressions inline when setting variables:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> tab-width (<span class="org-keyword">if</span> (string-equal (format-time-string <span class="org-string">"%A"</span>)
+                                  <span class="org-string">"Monday"</span>)
+                    3
+                    2))</pre>
+</div>
+
+<h3><a id="the-codewhencode-and-codeunlesscode-expressions" class="anchor" href="#the-codewhencode-and-codeunlesscode-expressions">¶</a>The <code>when</code> and <code>unless</code> expressions</h3><div class="outline-text-3" id="text-org49385ff">
+<p>
+These expressions are useful for evaluating forms when a particular condition is true or false:
+</p>
+
+<ul class="org-ul">
+<li><code>when</code> - Evaluate the following forms when the expression evaluates to <code>t</code></li>
+<li><code>unless</code> - Evaluate the following forms when the expression evaluates to <code>nil</code></li>
+</ul>
+
+<pre>(<span class="org-keyword">when</span> (&gt; 2 1) 'foo)    <span class="org-comment-delimiter">;; </span><span class="org-comment">'foo</span>
+(<span class="org-keyword">unless</span> (&gt; 2 1) 'foo)  <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+
+(<span class="org-keyword">when</span> (&gt; 1 2) 'foo)    <span class="org-comment-delimiter">;; </span><span class="org-comment">nil</span>
+(<span class="org-keyword">unless</span> (&gt; 1 2) 'foo)  <span class="org-comment-delimiter">;; </span><span class="org-comment">'foo</span></pre>
+
+<p>
+Both of these expressions can contain multiple forms and return the result of the last form:
+</p>
+
+<pre>(<span class="org-keyword">when</span> (&gt; 2 1)
+  (message <span class="org-string">"Hey, it's true!"</span>)
+  (- 5 2)
+  (+ 2 2)) <span class="org-comment-delimiter">;; </span><span class="org-comment">4</span>
+
+(<span class="org-keyword">unless</span> (&gt; 1 2)
+  (message <span class="org-string">"Hey, it's true!"</span>)
+  (- 5 2)
+  (+ 2 2)) <span class="org-comment-delimiter">;; </span><span class="org-comment">4</span></pre>
+</div>
+
+<h3><a id="the-codecondcode-expression" class="anchor" href="#the-codecondcode-expression">¶</a>The <code>cond</code> expression</h3><div class="outline-text-3" id="text-org8048066">
+<p>
+The <code>cond</code> expression enables you to concisely list multiple conditions to check with resulting forms to execute:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> a 1)
+(<span class="org-keyword">setq</span> a 2)
+(<span class="org-keyword">setq</span> a -1)
+
+(<span class="org-keyword">cond</span> ((eql a 1) <span class="org-string">"Equal to 1"</span>)
+      ((&gt; a 1)   <span class="org-string">"Greater than 1"</span>)
+      (t         <span class="org-string">"Something else!"</span>))</pre>
+</div>
+
+<h3><a id="the-codepcasecode-expression" class="anchor" href="#the-codepcasecode-expression">¶</a>The <code>pcase</code> expression</h3><div class="outline-text-3" id="text-org1e0853a">
+<p>
+This one is powerful!  We will cover it in a future episode.
+</p>
+</div>
+
+<h2><a id="loops" class="anchor" href="#loops">¶</a>Loops</h2><div class="outline-text-2" id="text-org5a53f26">
+<p>
+There are 4 ways to loop in Emacs Lisp:
+</p>
+</div>
+
+<h3><a id="while" class="anchor" href="#while">¶</a>while</h3><div class="outline-text-3" id="text-org48b90cd">
+<p>
+Loops until the condition expression returns false:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> my-loop-counter 0)
+
+(<span class="org-keyword">while</span> (&lt; my-loop-counter 5)
+  (message <span class="org-string">"I'm looping! %d"</span> my-loop-counter)
+  (<span class="org-keyword">setq</span> my-loop-counter (1+ my-loop-counter)))</pre>
+</div>
+
+<h3><a id="dotimes" class="anchor" href="#dotimes">¶</a>dotimes</h3><div class="outline-text-3" id="text-org16ebb90">
+<pre>(<span class="org-keyword">dotimes</span> (count 5)
+  (message <span class="org-string">"I'm looping more easily! %d"</span> count))</pre>
+</div>
+
+<h3><a id="dolist" class="anchor" href="#dolist">¶</a>dolist</h3><div class="outline-text-3" id="text-org9bb7f44">
+<p>
+Loops for each item in a list:
+</p>
+
+<pre>(<span class="org-keyword">dolist</span> (item '(<span class="org-string">"one"</span> <span class="org-string">"two"</span> <span class="org-string">"three"</span> <span class="org-string">"four"</span> <span class="org-string">"five"</span>))
+  (message <span class="org-string">"Item %s"</span> item))</pre>
+</div>
+
+<h3><a id="recursion" class="anchor" href="#recursion">¶</a>Recursion</h3><div class="outline-text-3" id="text-org79c2eed">
+<p>
+Can be fun and interesting, but not safe for a loop that will have many cycles:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/recursion-test</span> (counter limit)
+  (<span class="org-keyword">when</span> (&lt; counter limit)
+    (message <span class="org-string">"I'm looping via recursion! %d"</span> counter)
+    (efs/recursion-test (1+ counter) limit)))
+
+(efs/recursion-test 0 5)</pre>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orga3cef69">
+<ul class="org-ul">
+<li>Dive into functions!</li>
+<li>Shorter side videos on <code>pcase</code>, regular expressions</li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

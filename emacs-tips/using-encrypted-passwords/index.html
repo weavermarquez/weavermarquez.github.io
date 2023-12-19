@@ -1,0 +1,271 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Using Encrypted Passwords in Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Using Encrypted Passwords in Emacs</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/nZ_T7Q49B8Y" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="the-auth-source-library" class="anchor" href="#the-auth-source-library">¶</a>The Auth Source Library</h2><div class="outline-text-2" id="text-org1feadef">
+<p>
+The <code>auth-source</code> library provides Emacs with a way to look up passwords when connecting to other machines.
+</p>
+
+<p>
+Use cases:
+</p>
+
+<ul class="org-ul">
+<li>Sending SMTP mail</li>
+<li>Connecting to IRC servers</li>
+<li>Connecting to SSH servers with TRAMP</li>
+<li>Connecting to the GitHub API with Forge</li>
+</ul>
+
+<p>
+Any package can use this by calling the <code>auth-source-search</code> function!
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/auth/index.html#Top">Emacs Manual: Auth Source</a>
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="authentication-sources" class="anchor" href="#authentication-sources">¶</a>Authentication Sources</h2><div class="outline-text-2" id="text-org68f0493">
+<p>
+The <code>auth-source</code> library looks for passwords in a set of sources configured by the variable <code>auth-sources.</code>
+</p>
+
+<p>
+By default it looks at:
+</p>
+
+<ul class="org-ul">
+<li><code>~/.authinfo.gpg</code></li>
+<li><code>~/.authinfo</code></li>
+<li><code>~/.netrc</code></li>
+</ul>
+
+<p>
+You can add additional auth sources to this list if you store your passwords another way.  For example:
+</p>
+
+<ul class="org-ul">
+<li>macOS keychain (&ldquo;internet&rdquo; or &ldquo;generic&rdquo;)</li>
+<li>Linux Secret Service</li>
+<li>GNOME Keyring</li>
+<li>KWallet</li>
+</ul>
+
+<p>
+You should try the <code>customize</code> UI for configuring the possible options!
+</p>
+</div>
+
+<h2><a id="the-authinfo-file" class="anchor" href="#the-authinfo-file">¶</a>The .authinfo file</h2><div class="outline-text-2" id="text-org2eaa763">
+<p>
+Directly inspired by <a href="https://ec.haxx.se/usingcurl/usingcurl-netrc">.netrc</a> files which have existed in UNIX for a long time.
+</p>
+
+<p>
+Passwords stored in a file named <code>~/.authinfo</code> in this format, one per line:
+</p>
+
+<pre>machine facebook.com login zuck password w0rldd0m1n4ti0n</pre>
+
+<p>
+You can also store passwords for the same host with different ports, usernames, etc:
+</p>
+
+<pre>machine mailprovider.com login mailuser password b4dp4ssw0rd port 433
+machine mailprovider.com login mailuser password worsepassword</pre>
+
+<p>
+The <code>auth-source-search</code> function can read this file and search for entries based on any of the details they contain:
+</p>
+
+<pre>(auth-source-search <span class="org-builtin">:host</span> <span class="org-string">"facebook.com"</span>)
+(auth-source-search <span class="org-builtin">:host</span> <span class="org-string">"mailprovider.com"</span> <span class="org-builtin">:user</span> <span class="org-string">"mailuser"</span>)
+(auth-source-search <span class="org-builtin">:host</span> <span class="org-string">"mailprovider.com"</span> <span class="org-builtin">:user</span> <span class="org-string">"mailuser"</span> <span class="org-builtin">:port</span> 433)</pre>
+
+<p>
+The benefit of using <code>.authinfo</code> is that it&rsquo;s a file you have control over and can sync between systems (once encrypted!)  More easily portable than using one of the desktop environment keyrings.
+</p>
+</div>
+
+<h2><a id="encrypting-authinfo" class="anchor" href="#encrypting-authinfo">¶</a>Encrypting .authinfo</h2><div class="outline-text-2" id="text-org5df0532">
+<p>
+However, this file is plaintext by default, which is unsafe from a security standpoint!
+</p>
+
+<p>
+Emacs uses GnuPG via the <code>epa</code> library to automatically encrypt and decrypt any files that end with <code>.gpg</code>, so we can create a file named <code>.authinfo.gpg</code> with the same contents to have them be encrypted on save.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/epa.html">Emacs Manual: Easy PGP Assistant</a> (<code>epa</code>)
+</p>
+</div>
+
+<h3><a id="creating-an-encryption-key" class="anchor" href="#creating-an-encryption-key">¶</a>Creating an encryption key</h3><div class="outline-text-3" id="text-org9adeaf1">
+<p>
+But first, we need to generate an encryption key!  The following command (in GPG 2.2 and above) will walk you through the process of creating a new key:
+</p>
+
+<pre>gpg --full-generate-key</pre>
+
+<p>
+We need to answer some questions it asks us:
+</p>
+
+<ol class="org-ol">
+<li>What kind of key do you want?  <b>(1) RSA and RSA (default)</b></li>
+<li>What keysize do you want? <b>4096</b></li>
+<li>How long should the key be valid? <b>0</b> (Key does not expire)</li>
+<li>Enter your name</li>
+<li>Enter your e-mail address</li>
+<li>Enter a comment for the key (not necessary, but can be used to identify it)</li>
+<li>If everything looks good, press <b>O</b> for &ldquo;Okay&rdquo;</li>
+<li>You will now be prompted for a passphrase.  This is like a password for your encryption key, it should be secure and memorable!</li>
+<li>After entering the password, it will generate the new key.  Move the mouse around or press keyboard keys to help generate entropy.</li>
+</ol>
+
+<p>
+You should now have a new key that will show up when you run the following command:
+</p>
+
+<pre>gpg --list-keys</pre>
+
+<p>
+We can test this out by editing the new <code>~/.authinfo.gpg</code> file and then paste the contents from the original <code>~/.authinfo</code> file we created.
+</p>
+
+<p>
+Once you save the <code>~/.authinfo.gpg</code> file, a new Emacs window will appear and you will be prompted for which key to use to encrypt the file:
+</p>
+
+<pre>Select recipients for encryption.
+If no one is selected, symmetric encryption will be performed.
+- &#8216;m&#8217; to mark a key on the line
+- &#8216;u&#8217; to unmark a key on the line
+[Cancel][OK]</pre>
+
+<p>
+If you only have one encryption key, this is all that will appear.  You merely need to move your keyboard cursor on top of the string <code>[OK]</code> and press enter.  You will be prompted for your passphrase to unlock the key and the file will be encrypted once you save it successfully.
+</p>
+
+<p>
+If you have more than one encryption key, they will be listed below the prompt:
+</p>
+
+<pre>Select recipients for encryption.
+If no one is selected, symmetric encryption will be performed.
+- &#8216;m&#8217; to mark a key on the line
+- &#8216;u&#8217; to unmark a key on the line
+[Cancel][OK]
+
+  u FF0E73B64BBEB63F System Crafters (Password Encryption Key) <a href="mailto:systemcrafterstest%40gmail.com">&lt;systemcrafterstest@gmail.com&gt;</a>
+  u C0495F71F74DC5E9 David Wilson <a href="mailto:david%40systemcrafters.cc">&lt;david@systemcrafters.cc&gt;</a></pre>
+
+<p>
+You will need to move your keyboard cursor to the line with the key you would like to use and press the letter <code>m</code> to mark the key, then move the cursor to <code>[OK]</code> and press Enter.  You will be prompted for your passphrase to unlock the key and the file will be encrypted once you save it successfully.
+</p>
+</div>
+
+<h3><a id="verifying-that-it-works" class="anchor" href="#verifying-that-it-works">¶</a>Verifying that it works</h3><div class="outline-text-3" id="text-orgd023e0f">
+<p>
+You can verify that the file is encrypted by trying to read it at the shell:
+</p>
+
+<pre>cat ~/.authinfo.gpg</pre>
+
+<p>
+You can also double-check that the passwords are accessible to <code>auth-source-search</code>:
+</p>
+
+<pre>(auth-source-search <span class="org-builtin">:host</span> <span class="org-string">"facebook.com"</span>)
+(auth-source-search <span class="org-builtin">:host</span> <span class="org-string">"mailprovider.com"</span> <span class="org-builtin">:user</span> <span class="org-string">"mailuser"</span>)
+(auth-source-search <span class="org-builtin">:host</span> <span class="org-string">"mailprovider.com"</span> <span class="org-builtin">:user</span> <span class="org-string">"mailuser"</span> <span class="org-builtin">:port</span> 433)</pre>
+</div>
+
+<h3><a id="starting-gpg-agent" class="anchor" href="#starting-gpg-agent">¶</a>Starting gpg-agent</h3><div class="outline-text-3" id="text-org9cb1880">
+<p>
+The <code>gpg-agent</code> manages access to your PGP keys and assists with encryption and decryption of files.  It can also cache your passphrase so that you don&rsquo;t get prompted for it every time you try to encrypt or decrypt a file.
+</p>
+
+<p>
+Emacs&rsquo; <code>epa</code> library may be able to automatically start it for you when you try to encrypt or decrypt a file.  If it doesn&rsquo;t, you may need to start it yourself!
+</p>
+
+<p>
+We need to make sure the <code>gpg-agent</code> is running:
+</p>
+
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Check if gpg-agent is already running</span>
+pgrep gpg-agent
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">If it's not running, you can start it up with this command:</span>
+gpg-connect-agent /bye</pre>
+
+<p>
+In Ubuntu 20.04, it seems to be started as a user service.  If it isn&rsquo;t running by default in your system, you may need to add <code>gpg-connect-agent /bye</code> as a startup command in your desktop environment or however you start Xorg sessions.
+</p>
+</div>
+
+<h2><a id="accessing-passwords-outside-of-emacs" class="anchor" href="#accessing-passwords-outside-of-emacs">¶</a>Accessing passwords outside of Emacs</h2><div class="outline-text-2" id="text-orge4dfc72">
+<p>
+If you have Emacs running as a daemon or in server mode (see <a href="https://youtu.be/ZjCRxAMPdNc">my video</a> on that) you can use <code>emacsclient</code> to access your passwords from other programs (like <code>mbsync</code>, etc).
+</p>
+
+<p>
+First we&rsquo;ll create a helper function to add to our configuration to make this a little easier to call:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/lookup-password</span> (<span class="org-type">&amp;rest</span> keys)
+  (<span class="org-keyword">let</span> ((result (apply #'auth-source-search keys)))
+    (<span class="org-keyword">if</span> result
+        (funcall (plist-get (car result) <span class="org-builtin">:secret</span>))
+        nil)))</pre>
+
+<p>
+<b>NOTE</b>: We have to check if
+</p>
+
+<p>
+Make sure Emacs is running as a server: <code>M-x server-start</code>
+</p>
+
+<p>
+Now you can invoke <code>emacsclient</code> in the shell to run this function and process the result:
+</p>
+
+<pre>emacsclient -e <span class="org-string">"(efs/lookup-password :host \"facebook.com\" :user \"zuck\")"</span> | cut -d <span class="org-string">'"'</span> -f2</pre>
+
+<p>
+Any program that can call an external shell application can now use this line to request the unencrypted password!  When the password is requested, you will be prompted for your passphrase if it has been a while since the last time you were asked.
+</p>
+
+<p>
+For example, in the <code>mbsync</code> config from the Emacs Mail series:
+</p>
+
+<pre>IMAPAccount gmail
+Host imap.gmail.com
+User systemcrafters.test@gmail.com
+PassCmd <span class="org-string">"emacsclient -e \"(efs/lookup-password :host \\\"gmail.com\\\" :user \\\"systemcrafters.test\\\")\" | cut -d '\"' -f2"</span>
+
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt</pre>
+
+<p>
+The command looks a little weird because of all the escaping, but it works!
+</p>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org1bab741">
+<p>
+In a future video, we&rsquo;ll cover a program called <a href="https://passwordstore.org">pass</a> that simplifies the management of passwords for multiple accounts and makes it possible for us to sync them between multiple computers using a Git repository!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

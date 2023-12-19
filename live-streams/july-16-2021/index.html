@@ -1,0 +1,103 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Do we really need use-package in Emacs? - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Do we really need use-package in Emacs?</h1><p class="site-post-meta">July 16, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/zWIByv8JOrg" allowfullscreen></iframe></div><div id="content">
+<h2><a id="do-we-really-need-use-package" class="anchor" href="#do-we-really-need-use-package">¶</a>Do we really need use-package?</h2><div class="outline-text-2" id="text-org5aedc50">
+<p>
+<code>use-package</code> is a (very?) commonly used package for writing one&rsquo;s Emacs configuration in a more &ldquo;concise&rdquo; way.  It provides a macro called <code>use-package</code> which removes some boilerplate needed in Emacs configs.
+</p>
+
+<p>
+If you followed my Emacs From Scratch series, you&rsquo;re probably using it!
+</p>
+
+<p>
+I&rsquo;ve been experimenting with a new configuration lately which doesn&rsquo;t use <code>use-package</code>.  Why?
+</p>
+</div>
+
+<h2><a id="the-value-of-use-package" class="anchor" href="#the-value-of-use-package">¶</a>The value of use-package</h2><div class="outline-text-2" id="text-org8b672ae">
+<p>
+<code>use-package</code> certainly provides some useful features:
+</p>
+
+<ul class="org-ul">
+<li>It can make your configuration <b>appear</b> more concise and well-organized</li>
+<li>Installs external packages when necessary</li>
+<li>Streamlined configuration of key bindings, hooks, faces, and custom variables</li>
+<li>Can set up &ldquo;autoloads&rdquo; for commands that don&rsquo;t already have them</li>
+<li>Makes <code>init.el</code> look more like a configuration file syntax instead of code, more beginner friendly?</li>
+</ul>
+
+<p>
+What else?
+</p>
+</div>
+
+<h2><a id="the-downsides-of-use-package" class="anchor" href="#the-downsides-of-use-package">¶</a>The downsides of use-package</h2><div class="outline-text-2" id="text-orgfdd021c">
+<p>
+In my opinion, there are a few downsides to using <code>use-package</code>, especially for new Emacs users:
+</p>
+
+<ul class="org-ul">
+<li>Obscures the underlying Emacs Lisp code for configuration by providing a different syntax that must be learned</li>
+<li>Encourages you to cram all the config for a package inside of one expression</li>
+<li><code>:init</code> vs <code>:config</code> is confusing to new users</li>
+<li>Harder to really understand when packages will be loaded</li>
+</ul>
+
+<p>
+With all that said, I&rsquo;m not recommending that people get rid of <code>use-package</code>!
+</p>
+
+<p>
+This conversation is mainly an exercise to make us think critically about what it provides and look at that the equivalent Emacs Lisp would be.
+</p>
+</div>
+
+<h2><a id="what-does-use-package-really-do" class="anchor" href="#what-does-use-package-really-do">¶</a>What does use-package really do?</h2><div class="outline-text-2" id="text-org11c5237">
+<p>
+I mentioned before that <code>use-package</code> is a macro, but what does that mean?
+</p>
+
+<p>
+In Lisp languages, a macro can be thought of like a &ldquo;code template&rdquo; which is defined like a function but operates slightly differently.
+</p>
+
+<p>
+Instead of the arguments to the macro &ldquo;function&rdquo; being evaluated and then passed in, the arguments are <b>not</b> evaluated.  The body of the macro &ldquo;function&rdquo; returns the <i>real</i> code that should be executed instead!
+</p>
+
+<p>
+We can use <code>M-x emacs-lisp-macroexpand</code> with the cursor before a macro call to expand it into the resulting forms.  We&rsquo;ll use this in the Emacs From Scratch configuration to understand what <code>use-package</code> does and then convert it to plain Emacs Lisp!
+</p>
+</div>
+
+<h3><a id="features-to-investigate" class="anchor" href="#features-to-investigate">¶</a>Features to investigate</h3><div class="outline-text-3" id="text-org1a80c44">
+<ul class="org-ul">
+<li><code>:ensure t</code></li>
+<li><code>:after</code></li>
+<li><code>:config</code> and <code>:init</code></li>
+<li><code>:custom</code> (use <code>custom-set-variables</code>?)</li>
+<li><code>:defer</code></li>
+<li><code>:bind</code></li>
+<li><code>:hook</code></li>
+<li><code>:commands</code></li>
+<li><code>:mode</code></li>
+</ul>
+</div>
+
+<h2><a id="what-would-we-need-in-emacs" class="anchor" href="#what-would-we-need-in-emacs">¶</a>What would we need in Emacs?</h2><div class="outline-text-2" id="text-orgf1b8f7a">
+<p>
+I think that with some additional built-in helpers in Emacs, packages like <code>use-package</code> would be less necessary:
+</p>
+
+<ul class="org-ul">
+<li>A macro for defining multiple keys more easily</li>
+<li>A macro (or optional args to <code>add-hook</code>) for adding multiple hooks more easily</li>
+<li>A macro for setting custom variables</li>
+</ul>
+
+<p>
+Take a look at leaf: <a href="https://github.com/conao3/leaf.el">https://github.com/conao3/leaf.el</a>
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,149 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>How to Give Presentations with Org Mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">How to Give Presentations with Org Mode</h1><p class="site-post-meta"></p><div id="content">
+<h2><a id="why" class="anchor" href="#why">¶</a>Why?</h2><div class="outline-text-2" id="text-org3fca12f">
+<ul class="org-ul">
+<li>No need for complicated presentation software</li>
+<li>Impress and/or confuse your coworkers</li>
+<li>Because it&rsquo;s fun!</li>
+</ul>
+</div>
+
+<h2><a id="initial-setup" class="anchor" href="#initial-setup">¶</a>Initial Setup</h2><div class="outline-text-2" id="text-org8a933b7">
+<p>
+<a href="https://github.com/takaxp/org-tree-slide">https://github.com/takaxp/org-tree-slide</a>
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">org-tree-slide</span>
+  <span class="org-builtin">:custom</span>
+  (org-image-actual-width nil))</pre>
+
+<p>
+Run <code>org-tree-slide-mode</code>!
+Navigate slides with <code>C-&lt;</code> and <code>C-&gt;</code>
+</p>
+</div>
+
+<h2><a id="what-can-it-do" class="anchor" href="#what-can-it-do">¶</a>What Can It Do?</h2><h3><a id="display-images" class="anchor" href="#display-images">¶</a>Display Images</h3><h4><a id="system-crafters" class="anchor" href="#system-crafters">¶</a>System Crafters</h4><div class="outline-text-4" id="text-org0dccf91">
+<p>
+I haven&rsquo;t included these images with the notes so you will have to change the link to another image on your computer!  You can do that with <code>C-c C-l</code> (<code>org-insert-link</code>) and link to the image without adding a description.
+</p>
+
+
+<div id="org5f80596" class="figure">
+<p><a href="file:System Crafters2-01.png">file:System Crafters2-01.png</a>
+</p>
+</div>
+</div>
+
+<h4><a id="emacs" class="anchor" href="#emacs">¶</a>Emacs</h4><div class="outline-text-4" id="text-org49fa388">
+
+<div id="org2d6cdab" class="figure">
+<p><a href="file:Emacs.png">file:Emacs.png</a>
+</p>
+</div>
+</div>
+
+<h3><a id="run-code-examples" class="anchor" href="#run-code-examples">¶</a>Run Code Examples</h3><div class="outline-text-3" id="text-orgbac6d2f">
+<p>
+This is a terrible code snippet for <b>example purposes only</b>!
+</p>
+
+<pre>(<span class="org-keyword">let</span> ((output <span class="org-string">""</span>))
+  (<span class="org-keyword">dolist</span> (word '(<span class="org-string">"Emacs"</span> <span class="org-string">"is"</span> <span class="org-string">"awesome!"</span>))
+          (<span class="org-keyword">setq</span> output (concat output word <span class="org-string">" "</span>)))
+  (message (string-trim output)))</pre>
+
+<pre class="example">
+Emacs is awesome!
+</pre>
+</div>
+
+<h3><a id="countdown-timer" class="anchor" href="#countdown-timer">¶</a>Countdown Timer</h3><div class="outline-text-3" id="text-org7a1bac4">
+<p>
+Run <code>org-tree-slide-play-with-timer</code> to have a countdown timer appear in your modeline.
+</p>
+
+<p>
+Good for keeping track of how much time you have left!
+</p>
+</div>
+
+<h2><a id="profiles" class="anchor" href="#profiles">¶</a>Profiles</h2><div class="outline-text-2" id="text-org1a26520">
+<p>
+You can run each of these profiles after turning on <code>org-tree-slide-mode</code>
+</p>
+</div>
+
+<h3><a id="simple-profile" class="anchor" href="#simple-profile">¶</a>Simple Profile</h3><div class="outline-text-3" id="text-org253be72">
+<p>
+Run <code>org-tree-slide-simple-profile</code>
+</p>
+</div>
+
+<h3><a id="presentation-profile" class="anchor" href="#presentation-profile">¶</a>Presentation Profile</h3><div class="outline-text-3" id="text-org3629f96">
+<p>
+Run <code>org-tree-slide-presentation-profile</code>
+</p>
+</div>
+
+<h3><a id="narrowing-profile" class="anchor" href="#narrowing-profile">¶</a>Narrowing Profile</h3><div class="outline-text-3" id="text-org2b8925a">
+<p>
+Run <code>org-tree-slide-narrowing-control-profile</code>
+</p>
+</div>
+
+<h2><a id="customization" class="anchor" href="#customization">¶</a>Customization</h2><div class="outline-text-2" id="text-orgf2ca0b4">
+<p>
+You can also customize everything yourself without using the built-in profiles.
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">hide-mode-line</span>)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/presentation-setup</span> ()
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Hide the mode line</span>
+  (hide-mode-line-mode 1)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Display images inline</span>
+  (org-display-inline-images) <span class="org-comment-delimiter">;; </span><span class="org-comment">Can also use org-startup-with-inline-images</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Scale the text.  The next line is for basic scaling:</span>
+  (<span class="org-keyword">setq</span> text-scale-mode-amount 3)
+  (text-scale-mode 1))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">This option is more advanced, allows you to scale other faces too</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq-local face-remapping-alist '((default (:height 2.0) variable-pitch)</span>
+  <span class="org-comment-delimiter">;;                                    </span><span class="org-comment">(org-verbatim (:height 1.75) org-verbatim)</span>
+  <span class="org-comment-delimiter">;;                                    </span><span class="org-comment">(org-block (:height 1.25) org-block))))</span>
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/presentation-end</span> ()
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Show the mode line again</span>
+  (hide-mode-line-mode 0)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Turn off text scale mode (or use the next line if you didn't use text-scale-mode)</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(text-scale-mode 0))</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">If you use face-remapping-alist, this clears the scaling:</span>
+  (<span class="org-keyword">setq-local</span> face-remapping-alist '((default variable-pitch default))))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">org-tree-slide</span>
+  <span class="org-builtin">:hook</span> ((org-tree-slide-play . efs/presentation-setup)
+         (org-tree-slide-stop . efs/presentation-end))
+  <span class="org-builtin">:custom</span>
+  (org-tree-slide-slide-in-effect t)
+  (org-tree-slide-activate-message <span class="org-string">"Presentation started!"</span>)
+  (org-tree-slide-deactivate-message <span class="org-string">"Presentation finished!"</span>)
+  (org-tree-slide-header t)
+  (org-tree-slide-breadcrumbs <span class="org-string">" &gt; "</span>)
+  (org-image-actual-width nil))</pre>
+</div>
+
+<h2><a id="generating-a-pdf-of-slides" class="anchor" href="#generating-a-pdf-of-slides">¶</a>Generating a PDF of Slides</h2><div class="outline-text-2" id="text-org1a8c9d1">
+<p>
+Run <code>org-beamer-export-to-pdf</code>, requires <code>pdflatex</code> and associated tools though!
+</p>
+
+<p>
+More documentation: <a href="https://orgmode.org/worg/exporters/beamer/tutorial.html">https://orgmode.org/worg/exporters/beamer/tutorial.html</a>
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,161 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Enhance Your Emails with Org Mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Enhance Your Emails with Org Mode</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/aml36yZ-ANc" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="org-mode-is-great-for-email-too" class="anchor" href="#org-mode-is-great-for-email-too">¶</a>Org Mode is great for email too!</h2><div class="outline-text-2" id="text-org39ef9a8">
+<ul class="org-ul">
+<li>Composing HTML-formatted email messages</li>
+<li>Attaching images inline</li>
+<li>Sending the contents of your existing Org files</li>
+<li>Writing e-mails in Org files to send later</li>
+</ul>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="sending-html-mail" class="anchor" href="#sending-html-mail">¶</a>Sending HTML mail</h2><div class="outline-text-2" id="text-org2074052">
+<p>
+We can use the <a href="https://github.com/org-mime/org-mime">org-mime</a> package for this purpose:
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">org-mime</span>
+  <span class="org-builtin">:ensure</span> t)</pre>
+
+<p>
+Now you can use <code>M-x org-mime-htmlize</code> inside of a mail composition buffer to convert it to HTML!
+</p>
+
+<p>
+You can include:
+</p>
+
+<ul class="org-ul">
+<li>Formatted text (bold, italic, etc)</li>
+<li>Headings and subheadings</li>
+<li>Links</li>
+<li>Code blocks</li>
+<li>Images (that get attached correctly)</li>
+<li>&#x2026; anything that org-mode can convert to HTML</li>
+</ul>
+
+<pre>* First heading!
+
+Check out [[https://github.com/org-mime/org-mime][org-mime]]
+
+** Here's some Emacs Lisp
+
+#+begin_src emacs-lisp
+
+  (setq it-works t)
+
+  (defun does-it-work ()
+    (when it-works
+      (message "It works!")))
+
++end_src
+
+Enjoy this huge Emacs logo:
+
+[[~/Downloads/1024px-EmacsIcon.svg.png]]
+
+*Very cool!*</pre>
+
+<p>
+<b>NOTE:</b> Don&rsquo;t forget to add the <code>#</code> before the <code>+end_src</code> if you copy/paste this block!
+</p>
+</div>
+
+<h2><a id="composing-org-mail-comfortably" class="anchor" href="#composing-org-mail-comfortably">¶</a>Composing Org mail comfortably</h2><div class="outline-text-2" id="text-org88f9be6">
+<p>
+This required us to type out raw Org into the composition buffer.  What if we want to write in Org Mode?
+</p>
+
+<p>
+Run <code>M-x org-mime-edit-mail-in-org-mode</code>
+</p>
+
+<p>
+This didn&rsquo;t automatically convert our mail body to HTML though!  Still need to run <code>M-x org-mime-htmlize</code> before sending.
+</p>
+</div>
+
+<h2><a id="sending-an-existing-org-buffer-or-subtree-as-e-mail" class="anchor" href="#sending-an-existing-org-buffer-or-subtree-as-e-mail">¶</a>Sending an existing Org buffer or subtree as e-mail</h2><div class="outline-text-2" id="text-org08a7ec7">
+<p>
+You can use the following functions to send an existing org-mode document as an e-mail message:
+</p>
+
+<ul class="org-ul">
+<li><code>org-mime-org-buffer-htmlize</code> - Send an entire org-mode buffer as an e-mail message</li>
+<li><code>org-mime-org-subtree-htmlize</code> - Send a subtree of the current org-mode buffer as an e-mail message</li>
+</ul>
+
+<p>
+This will open up a new mail composition view, but it seems to use the default compose function instead of mu4e!  You may need to run <code>M-x mu4e-compose-mode</code> to set the buffer to use mu4e&rsquo;s behavior.
+</p>
+
+<p>
+One interesting aspect of the subtree function is that you can configure the e-mail using Org properties:
+</p>
+
+<pre>* Mail message
+:PROPERTIES:
+:MAIL_SUBJECT: I wrote this in Org Mode!
+:MAIL_TO: systemcrafters.test@gmail.com
+:MAIL_CC: person2@gmail.com
+:MAIL_BCC: person3@gmail.com
+:END:
+
+Here is the body of the message!</pre>
+
+<p>
+This would allow you to compose Org-formatted e-mails in advance and then send them when you are ready.
+</p>
+</div>
+
+<h2><a id="customizing-the-html-export-style" class="anchor" href="#customizing-the-html-export-style">¶</a>Customizing the HTML export style</h2><div class="outline-text-2" id="text-org2c9339c">
+<p>
+As you might have noticed, the exported e-mail has section numbers for headings.  We can turn that off!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-mime-export-options '(<span class="org-builtin">:section-numbers</span> nil
+                                <span class="org-builtin">:with-author</span> nil
+                                <span class="org-builtin">:with-toc</span> nil))</pre>
+
+<p>
+<code>org-mime</code> starts with Org&rsquo;s configured export options for HTML so your defaults may be different.
+</p>
+
+<p>
+We can also customize the styling of individual HTML elements inside of the message using <code>org-mime-html-hook</code>.  Here&rsquo;s an example of making all code blocks have a dark background and light text:
+</p>
+
+<pre>(add-hook 'org-mime-html-hook
+          (<span class="org-keyword">lambda</span> ()
+            (org-mime-change-element-style
+            <span class="org-string">"pre"</span> (format <span class="org-string">"color: %s; background-color: %s; padding: 0.5em;"</span>
+                          <span class="org-string">"#E6E1DC"</span> <span class="org-string">"#232323"</span>))))</pre>
+</div>
+
+<h2><a id="automatically-converting-mail-to-html" class="anchor" href="#automatically-converting-mail-to-html">¶</a>Automatically converting mail to HTML</h2><div class="outline-text-2" id="text-org41bd8db">
+<p>
+You can easily add a hook to do this conversion for you automatically:
+</p>
+
+<pre>(add-hook 'message-send-hook 'org-mime-htmlize)</pre>
+
+<p>
+Alternatively if you just want be reminded when you didn&rsquo;t use HTML, use <code>org-mime-confirm-when-no-multipart</code>:
+</p>
+
+<pre>(add-hook 'message-send-hook 'org-mime-confirm-when-no-multipart)</pre>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgc4869b3">
+<p>
+Next time we&rsquo;ll talk about how you can use Org Mode to manage your email processing workflow using capture templates!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

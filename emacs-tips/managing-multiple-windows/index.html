@@ -1,0 +1,378 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>How to Create and Manage Multiple Windows - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">How to Create and Manage Multiple Windows</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/-H2nU0rsUMY" allowfullscreen></iframe></div>
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+
+<h2><a id="windows-and-frames" class="anchor" href="#windows-and-frames">¶</a>Windows and Frames</h2><div class="outline-text-2" id="text-org6709848">
+<ul class="org-ul">
+<li>A &ldquo;window&rdquo; is a region within an Emacs frame that shows a particular buffer</li>
+<li>A &ldquo;frame&rdquo; is an Emacs program window at the level of your OS or desktop environment which can hold multiple windows</li>
+<li>Multiple windows can show the same buffer, but with different scroll, selection, etc</li>
+</ul>
+
+<p>
+Check out the Emacs manual entry for <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Windows.html#Windows">Multiple Windows</a>
+</p>
+</div>
+
+<h2><a id="basic-window-operations" class="anchor" href="#basic-window-operations">¶</a>Basic Window Operations</h2><div class="outline-text-2" id="text-orgd9760c7">
+<p>
+Each item lists the default Emacs binding followed by the evil-mode binding.  Note that many of the evil-mode bindings also allow you to use Ctrl with the second key in the sequence!
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>delete-window</code></td>
+<td class="org-left"><code>C-x 0</code></td>
+<td class="org-left">Close the current window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>delete-other-windows</code></td>
+<td class="org-left"><code>C-x 1</code></td>
+<td class="org-left">Close all other windows</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>split-window-below</code></td>
+<td class="org-left"><code>C-x 2</code></td>
+<td class="org-left">Split the current window horizonally</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>split-window-right</code></td>
+<td class="org-left"><code>C-x 3</code></td>
+<td class="org-left">Split the current window vertically</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>shrink-window-horizontally</code></td>
+<td class="org-left"><code>C-x {</code></td>
+<td class="org-left">Make the window smaller horizontally</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>enlarge-window-horizontally</code></td>
+<td class="org-left"><code>C-x }</code></td>
+<td class="org-left">Make the window bigger horizontally</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>shrink-window</code></td>
+<td class="org-left">None!</td>
+<td class="org-left">Shrink the window vertically</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>shrink-window-if-larger-than-buffer</code></td>
+<td class="org-left"><code>C-x -</code></td>
+<td class="org-left">Shrink the window vertically to buffer</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>balance-windows</code></td>
+<td class="org-left"><code>C-x +</code></td>
+<td class="org-left">Balance the sizes of all windows</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>TIP</b>: You can use <code>C-u</code> (<code>universal-argument</code>) and a numeric prefix before running the <code>shrink</code> and <code>enlarge</code> commands to dictate the mount by which the window is resized.
+</p>
+</div>
+
+<h3><a id="evil-mode-alternatives" class="anchor" href="#evil-mode-alternatives">¶</a>evil-mode alternatives</h3><div class="outline-text-3" id="text-orgd98a9a2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Key</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>evil-window-delete</code></td>
+<td class="org-left"><code>C-w C-c</code></td>
+<td class="org-left">Close the current window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>delete-other-windows</code></td>
+<td class="org-left"><code>C-w C-o</code></td>
+<td class="org-left">Close all other windows</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>evil-window-split</code></td>
+<td class="org-left"><code>C-w C-s</code></td>
+<td class="org-left">Split the current window horizontally</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>evil-window-vsplit</code></td>
+<td class="org-left"><code>C-w C-v</code></td>
+<td class="org-left">Split the current window vertically</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>evil-window-set-width</code></td>
+<td class="org-left"><code>C-w (pipe)</code></td>
+<td class="org-left">Use numeric prefix to set window width</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>evil-window-set-height</code></td>
+<td class="org-left"><code>C-w _</code></td>
+<td class="org-left">Use numeric prefix to set window height</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>balance-windows</code></td>
+<td class="org-left"><code>C-w =</code></td>
+<td class="org-left">Balance the sizes of all windows</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>TIP</b>: You can use a numeric argument before running <code>evil-window-set-width</code> and <code>evil-window-set-height</code> to specify the desired size of the window.
+</p>
+</div>
+
+<h2><a id="ldquoother-windowrdquo-operations" class="anchor" href="#ldquoother-windowrdquo-operations">¶</a>&ldquo;Other window&rdquo; operations</h2><div class="outline-text-2" id="text-orge3b0d2a">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Keys</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>other-window</code></td>
+<td class="org-left"><code>C-x o</code></td>
+<td class="org-left">Select the next visible window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>find-file-other-window</code></td>
+<td class="org-left"><code>C-x 4 f</code></td>
+<td class="org-left">Open a file in another window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dired-other-window</code></td>
+<td class="org-left"><code>C-x 4 d</code></td>
+<td class="org-left">Open Dired in another window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>dired-jump-other-window</code></td>
+<td class="org-left"><code>C-x 4 j</code></td>
+<td class="org-left">Open Dired in another window at location of file</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>scroll-other-window</code></td>
+<td class="org-left"><code>M-pgdn</code></td>
+<td class="org-left">Scroll the other window down without focusing it</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>scroll-other-window-down</code></td>
+<td class="org-left"><code>M-pgup</code></td>
+<td class="org-left">Scroll the other window up without focusing it</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3><a id="evil-mode-alternatives" class="anchor" href="#evil-mode-alternatives">¶</a>evil-mode alternatives</h3><div class="outline-text-3" id="text-org491b9bb">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Keys</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>evil-window-next</code></td>
+<td class="org-left"><code>C-w C-w</code></td>
+<td class="org-left">Select the next visible window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>evil-window-prev</code></td>
+<td class="org-left"><code>C-w W</code></td>
+<td class="org-left">Select the previous visible window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ffap-other-window</code></td>
+<td class="org-left"><code>C-w C-f</code></td>
+<td class="org-left">Open a file in another window</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h4><a id="more-codeother-windowcode-commands" class="anchor" href="#more-codeother-windowcode-commands">¶</a>More <code>other-window</code> commands</h4><div class="outline-text-4" id="text-org6236b4f">
+<p>
+Learn about more <code>other-window</code> commands:
+</p>
+
+<ul class="org-ul">
+<li>Check out the <code>C-x 4</code> prefix with <code>which-key</code>!</li>
+<li>Also, use <code>counsel-M-x</code> and search for any commands with <code>other-window</code> in the name!</li>
+</ul>
+</div>
+
+<h2><a id="defaulting-to-vertical-splits" class="anchor" href="#defaulting-to-vertical-splits">¶</a>Defaulting to vertical splits</h2><div class="outline-text-2" id="text-org6b95be6">
+<p>
+You can default to vertical splits for &ldquo;other windows&rdquo; with the following config:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> split-height-threshold nil)
+(<span class="org-keyword">setq</span> split-width-threshold 0)</pre>
+
+<p>
+More information about controlling <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Choosing-Window-Options.html">how buffers are displayed</a> in the Emacs manual.
+</p>
+</div>
+
+<h2><a id="windmove-for-moving-between-windows" class="anchor" href="#windmove-for-moving-between-windows">¶</a>Windmove for moving between windows</h2><div class="outline-text-2" id="text-orgc032e60">
+<p>
+Windmove comes with Emacs, but is missing some features in Emacs 26.
+</p>
+
+<ul class="org-ul">
+<li><code>windmove-up/down/left/right</code> - Focus the window next to the current in the specified direction</li>
+<li><code>windmove-swap-states-up/down/left/right</code> - &ldquo;Move&rdquo; the current buffer to the window in the specified direction</li>
+</ul>
+</div>
+
+<h3><a id="evil-mode-equivalents" class="anchor" href="#evil-mode-equivalents">¶</a>evil-mode equivalents</h3><div class="outline-text-3" id="text-orga5c3373">
+<p>
+evil-mode provides its own functions for moving between windows:
+</p>
+
+<ul class="org-ul">
+<li><code>evil-window-left</code> - <code>C-w h</code></li>
+<li><code>evil-window-right</code> - <code>C-w l</code></li>
+<li><code>evil-window-up</code> - <code>C-w k</code></li>
+<li><code>evil-window-down</code> - <code>C-w j</code></li>
+</ul>
+</div>
+
+<h2><a id="buffer-move-or-moving-buffers-between-windows" class="anchor" href="#buffer-move-or-moving-buffers-between-windows">¶</a>buffer-move or moving buffers between windows</h2><div class="outline-text-2" id="text-org0fd8468">
+<p>
+Use <code>buffer-move</code> for a more general solution:
+</p>
+
+<ul class="org-ul">
+<li><code>buf-move</code>: Turn on a mode where you can move the current buffer around with arrow keys, any other key finishes it</li>
+<li><code>buf-move-left</code></li>
+<li><code>buf-move-right</code></li>
+<li><code>buf-move-up</code></li>
+<li><code>buf-move-down</code></li>
+</ul>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">buffer-move</span>)</pre>
+</div>
+
+<h2><a id="winner-mode" class="anchor" href="#winner-mode">¶</a>winner-mode</h2><div class="outline-text-2" id="text-orgf2a5059">
+<p>
+<code>winner-mode</code> provides useful functions for undoing and redoing window configurations:
+</p>
+
+<ul class="org-ul">
+<li><code>winner-undo</code> (<code>C-c left</code> or <code>C-w u</code> bound below)</li>
+<li><code>winner-redo</code> (<code>C-c right</code> or <code>C-w U</code> bound below)</li>
+</ul>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">winner-mode</span>
+  <span class="org-builtin">:ensure</span> nil
+  <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> evil-window-map
+         (<span class="org-string">"u"</span> . winner-undo)
+         (<span class="org-string">"U"</span> . winner-redo))
+  <span class="org-builtin">:config</span>
+  (winner-mode))</pre>
+</div>
+
+<h2><a id="packages-for-moving-between-windows" class="anchor" href="#packages-for-moving-between-windows">¶</a>Packages for moving between windows</h2><h3><a id="ace-window" class="anchor" href="#ace-window">¶</a>ace-window</h3><div class="outline-text-3" id="text-orge5790a0">
+<p>
+<a href="https://github.com/abo-abo/ace-window">ace-window</a> makes it easy to jump between visible windows in your Emacs frame, just run the <code>ace-window</code> command and press the number displayed in the upper left corner of the window you want to switch to.  It also enables you to swap, delete, and move windows using similar functionality.
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">ace-window</span>)</pre>
+
+<p>
+Tip from <b>Cedrif Daf</b>: Set <code>aw-keys</code> to home-row keys for more convenience:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))</pre>
+</div>
+
+<h3><a id="winum-mode" class="anchor" href="#winum-mode">¶</a>winum-mode</h3><div class="outline-text-3" id="text-org5574276">
+<p>
+This mode shows numbers in your windows&rsquo; mode lines to tell you what keys you can press after using the key binding <code>C-x w</code>.  Check out the <a href="https://github.com/deb0ch/emacs-winum">winum-mode</a> page for more useful tips!
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">winum</span>
+  <span class="org-builtin">:config</span>
+  (winum-mode))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

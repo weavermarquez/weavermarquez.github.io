@@ -1,0 +1,93 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Crafting a Configuration Site Generator in Emacs - Part 1 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Crafting a Configuration Site Generator in Emacs - Part 1</h1><p class="site-post-meta">October 28, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/zMzkorlfqLA" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgf70ee52">
+<ul class="org-ul">
+<li>Jeff Bowman will be speaking at the EmacsATX meetup <b>Next Wednesday, Nov 2</b> about Crafted Emacs and his work on the <code>crafted-mastering-emacs</code> module! <a href="https://www.meetup.com/emacsatx/events/sstqrsydcpbdb/">https://www.meetup.com/emacsatx/events/sstqrsydcpbdb/</a></li>
+
+<li><p>
+Next week is the yearly GitHub Game Off competition.  It&rsquo;s a month-long game jam which will give me a lot more time to hack on a small game with <a href="https://github.com/mesche-lang/compiler">Mesche</a>!
+</p>
+
+<p>
+Keep an eye on the <b>Flux Harmonic</b> <a href="https://youtube.com/FluxHarmonicLive">YouTube</a> and <a href="https://twitch.tv/FluxHarmonicLive">Twitch</a> channels (FluxHarmonicLive on both), I&rsquo;ll be streaming my work there occasionally.
+</p></li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="crafting-a-configuration-site-generator-in-emacs" class="anchor" href="#crafting-a-configuration-site-generator-in-emacs">¶</a>Crafting a Configuration Site Generator in Emacs</h2><div class="outline-text-2" id="text-orgdc8b9e8">
+<p>
+I&rsquo;ve been saying for a long time that I want to simplify my configuration and eliminate the literate-style Org files that generate my entire configuration.  However, I still want to produce a really nice site from my config files which documents them!
+</p>
+
+<p>
+For the next few streams, I&rsquo;d like to focus on building such a site generator with Emacs so that I can finally get my entire configuration up to date on <a href="https://config.daviwil.com">https://config.daviwil.com</a>.
+</p>
+
+<p>
+Check out <b>Hawk</b>, a package that has inspired me to try to come up with my own approach for this:
+</p>
+
+<p>
+<a href="https://migrev-dolseg.com/hawk/README.html">https://migrev-dolseg.com/hawk/README.html</a>
+</p>
+</div>
+
+<h3><a id="why" class="anchor" href="#why">¶</a>Why?</h3><div class="outline-text-3" id="text-org6caeb6d">
+<ul class="org-ul">
+<li><p>
+<b>Why drop Org-based config?</b>
+</p>
+
+<p>
+I&rsquo;m tired of having to tangle when syncing config between machines.  I also want to treat my configuration as code because I intend to move more of my config to <b>Guix Home</b>!
+</p></li>
+
+<li><p>
+<b>Why not just use a normal repo website like GitHub or SourceHut?</b>
+</p>
+
+<p>
+It&rsquo;s a good idea, but I&rsquo;d like to have more control over how everything is presented.
+</p></li>
+</ul>
+</div>
+
+<h3><a id="desired-features" class="anchor" href="#desired-features">¶</a>Desired Features</h3><div class="outline-text-3" id="text-orgc940dfa">
+<ul class="org-ul">
+<li class="on"><code>[X]</code> Use the same syntax highlighting as I do in my configuration (or at least a specific Emacs theme)</li>
+<li>Linkable line numbers</li>
+<li><i>Possibly</i> generate &ldquo;permalink&rdquo; folders for older commits</li>
+<li>Some basic method of formatting the contents of comments in code files, including links to other files</li>
+<li>Basic file tree pages and header/footer for navigation</li>
+<li>Possibly extract defined function names or comment heading to generate a table of contents</li>
+<li>It should also be good for generating literate documentation sites for code projects!</li>
+</ul>
+</div>
+
+<h3><a id="the-plan" class="anchor" href="#the-plan">¶</a>The Plan</h3><div class="outline-text-3" id="text-org300160f">
+<p>
+Here&rsquo;s the rough idea:
+</p>
+
+<ul class="org-ul">
+<li>Use <code>htmlize</code>, <code>htmlfontify</code> or another similar package to generate HTML from code files</li>
+<li>Use <code>dom.el</code> to edit the HTML output to extract the body</li>
+<li>Use <code>esxml</code> to generate the outer layout of the pages</li>
+<li>Possibly use normal Org Export to export any <code>.org</code> files which can be used as entrypoints or commentary files</li>
+</ul>
+</div>
+
+<h3><a id="the-name" class="anchor" href="#the-name">¶</a>The Name</h3><div class="outline-text-3" id="text-org6f4079a">
+<p>
+Help me come up with something!
+</p>
+
+<ul class="org-ul">
+<li>configweaver</li>
+<li><b>dotweaver</b></li>
+<li>dotvanity</li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

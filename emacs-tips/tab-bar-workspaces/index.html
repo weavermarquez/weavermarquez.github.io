@@ -1,0 +1,80 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Organize Your Windows with the Tab Bar Emacs 27 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Organize Your Windows with the Tab Bar Emacs 27</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/C7ZlNRbWdVI" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-is-it" class="anchor" href="#what-is-it">¶</a>What is it?</h2><div class="outline-text-2" id="text-org20f0d90">
+<ul class="org-ul">
+<li>New feature in Emacs 27</li>
+<li>Manage window configurations as &ldquo;tabs&rdquo;</li>
+<li>Basically provides support for workspaces in Emacs!</li>
+<li>Different than <code>tab-line-mode</code></li>
+</ul>
+
+<p>
+Manual: <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html">https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html</a>
+</p>
+</div>
+
+<h2><a id="how-is-it-useful" class="anchor" href="#how-is-it-useful">¶</a>How is it useful?</h2><div class="outline-text-2" id="text-orgd0e4b11">
+<ul class="org-ul">
+<li>Separate workspaces for different tasks</li>
+<li>One tab per project</li>
+<li>A tab for your Org notes and agenda, split vertically</li>
+<li>A tab for chat or ERC</li>
+</ul>
+</div>
+
+<h2><a id="basic-usage" class="anchor" href="#basic-usage">¶</a>Basic Usage</h2><div class="outline-text-2" id="text-org3ee4414">
+<ul class="org-ul">
+<li><code>tab-bar-mode</code> - Enable display of the tab bar</li>
+<li><code>tab-new</code> (<code>C-x t 2</code>) - Create a new tab</li>
+<li><code>tab-next</code> (<code>C-x t o</code>, evil: <code>g t</code>) - Move to the next tab (also known as <code>tab-bar-switch-to-next-tab</code>)</li>
+<li><code>tab-bar-switch-to-prev-tab</code> (evil: <code>g T</code>) - Switch to the previous tab</li>
+<li><code>tab-rename</code> (<code>C-x t r</code>) - Rename the current tab (or numbered tab with prefix arg)</li>
+<li><code>tab-close</code> (<code>C-x t 0</code>) - Close the current tab</li>
+<li><code>tab-close-other</code> (<code>C-x t 1</code>) - Close other tabs</li>
+<li><code>tab-bar-undo-close-tab</code> - Reopen the last closed tab</li>
+<li><code>tab-move</code> (<code>C-x t m</code>) - Move the current tab to the right (or left with negative prefix)</li>
+<li><code>tab-bar-select-tab-by-name</code> (<code>C-x t RET</code>) - Select tab by name using completion</li>
+</ul>
+</div>
+
+<h2><a id="configuring-operation" class="anchor" href="#configuring-operation">¶</a>Configuring operation</h2><div class="outline-text-2" id="text-org0fd738f">
+<ul class="org-ul">
+<li><code>tab-bar-new-tab-choice</code> - The name of a buffer or file to display in new tabs</li>
+<li><code>tab-bar-new-tab-to</code> - Where to place new tabs (left or right of current) - Also a function!</li>
+<li><code>tab-bar-tab-name-function</code> - Control how new tabs are named (can prompt for a name!)</li>
+</ul>
+
+<pre>(<span class="org-keyword">setq</span> tab-bar-new-tab-choice <span class="org-string">"*scratch*"</span>)</pre>
+</div>
+
+<h2><a id="configuring-tab-bar-appearance" class="anchor" href="#configuring-tab-bar-appearance">¶</a>Configuring tab-bar appearance</h2><div class="outline-text-2" id="text-org938acef">
+<ul class="org-ul">
+<li><code>tab-bar-close-button-show</code> - Show or hide the close button</li>
+<li><code>tab-bar-new-button-show</code> - Show or hide the new button at the end</li>
+<li><code>tab-bar-button-relief</code> - Control pixel width of tab bar button appearance</li>
+
+<li><code>tab-bar</code> face - customize text of tabs</li>
+<li><code>tab-bar-tab</code> face - customize the color of the active tab</li>
+<li><code>tab-bar-tab-inactive</code> face - customize the color of inactive tabs</li>
+</ul>
+
+<pre>(<span class="org-keyword">setq</span> tab-bar-close-button-show nil
+      tab-bar-new-button-show nil)</pre>
+</div>
+
+<h2><a id="using-tab-bar-mode-without-showing-the-bar" class="anchor" href="#using-tab-bar-mode-without-showing-the-bar">¶</a>Using tab-bar-mode without showing the bar</h2><div class="outline-text-2" id="text-org638238c">
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Don't turn on tab-bar-mode when tabs are created</span>
+(<span class="org-keyword">setq</span> tab-bar-show nil)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Get the current tab name for use in some other display</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/current-tab-name</span> ()
+  (alist-get 'name (tab-bar--current-tab)))</pre>
+
+<p>
+One downside to this is that <code>doom-modeline</code> (currently) stops showing the tab name in the mode line when <code>tab-bar-mode</code> isn&rsquo;t turned on.
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,228 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Chat Like the 90&rsquo;s in Emacs with ERC - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Chat Like the 90&rsquo;s in Emacs with ERC</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/qWHTZIYTA4s" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="yet-another-thing-emacs-can-do" class="anchor" href="#yet-another-thing-emacs-can-do">¶</a>Yet another thing Emacs can do!</h2><div class="outline-text-2" id="text-org98474ab">
+<p>
+If you haven&rsquo;t already heard, it&rsquo;s possible to do yet another thing in Emacs that you might already be doing on a daily basis using some other set of programs.  We&rsquo;ve already seen on this channel that you can use Emacs for your e-mail, so it probably won&rsquo;t come as a surprise that you can also use Emacs as a chat client!
+</p>
+
+<p>
+In this episode show you the basics of using the IRC chat protocol with Emacs&rsquo; built-in client called ERC so that you can chat with other people from the comfort of your Emacs window!
+</p>
+</div>
+
+<h2><a id="what-is-irc" class="anchor" href="#what-is-irc">¶</a>What is IRC?</h2><div class="outline-text-2" id="text-org7a11813">
+<p>
+Internet Relay Chat, commonly known as IRC, is a protocol that enables real-time chat across a number of servers that are connected together to form something called an IRC network.  You might have heard of Freenode, EFNet, DALnet, and many other popular IRC networks.
+</p>
+
+<p>
+If you&rsquo;re not familiar with IRC, you can think of it like a Slack or Discord server; you join a server on a particular IRC network and there are a bunch of channels that you can join to chat about a variety of topics.  One difference though is that you must join the channels you want to participate in. You also don&rsquo;t see the history of a channel when you join it like you do in Slack or Discord; I&rsquo;ll show some ways to fix that in a future video.
+</p>
+
+<p>
+The nice thing about IRC is that it&rsquo;s an open protocol which means there are an incredible number of clients available for it on the Internet.  What&rsquo;s even better is that can join a server right now with no account creation necessary using packages that are already included with Emacs!
+</p>
+
+<p>
+We&rsquo;re going to take a look at one of them today: ERC.
+</p>
+</div>
+
+<h2><a id="what-is-erc" class="anchor" href="#what-is-erc">¶</a>What is ERC?</h2><div class="outline-text-2" id="text-org854407f">
+<p>
+ERC is a featureful and extensible IRC client written in Emacs Lisp.  It&rsquo;s not the only IRC client that comes with Emacs (see rcirc) but it&rsquo;s probably the one that you&rsquo;ll want to use long-term if you stick with in-box clients.
+</p>
+
+<p>
+<b>Useful Features</b>
+</p>
+
+<ul class="org-ul">
+<li>Connect to multiple servers at once</li>
+<li>Can complete the names of other users while typing</li>
+<li>Highlighting for your name or other terms in messages</li>
+<li>Channel tracking to show channel activity in the mode line</li>
+<li>Show emojis in messages</li>
+<li>Desktop notifications when mentioned or messaged (enabled as a module)</li>
+<li>Easy to script it with new behavior!</li>
+</ul>
+
+<p>
+One nice thing about it is that you don&rsquo;t really even need to configure it to use it, you can run it right out of the box!
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/erc.html">ERC Manual</a>
+</p>
+</div>
+
+<h2><a id="joining-a-server" class="anchor" href="#joining-a-server">¶</a>Joining a server</h2><div class="outline-text-2" id="text-org1612561">
+<p>
+Joining a server with ERC is very easy, you can just run <code>M-x erc-tls</code> to connect to a particular IRC server address and you&rsquo;ll be prompted for your &ldquo;nickname&rdquo; (the name you will use on the server) and your password.  You can skip the password prompt since you may not have an account yet!
+</p>
+
+<p>
+You can also use <code>M-x erc</code> but I <b>highly</b> recommend connecting using <code>M-x erc-tls</code> if the server supports SSL/TLS to ensure that you make a secure connection to the server!  This is very important for protecting the passwords you transmit to the server.
+</p>
+
+<p>
+I recommend joining the <a href="https://libera.chat/">Libera.Chat</a> server at <code>irc.libera.chat</code>.  Official chat rooms for many free and open source projects you know are there (<code>#emacs</code>, <code>#guix</code>, <code>#sr.ht</code>) and you can also join the <code>#systemcrafters</code> channel!
+</p>
+
+<p>
+Let&rsquo;s do that now!
+</p>
+</div>
+
+<h2><a id="joining-a-channel" class="anchor" href="#joining-a-channel">¶</a>Joining a channel</h2><div class="outline-text-2" id="text-org6687621">
+<p>
+Once you&rsquo;ve connected to a server, you can join a channel by typing the following command:
+</p>
+
+<pre>/join #systemcrafters</pre>
+
+<p>
+After you join the channel, a new buffer will appear in Emacs for that channel with the channel&rsquo;s name as the buffer name.  You can switch to this buffer at any time to read the chat or send messages.  Let&rsquo;s try typing a message to see if anyone responds!
+</p>
+
+<p>
+You&rsquo;ll probably notice that things look pretty minimal compared to more modern chat programs: no images, no profile icons, no emojis, etc.  Some of these things can be added with extension modules, though!
+</p>
+</div>
+
+<h2><a id="leaving-a-channel" class="anchor" href="#leaving-a-channel">¶</a>Leaving a channel</h2><div class="outline-text-2" id="text-orge926ffc">
+<p>
+If you ever want to leave a channel, you can use the <code>/part</code> command:
+</p>
+
+<pre>/part</pre>
+
+<p>
+You can also leave a specific channel by passing the channel name to <code>/part</code>.
+</p>
+</div>
+
+<h2><a id="listing-available-channels" class="anchor" href="#listing-available-channels">¶</a>Listing available channels</h2><div class="outline-text-2" id="text-orgb90cc5e">
+<p>
+You can get a list of all the channels on your IRC server by typing the <code>/list</code> command:
+</p>
+
+<pre>/list</pre>
+
+<p>
+ERC will show a new buffer with a listing of all the available channels in the server.  Since this is a normal Emacs buffer you can use your normal search key bindings to find channels with a particular string in the name or &ldquo;topic.&rdquo;
+</p>
+</div>
+
+<h2><a id="finding-more-details-about-a-user" class="anchor" href="#finding-more-details-about-a-user">¶</a>Finding more details about a user</h2><div class="outline-text-2" id="text-orgae3108e">
+<p>
+You can get a little bit more information about a particular user with the <code>/whois</code> command:
+</p>
+
+<pre>/whois daviwil</pre>
+
+<p>
+This can return information like:
+</p>
+
+<ul class="org-ul">
+<li>Their full name (if they provide it)</li>
+<li>The IRC node they are connected to</li>
+<li>The channels they are in</li>
+<li>Their IP address or &ldquo;cloak&rdquo;</li>
+</ul>
+</div>
+
+<h2><a id="sending-someone-a-private-message" class="anchor" href="#sending-someone-a-private-message">¶</a>Sending someone a private message</h2><div class="outline-text-2" id="text-orga9d2844">
+<p>
+You can send someone a private message a couple of different ways.  The most convenient way is to use the <code>/query</code> command:
+</p>
+
+<pre>/query daviwil</pre>
+
+<p>
+This will open a new Emacs buffer for the private conversation between you and the recipient.  You can type any message into this buffer and press RET to send the message.  Replies from the user will also be written to the buffer.
+</p>
+
+<p>
+You can also use the <code>/msg</code> command to send a one-time message without opening a new buffer:
+</p>
+
+<pre>/msg daviwil Hello there!</pre>
+
+<p>
+If the user responds, a query buffer will be opened!
+</p>
+</div>
+
+<h2><a id="changing-your-nickname" class="anchor" href="#changing-your-nickname">¶</a>Changing your Nickname</h2><div class="outline-text-2" id="text-org9f993ef">
+<p>
+If you aren&rsquo;t satisfied with the name you chose when you joined the server, you can use the <code>/nick</code> command to change your name:
+</p>
+
+<pre>/nick daviwil-x</pre>
+
+<p>
+Users across all the channels you&rsquo;re in will now see you as the new name!
+</p>
+</div>
+
+<h2><a id="quitting-the-irc-server" class="anchor" href="#quitting-the-irc-server">¶</a>Quitting the IRC server</h2><div class="outline-text-2" id="text-orgb50de75">
+<p>
+If you&rsquo;d like to quit the server, use the <code>/quit</code> command.  You can also add a message which will be seen by everyone in the chat rooms you&rsquo;re currently in when you leave:
+</p>
+
+<pre>/quit See you all later!</pre>
+</div>
+
+<h2><a id="reconnecting-to-the-server" class="anchor" href="#reconnecting-to-the-server">¶</a>Reconnecting to the server</h2><div class="outline-text-2" id="text-org13f38ee">
+<p>
+If you want to reconnect to the IRC server, you can use the <code>/reconnect</code> command inside of a buffer for that server, like one of the chat windows:
+</p>
+
+<pre>/reconnect</pre>
+
+<p>
+<b>NOTE:</b> You might need to do this if you use a laptop and it wakes up from sleep!  ERC doesn&rsquo;t do a good job of reconnecting reliably for me in this case so I have to reconnect manually pretty often.
+</p>
+</div>
+
+<h2><a id="a-basic-erc-configuration" class="anchor" href="#a-basic-erc-configuration">¶</a>A basic ERC configuration</h2><div class="outline-text-2" id="text-org53734a7">
+<p>
+Here&rsquo;s a basic ERC configuration you can use to get started:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> erc-server <span class="org-string">"irc.libera.chat"</span>
+      erc-nick <span class="org-string">"your-favorite-nick"</span>    <span class="org-comment-delimiter">; </span><span class="org-comment">Change this!</span>
+      erc-user-full-name <span class="org-string">"Emacs User"</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">And this!</span>
+      erc-track-shorten-start 8
+      erc-autojoin-channels-alist '((<span class="org-string">"irc.libera.chat"</span> <span class="org-string">"#systemcrafters"</span> <span class="org-string">"#emacs"</span>))
+      erc-kill-buffer-on-part t
+            erc-auto-query 'bury)</pre>
+
+<p>
+This will set your user details, default server, and channels to join upon connecting.  It will also control how some buffers get created or closed when you leave channels or receive messages from other users!
+</p>
+
+<p>
+In future videos I&rsquo;ll show some modules you can enable to improve your experience even further!
+</p>
+</div>
+
+<h2><a id="want-to-try-it-out--come-chat-with-us" class="anchor" href="#want-to-try-it-out--come-chat-with-us">¶</a>Want to try it out?  Come chat with us!</h2><div class="outline-text-2" id="text-org8590d5b">
+<p>
+System Crafters community member <a href="https://github.com/shombando">Shom</a> wrote up some helpful tips on the wiki that you might find useful!
+</p>
+
+<p>
+<a href="https://systemcrafters.net/community/#chat-with-us">Chat with us</a>
+</p>
+
+<p>
+Also, if you&rsquo;re a long-time IRC user, feel free to leave a note in the comments with some of your favorite IRC tips!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

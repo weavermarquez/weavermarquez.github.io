@@ -1,0 +1,132 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Exploring the Org Roam DB API - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Exploring the Org Roam DB API</h1><p class="site-post-meta">September  3, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/fWmZoaTvA8k" allowfullscreen></iframe></div><div id="content">
+<h2><a id="system-crafters-store-update" class="anchor" href="#system-crafters-store-update">¶</a>System Crafters Store Update</h2><div class="outline-text-2" id="text-org028e854">
+<ul class="org-ul">
+<li>The first orders from the new System Crafters Store should be arriving in the next few days!</li>
+<li>I want to see what you got!  Post in #general on the System Crafters Discord or tag @SystemCrafters on Twitter</li>
+<li>Also, let me know what you think about the item quality</li>
+<li>Those who checked out the site, please send me feedback!</li>
+</ul>
+
+<p>
+<a href="https://store.systemcrafters.net">https://store.systemcrafters.net</a>
+</p>
+</div>
+
+<h2><a id="news" class="anchor" href="#news">¶</a>News</h2><div class="outline-text-2" id="text-org1de755c">
+<ul class="org-ul">
+<li>The first EXWM hacking stream went great!</li>
+<li>New video next week</li>
+<li>Don&rsquo;t forget to submit a proposal for EmacsConf 2021!  Deadline Sep 30 - <a href="https://emacsconf.org/2021/cfp/">https://emacsconf.org/2021/cfp/</a></li>
+<li>Sponsors, check your transactions</li>
+</ul>
+</div>
+
+<h2><a id="exploring-the-org-roam-db-api" class="anchor" href="#exploring-the-org-roam-db-api">¶</a>Exploring the Org Roam DB API</h2><div class="outline-text-2" id="text-orgc771255">
+<p>
+Today we&rsquo;ll take a look at the <code>org-roam-db-query</code> function which allows us to gather information about our notes and their connections to other notes.
+</p>
+
+<p>
+This API actually queries a local SQLite database!  We may have to look at the docs for <code>emacsql</code> to learn more of the options.
+</p>
+
+<pre>(<span class="org-keyword">require</span> '<span class="org-constant">org-roam-node</span>)</pre>
+</div>
+
+<h2><a id="checking-out-the-db-schema" class="anchor" href="#checking-out-the-db-schema">¶</a>Checking out the DB schema</h2><div class="outline-text-2" id="text-org4d84748">
+<p>
+Take a look at <code>org-roam-db.el</code>, find the comment labelled &ldquo;Schemata&rdquo; (line 144).
+</p>
+
+<p>
+There are functions for accessing columns like <code>org-roam-node-tags</code>.
+</p>
+</div>
+
+<h2><a id="querying-for-nodes" class="anchor" href="#querying-for-nodes">¶</a>Querying for nodes</h2><div class="outline-text-2" id="text-org3a81e81">
+<p>
+There are a few useful ways to do this:
+</p>
+
+<ul class="org-ul">
+<li><code>org-roam-node-read</code>: Show a completion list, potentially filtered, returning selected node</li>
+<li><code>org-roam-node-at-point</code>: Figure out which node is represented by where the cursor is</li>
+<li><code>org-roam-db-query</code>: Query the database directly using SQL-like syntax</li>
+</ul>
+
+<p>
+There are other useful functions in <code>org-roam-db.el</code> that we might look at if we have time!
+</p>
+
+<p>
+<a href="https://www.orgroam.com/manual.html#Accessing-and-Modifying-Nodes">Org Roam Manual: Accessing and Modifying Nodes</a>
+</p>
+</div>
+
+<h2><a id="show-a-completion-list-of-nodes-with-specific-tag" class="anchor" href="#show-a-completion-list-of-nodes-with-specific-tag">¶</a>Show a completion list of nodes with specific tag</h2><div class="outline-text-2" id="text-org807a1ff">
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">my/org-roam-select-language</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (org-roam-node-read
+   nil
+   (<span class="org-keyword">lambda</span> (node)
+     (member <span class="org-string">"Language"</span> (org-roam-node-tags node)))
+   (<span class="org-keyword">lambda</span> (completion-a completion-b)
+     (&lt; (length (org-roam-node-title (cdr completion-a)))
+        (length (org-roam-node-title (cdr completion-b)))))
+   t))</pre>
+</div>
+
+<h2><a id="build-an-agenda-from-tagged-nodes" class="anchor" href="#build-an-agenda-from-tagged-nodes">¶</a>Build an agenda from tagged nodes</h2><div class="outline-text-2" id="text-org8e07daf">
+<pre>(<span class="org-keyword">require</span> '<span class="org-constant">seq</span>)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/org-roam-get-project-notes</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (mapcar
+   #'org-roam-node-file
+   (seq-filter
+    (<span class="org-keyword">lambda</span> (node)
+      (member <span class="org-string">"Project"</span> (org-roam-node-tags node)))
+    (org-roam-node-list))))
+
+(<span class="org-keyword">setq</span> org-directory <span class="org-string">"~/RoamFiles"</span>)
+(<span class="org-keyword">setq</span> org-agenda-files (my/org-roam-get-project-notes))</pre>
+</div>
+
+<h2><a id="build-an-agenda-from-projects-linked-to-a-node" class="anchor" href="#build-an-agenda-from-projects-linked-to-a-node">¶</a>Build an agenda from projects linked to a node</h2><div class="outline-text-2" id="text-orgf3c7ef7">
+<p>
+EmacSQL readme: <a href="https://github.com/skeeto/emacsql">https://github.com/skeeto/emacsql</a>
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">my/org-roam-show-linked-agenda</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((node (org-roam-node-read))
+        (org-agenda-files))
+    (<span class="org-keyword">setq</span> org-agenda-files
+        (cons (org-roam-node-file node)
+            (mapcar
+                (<span class="org-keyword">lambda</span> (res)
+                (org-roam-node-file (org-roam-node-from-id (car res))))
+                (org-roam-db-query
+                    [<span class="org-builtin">:select</span> <span class="org-builtin">:distinct</span> [dest]
+                        <span class="org-builtin">:from</span> links
+                        <span class="org-builtin">:where</span> (= source $s1)
+                        <span class="org-builtin">:and</span> (= type <span class="org-string">"id"</span>)]
+                    (org-roam-node-id node)))))
+    (org-agenda)))</pre>
+</div>
+
+<h2><a id="adding-information-to-the-node-completion-list" class="anchor" href="#adding-information-to-the-node-completion-list">¶</a>Adding information to the node completion list</h2><div class="outline-text-2" id="text-org1a21f3e">
+<p>
+Showing node TODO state:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-roam-node-display-template <span class="org-string">"${title:*} ${todo:10} ${tags:20}"</span>)</pre>
+
+<p>
+Showing node deadline:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-roam-node-display-template <span class="org-string">"${title:*} Deadline: ${deadline:10} ${tags:20}"</span>)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

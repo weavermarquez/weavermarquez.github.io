@@ -1,0 +1,331 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>5 Reasons to Try GNU Guix in 2022 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">5 Reasons to Try GNU Guix in 2022</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/7ZdMRLPZhFs" allowfullscreen></iframe></div><div id="content">
+<h2><a id="what-is-gnu-guix" class="anchor" href="#what-is-gnu-guix">¶</a>What is GNU Guix?</h2><div class="outline-text-2" id="text-orgb4a4af9">
+<p>
+Guix is a package manager and system configuration tool which enables you to safely and repeatably install software and an entire GNU/Linux environment on your computer.
+</p>
+
+<p>
+To be more specific, it is a <i>functional package manager</i> (inspired by <a href="https://nixos.org/">Nix</a>) which can make transactional changes to your system configuration.  This &ldquo;functional&rdquo; model ensures that any configuration you apply will always have the same result when given a particular set of inputs.  Also, every change can be rolled back to a previous configuration if something goes wrong.
+</p>
+
+<p>
+One interesting aspect of GNU Guix for the Lisp enthusiasts out there is that the entire tool is written and configured with Guile Scheme, so you can almost think of this as the Emacs of Linux distributions.
+</p>
+
+<p>
+Read more about this model in the <a href="https://guix.gnu.org/manual/en/html_node/Managing-Software-the-Guix-Way.html">Guix Manual</a>!
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="follow-along" class="anchor" href="#follow-along">¶</a>Follow along!</h2><div class="outline-text-2" id="text-orgddc1156">
+<p>
+In this video I&rsquo;ll demonstrate a few Guix features using a virtual machine.  If you&rsquo;d like to follow along, you can find instructions on how to set up a standard Guix VM image <a href="https://guix.gnu.org/manual/en/html_node/Running-Guix-in-a-VM.html">in the Guix manual</a>.
+</p>
+
+<p>
+If you want to get started quickly on a Linux system with QEMU installed, you might be able to run these commands:
+</p>
+
+<pre>wget -O ~/Downloads/guix-vm.qcow2 https://ftp.gnu.org/gnu/guix/guix-system-vm-image-1.3.0.x86_64-linux.qcow2 --show-progress
+
+qemu-system-x86_64 <span class="org-sh-escaped-newline">\</span>
+  -nic user,<span class="org-variable-name">model</span>=virtio-net-pci <span class="org-sh-escaped-newline">\</span>
+  -enable-kvm -m 2048 <span class="org-sh-escaped-newline">\</span>
+  -device virtio-blk,<span class="org-variable-name">drive</span>=guix-demo <span class="org-sh-escaped-newline">\</span>
+  -drive <span class="org-variable-name">if</span>=none,<span class="org-variable-name">file</span>=$<span class="org-variable-name">HOME</span>/Downloads/guix-vm.qcow2,<span class="org-variable-name">id</span>=guix-demo</pre>
+</div>
+
+<h2><a id="1-yoursquoll-never-lose-your-configuration-again" class="anchor" href="#1-yoursquoll-never-lose-your-configuration-again">¶</a>1. You&rsquo;ll never lose your configuration again</h2><div class="outline-text-2" id="text-orgba0dbc3">
+<p>
+In other GNU/Linux distributions, you install your system and then manually make changes to the configuration:
+</p>
+
+<ul class="org-ul">
+<li>Installing packages</li>
+<li>Adding user accounts</li>
+<li>Tweaking configuration files</li>
+<li>Configuring system services</li>
+<li>Setting up your user configuration (dotfiles)</li>
+</ul>
+
+<p>
+GNU Guix allows you to describe your <i>entire</i> system configuration using a declarative syntax.  This enables you to manage your whole configuration using a single file and then check it into source control so that you never lose it!
+</p>
+
+<p>
+Typically the process is to start with a configuration file generated from Guix&rsquo; &ldquo;graphical installer&rdquo; or one you&rsquo;ve found online, install it on your system, and then tweak it to your liking.
+</p>
+
+<p>
+Whether you want to install or update your system, it&rsquo;s the same command:
+</p>
+
+<pre>sudo guix system reconfigure config.scm</pre>
+
+<p>
+You can always find the current system configuration at <code>/run/current-system/configuration.scm</code> but I recommend keeping your own copy of your system configuration file that you check into source control.
+</p>
+
+<p>
+Let&rsquo;s add a new user to the system configuration:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">... starts at line 62 ...</span>
+
+(users (cons* (user-account
+               (name <span class="org-string">"guest"</span>)
+               (comment <span class="org-string">"GNU Guix Live"</span>)
+               (password <span class="org-string">""</span>)            <span class="org-comment-delimiter">;</span><span class="org-comment">no password</span>
+               (group <span class="org-string">"users"</span>)
+               (supplementary-groups '(<span class="org-string">"wheel"</span> <span class="org-string">"netdev"</span>
+                                       <span class="org-string">"audio"</span> <span class="org-string">"video"</span>)))
+              (user-account
+               (name <span class="org-string">"david"</span>)
+               (comment <span class="org-string">"GNU Guix Live"</span>)
+               (password <span class="org-string">""</span>)            <span class="org-comment-delimiter">;</span><span class="org-comment">no password</span>
+               (group <span class="org-string">"users"</span>)
+               (supplementary-groups '(<span class="org-string">"wheel"</span> <span class="org-string">"netdev"</span>
+                                       <span class="org-string">"audio"</span> <span class="org-string">"video"</span>)))
+
+              %base-user-accounts)</pre>
+
+<p>
+Now we can verify that the change gets applied by running <code>sudo guix system reconfigure config.scm</code> and checking <code>/etc/passwd</code>:
+</p>
+
+<pre>cat /etc/passwd | grep david  <span class="org-comment-delimiter"># </span><span class="org-comment">No result!</span>
+sudo guix system reconfigure config.scm
+cat /etc/passwd | grep david  <span class="org-comment-delimiter"># </span><span class="org-comment">The account is now there!</span></pre>
+
+<p>
+Guix enables you to truly craft a system configuration that will last, even if you have to reinstall your system or move the configuration to a different computer.
+</p>
+
+<p>
+You can even share the same base configuration between multiple machines with custom tweaks for each!
+</p>
+</div>
+
+<h2><a id="2-changing-your-configuration-is-safe" class="anchor" href="#2-changing-your-configuration-is-safe">¶</a>2. Changing your configuration is safe</h2><div class="outline-text-2" id="text-org7e844d0">
+<p>
+If you&rsquo;ve used distributions like Arch, Gentoo, or even Ubuntu, you&rsquo;ve probably experienced a system-breaking upgrade at some point.
+</p>
+
+<p>
+With Guix, no matter whether you&rsquo;re tweaking some part of your configuration or installing new versions of packages, you can always roll back to the previous state!
+</p>
+
+<p>
+And if you make a change that makes your system unbootable, you can always find the previous configuration in the Grub bootloader menu!
+</p>
+
+<p>
+Let&rsquo;s try to roll back the user addition we added before:
+</p>
+
+<pre>sudo guix system roll-back</pre>
+
+<p>
+Now the configuration update we just applied has been rolled back!
+</p>
+
+<p>
+We can check for the user we added just like last time:
+</p>
+
+<pre>cat /etc/passwd | grep david  <span class="org-comment-delimiter"># </span><span class="org-comment">The user is gone!</span></pre>
+</div>
+
+<h2><a id="3-you-can-also-use-it-for-managing-your-dotfiles" class="anchor" href="#3-you-can-also-use-it-for-managing-your-dotfiles">¶</a>3. You can also use it for managing your dotfiles</h2><div class="outline-text-2" id="text-orga5d3331">
+<p>
+Last year, an important new feature called <code>guix home</code> was added which enables you to apply the same declarative configuration style (including rollbacks) to your user-level configuration.
+</p>
+
+<p>
+This makes it possible to ensure all your favorite programs are installed and configured exactly how you want no matter which machine you use them on.  You can even configure user-level services with it!
+</p>
+
+<p>
+Let&rsquo;s try it out!  This configuration will install Emacs and Syncthing, configure the Bash profile, and then set up Syncthing as a user-level Shepherd service.
+</p>
+
+<p>
+Run the following commands to apply the configuration to the <code>guest</code> account&rsquo;s home directory:
+</p>
+
+<pre>wget https://0x0.st/ozVe.scm -O home.scm
+guix home reconfigure home.scm</pre>
+
+<p>
+To verify the home configuration:
+</p>
+
+<pre>emacs -v
+cat ~/.bash_profile
+herd status syncthing</pre>
+
+<p>
+<b>NOTE:</b> This feature is newer than the Guix 1.3.0 release that the demo VM is based on!  You will need to run the following commands before trying it:
+</p>
+
+<pre>guix pull
+<span class="org-builtin">hash</span> guix</pre>
+
+<p>
+This might take a while, so be patient!
+</p>
+</div>
+
+<h3><a id="example-home-configuration" class="anchor" href="#example-home-configuration">¶</a>Example Home Configuration</h3><div class="outline-text-3" id="text-orgff093da">
+<pre>(use-modules (gnu home)
+             (gnu home services)
+             (gnu home services shepherd)
+             (gnu home services shells)
+             (gnu packages emacs)
+             (gnu packages syncthing)
+             (gnu services)
+             (gnu services shepherd)
+             (guix gexp))
+
+(<span class="org-keyword">define</span> <span class="org-function-name">my-syncthing-service</span>
+  (shepherd-service
+   (provision '(syncthing))
+   (documentation <span class="org-string">"Run and control syncthing."</span>)
+   (start #~(make-forkexec-constructor
+             (list #$(file-append syncthing <span class="org-string">"/bin/syncthing"</span>)
+                   <span class="org-string">"-no-browser"</span>)))
+   (stop #~(make-kill-destructor))))
+
+(home-environment
+ (packages (list emacs syncthing))
+ (services
+  (list
+   (service home-bash-service-type
+            (home-bash-configuration
+             (environment-variables
+              '((<span class="org-string">"VISUAL"</span> . <span class="org-string">"emacsclient"</span>)
+                (<span class="org-string">"EDITOR"</span> . <span class="org-string">"emacsclient"</span>)))))
+   (simple-service 'my-services
+                   home-shepherd-service-type
+                   (list my-syncthing-service)))))</pre>
+
+<p>
+More information: <a href="https://guix.gnu.org/manual/devel/en/html_node/Home-Configuration.html">Home Configuration</a>
+</p>
+</div>
+
+<h2><a id="4-you-can-easily-create-isolated-development-environments" class="anchor" href="#4-you-can-easily-create-isolated-development-environments">¶</a>4. You can easily create isolated development environments</h2><div class="outline-text-2" id="text-org5d598b9">
+<p>
+If you&rsquo;re a software developer, you&rsquo;ve probably had to work a variety of different projects, all with their own platforms and tools and different versions of the same libraries.  This can quickly become a nightmare if you have to install all these things directly into your system!
+</p>
+
+<p>
+Guix provides a command called <code>guix shell</code> that can easily create an on-demand, isolated shell environment to work on your projects!  If you create a Guix manifest file (<code>manifest.scm</code> or <code>guix.scm</code>) in your project folder, you can run the following command to create such an environment:
+</p>
+
+<pre>guix shell --pure</pre>
+
+<p>
+It will let you know if you need to mark the project as safe for creating an environment, so run the command that it suggests!
+</p>
+
+<p>
+Let&rsquo;s use <code>guix shell</code> to set up a development environment for the project I&rsquo;m building on my other channel <a href="https://youtube.com/FluxHarmonicLive">Flux Harmonic</a>:
+</p>
+
+<pre>git clone https://github.com/FluxHarmonic/flux-compose
+<span class="org-builtin">cd</span> flux-compose
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Try to run CMake, it's not there!</span>
+cmake
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Set up the development environment using manifest.scm</span>
+guix shell --pure
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Try to build the code</span>
+./bootstrap.sh
+cmake  <span class="org-comment-delimiter"># </span><span class="org-comment">It works!</span>
+make -C build
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Exit the environment to see if commands are still there</span>
+<span class="org-keyword">exit</span>
+cmake
+make</pre>
+
+<p>
+<b>NOTE:</b> This feature is also newer than the Guix 1.3.0 release that the demo VM is based on!  You will need to run the two commands mentioned in the <code>guix home</code> slide (reason #3).
+</p>
+</div>
+
+<h2><a id="5-you-can-get-many-of-these-benefits-on-your-current-linux-distribution" class="anchor" href="#5-you-can-get-many-of-these-benefits-on-your-current-linux-distribution">¶</a>5. You can get many of these benefits on your current Linux distribution</h2><div class="outline-text-2" id="text-orgae4e3e9">
+<p>
+You don&rsquo;t need to install the full Guix System to benefit from Guix!  You can install the Guix package manager on many other Linux distributions, either from the distro package manager or by using the <a href="https://guix.gnu.org/manual/en/html_node/Binary-Installation.html">installation script</a> provided by the Guix maintainers.
+</p>
+
+<p>
+This enables you to use Guix to install software, manage your dotfiles with <code>guix home</code>, create isolated development environments with <code>guix shell</code>, and even create installation media for Guix System while still using your existing Linux distribution.
+</p>
+
+<p>
+Check out <a href="https://youtu.be/Nk8sprN7oZ0">my video</a> about this for more details!
+</p>
+</div>
+
+<h2><a id="how-to-get-started" class="anchor" href="#how-to-get-started">¶</a>How to get started</h2><div class="outline-text-2" id="text-org89d024e">
+<p>
+Last year I made <a href="https://www.youtube.com/watch?v=iBaqOK75cho&amp;list=PLEoMzSkcN8oNxnj7jm5V2ZcGc52002pQU">a number of videos</a> showing how to get started with Guix:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://youtu.be/iBaqOK75cho">An Introduction to GNU Guix</a></li>
+<li><a href="https://youtu.be/oSy-TmoxG_Y">Installing Guix as a Complete GNU/Linux System</a></li>
+<li><a href="https://youtu.be/Xy0YgnXFt1M">Everyday Package Management with GNU Guix</a></li>
+<li><a href="https://youtu.be/xVyvz2aViP8">Using Package Channels in GNU Guix</a></li>
+<li><a href="https://youtu.be/Nk8sprN7oZ0">Installing the GNU Guix Package Manager</a> (if you want to use it on another distribution)</li>
+</ul>
+
+<p>
+The <a href="https://guix.gnu.org/manual/en/guix.html">GNU Guix Reference Manual</a> is also a great starting point!
+</p>
+</div>
+
+<h2><a id="more-videos-coming-soon" class="anchor" href="#more-videos-coming-soon">¶</a>More videos coming soon!</h2><div class="outline-text-2" id="text-orge0d4e99">
+<p>
+This year I&rsquo;ll be making a lot more videos about GNU Guix to help with day to day usage and also going deeper into how you can write your own customizations and package definitions:
+</p>
+
+<ul class="org-ul">
+<li>A crash course on Guile Scheme</li>
+<li>&ldquo;I installed Guix, now what?&rdquo;</li>
+<li>Writing and updating Guix package definitions</li>
+<li>Configuring system services</li>
+<li>Managing your user-level configuration with <code>guix home</code></li>
+<li>Developing server configurations and managing remotely</li>
+</ul>
+</div>
+
+<h2><a id="i-want-to-hear-from-you" class="anchor" href="#i-want-to-hear-from-you">¶</a>I want to hear from you!</h2><div class="outline-text-2" id="text-orgf37cece">
+<p>
+Now I want to hear from all of you, especially those who are finding this channel for the first time.
+</p>
+
+<p>
+Leave a comment with an answer to one of these questions:
+</p>
+
+<ul class="org-ul">
+<li>What has kept you from using Guix before?</li>
+<li>If you&rsquo;ve tried Guix, what problems did you have?</li>
+<li>What&rsquo;s the worst you&rsquo;ve ever broken your Linux install with another distro?</li>
+</ul>
+
+<p>
+Don&rsquo;t forget to subscribe and click the bell to be notified when new Guix videos are released!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

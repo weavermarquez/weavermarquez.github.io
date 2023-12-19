@@ -1,0 +1,283 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>The Basics of Emacs Configuration - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">The Basics of Emacs Configuration</h1><p class="site-post-meta">January 31, 2022</p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/OaF-N-FuGtc" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org501edf5">
+<p>
+The most valuable aspect of Emacs is the ability it gives you to customize your environment and workflow perfectly for whatever it is you want to do.
+</p>
+
+<p>
+This is the first video in a series where I&rsquo;ll show you how to build a complete Emacs configuration while also teaching you what you need to know about Emacs Lisp, the language used to configure Emacs.
+</p>
+
+<p>
+Let&rsquo;s take a look at how you can quickly get started customizing Emacs using the functionality that comes &ldquo;in the box&rdquo;!
+</p>
+
+<p>
+Click like 👍 on the video if you&rsquo;re excited to get started!
+</p>
+</div>
+
+<h2><a id="getting-started" class="anchor" href="#getting-started">¶</a>Getting started</h2><div class="outline-text-2" id="text-org59c4f57">
+<p>
+In this video I won&rsquo;t show you how to install or use Emacs!  If you are a new Emacs user, check out my video <a href="https://youtu.be/48JlgiBpw_I">The Absolute Beginner&rsquo;s Guide To Emacs</a> where I give a very thorough introduction for how you can get started.
+</p>
+
+<p>
+I&rsquo;m going to assume you&rsquo;ve already got Emacs installed and you&rsquo;re using at least Emacs 27 which was released last year.  However, much of what I&rsquo;ll show in this series is using features in Emacs 28 which isn&rsquo;t fully released at the time of this video.
+</p>
+
+<p>
+If you can&rsquo;t find a recent build of Emacs 28 for your operating system or Linux distribution, check out the link to the show notes in the description to find more details on how to build your own copy of Emacs 28.
+</p>
+
+<p>
+As we go, I&rsquo;ll also give pointers on alternative ways to get some of the same functionality for earlier Emacs versions.
+</p>
+</div>
+
+<h3><a id="finding-emacs-28" class="anchor" href="#finding-emacs-28">¶</a>Finding Emacs 28</h3><div class="outline-text-3" id="text-org4076b3b">
+<p>
+Here are some pointers to find or build Emacs 28 on your operating system.  If you have trouble getting it, leave a note in the comments or come find us in the <a href="http://systemcrafters.chat">Discord or IRC</a>.
+</p>
+
+<ul class="org-ul">
+<li>On Linux, follow the instructions in the INSTALL file: <a href="https://git.savannah.gnu.org/cgit/emacs.git/tree/INSTALL">https://git.savannah.gnu.org/cgit/emacs.git/tree/INSTALL</a></li>
+<li>On Windows, these instructions <i>should</i> still work: <a href="https://gist.github.com/nauhygon/f3b44f51b34e89bc54f8">https://gist.github.com/nauhygon/f3b44f51b34e89bc54f8</a></li>
+<li>On macOS, install the <code>emacs-plus</code> package (<a href="https://github.com/d12frosted/homebrew-emacs-plus">see documentation</a>)</li>
+</ul>
+
+<pre>brew tap d12frosted/emacs-plus
+brew install emacs-plus@28</pre>
+</div>
+
+<h2><a id="where-is-the-configuration" class="anchor" href="#where-is-the-configuration">¶</a>Where is the configuration?</h2><div class="outline-text-2" id="text-org8bf53fd">
+<p>
+The primary way to configure Emacs is to edit its configuration file which is written in a language called Emacs Lisp.  This means that your Emacs configuration is actually code!  Don&rsquo;t worry, I&rsquo;ll explain everything.
+</p>
+
+<p>
+Here are the places where you might find the main configuration file:
+</p>
+
+<ul class="org-ul">
+<li><code>~/.emacs</code>  or <code>~/.emacs.el</code> - The old location for the configuration file (not recommended!)</li>
+<li><code>~/.emacs.d/init.el</code> - The main configuration file in the Emacs config folder (recommended on macOS and Windows)</li>
+<li><code>~/.config/emacs/init.el</code> - Follows Linux desktop environment guidlines (recommended on Linux!)</li>
+</ul>
+
+<p>
+Emacs will look for a configuration file in each of these locations every time it starts up!
+</p>
+
+<p>
+This file typically does not exist by default, so you will probably have to create it!  We&rsquo;ll use <code>C-x C-f</code> (Ctrl+X then Ctrl+F) to open this file for editing.
+</p>
+
+<p>
+Be aware that I&rsquo;m editing my <code>init.el</code> from a different folder than the default!  That&rsquo;s because I&rsquo;m isolating it from my own Emacs configuration.  Your <code>init.el</code> should go in one of the places I mentioned above!
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html">Emacs Manual: The Emacs Initialization File</a>
+</p>
+</div>
+
+<h2><a id="the-basics-of-configuration" class="anchor" href="#the-basics-of-configuration">¶</a>The basics of configuration</h2><div class="outline-text-2" id="text-org6b34d6c">
+<p>
+Now that we&rsquo;re in our <code>init.el</code> file, let&rsquo;s learn how you can actually configure Emacs with it!
+</p>
+
+<p>
+The two most common things you will do in your <code>init.el</code> file:
+</p>
+
+<ul class="org-ul">
+<li>Configure features by setting variables</li>
+<li>Enable or disable features by calling functions</li>
+</ul>
+</div>
+
+<h2><a id="setting-configuration-variables" class="anchor" href="#setting-configuration-variables">¶</a>Setting configuration variables</h2><div class="outline-text-2" id="text-org207090b">
+<p>
+Let&rsquo;s take a look at how you would set a configuration variable and then we&rsquo;ll break down the syntax to understand Emacs Lisp a little better:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Don't show the splash screen</span>
+(<span class="org-keyword">setq</span> inhibit-startup-message t)  <span class="org-comment-delimiter">; </span><span class="org-comment">Comment at end of line!</span></pre>
+
+<p>
+This is a <i>list expression</i> (wrapped in parentheses) that represents a &ldquo;call&rdquo; to a function named <code>setq</code>.
+</p>
+
+<p>
+An expression is an unit of code that can be evaluated to produce a result.  A list is an ordered collection of expressions: symbols, values, or lists.
+</p>
+
+<p>
+A function is a higher-level unit of code that has a name and accepts a certain number of inputs.  When you call a function by name and provide inputs, the code in that function executes and applies some kind of change in Emacs.
+</p>
+
+<p>
+<code>setq</code> is the name of the &ldquo;function&rdquo; to be called in this expression and the remaining two items are the inputs to the function.  <code>inhibit-startup-message</code> is the name of the configuration variable we are setting.
+</p>
+
+<p>
+The second parameter is <code>t</code>, a value that means &ldquo;true&rdquo;.  There is also a value <code>nil</code> which means &ldquo;false&rdquo;.  You will see these two values a lot in configuration!
+</p>
+
+<p>
+Variable and function names in Emacs are typically of the form <code>some-variable-name</code> where multiple lower-cased words are separated with the hyphen (<code>-</code>) character.
+</p>
+
+<p>
+The line starting with <code>;;</code> is a comment, a non-evaluated line that is used for writing notes in the code.  A single <code>;</code> also works, can be used at end of any line.
+</p>
+
+<p>
+What this expression says is that we want to <i>turn on</i> the setting to prevent the startup screen from being displayed.
+</p>
+
+<p>
+Let&rsquo;s try it out!  Add this line to your <code>init.el</code> file, save it with <code>C-x C-s</code> (Ctrl+X then Ctrl+S) and then restart Emacs.
+</p>
+</div>
+
+<h2><a id="setting-variables-without-restarting-emacs" class="anchor" href="#setting-variables-without-restarting-emacs">¶</a>Setting variables without restarting Emacs</h2><div class="outline-text-2" id="text-orge5654cf">
+<p>
+It wouldn&rsquo;t be great if you had to restart Emacs every time you changed your configuration file.  Luckily you can evaluate parts of your configuration while Emacs is running!
+</p>
+
+<p>
+Let&rsquo;s set another variable to test this out.  While we do this, I&rsquo;ll show you another detail about the <code>setq</code> function: you can set more than one variable in the same call!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> inhibit-startup-message t  <span class="org-comment-delimiter">; </span><span class="org-comment">Don't show the splash screen</span>
+      visible-bell t)            <span class="org-comment-delimiter">; </span><span class="org-comment">Flash when the bell rings</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">This could also be:</span>
+
+(<span class="org-keyword">setq</span> inhibit-startup-message t) <span class="org-comment-delimiter">; </span><span class="org-comment">Don't show the splash screen</span>
+(<span class="org-keyword">setq</span> visible-bell t)            <span class="org-comment-delimiter">; </span><span class="org-comment">Flash when the bell rings</span></pre>
+
+<p>
+Instead of restarting Emacs to test out this behavior, let&rsquo;s use a key binding that will evaluate the configuration expression under the cursor to apply it immediately:
+</p>
+
+<p>
+Place your cursor somewhere inside of the open and close parentheses of the <code>setq</code> call and press <code>C-M-x</code> (Ctrl+Alt+X).  Now try to use the UP arrow key to move the cursor before the beginning line of the file and it Emacs should blink!
+</p>
+
+<p>
+If you don&rsquo;t like the flashing behavior of <code>visual-bell</code> then leave it out, it&rsquo;s your configuration!
+</p>
+</div>
+
+<h2><a id="enabling-or-disabling-features" class="anchor" href="#enabling-or-disabling-features">¶</a>Enabling or disabling features</h2><div class="outline-text-2" id="text-orgd406fc5">
+<p>
+Many features of Emacs are controlled by something called a &ldquo;mode.&rdquo;  A mode is basically a collection of functionality that can be applied either to a single Emacs buffer or to the entire editor.
+</p>
+
+<p>
+Some modes are enabled by default in Emacs and others must be turned on explicitly.  You can turn modes on or off at any time by calling the mode&rsquo;s function and passing the value <code>-1</code> to disable the mode or <code>1</code> to enable the mode:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Turn off some unneeded UI elements</span>
+(menu-bar-mode -1)  <span class="org-comment-delimiter">; </span><span class="org-comment">Leave this one on if you're a beginner!</span>
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Display line numbers in every buffer</span>
+(global-display-line-numbers-mode 1)</pre>
+
+<p>
+Now that we&rsquo;ve added this code to our configuration and saved it with <code>C-x C-s</code>, these changes will be applied every time we start up Emacs!
+</p>
+</div>
+
+<h2><a id="setting-the-theme" class="anchor" href="#setting-the-theme">¶</a>Setting the theme</h2><div class="outline-text-2" id="text-org766111e">
+<p>
+Another way to configure certain parts of Emacs is by calling individual functions.  There are a ton of functions you can call in Emacs!
+</p>
+
+<p>
+One function you&rsquo;ll definitely want to call is <code>load-theme</code> which allows you to&#x2026; load a color theme!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Load the Modus Vivendi dark theme</span>
+(load-theme 'modus-vivendi t)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">If you're using Emacs 27, either install Modus themes or use this one!</span>
+(load-theme 'deeper-blue t)</pre>
+
+<p>
+We&rsquo;ll talk about visual customization more in a later video.
+</p>
+
+<ul class="org-ul">
+<li>How to <a href="https://protesilaos.com/emacs/modus-themes#h:1af85373-7f81-4c35-af25-afcef490c111">install the Modus themes</a> on Emacs 27 and lower (it&rsquo;s built-in with Emacs 28!)</li>
+<li><a href="https://protesilaos.com/emacs/modus-themes#h:bf1c82f2-46c7-4eb2-ad00-dd11fdd8b53f">Customizing the Modus themes</a> - this is a good way to practice!</li>
+<li><a href="https://www.youtube.com/channel/UC0uTPqBCFIpZxlz_Lv1tk_g">Prot&rsquo;s YouTube channel</a></li>
+</ul>
+</div>
+
+<h2><a id="how-to-find-more-things-to-configure" class="anchor" href="#how-to-find-more-things-to-configure">¶</a>How to find more things to configure</h2><div class="outline-text-2" id="text-org177370c">
+<p>
+The two most useful functions in Emacs when you&rsquo;re learning how to configure it are:
+</p>
+
+<ul class="org-ul">
+<li><code>describe-variable</code> (<code>C-h v</code> / Ctrl+H then V) - Shows documentation for any variable in Emacs</li>
+<li><code>describe-function</code> (<code>C-h f</code> / Ctrl+H then F) - Shows documentation for any function in Emacs</li>
+<li>The best of both worlds: <code>describe-symbol</code> (<code>C-h o</code> / Ctrl+H then O)!</li>
+</ul>
+
+<p>
+When you run these functions, the prompt will be filled automatically with the name of the variable or function where your cursor is in the current file, so just press Enter!  You can also type the name of any variable or function you&rsquo;d like to know about.
+</p>
+
+<p>
+Another useful property of these functions is that you can press <code>TAB</code> inside the prompt to get suggestions for variable and function names using the prefix you&rsquo;ve already typed!  This can be very useful for discovering new things to configure.
+</p>
+
+<p>
+You can also get suggestions for variable and function names right in your <code>init.el</code> buffer by using the key binding <code>C-M-i</code> (Ctrl+Alt+i).  Let&rsquo;s type &ldquo;<code>scroll</code>&rdquo; and press this key binding right after it!
+</p>
+</div>
+
+<h2><a id="try-it-out" class="anchor" href="#try-it-out">¶</a>Try it out!</h2><div class="outline-text-2" id="text-org3de5ba0">
+<p>
+Now it&rsquo;s your turn to experiment with what you&rsquo;ve learned in this video!
+</p>
+
+<ul class="org-ul">
+<li>Try <code>hl-line-mode</code> and <code>blink-cursor-mode</code></li>
+<li>Explore variables and functions: type a particular word (like &ldquo;<code>indent</code>&rdquo;) and use <code>C-M-i</code> to see what shows up</li>
+<li>Use <code>describe-function</code> and <code>describe-variable</code> to see documentation interesting things you find</li>
+<li>If you have Modus themes installed, try setting some of the customization variables to make the theme look more to your taste.  I&rsquo;ll show you a better configuration for it in a later video!</li>
+</ul>
+
+<p>
+When you try what I showed in this video, let me know in the comments how it went for you!
+</p>
+</div>
+
+<h2><a id="bonus-my-emacs-demo-launcher" class="anchor" href="#bonus-my-emacs-demo-launcher">¶</a>Bonus: My Emacs demo launcher</h2><div class="outline-text-2" id="text-org8dfeaf9">
+<p>
+If you&rsquo;re curious, here&rsquo;s the command I&rsquo;m using in my own Emacs configuration to quickly launch my demo Emacs session!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/launch-demo-emacs</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((default-directory <span class="org-string">"~/Projects/Code/emacs-from-scratch"</span>)
+        (existing-emacs (get-buffer <span class="org-string">"Emacs"</span>)))
+    (<span class="org-keyword">if</span> existing-emacs
+        (switch-to-buffer existing-emacs)
+      (start-process-shell-command <span class="org-string">"Emacs"</span> nil <span class="org-string">"./.tools/run-emacs.sh"</span>))))
+
+(local-set-key (kbd <span class="org-string">"C-c e"</span>) #'efs/launch-demo-emacs)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

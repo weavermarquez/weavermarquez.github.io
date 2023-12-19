@@ -1,0 +1,145 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Exploring Denote 2.0 for Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Exploring Denote 2.0 for Emacs</h1><p class="site-post-meta">October  6, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/cLsByub89VY" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org01e7989">
+<ul class="org-ul">
+<li><p>
+Submit proposals for LibrePlanet 2024 until October 25!
+</p>
+
+<p>
+The theme is &ldquo;Cultivating Community&rdquo; but there are other categories of talks they are looking for.
+</p>
+
+<p>
+<a href="https://libreplanet.org/2024/">https://libreplanet.org/2024/</a>
+</p></li>
+
+<li><p>
+The EmacsConf 2023 talks are posted!
+</p>
+
+<p>
+<a href="https://emacsconf.org/2023/talks/">https://emacsconf.org/2023/talks/</a>
+</p></li>
+</ul>
+</div>
+
+<h2><a id="letrsquos-check-out-denote-20" class="anchor" href="#letrsquos-check-out-denote-20">¶</a>Let&rsquo;s check out Denote 2.0!</h2><div class="outline-text-2" id="text-orgfadf44c">
+<p>
+Denote 2.0 by Protesilaos Stavrou was released on July 21 of this year but I haven&rsquo;t had a chance to examine the changelog until now.  Let&rsquo;s take a look together!
+</p>
+
+<ul class="org-ul">
+<li><a href="https://protesilaos.com/emacs/denote-changelog">https://protesilaos.com/emacs/denote-changelog</a></li>
+<li><a href="https://elpa.gnu.org/packages/denote.html">https://elpa.gnu.org/packages/denote.html</a></li>
+</ul>
+
+<p>
+We&rsquo;ll try out as many of the new features as we have time for to see how they might be useful for our note taking workflows.
+</p>
+</div>
+
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org6a98c21">
+<p>
+Here&rsquo;s the configuration we worked on during the stream:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Set an initial theme</span>
+(load-theme 'modus-vivendi t)
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">evil</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> evil-want-keybinding nil)
+  <span class="org-builtin">:config</span>
+  (evil-mode 1))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">evil-collection</span>
+  <span class="org-builtin">:after</span> evil
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:config</span>
+  (evil-collection-init))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">marginalia</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:after</span> vertico)
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">vertico</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (vertico-mode)
+  (marginalia-mode)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Show more candidates</span>
+  (<span class="org-keyword">setq</span> vertico-count 10)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Grow and shrink the Vertico minibuffer</span>
+  (<span class="org-keyword">setq</span> vertico-resize t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Optionally enable cycling for `</span><span class="org-comment"><span class="org-constant">vertico-next</span></span><span class="org-comment">' and `</span><span class="org-comment"><span class="org-constant">vertico-previous</span></span><span class="org-comment">'.</span>
+  (<span class="org-keyword">setq</span> vertico-cycle t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Add prompt indicator to `</span><span class="org-comment"><span class="org-constant">completing-read-multiple</span></span><span class="org-comment">'.</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">We display [CRM&lt;separator&gt;], e.g., [CRM,] if the separator is a comma.</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">crm-indicator</span> (args)
+    (cons (format <span class="org-string">"[CRM%s] %s"</span>
+                  (replace-regexp-in-string
+                   <span class="org-string">"\\`\\[</span><span class="org-string"><span class="org-constant">.*?</span></span><span class="org-string">]\\*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">\\[</span><span class="org-string"><span class="org-constant">.*?</span></span><span class="org-string">]\\*\\'"</span> <span class="org-string">""</span>
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple <span class="org-builtin">:filter-args</span> #'crm-indicator)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable recursive minibuffers</span>
+  (<span class="org-keyword">setq</span> enable-recursive-minibuffers t))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dw/denote-rename-buffer-with-prefixed-title</span> (<span class="org-type">&amp;optional</span> buffer)
+  (denote-rename-buffer-with-title)
+  (rename-buffer (concat <span class="org-string">"[D] "</span> (buffer-name (<span class="org-keyword">or</span> buffer (current-buffer) title <span class="org-builtin">:unique</span>)))))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">denote</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:custom</span>
+  (denote-directory <span class="org-string">"~/denote-test/Notes"</span>)
+  (denote-rename-buffer-function 'dw/denote-rename-buffer-with-prefixed-title)
+  <span class="org-builtin">:config</span>
+  (denote-rename-buffer-mode)
+  (<span class="org-keyword">require</span> '<span class="org-constant">denote-org-dblock</span>)
+
+  (<span class="org-keyword">with-eval-after-load</span> 'org-capture
+    (add-to-list 'org-capture-templates
+                 '(<span class="org-string">"n"</span> <span class="org-string">"New note (with Denote)"</span> plain
+                   (file denote-last-path)
+                   #'denote-org-capture
+                   <span class="org-builtin">:no-save</span> t
+                   <span class="org-builtin">:immediate-finish</span> nil
+                   <span class="org-builtin">:kill-buffer</span> t
+                   <span class="org-builtin">:jump-to-captured</span> t))))
+
+(custom-set-variables
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">custom-set-variables was added by Custom.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If you edit it by hand, you could mess it up, so be careful.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">Your init file should contain only one such instance.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If there is more than one, they won't work right.</span>
+ '(package-selected-packages '(marginalia vertico denote))
+ '(safe-local-variable-values
+   '((denote-known-keywords <span class="org-string">"food"</span> <span class="org-string">"drink"</span>)
+     (denote-directory . <span class="org-string">"~/denote/OtherNotes"</span>))))
+(custom-set-faces
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">custom-set-faces was added by Custom.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If you edit it by hand, you could mess it up, so be careful.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">Your init file should contain only one such instance.</span>
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">If there is more than one, they won't work right.</span>
+ )</pre>
+
+<p>
+Here is the directory-local variable file (<code>.dir-locals.el</code>) that I used to create a &ldquo;silo&rdquo; of notes:
+</p>
+
+<pre><span class="org-comment-delimiter">;;; </span><span class="org-comment">Directory Local Variables            -*- no-byte-compile: t -*-</span>
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">For more information see (info "(emacs) Directory Variables")</span>
+
+((nil . ((denote-directory . <span class="org-string">"~/denote/OtherNotes"</span>)
+         (denote-known-keywords . (<span class="org-string">"food"</span> <span class="org-string">"drink"</span>)))))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

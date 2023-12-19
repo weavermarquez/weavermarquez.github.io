@@ -1,0 +1,154 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Exploring dwl-guile: A Wayland Compositor for Guile and Guix - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Exploring dwl-guile: A Wayland Compositor for Guile and Guix</h1><p class="site-post-meta">May  5, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/wHbH0VGJ6TQ" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orge1eb103">
+<ul class="org-ul">
+<li>The new System Crafters website will be officially launched next week!</li>
+
+<li><p>
+Subscribe to the System Crafters Newsletter!
+</p>
+
+<p>
+<a href="https://new.systemcrafters.net/newsletter/">https://new.systemcrafters.net/newsletter/</a>
+</p></li>
+
+<li><p>
+Support the channel!
+</p>
+
+<p>
+<b>Buy me a coffee</b> at <a href="https://ko-fi.com/SystemCrafters">https://ko-fi.com/SystemCrafters</a>
+</p>
+
+<p>
+<b>Buy Mastering Emacs</b> with this link:
+<a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a>
+</p></li>
+</ul>
+</div>
+
+<h2><a id="letrsquos-try-codedwl-guilecode" class="anchor" href="#letrsquos-try-codedwl-guilecode">¶</a>Let&rsquo;s try <code>dwl-guile</code>!</h2><div class="outline-text-2" id="text-org62cd257">
+<p>
+I&rsquo;ve mentioned a few times recently that I&rsquo;ve really enjoyed using Wayland via Sway recently.  It&rsquo;s the future!  However, we haven&rsquo;t really seen many Lisp or Scheme-based compositors yet.
+</p>
+
+<p>
+<a href="https://github.com/engstrand-config/dwl-guile">dwl-guile</a> is a fork of the <a href="https://github.com/djpohly/dwl">dwl</a> Wayland Compositor (which is a port of <a href="https://dwm.suckless.org/">dwm</a>).
+</p>
+
+<p>
+<code>dwl-guile</code> was developed to be used with GNU Guix!  There is a custom Guix channel which also provides a Guix Home service for configuring the window manager:
+</p>
+
+<p>
+<a href="https://github.com/engstrand-config/home-service-dwl-guile">https://github.com/engstrand-config/home-service-dwl-guile</a>
+</p>
+
+<p>
+Today we&rsquo;ll see if we can get <code>dwl-guile</code> up and running and see if it can be a solid addition to our modern, Lisp-based system crafting toolset!
+</p>
+
+<p>
+To get things running, I added the <code>home-service-dwl-guile</code> channel to my Guix Channel configuration:
+</p>
+
+<pre>(channel
+  (name 'home-service-dwl-guile)
+  (url <span class="org-string">"https://github.com/engstrand-config/home-service-dwl-guile"</span>)
+  (branch <span class="org-string">"main"</span>)
+  (introduction
+    (make-channel-introduction
+      <span class="org-string">"314453a87634d67e914cfdf51d357638902dd9fe"</span>
+      (openpgp-fingerprint
+        <span class="org-string">"C9BE B8A0 4458 FDDF 1268 1B39 029D 8EB7 7E18 D68C"</span>))))</pre>
+
+<p>
+I then installed <code>dwl-guile</code> and created a configuration file called <code>dwl-config.scm</code>.
+</p>
+
+<p>
+I ran it like this:
+</p>
+
+<pre>dwl-guile -c dwl-config.scm</pre>
+</div>
+
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org568c67c">
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Inhibit the defaults so that we can control the keys!</span>
+(setq inhibit-defaults? #t)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">THINGS TO FIGURE OUT:</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">- Setting the background image (swaybg?)</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">- Fixing ctrl:nocaps</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">- Settings desired layouts and switching them</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">- Set up swaylock/swayidle</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Start the repl, connect via M-x geiser-connect-local RET /tmp/dwl-guile.socket RET</span>
+(dwl:start-repl-server)
+
+(set-monitor-rules
+ '((name . <span class="org-string">"HDMI-A-1"</span>)
+   (x . 0) (y . 0)
+   (masters . 1)
+   (master-factor . 0.55)
+   (width . 2560)
+   (height . 1440)
+   (scale . 2))
+
+ `((name . <span class="org-string">"eDP-2"</span>)
+   (width . 3840)
+   (height . 2160)
+   (scale . 2)
+   (x . 2560) (y . ,(- (/ 2160 2)
+                       (/ 1440 2)))))
+
+(set-xkb-rules '((layout . <span class="org-string">"us"</span>)
+                 (options . <span class="org-string">"ctrl:nocaps"</span>)))
+
+(setq tags (list <span class="org-string">"chat"</span> <span class="org-string">"dev"</span> <span class="org-string">"web"</span> <span class="org-string">"media"</span> <span class="org-string">"misc"</span>))
+
+(dwl:set-tty-keys <span class="org-string">"C-M"</span>)
+(dwl:set-tag-keys <span class="org-string">"s"</span> <span class="org-string">"s-S"</span>)
+
+(set-keys <span class="org-string">"s-&lt;space&gt;"</span> '(dwl:spawn <span class="org-string">"fuzzel"</span> <span class="org-string">"--no-fuzzy"</span>)
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">(dwl:spawn "fuzzel -w 50 -x 8 -y 8 -r 3 -b 232635ff -t A6Accdff -s A6Accdff -S 232635ff -C c792eacc -m c792eacc -f \"Iosevka Aile:weight=light:size=11\" --no-fuzzy --icon-theme=\"Papirus-Dark\"")</span>
+          <span class="org-string">"s-&lt;return&gt;"</span> '(dwl:spawn <span class="org-string">"emacsclient"</span> <span class="org-string">"-c"</span>)
+          <span class="org-string">"s-j"</span> '(dwl:focus-stack 1)
+          <span class="org-string">"s-k"</span> '(dwl:focus-stack -1)
+          <span class="org-string">"s-l"</span> '(dwl:change-master-factor 0.05)
+          <span class="org-string">"s-h"</span> '(dwl:change-master-factor -0.05)
+          <span class="org-string">"s-&lt;page-up&gt;"</span> '(dwl:change-masters 1)
+          <span class="org-string">"s-&lt;page-down&gt;"</span> '(dwl:change-masters -1)
+          <span class="org-string">"s-t"</span> '(dwl:cycle-layout 1)
+          <span class="org-string">"s-&lt;left&gt;"</span> '(dwl:focus-monitor 'DIRECTION-LEFT)
+          <span class="org-string">"s-&lt;right&gt;"</span> '(dwl:focus-monitor 'DIRECTION-RIGHT)
+          <span class="org-string">"s-&lt;up&gt;"</span> '(dwl:focus-monitor 'DIRECTION-UP)
+          <span class="org-string">"s-&lt;down&gt;"</span> '(dwl:focus-monitor 'DIRECTION-DOWN)
+          <span class="org-string">"s-S-&lt;left&gt;"</span> '(dwl:tag-monitor 'DIRECTION-LEFT)
+          <span class="org-string">"s-S-&lt;right&gt;"</span> '(dwl:tag-monitor 'DIRECTION-RIGHT)
+          <span class="org-string">"s-S-&lt;up&gt;"</span> '(dwl:tag-monitor 'DIRECTION-UP)
+          <span class="org-string">"s-S-&lt;down&gt;"</span> '(dwl:tag-monitor 'DIRECTION-DOWN)
+          <span class="org-string">"s-q"</span> 'dwl:kill-client
+          <span class="org-string">"s-&lt;tab&gt;"</span> 'dwl:view
+          <span class="org-string">"s-S-0"</span> '(dwl:view 0) <span class="org-comment-delimiter">;; </span><span class="org-comment">0 will show all tags</span>
+          <span class="org-string">"s-f"</span> 'dwl:toggle-fullscreen
+          <span class="org-string">"S-s-&lt;space&gt;"</span> 'dwl:toggle-floating
+          <span class="org-string">"S-s-q"</span> 'dwl:quit
+          <span class="org-string">"s-&lt;mouse-left&gt;"</span> 'dwl:move
+          <span class="org-string">"s-&lt;mouse-middle&gt;"</span> 'dwl:toggle-floating
+          <span class="org-string">"s-&lt;mouse-right&gt;"</span> 'dwl:resize)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Configure gaps</span>
+(dwl:change-gaps 5)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Launch helpful programs after init</span>
+(add-hook! dwl:hook-startup
+           (<span class="org-keyword">lambda</span> ()
+             (dwl:spawn <span class="org-string">"setxkbmap"</span> <span class="org-string">"-option"</span> <span class="org-string">"ctrl:nocaps"</span>)
+             (dwl:spawn <span class="org-string">"waybar"</span>)
+             (dwl:spawn <span class="org-string">"dunst"</span>)
+             (dwl:spawn <span class="org-string">"nm-applet"</span> <span class="org-string">"--indicator"</span>)
+             (dwl:spawn <span class="org-string">"udiskie"</span> <span class="org-string">"-t"</span>)
+             (dwl:spawn <span class="org-string">"emacs"</span>)))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

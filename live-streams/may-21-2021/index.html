@@ -1,0 +1,90 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Replacing Ivy and Counsel with Vertico and Consult - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Replacing Ivy and Counsel with Vertico and Consult</h1><p class="site-post-meta">May 21, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/UtqE-lR2HCA" allowfullscreen></iframe></div><div id="content">
+<h2><a id="replacing-ivy-and-counsel-with-vertico-and-consult" class="anchor" href="#replacing-ivy-and-counsel-with-vertico-and-consult">¶</a>Replacing Ivy and Counsel with Vertico and Consult</h2><div class="outline-text-2" id="text-orgaa2884d">
+<p>
+If you tried out Vertico after the video on Monday, you probably wondered how you can get back to the level of functionality you had with Ivy.
+</p>
+
+<p>
+Today we&rsquo;re going to survey the set of commands that come with the Consult package to figure out which will be useful for the transition away from Ivy.
+</p>
+
+<p>
+I&rsquo;ll be making a video on this soon, but today we&rsquo;ll be figuring it out together!
+</p>
+</div>
+
+<h3><a id="mapping-ivyswipercounsel-to-consult" class="anchor" href="#mapping-ivyswipercounsel-to-consult">¶</a>Mapping Ivy/Swiper/Counsel to Consult</h3><div class="outline-text-3" id="text-org26b07eb">
+<ul class="org-ul">
+<li><code>swiper</code> -&gt; <code>consult-line</code></li>
+<li><code>counsel-rg</code> -&gt; <code>consult-ripgrep</code></li>
+<li><code>counsel-switch-buffer</code> -&gt; <code>consult-buffer</code>.  Annotations are better for <code>switch-to-buffer</code>?</li>
+<li><code>counsel-org-goto</code> -&gt; <code>consult-imenu</code> or <code>consult-org-heading</code></li>
+</ul>
+
+<p>
+<b>TIP:</b> You should set <code>consult-project-root-function</code> to something like this if you use Projectile:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">dw/get-project-root</span> ()
+  (<span class="org-keyword">when</span> (fboundp 'projectile-project-root)
+    (projectile-project-root)))</pre>
+</div>
+
+<h3><a id="other-useful-commands" class="anchor" href="#other-useful-commands">¶</a>Other useful commands</h3><div class="outline-text-3" id="text-org0947ee4">
+<ul class="org-ul">
+<li><code>consult-mark</code>: Show a list of previous mark locations</li>
+<li><code>consult-outline</code>: Show a list of headings in the current file depending on type</li>
+<li><code>consult-minor-mode-menu</code>: Show a list of all minor modes, press <code>i SPC</code> to narrow to active modes</li>
+<li><code>consult-history</code>: History for current minibuffer, also works for terminal modes</li>
+<li><code>consult-file-externally</code>: Open a file in an external program</li>
+<li><code>consult-preview-mode</code>: Preview selections for various commands</li>
+<li><code>consult-completion-in-region</code>: Can be used with the <code>completion-in-region-function</code> variable to do in-buffer completions using Vertico</li>
+</ul>
+</div>
+
+<h3><a id="going-up-a-directory-in-codefind-filecode" class="anchor" href="#going-up-a-directory-in-codefind-filecode">¶</a>Going up a directory in <code>find-file</code></h3><div class="outline-text-3" id="text-orgece50f2">
+<p>
+One bit of functionality I got used to in Ivy was how the <code>counsel-find-file</code> command would go up a directory whenever I pressed Backspace.  Here&rsquo;s how to replicate it in Vertico!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">dw/minibuffer-backward-kill</span> (arg)
+  <span class="org-doc">"When minibuffer is completing a file name delete up to parent</span>
+<span class="org-doc">folder, otherwise delete a character backward"</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"p"</span>)
+  (<span class="org-keyword">if</span> minibuffer-completing-file-name
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Borrowed from https://github.com/raxod502/selectrum/issues/498#issuecomment-803283608</span>
+      (<span class="org-keyword">if</span> (string-match-p <span class="org-string">"/."</span> (minibuffer-contents))
+          (zap-up-to-char (- arg) ?/)
+        (delete-minibuffer-contents))
+      (delete-backward-char arg)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">This is not a full config, just an example of the :bind!</span>
+(<span class="org-keyword">use-package</span> <span class="org-constant">vertico</span>
+  <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> minibuffer-local-map
+         (<span class="org-string">"&lt;backspace&gt;"</span> . dw/minibuffer-backward-kill)))</pre>
+</div>
+
+<h3><a id="other-consult-packages" class="anchor" href="#other-consult-packages">¶</a>Other Consult packages</h3><div class="outline-text-3" id="text-org485a9e3">
+<ul class="org-ul">
+<li><a href="https://github.com/gagbo/consult-lsp">lsp-mode interface for Consult</a></li>
+<li><a href="https://github.com/SebastienWae/app-launcher">App launching like counsel-linux-app with app-launcher</a></li>
+</ul>
+</div>
+
+<h3><a id="other-resources" class="anchor" href="#other-resources">¶</a>Other resources</h3><div class="outline-text-3" id="text-org74d0114">
+<ul class="org-ul">
+<li><a href="https://github.com/minad/consult/wiki">The Consult wiki</a></li>
+<li><a href="https://github.com/minad/consult/issues/6">Consult command wishlist</a> - has some good pointers on where to find replacement functionality</li>
+</ul>
+</div>
+
+<h2><a id="emacs-news" class="anchor" href="#emacs-news">¶</a>Emacs News</h2><div class="outline-text-2" id="text-orgd57754f">
+<ul class="org-ul">
+<li><a href="https://github.com/minad/affe">New package: minad/affe</a></li>
+<li><a href="https://www.reddit.com/r/emacs/comments/n9ts4j/gccemacs_prebuilt_package_on_windows_10/">Prebuilt Emacs 28 package for Windows with native compilation</a></li>
+<li><a href="https://www.philnewton.net/blog/bug-reference-config-org-mode/">Configuring bug-reference-mode from within org-mode</a></li>
+<li><a href="https://nyxt.atlas.engineer/article/release-2.0.0.org">Nyxt 2.0 released</a></li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

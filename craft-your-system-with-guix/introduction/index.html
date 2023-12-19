@@ -1,0 +1,213 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>An Introduction to GNU Guix - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">An Introduction to GNU Guix</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/iBaqOK75cho" allowfullscreen></iframe></div><div id="content">
+<h2><a id="why-talk-about-gnu-guix" class="anchor" href="#why-talk-about-gnu-guix">¶</a>Why talk about GNU Guix?</h2><div class="outline-text-2" id="text-org02d5cb1">
+<p>
+So far on this channel, we&rsquo;ve primarily been focused on GNU Emacs.  Why talk about GNU Guix?
+</p>
+
+<p>
+In my opinion, the combination of Emacs + EXWM + Guix creates the ultimate hackable system.
+</p>
+
+<p>
+In this video, I&rsquo;ll explain what GNU Guix can do for you and then show you how to do these things in the subsequent videos in the series.
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="what-is-gnu-guix" class="anchor" href="#what-is-gnu-guix">¶</a>What is GNU Guix?</h2><div class="outline-text-2" id="text-org1993352">
+<p>
+Guix is a next-generation tool for installing and managing both the software you use and your entire system configuration.
+</p>
+
+<p>
+In my opinion, it&rsquo;s the best Linux distribution to use for crafting your own system configuration!
+</p>
+</div>
+
+<h3><a id="a-functional-package-manager" class="anchor" href="#a-functional-package-manager">¶</a>A functional package manager</h3><div class="outline-text-3" id="text-org4ba1553">
+<p>
+Guix makes it possible to manage all of the applications and libraries you use in a consistent and repeatable way.  You can easily install all of the packages you care about using a &ldquo;manifest&rdquo; file that you can check in to source control.  You can also lock the versions of all the packages you want to use to make sure you never get upgraded until you are ready!
+</p>
+
+<p>
+Guix installs packages and updates in a &ldquo;transactional&rdquo; way, meaning that the changes aren&rsquo;t applied to your system until installation completes successfully.
+</p>
+
+<p>
+You can also roll back your installed packages to a previous &ldquo;generation&rdquo; if things go wrong!  A package upgrade will never permanently break your system again.
+</p>
+
+<p>
+You can use the package manager on any GNU/Linux distribution!  It has its own package ecosystem which typically has newer versions of everything you might want to use.
+</p>
+</div>
+
+<h3><a id="a-ldquovirtual-environmentrdquo-tool-for-software-development" class="anchor" href="#a-ldquovirtual-environmentrdquo-tool-for-software-development">¶</a>A &ldquo;virtual environment&rdquo; tool for software development</h3><div class="outline-text-3" id="text-orgc6172a2">
+<p>
+Think <code>virtualenv</code> but for <i>all</i> programs, not just code dependencies!  If you are working on a project which depends on both code <b>and</b> software dependencies, GNU Guix can simplify the installation of both.
+</p>
+
+<p>
+You can also create &ldquo;pure&rdquo; environments which only contain the libraries and programs you want to develop and test with so that you know that your system configuration isn&rsquo;t giving you a false sense of trust that your code will work on another machine.
+</p>
+
+<p>
+This means you can have this functionality not only for Python, but also Rust, C/C++, Haskell, Common Lisp, Guile Scheme, and any other language or programming platform that GNU Guix has packages for!
+</p>
+</div>
+
+<h3><a id="a-tool-for-applying-declarative-system-configurations" class="anchor" href="#a-tool-for-applying-declarative-system-configurations">¶</a>A tool for applying declarative system configurations</h3><div class="outline-text-3" id="text-orge5d5d0e">
+<p>
+Guix allows you to declare a complete system configuration which can be applied to a machine with a single command.
+</p>
+
+<p>
+No more hand-editing of files in <code>/etc</code>! Now you can use Scheme code to configure your systems all in one place.
+</p>
+
+<p>
+Most importantly, Guix allows you to roll back your <i>entire system configuration</i> if something you change makes it unbootable.  You can easily boot a previous system configuration from the GRUB menu and continue with your work.
+</p>
+</div>
+
+<h3><a id="a-gnulinux-distribution" class="anchor" href="#a-gnulinux-distribution">¶</a>A GNU/Linux distribution!</h3><div class="outline-text-3" id="text-orgc2a204f">
+<p>
+Guix has its own package repository with many free and open source applications that you would find on other Linux distributions.
+</p>
+
+<p>
+You can easily add additional package sources using a feature of Guix called &ldquo;channels&rdquo;.  A channel is basically just a Git repository with a collection of package definitions in it!
+</p>
+</div>
+
+<h3><a id="a-full-embodiment-of-gnu-principles" class="anchor" href="#a-full-embodiment-of-gnu-principles">¶</a>A full embodiment of GNU principles</h3><div class="outline-text-3" id="text-orgc61d4c6">
+<p>
+The maintainers of GNU Guix care a lot about freedom and privacy!  This means that they work hard to make sure that no proprietary software (which restricts your freedoms) or software with tracking code (which harms your privacy) is included in the main Guix repository.
+</p>
+
+<p>
+This can actually be a downside in some respects when you <i>need</i> to install some proprietary software or hardware drivers, but there are ways around this.
+</p>
+</div>
+
+<h2><a id="why-guile-scheme" class="anchor" href="#why-guile-scheme">¶</a>Why Guile Scheme?</h2><div class="outline-text-2" id="text-orgfcd26d6">
+<p>
+I mentioned that GNU Guix is written and configured with Guile Scheme. Why is this useful?
+</p>
+
+<p>
+Let&rsquo;s look at an example package definition: <code>emacs-org-roam</code>
+</p>
+
+<p>
+All of the configuration you write is declarative and looks like markup, but it&rsquo;s code!  You can enhance your configurations and package definitions with embedded code that can make customization a lot easier.
+</p>
+
+<p>
+Guix also has a REPL where you can experiment with the built-in APIs!  You can learn how to use the functions that are helpful for package definitions and configurations.
+</p>
+
+<p>
+You can also write your own Guile Scheme code to script the behavior of Guix.  This would allow you to make your own custom system management commands!
+</p>
+
+<p>
+Example: profile management scripts.
+</p>
+</div>
+
+<h2><a id="what-about-proprietary-software" class="anchor" href="#what-about-proprietary-software">¶</a>What about proprietary software?</h2><div class="outline-text-2" id="text-orga4e4e93">
+<p>
+GNU Guix is a GNU/Linux distribution that conforms to the <a href="https://www.gnu.org/distros/free-system-distribution-guidelines.html">GNU Free System Distribution Guidelines</a>.  This means that all of the software (including the kernel), documentation, fonts, etc must all be licensed with <a href="https://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses">GPL-compatible licenses</a>.  This means that you won&rsquo;t find proprietary applications or hardware drivers in the main Guix repository!
+</p>
+
+<p>
+There are solutions to this, though:
+</p>
+
+<ul class="org-ul">
+<li>Alternative Guix channels like <a href="https://gitlab.com/nonguix/nonguix">Nonguix</a></li>
+<li>Using <a href="https://nixos.org/">Nix</a> package manager</li>
+<li><a href="https://www.flatpak.org/">Flatpak</a> with <a href="https://www.flatpak.org/">Flathub</a></li>
+</ul>
+
+<p>
+I&rsquo;ll talk about these options more once we start configuring a full system with Guix.
+</p>
+
+<p>
+NOTE: You should avoid asking about how to install proprietary software or drivers on the main Guix mailing lists and IRC chat.  Since they are a FSDG distro, I don&rsquo;t think they can (or even want) to help with that.
+</p>
+</div>
+
+<h2><a id="some-examples-of-how-i-use-guix" class="anchor" href="#some-examples-of-how-i-use-guix">¶</a>Some examples of how I use Guix</h2><h3><a id="managing-emacs-packages" class="anchor" href="#managing-emacs-packages">¶</a>Managing Emacs packages</h3><div class="outline-text-3" id="text-org50a28bb">
+<p>
+I have a &ldquo;manifest&rdquo; of Emacs packages that gets generated from Emacs.org which I can install with a single command.
+</p>
+
+<p>
+Some packages aren&rsquo;t (yet) in the Guix repository!  I conditionally install those using <code>straight.el</code> or make my own packages in a custom channel.
+</p>
+</div>
+
+<h3><a id="installing-categories-of-packages-separately" class="anchor" href="#installing-categories-of-packages-separately">¶</a>Installing categories of packages separately</h3><div class="outline-text-3" id="text-orga30c79a">
+<p>
+I have separate manifest files for different categories of packages that I use:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://gist.github.com/daviwil/ecef35bde8fa69236e7c8f1727c271e4">desktop.scm</a> (generated from <a href="https://github.com/daviwil/dotfiles/blob/master/Desktop.org">Desktop.org</a>)</li>
+<li><a href="https://gist.github.com/daviwil/0d503fadffe2c777cc110f9a23db78bb">emacs.scm</a> (generated from <a href="https://github.com/daviwil/dotfiles/blob/master/Emacs.org">Emacs.org</a>)</li>
+<li><a href="https://gist.github.com/daviwil/ffcb4d0f58c56f0893b5246c34c592a5">video.scm</a></li>
+<li><a href="https://gist.github.com/daviwil/ea8a0e5a94ac59240dd1c8344cd6202f">games.scm</a></li>
+</ul>
+
+<p>
+Splitting them in this way allows me to only install the software I need on a particular machine.
+</p>
+</div>
+
+<h3><a id="using-different-package-channels" class="anchor" href="#using-different-package-channels">¶</a>Using different package channels</h3><div class="outline-text-3" id="text-orga13dc37">
+<p>
+My channel configuration includes a few other channels outside of the main Guix repository.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/daviwil/dotfiles/blob/aeb26ff509895cd44ecc4a5832c8f66223b563bb/.config/guix/channels.scm">~/.config/guix/channels.scm</a></li>
+</ul>
+</div>
+
+<h3><a id="configuring-multiple-systems-with-a-shared-base-configuration" class="anchor" href="#configuring-multiple-systems-with-a-shared-base-configuration">¶</a>Configuring multiple systems with a shared base configuration</h3><div class="outline-text-3" id="text-org3e8f8a6">
+<p>
+When I started installing GNU Guix on more than one machine, I separated out the common configuration bits into base-system.scm so that my individual system configurations can be much simpler and focus only on the unique hardware configurations of those systems:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/daviwil/dotfiles/blob/master/Systems.org#base-configuration">base-system.scm</a></li>
+<li><a href="https://github.com/daviwil/dotfiles/blob/master/Systems.org#zerocool">zerocool.scm</a></li>
+<li><a href="https://github.com/daviwil/dotfiles/blob/master/Systems.org#acidburn">acidburn.scm</a></li>
+</ul>
+
+<p>
+I&rsquo;m also generating these configurations from my Systems.org file!
+</p>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org35631b7">
+<p>
+In the next episode of this series, I&rsquo;ll show you how to install GNU Guix as a package manager on your existing GNU/Linux distribution so that you can try it out!
+</p>
+
+<p>
+In the subsequent videos, we&rsquo;ll perform a full system installation and then learn how to manage your entire system using Guix and Emacs.
+</p>
+
+<p>
+I&rsquo;ll also make videos on how you can create your own package definitions for programs and libraries you&rsquo;d like to contribute to Guix, and also how to make your own package channel for everything else!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

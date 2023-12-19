@@ -1,0 +1,120 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Trying Out Prot&rsquo;s Denote, an Org Roam Alternative? - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Trying Out Prot&rsquo;s Denote, an Org Roam Alternative?</h1><p class="site-post-meta">July 15, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/QcRY_rsX0yY" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org2dbe23e">
+<ul class="org-ul">
+<li>My streaming and video schedule might be disrupted over the next few weeks!  I&rsquo;ll keep you posted.</li>
+</ul>
+</div>
+
+<h2><a id="renaming-rational-emacs-to-crafted-emacs" class="anchor" href="#renaming-rational-emacs-to-crafted-emacs">¶</a>Renaming Rational Emacs to Crafted Emacs</h2><div class="outline-text-2" id="text-orgdf58c2b">
+<p>
+Today we&rsquo;re renaming Rational Emacs to <b>Crafted Emacs</b>!
+</p>
+
+<p>
+Why?  Because this name fits better with the philosophy and &ldquo;tone&rdquo; of the community.
+</p>
+
+<p>
+Huge thanks to Jeff Bowman for putting together the necessary changes and providing a migration script so that most users can easily get migrated over.
+</p>
+
+<p>
+Let&rsquo;s finalize the rename now!
+</p>
+</div>
+
+<h2><a id="denote-a-new-note-taking-package" class="anchor" href="#denote-a-new-note-taking-package">¶</a>Denote, a new note-taking package</h2><div class="outline-text-2" id="text-orgb4dbc7c">
+<p>
+Today we&rsquo;re going to try out a new note-taking package by Protesilaos Stavrou (&ldquo;also known as Prot&rdquo;) which looks like it could be a promising alternative to other packages like Org Roam!
+</p>
+
+<p>
+<a href="https://protesilaos.com/emacs/denote">https://protesilaos.com/emacs/denote</a>
+</p>
+
+<p>
+I&rsquo;m going to try and build up a note taking workflow from scratch while reading the manual that Prot put together.  The goal would be to replicate something similar to what I have with Org Roam while benefitting from the unique features of Denote.
+</p>
+</div>
+
+<h3><a id="things-to-try" class="anchor" href="#things-to-try">¶</a>Things to try</h3><div class="outline-text-3" id="text-orgb14e013">
+<ul class="org-ul">
+<li>Creating new notes</li>
+<li>Linking notes</li>
+<li>Backlinks?</li>
+<li>Capture templates</li>
+<li>Journalling workflow</li>
+</ul>
+</div>
+
+<h3><a id="comparison-to-org-roam" class="anchor" href="#comparison-to-org-roam">¶</a>Comparison to Org Roam</h3><div class="outline-text-3" id="text-org18341de">
+<p>
+<b>Pros</b>
+</p>
+
+<ul class="org-ul">
+<li>Much easier to build your own workflow, especially when you need to use your files across multiple machines</li>
+<li>Simpler to understand and extend</li>
+<li>Very easy to filter all of your note files based on filename metadata</li>
+<li>Meshes well with existing Emacs functionality, you can customize behavior more easily because it&rsquo;s just plain Emacs Lisp in most cases</li>
+<li>Note renaming works pretty well, better than Org Roam</li>
+<li>Note subdirectories and silos are a first-class capability</li>
+<li>Timestamps are not timezone agnostic?</li>
+</ul>
+
+<p>
+<b>Cons</b>
+</p>
+
+<ul class="org-ul">
+<li>You may not like how the file name convention looks, especially because that&rsquo;s the way you navigate your notes (though this is also a benefit!)</li>
+<li>Lack of database means you miss some functionality like backlink context, finding notes by title (especially in completions), generating a graph of all notes.  These may matter to you!</li>
+<li>Generating backlinks buffers is slow because it must be done on the fly by scraping files</li>
+<li>Could cause problems on systems where long file names aren&rsquo;t supported</li>
+<li>Not as clear how to deal with multiple notes bearing the same name</li>
+</ul>
+</div>
+
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org6c92e72">
+<p>
+Also check out the <a href="https://protesilaos.com/emacs/denote#h:8ed2bb6f-b5be-4711-82e9-8bee5bb06ece">Extending Denote</a> section of the manual for more cool ideas!
+</p>
+
+<pre>(package-install 'denote)
+(<span class="org-keyword">require</span> '<span class="org-constant">denote</span>)
+
+(<span class="org-keyword">setq</span> denote-directory <span class="org-string">"~/Denotes"</span>)
+(<span class="org-keyword">setq</span> denote-known-keywords '(<span class="org-string">"journal"</span> <span class="org-string">"projects"</span> <span class="org-string">"ideas"</span>))
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(setq denote-prompts '(title subdirectory))</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Buttonize all denote links in text buffers</span>
+(add-hook 'find-file-hook #'denote-link-buttonize-buffer)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Fontify file names in Dired</span>
+(<span class="org-keyword">require</span> '<span class="org-constant">denote-dired</span>)
+(add-hook 'dired-mode-hook #'denote-dired-mode)
+
+(<span class="org-keyword">with-eval-after-load</span> 'org-capture
+  (<span class="org-keyword">require</span> '<span class="org-constant">denote-org-capture</span>)
+  (add-to-list 'org-capture-templates
+               '(<span class="org-string">"n"</span> <span class="org-string">"New note (with Denote)"</span> plain
+                 (file denote-last-path)
+                 #'denote-org-capture
+                 <span class="org-builtin">:no-save</span> t
+                 <span class="org-builtin">:immediate-finish</span> nil
+                 <span class="org-builtin">:kill-buffer</span> t
+                 <span class="org-builtin">:jump-to-captured</span> t)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my-denote-journal</span> ()
+  <span class="org-doc">"Create an entry tagged 'journal' with the date as its title."</span>
+  (<span class="org-keyword">interactive</span>)
+  (denote
+   (format-time-string <span class="org-string">"%A %e %B %Y"</span>)   <span class="org-comment-delimiter">; </span><span class="org-comment">format like Tuesday 14 June 2022</span>
+   '(<span class="org-string">"journal"</span>)
+   nil
+   <span class="org-string">"~/Denotes/Journal"</span>)
+
+  (insert <span class="org-string">"* Thoughts\n\n* Tasks\n\n"</span>)) <span class="org-comment-delimiter">; </span><span class="org-comment">multiple keywords are a list of strings: '("one" "two")</span></pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

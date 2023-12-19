@@ -1,0 +1,112 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Distilling the Essence of Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Distilling the Essence of Emacs</h1><p class="site-post-meta">August 19, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/j0GmFP9hDCc" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgcc54ff9">
+<ul class="org-ul">
+<li>The next System Crafters video will be about Embark, perhaps next week!</li>
+
+<li>Flux Harmonic will be starting up again soon!  Subscribe if you haven&rsquo;t yet:
+<a href="https://youtube.com/FluxHarmonicLive">https://youtube.com/FluxHarmonicLive</a></li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="distilling-the-essence-of-emacs" class="anchor" href="#distilling-the-essence-of-emacs">¶</a>Distilling the Essence of Emacs</h2><div class="outline-text-2" id="text-org9e7de86">
+<p>
+As you may have already suspected, Emacs is probably the most hackable and customizable program that has ever existed.  But how does it accomplish that?
+</p>
+
+<p>
+Today I&rsquo;d like to spend some time discussing the unique aspects of Emacs that enable this ultimate hackability so that we can basically produce a blueprint for other programs that might hope to replicate what Emacs has accomplished.
+</p>
+
+<p>
+What I really want is to get your ideas and feedback here so that I don&rsquo;t miss anything!
+</p>
+
+<p>
+The purpose for discussing this is that I would really like to experiment with building Emacs-like applications for other use cases.  We&rsquo;ll be looking into this on the Flux Harmonic channel when I start producing videos there again.
+</p>
+</div>
+
+<h3><a id="user-interface" class="anchor" href="#user-interface">¶</a>User Interface</h3><div class="outline-text-3" id="text-orgdf6ace1">
+<ul class="org-ul">
+<li>The text-focused interface</li>
+<li>Defining user-facing actions as commands</li>
+<li>The flexibility of the minibuffer</li>
+<li>Theming and visual customization with faces</li>
+<li>Window and frame management</li>
+<li>Mode line (you can put whatever you want in there)</li>
+</ul>
+
+<p>
+<b>Question:</b> could a more graphical representation still be as effective or hackable?
+</p>
+
+<p>
+(How does Blender accomplish UI extensibility?)
+</p>
+</div>
+
+<h3><a id="key-bindings" class="anchor" href="#key-bindings">¶</a>Key Bindings</h3><div class="outline-text-3" id="text-org9c277bb">
+<ul class="org-ul">
+<li>Prefix key system</li>
+<li>Binding keys directly to commands</li>
+<li>Ability to totally change input style (<code>evil-mode</code>, etc)</li>
+<li>Mode maps</li>
+</ul>
+
+<p>
+<b>Question:</b> does a program need such extensive ability to control key bindings to be considered hackable?
+</p>
+</div>
+
+<h3><a id="extension-language" class="anchor" href="#extension-language">¶</a>Extension Language</h3><div class="outline-text-3" id="text-org7af29ad">
+<p>
+What are the unique aspects of Emacs Lisp that make it especially effective as a configuration language?
+</p>
+
+<ul class="org-ul">
+<li>Lack of module namespaces</li>
+<li>Simplicity of libraries</li>
+<li>Hooks as a core extensibility point</li>
+<li>You can hook/hack any function with advice</li>
+<li>You can redefine any function no matter where it&rsquo;s defined (as long as it wasn&rsquo;t a C function)</li>
+<li>Core program behavior (buffers, windows, frames) represented as first class objects</li>
+<li>Major and minor modes</li>
+<li>Self-documenting and source is easily accessible</li>
+<li>You can inspect any variable or function at any time</li>
+<li>Easy to pull in community-authored packages</li>
+</ul>
+
+<p>
+<b>Question:</b> could you still achieve the same hackability with a better language?
+</p>
+
+<ul class="org-ul">
+<li>Having a clear documentation/manual strategy that isn&rsquo;t hard to keep up to date is critical for a hackable application</li>
+</ul>
+</div>
+
+<h3><a id="what-else--what-could-be-improved" class="anchor" href="#what-else--what-could-be-improved">¶</a>What else?  What could be improved?</h3><div class="outline-text-3" id="text-orgfcdb16d">
+<p>
+Anything major that we&rsquo;re missing from the previous items?
+</p>
+
+<ul class="org-ul">
+<li>The fact that you can re-evaluate code and extend Emacs while the program is running!</li>
+</ul>
+
+<p>
+What could be done better?
+</p>
+
+<ul class="org-ul">
+<li>The way you manipulate buffers is not very convenient (especially when you need to have a more structured representation of data)</li>
+<li>Emacs was designed in a totally different era, lots of legacy design decisions</li>
+<li>Asychrony should be easier to manage (not so in Emacs Lisp) - but how do you deal with the inevitable concurrency issues</li>
+<li>Being able to make use of modern computing resources (more memory, more cores)</li>
+<li>Immutable data types?</li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,218 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Automating Tasks with Emacs Lisp - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Automating Tasks with Emacs Lisp</h1><p class="site-post-meta">July 29, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/6zvE2vZEPzs" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org845301b">
+<ul class="org-ul">
+<li>Jeff Bowman wrote an article about the rename from Rational Emacs to Crafted Emacs: <a href="https://jeffbowman.writeas.com/from-rational-to-crafted-emacs">https://jeffbowman.writeas.com/from-rational-to-crafted-emacs</a></li>
+
+<li>A new way to support the channel: <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="automating-tasks-with-emacs-lisp" class="anchor" href="#automating-tasks-with-emacs-lisp">¶</a>Automating Tasks with Emacs Lisp</h2><div class="outline-text-2" id="text-orga120af4">
+<p>
+Today we&rsquo;re going to write a lot of Emacs Lisp code to automate a particular monotonous task: editing my YouTube video descriptions!
+</p>
+
+<p>
+Why?  It&rsquo;s nice to be able to keep all of your video descriptions following a standard format so that they can be automatically updated using code for things like:
+</p>
+
+<ul class="org-ul">
+<li>Adding links to new playlists to every video</li>
+<li>Updating links to my websites</li>
+<li>Temporary links to occasional events I want to promote</li>
+</ul>
+
+<p>
+Here&rsquo;s the flow I have in mind:
+</p>
+
+<ul class="org-ul">
+<li>Download the description of a particular video to a file on disk (in a temporary location)</li>
+<li>Open the buffer to make any desired edits</li>
+<li>Use a command to send the changes back to the original video</li>
+<li>Make it possible to download all video descriptions at once</li>
+<li>Create a bulk editing action to edit (and verify) changes to all description files</li>
+<li>Mass-upload all changed description files back to YouTube</li>
+</ul>
+
+<p>
+We probably won&rsquo;t get through all of this today!  I do have a starting point, though.  My <code>live-crafter</code> package has some YouTube Data API code we can borrow to kick things off!
+</p>
+</div>
+
+<h3><a id="reference" class="anchor" href="#reference">¶</a>Reference</h3><div class="outline-text-3" id="text-org02cdf6f">
+<ul class="org-ul">
+<li><a href="https://developers.google.com/youtube/v3/getting-started">https://developers.google.com/youtube/v3/getting-started</a></li>
+<li><a href="https://developers.google.com/youtube/v3/guides/implementation/videos">https://developers.google.com/youtube/v3/guides/implementation/videos</a></li>
+<li><a href="https://developers.google.com/youtube/v3/docs/videos">https://developers.google.com/youtube/v3/docs/videos</a></li>
+<li><a href="https://developers.google.com/youtube/v3/determine_quota_cost">https://developers.google.com/youtube/v3/determine_quota_cost</a></li>
+</ul>
+</div>
+
+<h2><a id="the-final-code" class="anchor" href="#the-final-code">¶</a>The final code</h2><div class="outline-text-2" id="text-org47d39ea">
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">-*- lexical-binding: t; -*-</span>
+
+(<span class="org-keyword">require</span> '<span class="org-constant">simple-httpd</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta-client-id</span> nil)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta-api-key</span> nil)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta-client-secret</span> nil)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta--access-token-func</span> nil)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta--auth-redirect-uri</span> <span class="org-string">"http://localhost:3000/oauth2_callback"</span>)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta--use-bearer-auth</span> nil)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta--request-url</span> nil)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">video-meta--video-file-path</span> <span class="org-string">"/tmp/video-meta"</span>)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--get-access-token</span> ()
+  (funcall video-meta--access-token-func))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--build-params</span> (params)
+  (string-join (mapcar (<span class="org-keyword">lambda</span> (pair)
+                         (format <span class="org-string">"%s=%s"</span> (car pair) (cdr pair)))
+                       params)
+               <span class="org-string">"&amp;"</span>))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--build-uri</span> (path params)
+  (<span class="org-keyword">let</span> ((param-string (video-meta--build-params params)))
+    (concat path
+            (<span class="org-keyword">if</span> (&gt; (length param-string) 0) <span class="org-string">"?"</span> <span class="org-string">""</span>)
+            param-string)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--http-get</span> (url params)
+  (plz 'get (video-meta--build-uri url params)
+    <span class="org-builtin">:as</span> #'json-read
+    <span class="org-builtin">:else</span> (<span class="org-keyword">lambda</span> (err) (message <span class="org-string">"ERROR: %S"</span> err))
+    <span class="org-builtin">:headers</span> `((<span class="org-string">"Content-Type"</span> . <span class="org-string">"application/json"</span>)
+               (<span class="org-string">"Authorization"</span> . ,(format <span class="org-string">"Bearer %s"</span> (video-meta--get-access-token))))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--http-put</span> (url params body)
+  (plz 'put (video-meta--build-uri url params)
+    <span class="org-builtin">:as</span> #'json-read
+    <span class="org-builtin">:body</span> (json-encode body)
+    <span class="org-builtin">:headers</span> `((<span class="org-string">"Content-Type"</span> . <span class="org-string">"application/json"</span>)
+               (<span class="org-string">"Authorization"</span> . ,(format <span class="org-string">"Bearer %s"</span> (video-meta--get-access-token))))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--build-auth-url</span> (client-id redirect-uri)
+  (video-meta--build-uri
+   <span class="org-string">"https://accounts.google.com/o/oauth2/v2/auth"</span>
+   `((client_id . ,client-id)
+     (response_type . <span class="org-string">"code"</span>)
+     (redirect_uri . ,redirect-uri)
+     (<span class="org-string">"scope"</span> . ,(string-join '(<span class="org-string">"https://www.googleapis.com/auth/youtube"</span>
+                                <span class="org-string">"https://www.googleapis.com/auth/youtube.force-ssl"</span>
+                                <span class="org-string">"https://www.googleapis.com/auth/youtube.readonly"</span>)
+                              <span class="org-string">" "</span>)))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--extract-token</span> (json-body)
+  (cdr (assoc 'access_token json-body)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--request-token</span> (auth-code)
+  (<span class="org-keyword">let*</span> ((params `((client_id . ,video-meta-client-id)
+                   (client_secret . ,video-meta-client-secret)
+                   (code . ,auth-code)
+                   (grant_type . <span class="org-string">"authorization_code"</span>)
+                   (redirect_uri . ,video-meta--auth-redirect-uri)))
+         (url-request-method <span class="org-string">"POST"</span>)
+         (url-request-extra-headers
+          '((<span class="org-string">"Content-Type"</span> . <span class="org-string">"application/x-www-form-urlencoded"</span>)))
+         (url-request-data (video-meta--build-params params)))
+    (<span class="org-keyword">with-temp-buffer</span>
+      (url-retrieve
+       <span class="org-string">"https://oauth2.googleapis.com/token"</span>
+       (<span class="org-keyword">lambda</span> (status)
+         (message <span class="org-string">"In callback!"</span>)
+         (re-search-forward <span class="org-string">"^\n"</span>)
+         (<span class="org-keyword">let</span> ((token-details (json-read)))
+           (<span class="org-keyword">setq</span> video-meta--access-token-func
+                 #'(lambda ()
+                     (video-meta--extract-token token-details)))))
+       nil
+       t))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta-authenticate</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((httpd-port 3000)
+        (auth-url (video-meta--build-auth-url video-meta-client-id
+                                                <span class="org-string">"http://localhost:3000/oauth2_callback"</span>)))
+    (httpd-start)
+    (browse-url auth-url)))
+
+(defservlet* oauth2_callback text/plain (code error)
+  (<span class="org-keyword">if</span> error
+      (message <span class="org-string">"Error during YouTube authentication: %s"</span> error)
+    (<span class="org-keyword">progn</span>
+      (message <span class="org-string">"Requesting token!"</span>)
+      (video-meta--request-token code)))
+  (httpd-stop))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta-get-subscriber-count</span> ()
+  (<span class="org-keyword">let</span> ((params `((part . <span class="org-string">"statistics"</span>)
+                  (mine . <span class="org-string">"true"</span>)
+                  (key . ,video-meta-api-key))))
+    (video-meta--http-get
+     <span class="org-string">"https://youtube.googleapis.com/youtube/v3/channels"</span>
+     params
+     (<span class="org-keyword">lambda</span> (response)
+       (message <span class="org-string">"Got response! %S"</span> response)))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--extract-video-list</span> (response)
+  (cdr (assoc 'items response)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--extract-video-details</span> (video)
+  (<span class="org-keyword">let</span> ((snippet (cdr (assoc 'snippet video))))
+    `((id . ,(cdr (assoc 'id video)))
+      (category-id . ,(cdr (assoc 'categoryId snippet)))
+      (title . ,(cdr (assoc 'title snippet)))
+      (description . ,(cdr (assoc 'description snippet))))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta-get-video-details</span> (video-id)
+  (<span class="org-keyword">let</span> ((response (video-meta--http-get
+                   <span class="org-string">"https://youtube.googleapis.com/youtube/v3/videos"</span>
+                   `((part . <span class="org-string">"snippet"</span>)
+                     (id . ,video-id)
+                     (key . ,video-meta-api-key)))))
+
+    (video-meta--extract-video-details
+      (aref (video-meta--extract-video-list response)
+            0))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--download-video-description</span> (video-id)
+  (<span class="org-keyword">let*</span> ((video (video-meta-get-video-details video-id))
+         (description (cdr (assoc 'description video))))
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Save the file to the path using the video id as filename</span>
+    (<span class="org-keyword">with-temp-file</span> (expand-file-name (format <span class="org-string">"%s.txt"</span> video-id)
+                                      video-meta--video-file-path)
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Try pretty printing with pp and with-output-to-string</span>
+      (insert (format <span class="org-string">"%S"</span> (map-delete video 'description)))
+      (insert <span class="org-string">"\n---\n"</span>)
+      (insert description))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(video-meta--download-video-description "za99DwdZEyg")</span>
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">video-meta--upload-video-description</span> (video-id category-id title description)
+  (<span class="org-keyword">let</span> ((response (video-meta--http-put
+                   <span class="org-string">"https://youtube.googleapis.com/youtube/v3/videos"</span>
+                   `((part . <span class="org-string">"snippet"</span>)
+                     (id . ,video-id)
+                     (key . ,video-meta-api-key))
+
+                   `((id . ,video-id)
+                     (snippet . ((title . ,title)
+                                 (categoryId . ,category-id)
+                                 (description . ,description)))))))))
+
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(let* ((video-id "za99DwdZEyg")</span>
+<span class="org-comment-delimiter">;;        </span><span class="org-comment">(video (video-meta-get-video-details video-id)))</span>
+
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(video-meta--upload-video-description video-id</span>
+<span class="org-comment-delimiter">;;                                         </span><span class="org-comment">(cdr (assoc 'category-id video))</span>
+<span class="org-comment-delimiter">;;                                         </span><span class="org-comment">(cdr (assoc 'title video))</span>
+<span class="org-comment-delimiter">;;                                         </span><span class="org-comment">(concat "Testing description uploading!  " (cdr (assoc 'description video)))))</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(video-meta--upload-video-description "za99DwdZEyg" "Automated Org Mode Website Publishing with GitHub or SourceHut")</span>
+
+(<span class="org-keyword">provide</span> '<span class="org-constant">video-meta</span>)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

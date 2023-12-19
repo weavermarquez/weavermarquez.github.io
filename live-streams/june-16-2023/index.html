@@ -1,0 +1,136 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Crafting Streamlined Guix Configurations - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Crafting Streamlined Guix Configurations</h1><p class="site-post-meta">June 16, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/u6WCnzKkKts" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><h3><a id="speaking-at-libreplanet-2024" class="anchor" href="#speaking-at-libreplanet-2024">¶</a>Speaking at LibrePlanet 2024</h3><div class="outline-text-3" id="text-orged884a3">
+<p>
+I was invited to give a keynote talk at the FSF&rsquo;s LibrePlanet 2024 conference!  The talk will be about building community around Free Software projects and creating a healthy ecosystem of contributors.
+</p>
+
+<p>
+Here&rsquo;s the link for this year&rsquo;s LibrePlanet: <a href="https://libreplanet.org/2023/">https://libreplanet.org/2023/</a>
+</p>
+
+<p>
+I&rsquo;ll keep you posted for when registration opens.  I&rsquo;d love to have a System Crafters meetup in Boston next spring!
+</p>
+</div>
+
+<h3><a id="subscribe-to-the-newsletter" class="anchor" href="#subscribe-to-the-newsletter">¶</a>Subscribe to the Newsletter!</h3><div class="outline-text-3" id="text-orge196c7d">
+<p>
+<a href="https://systemcrafters.net/newsletter/">https://systemcrafters.net/newsletter/</a>
+</p>
+
+<p>
+Issue #004 just went out yesterday!
+</p>
+
+<p>
+<a href="https://systemcrafters.net/newsletter/sc-news-004.html">https://systemcrafters.net/newsletter/sc-news-004.html</a>
+</p>
+</div>
+
+<h3><a id="support-my-work" class="anchor" href="#support-my-work">¶</a>Support my work!</h3><div class="outline-text-3" id="text-orge3a9703">
+<p>
+<a href="https://systemcrafters.net/how-to-help/#support-my-work">https://systemcrafters.net/how-to-help/#support-my-work</a>
+</p>
+</div>
+
+<h2><a id="call-for-community-projects" class="anchor" href="#call-for-community-projects">¶</a>Call for Community Projects</h2><div class="outline-text-2" id="text-org5c226eb">
+<p>
+One thing I&rsquo;ve been thinking about for a while is how to activate our community to collaborate on building new and useful things.  Emacs packages, Guix packages or configurations, Lisp-authored tools, really anything that would be useful to a system crafter!
+</p>
+
+<p>
+To that end, I&rsquo;ve created a new channel on Matrix and IRC for community members to discuss projects that they would like to collaborate on:
+</p>
+
+<ul class="org-ul">
+<li><b>Matrix:</b> #systemcrafters-hacking:matrix.org</li>
+<li><b>IRC:</b> #systemcrafters-hacking on irc.libera.chat</li>
+</ul>
+
+<p>
+A few of us are there already discussing a few projects that you might be interested to join:
+</p>
+
+<ul class="org-ul">
+<li><p>
+Fade is prototyping a new type of decentralized forum protocol based on NNTP
+and IPFS, written in Common Lisp:
+</p>
+
+<p>
+<a href="https://codeberg.org/fade/callisto">https://codeberg.org/fade/callisto</a>
+</p></li>
+
+<li><p>
+David is doing early work on simplifying Guix configurations in Crafted Guix:
+</p>
+
+<p>
+<a href="https://codeberg.org/SystemCrafters/crafted-guix">https://codeberg.org/SystemCrafters/crafted-guix</a>
+</p></li>
+
+<li>Bionicbabelfish asked for help in finishing this patch to add a Guix service to manage Docker containers as Shepherd services:
+<a href="https://codeberg.org/SystemCrafters/crafted-guix/src/commit/3bd0f448e1940b3fad9957c3314c1439842ebed0/projects/docker-container-service-type.org">https://codeberg.org/SystemCrafters/crafted-guix/src/commit/3bd0f448e1940b3fad9957c3314c1439842ebed0/projects/docker-container-service-type.org</a>
+<a href="https://codeberg.org/SystemCrafters/crafted-guix/pulls/5">https://codeberg.org/SystemCrafters/crafted-guix/pulls/5</a>
+<a href="https://issues.guix.gnu.org/58123">https://issues.guix.gnu.org/58123</a></li>
+
+<li><p>
+We should fix how Codeberg renders code blocks in Org Mode files:
+</p>
+
+<p>
+<a href="https://github.com/niklasfasching/go-org/issues/101">https://github.com/niklasfasching/go-org/issues/101</a>
+</p></li>
+</ul>
+
+<p>
+If you have your own idea for a project, please feel free to come discuss it with us!  These projects don&rsquo;t have to be under the &ldquo;System Crafters&rdquo; banner, but if you&rsquo;d like to make it an official SC project, we can discuss giving you a repo under the System Crafters org on Codeberg.
+</p>
+</div>
+
+<h2><a id="simplifying-guix-configurations" class="anchor" href="#simplifying-guix-configurations">¶</a>Simplifying Guix Configurations</h2><div class="outline-text-2" id="text-org227bc45">
+<p>
+To test the configuration in a VM:
+</p>
+
+<pre>$(guix system vm examples/sway-desktop.scm) -device virtio-vga-gl -display gtk,<span class="org-variable-name">gl</span>=on -m 2G -smp <span class="org-variable-name">cores</span>=2</pre>
+
+<p>
+&#x2026; or &#x2026;
+</p>
+
+<pre>$(guix system vm examples/sway-desktop.scm) -device virtio-serial-pci,<span class="org-variable-name">id</span>=virtio-serial0,<span class="org-variable-name">max_ports</span>=16,<span class="org-variable-name">bus</span>=pci.0,<span class="org-variable-name">addr</span>=0x5 <span class="org-sh-escaped-newline">\</span>
+                                            -chardev spicevmc,<span class="org-variable-name">name</span>=vdagent,<span class="org-variable-name">id</span>=vdagent <span class="org-sh-escaped-newline">\</span>
+                                            -device virtserialport,<span class="org-variable-name">nr</span>=1,<span class="org-variable-name">bus</span>=virtio-serial0.0,<span class="org-variable-name">chardev</span>=vdagent,<span class="org-sh-escaped-newline">\</span>
+                                            <span class="org-variable-name">name</span>=com.redhat.spice.0
+
+guix shell virt-viewer -- remote-viewer -spice <span class="org-variable-name">port</span>=5930,disable-ticketing</pre>
+
+<p>
+Docs: <a href="https://guix.gnu.org/manual/devel/en/guix.html#Using-virt_002dviewer-with-Spice">https://guix.gnu.org/manual/devel/en/guix.html#Using-virt_002dviewer-with-Spice</a>
+</p>
+
+<pre>(bootloader (bootloader-configuration
+             (bootloader grub-bootloader)
+             (targets <span class="org-string">'("/dev/vda"))))</span>
+
+<span class="org-string">(file-systems (cons (file-system</span>
+<span class="org-string">                     (mount-point "/")</span>
+<span class="org-string">                     (device "/dev/vda1")</span>
+<span class="org-string">                     (type "ext4"))</span>
+<span class="org-string">                    %base-file-systems))</span>
+
+
+<span class="org-string"> ;; TODO: Import (gnu services spice)</span>
+<span class="org-string"> (define vm-config</span>
+<span class="org-string">   (crafted-config (add-system-services</span>
+<span class="org-string">                    (service spice-vdagent-service-type))))</span></pre>
+
+<p>
+Trying out the home configuration:
+</p>
+
+<pre>guix home -L ~/Projects/Code/crafted-guix/modules container examples/sway-desktop.scm</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

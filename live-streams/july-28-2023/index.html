@@ -1,0 +1,143 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Terminal Velocity: Eshell, vterm, and Eat - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Terminal Velocity: Eshell, vterm, and Eat</h1><p class="site-post-meta">July 28, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/HG7pVCa0DVY" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org842105e">
+<ul class="org-ul">
+<li>Judy (jvdydev) has joined Crafted Emacs as a co-maintainer!
+<a href="https://jeffbowman.writeas.com/crafted-emacs-update-for-july-and-new-teammate">https://jeffbowman.writeas.com/crafted-emacs-update-for-july-and-new-teammate</a></li>
+
+<li><p>
+Denote 2.0 has been released!
+</p>
+
+<p>
+<a href="https://protesilaos.com/codelog/2023-07-21-denote-2-0-0/">https://protesilaos.com/codelog/2023-07-21-denote-2-0-0/</a>
+</p></li>
+
+<li><p>
+Submit your <b>EmacsConf 2023</b> proposals!
+</p>
+
+<p>
+<a href="https://emacsconf.org/2023/cfp/">https://emacsconf.org/2023/cfp/</a>
+</p></li>
+
+<li>I&rsquo;ll be out for 2 weeks!  No streams in that time, August 4 and 11th</li>
+</ul>
+</div>
+
+<h2><a id="comparing-emacs-terminals-and-shells" class="anchor" href="#comparing-emacs-terminals-and-shells">¶</a>Comparing Emacs Terminals and Shells</h2><div class="outline-text-2" id="text-org7d8a438">
+<p>
+If you&rsquo;re an Emacs fan and haven&rsquo;t been using it as your terminal of choice, you&rsquo;ve been missing out!
+</p>
+
+<p>
+In this stream, we&rsquo;ll take a look at three different options you should consider for a terminal (or terminal-like) experience in Emacs:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.gnu.org/software/emacs/manual/html_mono/eshell.html">Eshell</a></li>
+<li><a href="https://github.com/akermu/emacs-libvterm">vterm</a></li>
+<li><a href="https://codeberg.org/akib/emacs-eat">Eat</a></li>
+</ul>
+
+<p>
+We will experiment with these three options to see which one gives the best results based on the following factors:
+</p>
+
+<ul class="org-ul">
+<li>Speed</li>
+<li>Terminal emulation quality</li>
+<li>Efficiency/ease of use</li>
+</ul>
+
+<p>
+We&rsquo;ll quickly try to come up with a decent configuration with each of them and then experiment to see what kind of results we get!
+</p>
+</div>
+
+<h3><a id="eshell" class="anchor" href="#eshell">¶</a>Eshell</h3><h4><a id="pros" class="anchor" href="#pros">¶</a>Pros</h4><div class="outline-text-4" id="text-org5bc5fff">
+<ul class="org-ul">
+<li>Nice prompt editing experience</li>
+<li>You can run Emacs commands from the shell prompt</li>
+<li>Easy redirect of command output to Emacs buffers</li>
+<li>Supports Windows and emulates Linux-style shell commands in that environment!</li>
+</ul>
+</div>
+
+<h4><a id="cons" class="anchor" href="#cons">¶</a>Cons</h4><div class="outline-text-4" id="text-orgfd3471d">
+<ul class="org-ul">
+<li>Not a full POSIX shell so some things work differently (subcommands, piping, etc)</li>
+<li>Output can be really slow for some things like <code>ls</code> on large folders. (Though you still can drop through to the real commands with <code>*ls</code> etc</li>
+<li>It&rsquo;s not a terminal emulator, so terminal programs don&rsquo;t render correctly (though you can use <code>eshell-visual-commands</code> to defer specific programs to <code>term-mode</code>)</li>
+</ul>
+</div>
+
+<h3><a id="vterm" class="anchor" href="#vterm">¶</a>vterm</h3><h4><a id="pros" class="anchor" href="#pros">¶</a>Pros</h4><div class="outline-text-4" id="text-orgf29f7b4">
+<ul class="org-ul">
+<li>Great in terms of speed and terminal emulation completeness</li>
+<li>You can use Emacs inside of Emacs (but not easily)</li>
+<li>You can use <code>vterm_cmd</code> inside of your shell to invoke Emacs commands</li>
+</ul>
+</div>
+
+<h4><a id="cons" class="anchor" href="#cons">¶</a>Cons</h4><div class="outline-text-4" id="text-orge6d43e9">
+<ul class="org-ul">
+<li>Requires some extra Bash (or other) shell configuration to make it blend with Emacs more effectively (directory tracking, key bindings, etc)</li>
+<li>Not easy to have separate modes for passing through certain keys directly to the terminal app</li>
+<li>Tricky to use with Evil Mode</li>
+<li>You need some compiler dependencies to use it on most systems!</li>
+<li>It doesn&rsquo;t support Windows</li>
+</ul>
+</div>
+
+<h3><a id="eat" class="anchor" href="#eat">¶</a>Eat</h3><h4><a id="pros" class="anchor" href="#pros">¶</a>Pros</h4><div class="outline-text-4" id="text-orge96161b">
+<ul class="org-ul">
+<li>Does not require compiled components</li>
+<li>Does seem to emulate the terminal pretty well</li>
+<li>Better key binding modes to control how keypresses get sent to the terminal</li>
+<li>Handy <code>eat-project</code> command</li>
+</ul>
+</div>
+
+<h4><a id="cons" class="anchor" href="#cons">¶</a>Cons</h4><div class="outline-text-4" id="text-orgd04d3b2">
+<ul class="org-ul">
+<li>Have some issues with the cursor jumping upward when using TAB for completions (sometimes)</li>
+<li>Not as fast as vterm, but still not bad</li>
+<li>Also requires some shell integration, but it&rsquo;s easy to set up, pretty much automatic (directory tracking, etc)</li>
+</ul>
+</div>
+
+<h3><a id="eshell--eat---the-best-of-both-worlds" class="anchor" href="#eshell--eat---the-best-of-both-worlds">¶</a>Eshell + Eat - The best of both worlds?</h3><h4><a id="pros" class="anchor" href="#pros">¶</a>Pros</h4><div class="outline-text-4" id="text-orgff18e6a">
+<ul class="org-ul">
+<li>You can run full terminal applications from within Eshell!</li>
+<li>You still have full integration with Emacs, no shell integration scripts needed on the Eat side</li>
+<li>You have full Emacs-driven prompt editing and display</li>
+</ul>
+</div>
+
+<h4><a id="cons" class="anchor" href="#cons">¶</a>Cons</h4><div class="outline-text-4" id="text-orge39aeee">
+<ul class="org-ul">
+<li>You still aren&rsquo;t using a POSIX shell (Eshell) so you might get confused and expect certain things to work like Bash (subcommands, piping, etc)</li>
+</ul>
+
+<p>
+Note: It&rsquo;s possible to do something similar with <code>vterm</code> and the <code>eshell-vterm</code> package: <a href="https://github.com/iostapyshyn/eshell-vterm">https://github.com/iostapyshyn/eshell-vterm</a>
+</p>
+</div>
+
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-orgbde4448">
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">eat</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:config</span>
+  (eat-eshell-mode)
+  (<span class="org-keyword">setq</span> eshell-visual-commands '()))</pre>
+
+
+<p>
+<code>~/.emacs.d/eshell/alias</code>
+</p>
+
+<pre>alias ls *ls $*
+alias cp *cp $*</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

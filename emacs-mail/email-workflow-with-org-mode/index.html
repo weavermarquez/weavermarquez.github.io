@@ -1,0 +1,274 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Craft an Email Workflow with Org Mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Craft an Email Workflow with Org Mode</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/dSZu4jwvaSs" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-orgb89cc27">
+<ul class="org-ul">
+<li>Capturing emails for further processing</li>
+<li>Creating query links to drive your mail workflow</li>
+</ul>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="is-it-org-mu4e-or-mu4e-org" class="anchor" href="#is-it-org-mu4e-or-mu4e-org">¶</a>Is it org-mu4e or mu4e-org?</h2><div class="outline-text-2" id="text-orgc9ad9c0">
+<p>
+One thing to keep in mind throughout this video is that the naming of the variables and commands we will cover may be different depending on which version of mu4e you have installed!
+</p>
+
+<p>
+In mu4e 1.3.6, a new module called <code>mu4e-org</code> was added which improves upon the <code>org-mu4e</code> capture functions in previous versions.  We will try to cover both where necessary, but you should try to use 1.3.6 or later for best experience!
+</p>
+</div>
+
+<h2><a id="adding-codemu4e-orgcode-to-our-configuration" class="anchor" href="#adding-codemu4e-orgcode-to-our-configuration">¶</a>Adding <code>mu4e-=org</code> to our configuration</h2><div class="outline-text-2" id="text-orge8574ac">
+<p>
+This bit of configuration depends on which version of mu4e you have installed.  Add one of these lines to your mu4e configuration:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">If mu4e version is less than 1.3.6</span>
+(<span class="org-keyword">require</span> '<span class="org-constant">org-mu4e</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Otherwise use this</span>
+(<span class="org-keyword">require</span> '<span class="org-constant">mu4e-org</span>)</pre>
+</div>
+
+<h2><a id="letrsquos-create-mailorg" class="anchor" href="#letrsquos-create-mailorg">¶</a>Let&rsquo;s create Mail.org</h2><div class="outline-text-2" id="text-orgfb6bb43">
+<p>
+To get things started, we will create a new Org Mode file called <code>Mail.org</code> in our folder containing Org files.
+</p>
+
+<p>
+We&rsquo;ll create a couple of headings for storing links to email messages in mu4e:
+</p>
+
+<ul class="org-ul">
+<li>Follow Up</li>
+<li>Read Later</li>
+</ul>
+</div>
+
+<h2><a id="capturing-emails-for-processing-with-capture-templates" class="anchor" href="#capturing-emails-for-processing-with-capture-templates">¶</a>Capturing emails for processing with capture templates</h2><div class="outline-text-2" id="text-org1ac3ec6">
+<p>
+Now we can create capture templates that create TODO items for emails that we&rsquo;d like to act on at some point.
+</p>
+
+<p>
+I covered capture templates in <a href="https://youtu.be/PNE-mgkZ6HM?t=2662">Emacs From Scratch #6 - Organize Your Life with Org Mode</a> so we won&rsquo;t go into general detail here, but I&rsquo;ll show you a few things that will be useful.
+</p>
+
+<p>
+Let&rsquo;s create two capture templates that will help populate the headings we created in Mail.org:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-capture-templates
+  `((<span class="org-string">"m"</span> <span class="org-string">"Email Workflow"</span>)
+    (<span class="org-string">"mf"</span> <span class="org-string">"Follow Up"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Follow Up"</span>)
+          <span class="org-string">"* TODO %a"</span>)
+    (<span class="org-string">"mr"</span> <span class="org-string">"Read Later"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Read Later"</span>)
+          <span class="org-string">"* TODO %a"</span>)))</pre>
+
+<p>
+Now you can run <code>M-x mu4e-org-store-and-capture</code> to capture a link to the current e-mail with a capture template.
+</p>
+
+<p>
+<b>NOTE</b>: This is <code>org-mu4e-store-and-capture</code> on versions before 1.3.6!
+</p>
+
+<p>
+This command stores a link to the current email using the <code>org-store-link</code> command before invoking <code>org-capture</code> so that you can select the capture template to use for the selected email.
+</p>
+
+<p>
+Let&rsquo;s add some more things to the capture template!
+</p>
+</div>
+
+<h3><a id="selected-text-from-the-mail" class="anchor" href="#selected-text-from-the-mail">¶</a>Selected text from the mail</h3><div class="outline-text-3" id="text-org9e4950f">
+<p>
+You can use the <code>%i</code> template string to insert any selected text into the captured item:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-capture-templates
+  `((<span class="org-string">"m"</span> <span class="org-string">"Email Workflow"</span>)
+    (<span class="org-string">"mf"</span> <span class="org-string">"Follow Up"</span> entry (file+headline <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Follow Up"</span>)
+          <span class="org-string">"* TODO %a\n\n  %i"</span>)
+    (<span class="org-string">"mr"</span> <span class="org-string">"Read Later"</span> entry (file+headline <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Read Later"</span>)
+          <span class="org-string">"* TODO %a\n\n  %i"</span>)))</pre>
+
+<p>
+This is great for reminding yourself <b>why</b> you need to follow up with a particular email!
+</p>
+</div>
+
+<h3><a id="formatting-the-todo-title-using-mail-details" class="anchor" href="#formatting-the-todo-title-using-mail-details">¶</a>Formatting the TODO title using mail details</h3><div class="outline-text-3" id="text-org7fbc387">
+<p>
+We can pull in details from the selected mail using the <code>%:keyword</code> syntax:
+</p>
+
+<ul class="org-ul">
+<li><code>%:subject</code> - The subject of the message</li>
+<li><code>%:from</code> - The full sender string including name and address</li>
+<li><code>%:fromname</code> - The display name of the sender</li>
+<li><code>%:fromaddress</code> - The email address of the sender</li>
+<li><code>%to</code>, <code>%:toname</code>, <code>%:toaddress</code> - Details of the recipient</li>
+<li><code>%:date</code> - The date of the message</li>
+<li><code>%:date-timestamp</code> - The date of the message as an active Org timestamp</li>
+</ul>
+
+<p>
+Let&rsquo;s use a couple of these to enhance our capture templates:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-capture-templates
+  `((<span class="org-string">"m"</span> <span class="org-string">"Email Workflow"</span>)
+    (<span class="org-string">"mf"</span> <span class="org-string">"Follow Up"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Follow Up"</span>)
+          <span class="org-string">"* TODO Follow up with %:fromname on %:subject\n%a\n\n%i"</span>)
+    (<span class="org-string">"mr"</span> <span class="org-string">"Read Later"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Read Later"</span>)
+          <span class="org-string">"* TODO Read %:subject\n%a\n\n%i"</span>)))</pre>
+</div>
+
+<h3><a id="scheduling-mail-for-processing" class="anchor" href="#scheduling-mail-for-processing">¶</a>Scheduling mail for processing</h3><div class="outline-text-3" id="text-org6b91407">
+<p>
+Another thing you can add to your capture template is a schedule or deadline timestamp to cause it to appear on your Org agenda!
+</p>
+
+<p>
+The <code>%t</code> template syntax will insert a timestamp for the current date and time:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-capture-templates
+  `((<span class="org-string">"m"</span> <span class="org-string">"Email Workflow"</span>)
+    (<span class="org-string">"mf"</span> <span class="org-string">"Follow Up"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Follow Up"</span>)
+          <span class="org-string">"* TODO Follow up with %:fromname on %a\nSCHEDULED:%t\n\n%i"</span>)
+    (<span class="org-string">"mr"</span> <span class="org-string">"Read Later"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Read Later"</span>)
+          <span class="org-string">"* TODO Read %:subject\nSCHEDULED:%t\n%a\n\n%i"</span>)))</pre>
+
+<p>
+We can also calculate a date in the future by using the <code>%()</code> syntax to evaluate an arbitrary expression.  In this case we will use <code>org-insert-time-stamp</code> and <code>org-read-date</code> to generate a timestamp for two days from today:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-capture-templates
+  `((<span class="org-string">"m"</span> <span class="org-string">"Email Workflow"</span>)
+    (<span class="org-string">"mf"</span> <span class="org-string">"Follow Up"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Follow Up"</span>)
+          <span class="org-string">"* TODO Follow up with %:fromname on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"</span>)
+    (<span class="org-string">"mr"</span> <span class="org-string">"Read Later"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Read Later"</span>)
+          <span class="org-string">"* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"</span>)))</pre>
+
+<p>
+Now that we&rsquo;ve added timestamps for our mail tasks, we can see them in <code>org-agenda</code>!  Make sure to add the <code>Mail.org</code> file to <code>org-agenda-files</code>
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-agenda-files '(<span class="org-string">"~/org/Mail.org"</span>))</pre>
+
+<p>
+Now run <code>M-x org-agenda</code> and select today&rsquo;s agenda with <code>a</code>
+</p>
+</div>
+
+
+<h3><a id="capturing-mails-immediately-with-no-prompt" class="anchor" href="#capturing-mails-immediately-with-no-prompt">¶</a>Capturing mails immediately with no prompt</h3><div class="outline-text-3" id="text-orga3abe3e">
+<p>
+This has all been great so far, but what if you want to capture emails without the need to confirm every time?
+</p>
+
+<p>
+There&rsquo;s an easy solution, just add <code>:immediate-finish t</code> to your templates!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-capture-templates
+  `((<span class="org-string">"m"</span> <span class="org-string">"Email Workflow"</span>)
+    (<span class="org-string">"mf"</span> <span class="org-string">"Follow Up"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Follow Up"</span>)
+          <span class="org-string">"* TODO Follow up with %:fromname on %a\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%i"</span> <span class="org-builtin">:immediate-finish</span> t)
+    (<span class="org-string">"mr"</span> <span class="org-string">"Read Later"</span> entry (file+olp <span class="org-string">"~/org/Mail.org"</span> <span class="org-string">"Read Later"</span>)
+          <span class="org-string">"* TODO Read %:subject\nSCHEDULED:%t\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+2d\"))\n\n%a\n\n%i"</span> <span class="org-builtin">:immediate-finish</span> t)))</pre>
+</div>
+
+<h3><a id="adding-custom-actions-for-quick-capturing" class="anchor" href="#adding-custom-actions-for-quick-capturing">¶</a>Adding custom actions for quick capturing</h3><div class="outline-text-3" id="text-org66346d4">
+<p>
+Tired of running <code>org-capture</code> or <code>mu4e-org-store-and-capture</code>?  We can make this a lot more convenient!
+</p>
+
+<p>
+You can also define actions for capturing messages from the header and message views:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/capture-mail-follow-up</span> (msg)
+  (<span class="org-keyword">interactive</span>)
+  (call-interactively 'org-store-link)
+  (org-capture nil <span class="org-string">"mf"</span>))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/capture-mail-read-later</span> (msg)
+  (<span class="org-keyword">interactive</span>)
+  (call-interactively 'org-store-link)
+  (org-capture nil <span class="org-string">"mr"</span>))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Add custom actions for our capture templates</span>
+(add-to-list 'mu4e-headers-actions
+  '(<span class="org-string">"follow up"</span> . efs/capture-mail-follow-up) t)
+(add-to-list 'mu4e-view-actions
+  '(<span class="org-string">"follow up"</span> . efs/capture-mail-follow-up) t)
+(add-to-list 'mu4e-headers-actions
+  '(<span class="org-string">"read later"</span> . efs/capture-mail-read-later) t)
+(add-to-list 'mu4e-view-actions
+  '(<span class="org-string">"read later"</span> . efs/capture-mail-read-later) t)</pre>
+</div>
+
+<h2><a id="creating-a-mail-processing-workflow" class="anchor" href="#creating-a-mail-processing-workflow">¶</a>Creating a mail processing workflow</h2><div class="outline-text-2" id="text-org18d298d">
+<p>
+Special thanks to <b>ftrx</b> on Reddit for a <a href="https://www.reddit.com/r/emacs/comments/l4odm8/enhance_your_email_with_org_mode/gkq7bya/?utm_source=reddit&amp;utm_medium=web2x&amp;context=3">helpful suggestion</a> that I used in this video!
+</p>
+
+<p>
+Now that we&rsquo;re capturing our emails to be processed in <code>Mail.org</code>, let&rsquo;s think about how we can drive the rest of our mail process from this file.
+</p>
+
+<p>
+Often times you need to check for different types of e-mail at different times.  We can encode these different types of mail as links in the <code>Mail.org</code> files using mu4e query links.
+</p>
+
+<p>
+Let&rsquo;s create a heading called &ldquo;Queries&rdquo; and add the following links under it:
+</p>
+
+<pre>- <span class="org-org-link"><a href="mu4e:query:flag:unread AND NOT flag:trashed">Unread Mail</a></span>
+  - <span class="org-org-link"><a href="mu4e:query:date:today..now">Today's Messages</a></span>
+  - <span class="org-org-link"><a href="mu4e:query:date:7d..now">Last 7 Days</a></span>
+  - <span class="org-org-link"><a href="mu4e:query:flag:flagged">Flagged Emails</a></span>
+  - <span class="org-org-link"><a href="mu4e:query:prio:high">High Priority</a></span>
+  - <span class="org-org-link"><a href="mu4e:query:list:guix-patches.gnu.org">guix-patches</a></span>
+<span class="org-org-meta-line">#+end_src org</span>
+
+  If you want a command that will help store the link to the current query:
+
+  #+begin_src emacs-lisp
+
+    (defun efs/store-link-to-mu4e-query ()
+      (interactive)
+      (let ((org-mu4e-link-query-in-headers-mode t))
+        (call-interactively 'org-store-link)))</pre>
+
+<p>
+Now you can easily store links to header queries, even containing search strings!
+</p>
+
+<p>
+See also <a href="https://www.djcbsoftware.nl/code/mu/mu4e/Org_002dmode-links.html">mu4e manual: Org links</a> and <a href="https://www.djcbsoftware.nl/code/mu/mu4e/Queries.html#Queries">mu4e manual: Queries</a>
+</p>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org815e7a5">
+<p>
+We&rsquo;ve covered a lot about reading, writing, and managing emails.  The next topics we will cover:
+</p>
+
+<ul class="org-ul">
+<li>Managing contacts</li>
+<li>Syncing and managing your calendar</li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

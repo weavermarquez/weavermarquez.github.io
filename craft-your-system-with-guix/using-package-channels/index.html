@@ -1,0 +1,272 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Using Package Channels in GNU Guix - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Using Package Channels in GNU Guix</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/xVyvz2aViP8" allowfullscreen></iframe></div><div id="content">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgb2158ca">
+<p>
+In this video I&rsquo;ll show you how you can find more software and drivers than what&rsquo;s available in Guix by default using a feature called &ldquo;channels.&rdquo;  Channels give you even more freedom to manage your Guix configuration the way you want and also ensure that all your Guix machines are using the exact same versions of all software and drivers.
+</p>
+
+<p>
+You can even create your own channel pretty easily!  We&rsquo;ll cover that in another video.
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="what-is-a-channel" class="anchor" href="#what-is-a-channel">¶</a>What is a channel?</h2><div class="outline-text-2" id="text-org1738c47">
+<p>
+A channel is a source of Guix packages that is stored in a Git repository.  When you add a channel to your Guix configuration, its Git repository will be pulled and it will be added to your Guix profile so that the new packages become available for your configuration.
+</p>
+
+<p>
+Since channels are Git repositories, we can be specific about which commit or branch of the channel we want to pull!  This can give us more flexibility to choose versions of packages that we use from the channels we configure.
+</p>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/guix.html#Channels">Guix Manual: Channels</a>
+</p>
+</div>
+
+<h2><a id="the-channel-configuration" class="anchor" href="#the-channel-configuration">¶</a>The channel configuration</h2><div class="outline-text-2" id="text-orgf3abc55">
+<p>
+The channel configuration tells Guix where it can find the packages that the user wants to install.  To find other packages that aren&rsquo;t provided by Guix you&rsquo;ll need to edit your channel configuration to add channels which have the software or drivers you want to use.
+</p>
+
+<p>
+By default, the only channel that is configured in Guix is the main Guix repository at GNU Savannah.  You can check this by running the following command:
+</p>
+
+<pre>guix describe</pre>
+
+<p>
+To edit the channel configuration you can edit the file <code>~/.config/guix/channels.scm</code>.  This file doesn&rsquo;t exist by default so you will have to create it!
+</p>
+
+<p>
+Guix channel configurations are written in Guile Scheme!  Don&rsquo;t be afraid if you don&rsquo;t know Scheme, it will look like a plain configuration file to you once you get used to it.
+</p>
+
+<p>
+Let&rsquo;s take a look at a basic channel configuration:
+</p>
+
+<pre>(cons* (channel
+        (name 'channel-x)
+        (url <span class="org-string">"https://github.com/daviwil/channel-x"</span>))
+       (channel
+        (name 'nonguix)
+        (url <span class="org-string">"https://gitlab.com/nonguix/nonguix"</span>))
+       %default-channels)</pre>
+
+<p>
+Some things to point out:
+</p>
+
+<ul class="org-ul">
+<li>The important sections of the configuration are wrapped in parentheses because this is Lisp code!</li>
+<li>The <code>cons*</code> at the beginning is a way to say that each channel item provided will be combined with the <code>%default-channels</code> to produce the final channel list</li>
+<li><code>%default-channels</code> is a variable containing the list of default channels (only the main Guix channel for now)</li>
+</ul>
+
+<p>
+This also means that you don&rsquo;t have to use the main Guix repository as your default channel!  If you want to fork the main Guix repository and make changes to it, you can use that in the place of <code>%default-channels</code> in your channel configuration.
+</p>
+
+<p>
+<b>IMPORTANT:</b> Whenever you change your channel configuration, you will need to run <code>guix pull</code> before the channel&rsquo;s packages will become available!
+</p>
+
+<p>
+If you&rsquo;ve made any mistakes in the channel configuration file, you&rsquo;ll receive an error at the time you pull.  It&rsquo;s best to go double-check your channel file to ensure that all of the parentheses are matched up correctly!
+</p>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/guix.html#Specifying-Additional-Channels">Guix Manual: Specifying Additional Channels</a>
+</p>
+</div>
+
+<h2><a id="additional-configuration-for-channels" class="anchor" href="#additional-configuration-for-channels">¶</a>Additional configuration for channels</h2><div class="outline-text-2" id="text-org10f0d77">
+<p>
+In addition to the channel name and URL, you can also configure the branch of the Git repository to use and also the &ldquo;introduction&rdquo; information to authenticate the commits in the channel.
+</p>
+
+<p>
+Channel authentication uses some additional metadata to ensure that all commits in a channel past a certain commit have been signed with known GPG keys to help ensure that no malicious changes have been inserted into the channel.  You don&rsquo;t have to specify this introduction information, but it&rsquo;s good to do so if the channel supports it!
+</p>
+
+<p>
+One last thing to mention: if you&rsquo;re hacking on Guix packages locally, you can also use a local file URL for a package channel.  This can be a good way to ensure that your package changes will work correctly when pulled to someone else&rsquo;s machine!
+</p>
+
+<pre>(cons* (channel
+        (name 'channel-x)
+        (branch <span class="org-string">"testing"</span>)
+        <span class="org-comment-delimiter">;</span><span class="org-comment">(url "file:///home/daviwil/Projects/Code/channel-x"))</span>
+        (url <span class="org-string">"https://github.com/daviwil/channel-x"</span>))
+       (channel
+        (name 'nonguix)
+        (url <span class="org-string">"https://gitlab.com/nonguix/nonguix"</span>)
+        (introduction
+          (make-channel-introduction
+            <span class="org-string">"897c1a470da759236cc11798f4e0a5f7d4d59fbc"</span>
+            (openpgp-fingerprint
+            <span class="org-string">"2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"</span>))))
+       %default-channels)</pre>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/guix.html#Using-a-Custom-Guix-Channel">Guix Manual: Using a Custom Guix Channel</a>
+<a href="https://guix.gnu.org/manual/en/guix.html#Specifying-Additional-Channels">Guix Manual: Channel Authentication</a>
+</p>
+</div>
+
+<h2><a id="pinning-channels-to-commits" class="anchor" href="#pinning-channels-to-commits">¶</a>Pinning channels to commits</h2><div class="outline-text-2" id="text-orgbc74a2f">
+<p>
+If you want to make your exact configuration fully reproducible across multiple machines, it can be helpful to &ldquo;pin&rdquo; the list of channels to specific commits so that you get the the same set of packages every time you run <code>guix pull</code>.  This can also be useful when you know that a more recent update to a channel causes problems for your system!
+</p>
+
+<p>
+You can run the <code>guix describe</code> command to generate a complete channel configuration with each channel pinned to the commit that you&rsquo;ve pulled most recently:
+</p>
+
+<pre>guix describe --format=channels</pre>
+
+<p>
+You can take the output of this program and place it in the location where the channel configuration is kept!
+</p>
+
+<p>
+<b>IMPORTANT:</b> If you lock a single channel (like Nonguix) to a commit and that channel depends on packages in the main Guix channel, you might see errors when you pull!  You will also need to lock the main Guix channel to a compatible commit when this happens.  In other words, use <code>guix describe</code>!
+</p>
+
+<p>
+<a href="https://guix.gnu.org/manual/en/guix.html#Replicating-Guix">Guix Manual: Replicating Guix</a>
+</p>
+</div>
+
+<h2><a id="updating-pinned-channels" class="anchor" href="#updating-pinned-channels">¶</a>Updating pinned channels</h2><div class="outline-text-2" id="text-orgcd32e40">
+<p>
+Once you&rsquo;ve pinned your channel configuration, you might want to update them to newer commits in the future.  One strategy can be to have a separate channel file with the base list of channels and pass that to <code>guix pull --channels=my-channels.scm</code>.  For example:
+</p>
+
+<p>
+<b>~/.config/guix/my-channels.scm:</b>
+</p>
+
+<pre>(cons* (channel
+        (name 'channel-x)
+        (url <span class="org-string">"https://github.com/daviwil/channel-x"</span>))
+       (channel
+        (name 'nonguix)
+        (url <span class="org-string">"https://gitlab.com/nonguix/nonguix"</span>))
+       %default-channels)</pre>
+
+<p>
+<b>~/.config/guix/update-channels.sh:</b>
+</p>
+
+<pre><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/sh</span>
+guix pull --channels=$<span class="org-variable-name">HOME</span>/.config/guix/my-channels.scm
+guix describe --format=channels &gt; ~/.config/guix/channels.scm</pre>
+
+<p>
+Running the <code>update-channels.sh</code> script will use the <code>my-channels.scm</code> file to fetch the latest commits of each of your channels and then save the pinned channel configuration to the real channel config file so that all future runs of <code>guix pull</code> will use the pinned channel configuration!
+</p>
+</div>
+
+<h2><a id="useful-channels" class="anchor" href="#useful-channels">¶</a>Useful channels</h2><div class="outline-text-2" id="text-orgac065c2">
+<p>
+Here are a few useful Guix channels you might be interested to try!
+</p>
+</div>
+
+<h3><a id="nonguix" class="anchor" href="#nonguix">¶</a>Nonguix</h3><div class="outline-text-3" id="text-orgf062fdc">
+<p>
+Site: <a href="https://gitlab.com/nonguix/nonguix">https://gitlab.com/nonguix/nonguix</a>
+</p>
+
+<p>
+The Nonguix channel is your primary source for software and drivers that can&rsquo;t be included in the main Guix repository.  You can find the following packages (and more!) there:
+</p>
+
+<ul class="org-ul">
+<li>The full Linux kernel, necessary to run Guix on modern laptops</li>
+<li>NVIDIA drivers (though I never got them to work)</li>
+<li>Drivers for various wifi chipsets</li>
+<li>Steam game store client</li>
+<li>The latest Firefox release</li>
+<li>.NET SDK 5</li>
+<li>Clojure&rsquo;s Leiningen tool</li>
+<li>Wine, the Windows compatibility layer</li>
+</ul>
+
+<p>
+Keep in mind that if you use the <code>linux</code> package here, it will require that the kernel be rebuilt every time you update your system!  This can take around an hour depending on how powerful your machine is.
+</p>
+
+<p>
+I&rsquo;ll show how to use this channel to perform a full installation of the Guix system distribution in the next Guix video!
+</p>
+
+<pre>(channel
+  (name 'nonguix)
+  (url <span class="org-string">"https://gitlab.com/nonguix/nonguix"</span>)
+  (introduction
+    (make-channel-introduction
+      <span class="org-string">"897c1a470da759236cc11798f4e0a5f7d4d59fbc"</span>
+      (openpgp-fingerprint
+      <span class="org-string">"2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"</span>))))</pre>
+</div>
+
+<h3><a id="flat" class="anchor" href="#flat">¶</a>flat</h3><div class="outline-text-3" id="text-org57b80cf">
+<p>
+Site: <a href="https://github.com/flatwhatson/guix-channel">https://github.com/flatwhatson/guix-channel</a>
+</p>
+
+<p>
+The <code>flat</code> channel provides an easy way to install Emacs 28 with the new <code>native-comp</code> branch providing native compilation of Emacs Lisp code.  After you set up this channel you can install the package <code>emacs-native-comp</code> instead of the default <code>emacs</code> package to get this new functionality.
+</p>
+
+<p>
+Keep in mind that this will compile both <code>libgccjit</code> and Emacs from source so installation can take 1-2 hours!  I recommend pinning this channel to the commit that you first pull it with so that you don&rsquo;t have to rebuild Emacs every time you run <code>guix pull</code>.
+</p>
+
+<pre>(channel
+  (name 'flat)
+  (url <span class="org-string">"https://github.com/flatwhatson/guix-channel.git"</span>)
+  (introduction
+    (make-channel-introduction
+      <span class="org-string">"33f86a4b48205c0dc19d7c036c85393f0766f806"</span>
+      (openpgp-fingerprint
+      <span class="org-string">"736A C00E 1254 378B A982  7AF6 9DBE 8265 81B6 4490"</span>))))</pre>
+</div>
+
+<h3><a id="guix-gaming-channels-games" class="anchor" href="#guix-gaming-channels-games">¶</a>Guix Gaming Channels: Games</h3><div class="outline-text-3" id="text-org68f42e2">
+<p>
+Site: <a href="https://gitlab.com/guix-gaming-channels/games">https://gitlab.com/guix-gaming-channels/games</a>
+</p>
+
+<p>
+The channel provides Guix packages for a variety of proprietary games, making it easier to run them on Guix.  These packages do not contain the game data files, you have to own these games so that you can provide the data files so that they can run successfully!
+</p>
+
+<pre>(channel
+  (name 'guix-gaming-games)
+  (url <span class="org-string">"https://gitlab.com/guix-gaming-channels/games.git"</span>)
+  (introduction
+    (make-channel-introduction
+      <span class="org-string">"c23d64f1b8cc086659f8781b27ab6c7314c5cca5"</span>
+      (openpgp-fingerprint
+      <span class="org-string">"50F3 3E2E 5B0C 3D90 0424  ABE8 9BDC F497 A4BB CC7F"</span>))))</pre>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org17f20da">
+<p>
+Now that we&rsquo;ve covered enough of the fundamentals of Guix, I can finally show you how to perform a full Guix system installation!  In the next video, we&rsquo;ll do just that.
+</p>
+
+<p>
+After that, we&rsquo;ll continue covering the various ways you can use Guix to manage your system more effectively and keep your configuration consistent and reliable across all your machines!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

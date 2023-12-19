@@ -1,0 +1,215 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Keep a Journal in Emacs with Org Roam - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Keep a Journal in Emacs with Org Roam</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/3-sLBaJAtew" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org03013e2">
+<p>
+One of the best ways to think and work through problems is to have a written dialogue with yourself.  By the end of this video, you&rsquo;ll know how to log your thoughts from the day, link them to existing notes, and easily review the notes for any day, all with Org Roam.
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="the-starting-configuration" class="anchor" href="#the-starting-configuration">¶</a>The starting configuration</h2><div class="outline-text-2" id="text-orge93ba6a">
+<p>
+Before we start, make sure you&rsquo;ve got Org Roam set up already.
+</p>
+
+<p>
+You can get started quickly by copying the configuration below, but you&rsquo;ll learn more if you watch the two previous videos in the Org Roam series first:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://youtu.be/AyhPmypHDEw">Getting Started with Org Roam</a></li>
+<li><a href="https://youtu.be/YxgA5z2R08I">Capturing Notes Efficiently with Org Roam</a></li>
+</ul>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">org-roam</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> org-roam-v2-ack t)
+  <span class="org-builtin">:custom</span>
+  (org-roam-directory <span class="org-string">"~/RoamNotes"</span>)
+  (org-roam-completion-everywhere t)
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c n l"</span> . org-roam-buffer-toggle)
+         (<span class="org-string">"C-c n f"</span> . org-roam-node-find)
+         (<span class="org-string">"C-c n i"</span> . org-roam-node-insert)
+         <span class="org-builtin">:map</span> org-mode-map
+         (<span class="org-string">"C-M-i"</span> . completion-at-point)
+         <span class="org-builtin">:map</span> org-roam-dailies-map
+         (<span class="org-string">"Y"</span> . org-roam-dailies-capture-yesterday)
+         (<span class="org-string">"T"</span> . org-roam-dailies-capture-tomorrow))
+  <span class="org-builtin">:bind-keymap</span>
+  (<span class="org-string">"C-c n d"</span> . org-roam-dailies-map)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">require</span> '<span class="org-constant">org-roam-dailies</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure the keymap is available</span>
+  (org-roam-db-autosync-mode))</pre>
+</div>
+
+<h3><a id="configuration-notes" class="anchor" href="#configuration-notes">¶</a>Configuration Notes</h3><div class="outline-text-3" id="text-orge6251ff">
+<ul class="org-ul">
+<li>Make sure to update the value of <code>org-roam-directory</code> to the path where you&rsquo;d like your Org Roam files to be stored.  Create the directory before loading the configuration!</li>
+
+<li>There is one slight difference with this configuration from the one in the previous episodes, the function <code>org-roam-setup</code> was renamed to <code>org-roam-db-autosync-mode</code></li>
+</ul>
+</div>
+
+
+<h2><a id="creating-the-folder-for-journal-entries" class="anchor" href="#creating-the-folder-for-journal-entries">¶</a>Creating the folder for journal entries</h2><div class="outline-text-2" id="text-org83a8602">
+<p>
+Before we can create and view journal entries, we first need to make sure the folder exists.
+</p>
+
+<p>
+By default, Org Roam will create daily files under the <code>daily/</code> subfolder of your <code>org-roam-directory</code>.  Let&rsquo;s create that folder!
+</p>
+
+<p>
+If you&rsquo;d like to change this folder to a different path, you can set the <code>org-roam-dailies-directory</code> like so:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-roam-dailies-directory <span class="org-string">"journal/"</span>)</pre>
+
+<p>
+This path must be relative to <code>org-roam-directory</code>!
+</p>
+</div>
+
+<h2><a id="creating-a-journal-entry-for-today" class="anchor" href="#creating-a-journal-entry-for-today">¶</a>Creating a journal entry for today</h2><div class="outline-text-2" id="text-org8126335">
+<p>
+Once you&rsquo;ve got Org Roam configured, you can run the command <code>org-roam-dailies-capture-today</code> which we&rsquo;ve bound to <code>C-c n d n</code>.
+</p>
+
+<p>
+We&rsquo;re using the existing <code>org-roam-dailies-map</code> for key bindings!
+</p>
+
+<p>
+When you run that command, a capture window will appear for a file named with the current date.  Here, you can write whatever you like and then press <code>C-c C-c</code> to save the entry or <code>C-c C-k</code> to cancel the capture without saving it.
+</p>
+
+<p>
+The nice thing about this command is that you can run it again to capture another entry, basically allowing you to create entries across the entire day.  Let&rsquo;s try it!
+</p>
+
+<p>
+One major benefit of using Org Roam for your journal (instead of something like <a href="https://github.com/bastibe/org-journal">org-journal</a>) is that you can link to any other note in your Org Roam database.  We can use <code>C-c n i</code> to insert a link to the <code>Scheme</code> entry that we created in a previous episode.
+</p>
+</div>
+
+<h2><a id="reviewing-todayrsquos-journal-entries" class="anchor" href="#reviewing-todayrsquos-journal-entries">¶</a>Reviewing today&rsquo;s journal entries</h2><div class="outline-text-2" id="text-org2ec8537">
+<p>
+Perhaps you want to take a look at the journal entries you&rsquo;ve already written for today.  To do this, you can run the command <code>org-roam-dailies-goto-today</code> which we&rsquo;ve bound to <code>C-c n d d</code>.
+</p>
+
+<p>
+When you run this command, the journal file for today will be opened so that you can read it and make any edits you like.
+</p>
+
+<p>
+This file is set up like any other Org Roam note.  You can also use <code>C-c n f</code> to navigate to it and even insert a link to it in other note files!
+</p>
+</div>
+
+<h2><a id="creating-and-viewing-entries-for-yesterday-or-tomorrow" class="anchor" href="#creating-and-viewing-entries-for-yesterday-or-tomorrow">¶</a>Creating and viewing entries for yesterday or tomorrow</h2><div class="outline-text-2" id="text-org6096079">
+<p>
+You can also create entries for the previous or next day from today:
+</p>
+
+<ul class="org-ul">
+<li>Capture a note for yesterday with <code>org-roam-dailies-capture-yesterday</code> (<code>C-c n d Y</code>)</li>
+<li>Capture a note for tomorrow with <code>org-roam-dailies-capture-tomorrow</code> (<code>C-c n d T</code>)</li>
+</ul>
+
+<p>
+These commands can be useful for writing concluding thoughts for the previous day or leaving notes for yourself for tomorrow!
+</p>
+
+<p>
+There are also commands to navigate to the entries for these days:
+</p>
+
+<ul class="org-ul">
+<li>Go to the file for yesterday with <code>org-roam-dailies-goto-yesterday</code> (<code>C-c n d y</code>)</li>
+<li>Go to the file for tomorrow with <code>org-roam-dailies-goto-tomorrow</code> (<code>C-c n d t</code>)</li>
+</ul>
+</div>
+
+<h2><a id="creating-and-viewing-entries-for-a-specific-date" class="anchor" href="#creating-and-viewing-entries-for-a-specific-date">¶</a>Creating and viewing entries for a specific date</h2><div class="outline-text-2" id="text-orgf313b7b">
+<p>
+You can create or view notes for a specific day with the following commands:
+</p>
+
+<ul class="org-ul">
+<li>Capture a note for a specific date with <code>org-roam-dailies-capture-date</code> (<code>C-c n d v</code>)</li>
+<li>Go to the file for a specific date with <code>org-roam-dailies-goto-date</code> (<code>C-c n d c</code>)</li>
+</ul>
+
+<p>
+When you run either of these commands, you&rsquo;ll be shown a calendar which lets you pick the date to view or create entries.  Just hold shift and use the arrow keys to move around in the calendar!
+</p>
+
+<p>
+You can also navigate forward or backward in time from the date of the file you&rsquo;re currently viewing:
+</p>
+
+<ul class="org-ul">
+<li>Go back one existing date file with <code>org-roam-dailies-goto-next-note</code> (<code>C-c n d b</code>)</li>
+<li>Go forward one existing date file with <code>org-roam-dailies-goto-previous-note</code> (<code>C-c n d f</code>)</li>
+</ul>
+</div>
+
+<h2><a id="adding-the-time-to-each-entry" class="anchor" href="#adding-the-time-to-each-entry">¶</a>Adding the time to each entry</h2><div class="outline-text-2" id="text-orgc9794ea">
+<p>
+If you want to add some more information to the entries that you capture, you can customize the default capture template:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> org-roam-dailies-capture-templates
+      '((<span class="org-string">"d"</span> <span class="org-string">"default"</span> entry <span class="org-string">"* %&lt;%I:%M %p&gt;: %?"</span>
+         <span class="org-builtin">:if-new</span> (file+head <span class="org-string">"%&lt;%Y-%m-%d&gt;.org"</span> <span class="org-string">"#+title: %&lt;%Y-%m-%d&gt;\n"</span>))))</pre>
+
+<p>
+More information on the format can be found in the documentation for <code>format-time-string</code>.
+</p>
+
+<p>
+Now when we create a new daily entry, the date will be captured in the heading.
+</p>
+
+<p>
+You can create more capture templates for daily entries!  I&rsquo;ll give some more examples on how to use this in another video.
+</p>
+</div>
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org65eec73">
+<p>
+Here&rsquo;s the final configuration for everything you saw in the video:
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">org-roam</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> org-roam-v2-ack t)
+  <span class="org-builtin">:custom</span>
+  (org-roam-directory <span class="org-string">"~/RoamNotes"</span>)
+  (org-roam-completion-everywhere t)
+  (org-roam-dailies-capture-templates
+    '((<span class="org-string">"d"</span> <span class="org-string">"default"</span> entry <span class="org-string">"* %&lt;%I:%M %p&gt;: %?"</span>
+       <span class="org-builtin">:if-new</span> (file+head <span class="org-string">"%&lt;%Y-%m-%d&gt;.org"</span> <span class="org-string">"#+title: %&lt;%Y-%m-%d&gt;\n"</span>))))
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c n l"</span> . org-roam-buffer-toggle)
+         (<span class="org-string">"C-c n f"</span> . org-roam-node-find)
+         (<span class="org-string">"C-c n i"</span> . org-roam-node-insert)
+         <span class="org-builtin">:map</span> org-mode-map
+         (<span class="org-string">"C-M-i"</span> . completion-at-point)
+         <span class="org-builtin">:map</span> org-roam-dailies-map
+         (<span class="org-string">"Y"</span> . org-roam-dailies-capture-yesterday)
+         (<span class="org-string">"T"</span> . org-roam-dailies-capture-tomorrow))
+  <span class="org-builtin">:bind-keymap</span>
+  (<span class="org-string">"C-c n d"</span> . org-roam-dailies-map)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">require</span> '<span class="org-constant">org-roam-dailies</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure the keymap is available</span>
+  (org-roam-db-autosync-mode))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

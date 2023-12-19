@@ -1,0 +1,50 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Learning Paredit for Structural Lisp Editing - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Learning Paredit for Structural Lisp Editing</h1><p class="site-post-meta">September 30, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/FiFMZwQbgOM" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org392c151">
+<ul class="org-ul">
+<li>Ludum Dare 51 is tomorrow, October 1!  I will be streaming starting around 6AM - 10 AM EEST (3AM UTC, 8PM Pacific, 11PM Eastern), and a second stream from 2PM to 6PM EEST.
+
+<ul class="org-ul">
+<li><a href="https://youtube.com/FluxHarmonicLive">https://youtube.com/FluxHarmonicLive</a></li>
+<li><a href="https://twitch.tv/FluxHarmonicLive">https://twitch.tv/FluxHarmonicLive</a></li>
+<li><a href="https://ldjam.com/events/ludum-dare/51">https://ldjam.com/events/ludum-dare/51</a></li>
+</ul></li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a>
+
+<ul class="org-ul">
+<li><p>
+Check out Jeff Bowman&rsquo;s new <code>crafted-mastering-emacs</code> module:
+</p>
+
+<p>
+<a href="https://github.com/SystemCrafters/crafted-emacs/pull/234">https://github.com/SystemCrafters/crafted-emacs/pull/234</a>
+</p></li>
+</ul></li>
+</ul>
+</div>
+
+<h2><a id="learning-paredit-for-structural-lisp-editing" class="anchor" href="#learning-paredit-for-structural-lisp-editing">¶</a>Learning Paredit for Structural Lisp Editing</h2><div class="outline-text-2" id="text-org6f1f708">
+<p>
+Today we&rsquo;ll be learning how to use Paredit, a long-standing and venerable &ldquo;structural editing&rdquo; package for Lisp coding.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.emacswiki.org/emacs/ParEdit">https://www.emacswiki.org/emacs/ParEdit</a></li>
+<li><a href="https://github.com/emacsmirror/paredit">https://github.com/emacsmirror/paredit</a></li>
+<li><a href="http://danmidwood.com/content/2014/11/21/animated-paredit.html">http://danmidwood.com/content/2014/11/21/animated-paredit.html</a></li>
+</ul>
+</div>
+
+<h3><a id="other-similar-packages" class="anchor" href="#other-similar-packages">¶</a>Other Similar Packages</h3><div class="outline-text-3" id="text-orgde3760f">
+<ul class="org-ul">
+<li>Parinfer: <a href="https://github.com/justinbarclay/parinfer-rust-mode">https://github.com/justinbarclay/parinfer-rust-mode</a></li>
+<li>Lispy / Lispyville: <a href="https://github.com/abo-abo/lispy">https://github.com/abo-abo/lispy</a></li>
+<li>SmartParens: <a href="https://github.com/Fuco1/smartparens">https://github.com/Fuco1/smartparens</a></li>
+<li>Symex: <a href="https://github.com/countvajhula/symex.el">https://github.com/countvajhula/symex.el</a></li>
+<li>Puni: <a href="https://github.com/AmaiKinono/puni">https://github.com/AmaiKinono/puni</a></li>
+<li>evil-cleverparens: <a href="https://github.com/luxbock/evil-cleverparens">https://github.com/luxbock/evil-cleverparens</a></li>
+<li>Vanilla structural editing in Emacs: <a href="https://dawranliou.com/blog/structural-editing-in-vanilla-emacs/">https://dawranliou.com/blog/structural-editing-in-vanilla-emacs/</a></li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

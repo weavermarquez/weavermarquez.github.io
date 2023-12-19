@@ -1,0 +1,536 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Defining Variables and Scopes - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Defining Variables and Scopes</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/tq4kTNL1VD8" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org9b8abd3">
+<ul class="org-ul">
+<li>The many ways to set the value of a variable</li>
+<li>Defining variables</li>
+<li>Creating buffer-local variables</li>
+<li>Understanding variable scopes</li>
+<li>Creating variable scopes with <code>let</code></li>
+<li>Defining and setting customization variables</li>
+</ul>
+
+<p>
+We&rsquo;ll briefly apply what we&rsquo;ve learned to our project!
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="review-what-is-a-variable" class="anchor" href="#review-what-is-a-variable">¶</a>Review: what is a variable?</h2><div class="outline-text-2" id="text-org193acb4">
+<p>
+A variable is an association (binding) between a name (more specifically a symbol) and a value.
+</p>
+
+<ul class="org-ul">
+<li><code>'tab-width</code> -&gt; <code>4</code></li>
+</ul>
+
+<p>
+In Emacs there are many ways to define these bindings and change the values that they are associated with.
+</p>
+
+<p>
+There are also a few ways to change how the value for a particular variable is resolved!
+</p>
+</div>
+
+<h2><a id="setting-variables" class="anchor" href="#setting-variables">¶</a>Setting variables</h2><div class="outline-text-2" id="text-orgb1cb8a5">
+<p>
+You&rsquo;re probably familiar with this, a large part Emacs configuration is setting variables!
+</p>
+
+<p>
+We usually do this with <code>setq</code>:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> tab-width 4)</pre>
+
+<p>
+But what is this really doing?
+</p>
+
+<pre>(set 'tab-width 4)
+
+(set 'tab-width (- 4 2))</pre>
+
+<p>
+The variable does not have to exist or be pre-defined!
+</p>
+
+<pre>(set 'i-dont-exist 5)
+
+i-dont-exist</pre>
+
+<p>
+<code>setq</code> is just a convenience function for setting variable bindings.  It removes the need for quoting the symbol name!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(<span class="org-keyword">setq</span> mouse-wheel-progressive-speed nil)
+(<span class="org-keyword">setq</span> mouse-wheel-follow-mouse 't)
+(<span class="org-keyword">setq</span> scroll-step 1)
+(<span class="org-keyword">setq</span> use-dialog-box nil))</pre>
+
+<p>
+It also allows you to set multiple variables in one expression:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-follow-mouse 't
+      scroll-step 1
+      use-dialog-box nil)</pre>
+</div>
+
+<h2><a id="defining-variables" class="anchor" href="#defining-variables">¶</a>Defining variables</h2><div class="outline-text-2" id="text-org4a64220">
+<p>
+Setting global variables is easy, but what if you want to document the purpose of a variable?
+</p>
+
+<p>
+This is what <code>defvar</code> is for.  It basically allows you to create a variable binding and assign a documentation string to it:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> am-i-documented <span class="org-string">"no"</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">am-i-documented</span> <span class="org-string">"yes"</span>
+  <span class="org-doc">"I will relieve my own concern by documenting myself"</span>)</pre>
+
+<p>
+Why didn&rsquo;t <code>am-i-documented</code> show up as &ldquo;yes&rdquo;?  <code>defvar</code> only applies the default value if the binding doesn&rsquo;t already exist!
+</p>
+
+<p>
+This is actually useful: packages can define their variables with <code>defvar</code> and you can set values for them <b>before</b> the package gets loaded!  Your settings will not be overridden by the default value.
+</p>
+
+<p>
+If you want the default value to be immediately applied while writing your code, use <code>eval-defun</code> (<code>C-M-x</code>)
+</p>
+
+<p>
+In the end, you would use <code>defvar</code> when you want to define and document a variable in your configuration or in a package.  In most other cases, plain <code>setq</code> is sufficient.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Defining-Variables.html#Defining-Variables">Emacs Lisp Manual: Defining Variables</a>
+</p>
+</div>
+
+<h2><a id="buffer-local-variables" class="anchor" href="#buffer-local-variables">¶</a>Buffer local variables</h2><div class="outline-text-2" id="text-org04b9a93">
+<p>
+You can set the value of a variable for the current buffer only using <code>setq-local</code>.  Any code that runs in that buffer will receive the buffer-local value instead of the global value!
+</p>
+
+<p>
+This is the first example where we see how the value of a variable can be different depending on where it is accessed.
+</p>
+
+<pre>(<span class="org-keyword">setq-local</span> tab-width 4)</pre>
+
+<p>
+Why do this?  There are many settings that should only be set per buffer, like editor settings for different programming languages and customization variables for major modes.
+</p>
+
+<p>
+If the variable isn&rsquo;t already buffer-local, <code>setq-local</code> will make it so, but only for the current buffer!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">some-value doesn't exist yet!</span>
+(<span class="org-keyword">setq</span> some-value 2)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Make it buffer-local</span>
+(<span class="org-keyword">setq-local</span> some-value 4)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Using setq now will only set the buffer-local binding!</span>
+(<span class="org-keyword">setq</span> some-value 5)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">A variable may only exist in a particular buffer!</span>
+(<span class="org-keyword">setq-local</span> only-buffer-local <span class="org-string">"maybe?"</span>)</pre>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Buffer_002dLocal-Variables.html#Buffer_002dLocal-Variables">Emacs Lisp Manual: Buffer Local Variables</a>
+</p>
+</div>
+
+<h3><a id="making-a-variable-local-for-all-buffers" class="anchor" href="#making-a-variable-local-for-all-buffers">¶</a>Making a variable local for all buffers</h3><div class="outline-text-3" id="text-orgbdd73d6">
+<p>
+You can make any variable local for all future buffers with the <code>make-variable-buffer-local</code> function:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> not-local-yet t)
+(make-variable-buffer-local 'not-local-yet)</pre>
+
+<p>
+If you are writing an Emacs Lisp package and want to provide a buffer-local variable, this is the way to do it!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Defining a variable with defvar and then making it buffer local</span>
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">new-buffer-local-var</span> 311)
+(make-variable-buffer-local 'new-buffer-local-var)</pre>
+</div>
+
+<h3><a id="setting-default-values" class="anchor" href="#setting-default-values">¶</a>Setting default values</h3><div class="outline-text-3" id="text-org5254c3c">
+<p>
+You might also want to set the default value for a buffer-local variable with <code>setq-default</code>:
+</p>
+
+<pre>(<span class="org-keyword">setq-default</span> not-local-yet nil)
+
+(<span class="org-keyword">setq-default</span> tab-width 2
+              evil-shift-width 2)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">BEWARE!  Unexpected results using buffer-Local Variables&#58;</span>
+(<span class="org-keyword">setq-default</span> evil-shift-width tab-width)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">This will create a variable that doesn't exist</span>
+(<span class="org-keyword">setq-default</span> will-i-be-created t)</pre>
+
+<p>
+Keep in mind that <code>setq-default</code> <b>does not</b> set the value in the current buffer, only future buffers!
+</p>
+</div>
+
+<h2><a id="defining-variable-scopes" class="anchor" href="#defining-variable-scopes">¶</a>Defining variable scopes</h2><h3><a id="what-is-a-ldquoscoperdquo" class="anchor" href="#what-is-a-ldquoscoperdquo">¶</a>What is a &ldquo;scope&rdquo;?</h3><div class="outline-text-3" id="text-orga03731e">
+<p>
+It&rsquo;s a region of your code where a variable is bound to a particular value (or not).
+</p>
+
+<p>
+More specifically, the value of <code>x</code> can be different depending on where in your code you try to access it!
+</p>
+
+<p>
+There are two different models for variable scope in Emacs Lisp, we will discuss this later.
+</p>
+</div>
+
+<h3><a id="global-scope" class="anchor" href="#global-scope">¶</a>Global scope</h3><div class="outline-text-3" id="text-org7a0f35e">
+<p>
+So far, we&rsquo;ve been using variables that are defined in the &ldquo;global&rdquo; scope, meaning that they are visible to any other code loaded in Emacs.  A buffer-local variable can be thought of as a global variable for a particular buffer.
+</p>
+
+<p>
+Global variables are great for two things:
+</p>
+
+<ul class="org-ul">
+<li>Storing configuration values that are used by modes and commands</li>
+<li>Storing information that needs to be accessed by future invocations of a piece of code</li>
+</ul>
+</div>
+
+<h3><a id="defining-a-local-scope-with-codeletcode" class="anchor" href="#defining-a-local-scope-with-codeletcode">¶</a>Defining a local scope with <code>let</code></h3><div class="outline-text-3" id="text-orgf1b8a07">
+<p>
+Sometimes you just need to define a variable temporarily without &ldquo;polluting&rdquo; the global scope.  For example:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> x 0)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">do-the-loop</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (message <span class="org-string">"Starting the loop from %d"</span> x)
+  (<span class="org-keyword">while</span> (&lt; x 5)
+    (message <span class="org-string">"Loop index: %d"</span> x)
+    (<span class="org-keyword">incf</span> x))
+  (message <span class="org-string">"Done!"</span>))
+
+(do-the-loop)</pre>
+
+<p>
+But what if we run the function again?
+</p>
+
+<p>
+We can use <code>let</code> to define <code>x</code> inside of <code>do-the-loop</code>:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-the-loop</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((x 0))
+    (message <span class="org-string">"Starting the loop from %d"</span> x)
+    (<span class="org-keyword">while</span> (&lt; x 5)
+      (message <span class="org-string">"Loop index: %d"</span> x)
+      (<span class="org-keyword">incf</span> x))
+    (message <span class="org-string">"Done!"</span>)))
+
+(do-the-loop)</pre>
+
+<p>
+<code>x</code> is bound inside of the scope contained within the <code>let</code> expression!
+</p>
+
+<p>
+However, what happened to the <code>x</code> that we defined globally?
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-the-loop</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (message <span class="org-string">"The global value of x is %d"</span> x)
+  (<span class="org-keyword">let</span> ((x 0))
+    (message <span class="org-string">"Starting the loop from %d"</span> x)
+    (<span class="org-keyword">while</span> (&lt; x 5)
+      (message <span class="org-string">"Loop index: %d"</span> x)
+      (<span class="org-keyword">incf</span> x))
+    (message <span class="org-string">"Done!"</span>)))</pre>
+
+<p>
+The <code>x</code> defined in the <code>let</code> overrides the global <code>x</code>!  Now when you set the value of <code>x</code>, you are only setting the value of the local <code>x</code> binding.
+</p>
+
+<p>
+<b>NOTE</b>: In the examples above, I am using <code>let</code> inside of a function definition, but it can be used anywhere!  We&rsquo;ll see this in the next section.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Variable-Scoping.html#Variable-Scoping">Emacs Lisp Manual: Variable Scoping</a>
+</p>
+</div>
+
+<h3><a id="defining-multiple-bindings-with-codeletcode-and-codeletcode" class="anchor" href="#defining-multiple-bindings-with-codeletcode-and-codeletcode">¶</a>Defining multiple bindings with <code>let</code> and <code>let*</code></h3><div class="outline-text-3" id="text-org973a3a7">
+<p>
+Once you start writing code that isn&rsquo;t so trivial, you&rsquo;ll find that you need to initialize a few temporary variables in a function to precalculate some results before running the real function body.
+</p>
+
+<p>
+The <code>let</code> expression enables you to bind multiple variables in the local scope:
+</p>
+
+<pre>(<span class="org-keyword">let</span> ((y 5)
+      (z 10))
+  (* y z))</pre>
+
+<p>
+However, what if you want to refer to <code>y</code> in the expression that gets assigned to <code>z</code>?
+</p>
+
+<pre>(<span class="org-keyword">let</span> ((y 5)
+      (z (+ y 5)))
+  (* y z))</pre>
+
+<p>
+<code>let*</code> allows you to use previous variables you&rsquo;ve bound in subsequent binding expressions:
+</p>
+
+<pre>(<span class="org-keyword">let*</span> ((y 5)
+       (z (+ y 5)))
+  (* y z))</pre>
+
+<p>
+The difference between <code>let</code> and <code>let*</code> is that <code>let*</code> actually expands to something more like this:
+</p>
+
+<pre>(<span class="org-keyword">let</span> ((y 5))
+  (<span class="org-keyword">let</span> ((z (+ y 5)))
+    (* y z)))</pre>
+
+<p>
+Side note: there are a couple of useful macros called <code>if-let</code> and <code>when-let</code>, we will cover them in another video about helpful Emacs Lisp functions!
+</p>
+</div>
+
+<h2><a id="understanding-ldquodynamicrdquo-scope" class="anchor" href="#understanding-ldquodynamicrdquo-scope">¶</a>Understanding &ldquo;dynamic&rdquo; scope</h2><div class="outline-text-2" id="text-org72dc9e1">
+<p>
+Emacs Lisp uses something called &ldquo;dynamic scope&rdquo; by default.  This means that the value that is associated with a variable may change depending on where an expression gets evaluated.
+</p>
+
+<p>
+It&rsquo;s easier to understand this by looking at an example:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> x 5)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">x is considered a "free" variable</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (y)
+  (+ x y))
+
+(do-some-math 10)     <span class="org-comment-delimiter">;; </span><span class="org-comment">15</span>
+
+(<span class="org-keyword">let</span> ((x 15))
+  (do-some-math 10))  <span class="org-comment-delimiter">;; </span><span class="org-comment">25</span>
+
+(do-some-math 10)</pre>
+
+<p>
+The value of <code>x</code> is resolved from a different scope based on where <code>do-some-math</code> gets executed!
+</p>
+
+<p>
+This can actually be useful for customizing the behavior for functions from other packages.  We&rsquo;ve seen this before!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">dotfiles-tangle-org-file</span> (<span class="org-type">&amp;optional</span> org-file)
+    <span class="org-doc">"Tangles a single .org file relative to the path in</span>
+<span class="org-doc">dotfiles-folder.  If no file is specified, tangle the current</span>
+<span class="org-doc">file if it is an org-mode buffer inside of dotfiles-folder."</span>
+    (<span class="org-keyword">interactive</span>)
+   <span class="org-comment-delimiter">;; </span><span class="org-comment">Suppress prompts and messages</span>
+    (<span class="org-keyword">let</span> ((org-confirm-babel-evaluate nil)
+          (message-log-max nil)
+          (inhibit-message t))
+      (org-babel-tangle-file (expand-file-name org-file dotfiles-folder))))</pre>
+
+<p>
+We didn&rsquo;t actually change the global value of any of these variables!
+</p>
+
+<p>
+The other scoping model in Emacs is called &ldquo;lexical scoping&rdquo;.  We will cover this and contrast the differences with dynamic scoping in another video.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Variable-Scoping.html#Variable-Scoping">Emacs Lisp Manual: Variable Scoping</a>
+</p>
+</div>
+
+<h2><a id="defining-customization-variables" class="anchor" href="#defining-customization-variables">¶</a>Defining customization variables</h2><div class="outline-text-2" id="text-org2d72a18">
+<p>
+Customizable variables are used to define user-facing settings for customizing the behavior of Emacs and packages.
+</p>
+
+<p>
+The primary difference between They show up in the customization UI (users can set them without code)
+</p>
+
+<p>
+We&rsquo;ll only cover them briefly today because they are a core part of Emacs.  I&rsquo;ll make another video to cover custom variables and the customization interface in depth.
+</p>
+</div>
+
+<h3><a id="using-codedefcustomcode" class="anchor" href="#using-codedefcustomcode">¶</a>Using <code>defcustom</code></h3><div class="outline-text-3" id="text-orgfc3158e">
+<p>
+The <code>defcustom</code> function allows you to define a customizable variable:
+</p>
+
+<pre>(<span class="org-keyword">defcustom</span> <span class="org-variable-name">my-custom-variable</span> 42
+  <span class="org-doc">"A variable that you can customize"</span>)</pre>
+
+<p>
+<code>defcustom</code> takes some additional parameters after the documentation string:
+</p>
+
+<ul class="org-ul">
+<li><code>:type</code> - The expected value type</li>
+<li><code>:group</code> - The symbol that identifies the &ldquo;group&rdquo; this variable belongs to (defined with <code>defgroup</code>)</li>
+<li><code>:options</code> - The list of possible values this variable can hold</li>
+<li><code>:set</code> - A function that will be invoked when this variable is customized</li>
+<li><code>:get</code> - A function that will be invoked when this variable is resolved</li>
+<li><code>:initialize</code> - A function to be used to initialize the variable when it gets defined</li>
+<li><code>:local</code> - When <code>t</code>, automatically marks the variable as buffer-local</li>
+</ul>
+
+<p>
+There are a few more properties that I didn&rsquo;t mention but you can find them in the manual:
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Variable-Definitions.html">Emacs Lisp Manual: Defining Customization Variables</a>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Group-Definitions.html">Emacs Lisp Manual: Defining Customization Groups</a>
+</p>
+</div>
+
+<h2><a id="setting-customizable-variables-correctly" class="anchor" href="#setting-customizable-variables-correctly">¶</a>Setting customizable variables (correctly)</h2><div class="outline-text-2" id="text-org787e4be">
+<p>
+Some variables are defined to be customized and could have behavior that executes when they are changed.
+</p>
+
+<p>
+The important thing to know is that <code>setq</code> does not trigger this behavior!
+</p>
+
+<p>
+Use <code>customize-set-variable</code> to set these variables correctly in code:
+</p>
+
+<pre>(customize-set-variable 'tab-width 2)
+(customize-set-variable 'org-directory <span class="org-string">"~/Notes)</span></pre>
+
+<p>
+If you&rsquo;re using <code>use-package</code> (which I recommend), you can use the <code>:custom</code> section:
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:custom</span>
+  (tab-width 2))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
+  <span class="org-builtin">:custom</span>
+  (org-directory <span class="org-string">"~/Notes"</span>))</pre>
+</div>
+
+<h4><a id="how-do-i-know-that-a-variable-is-customizable" class="anchor" href="#how-do-i-know-that-a-variable-is-customizable">¶</a>How do I know that a variable is customizable?</h4><div class="outline-text-4" id="text-org0ed0d98">
+<p>
+The easiest way is to use <code>describe-variable</code> (bound to <code>C-h v</code>) to check the documentation.  If the variable is customizable it should say:
+</p>
+
+<pre><span class="org-string">"You can customize this variable"</span></pre>
+
+<p>
+<b>NOTE:</b> The <a href="https://github.com/Wilfred/helpful">Helpful</a> package gives a lot more useful information!
+</p>
+
+<p>
+You can also use <code>custom-variable-p</code> on the variable&rsquo;s symbol (eval with <code>M-:</code>)
+</p>
+
+<pre>(custom-variable-p 'tab-width)
+(custom-variable-p 'org-directory)
+(custom-variable-p 'org--file-cache)</pre>
+</div>
+
+<h2><a id="continuing-the-project" class="anchor" href="#continuing-the-project">¶</a>Continuing the project</h2><div class="outline-text-2" id="text-org69d18c0">
+<p>
+We&rsquo;ve covered a lot today so we&rsquo;ll keep the example short this time!
+</p>
+
+<p>
+We&rsquo;re going convert a couple of the variables from last time into customizable variables using <code>defcustom</code>:
+</p>
+
+<pre>(<span class="org-keyword">defcustom</span> <span class="org-variable-name">dotfiles-folder</span> <span class="org-string">"~/.dotfiles"</span>
+  <span class="org-doc">"The folder where dotfiles and org-mode configuration files are stored."</span>
+  <span class="org-builtin">:type</span> 'string
+  <span class="org-builtin">:group</span> 'dotfiles)
+
+(<span class="org-keyword">defcustom</span> <span class="org-variable-name">dotfiles-org-files</span> '()
+  <span class="org-doc">"The list of org-mode files under the `</span><span class="org-doc"><span class="org-constant">dotfiles-folder</span></span><span class="org-doc">' which</span>
+<span class="org-doc">contain configuration files that should be tangled"</span>
+  <span class="org-builtin">:type</span> '(list string)
+  <span class="org-builtin">:group</span> 'dotfiles)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dotfiles-tangle-org-file</span> (<span class="org-type">&amp;optional</span> org-file)
+  <span class="org-doc">"Tangles a single .org file relative to the path in</span>
+<span class="org-doc">dotfiles-folder.  If no file is specified, tangle the current</span>
+<span class="org-doc">file if it is an org-mode buffer inside of dotfiles-folder."</span>
+  (<span class="org-keyword">interactive</span>)
+ <span class="org-comment-delimiter">;; </span><span class="org-comment">Suppress prompts and messages</span>
+  (<span class="org-keyword">let</span> ((org-confirm-babel-evaluate nil)
+        (message-log-max nil)
+        (inhibit-message t))
+    (org-babel-tangle-file (expand-file-name org-file dotfiles-folder))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dotfiles-tangle-org-files</span> ()
+  <span class="org-doc">"Tangles all of the .org files in the paths specified by the variable dotfiles-folder"</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">dolist</span> (org-file dotfiles-org-files)
+    (dotfiles-tangle-org-file org-file))
+  (message <span class="org-string">"Dotfiles are up to date!"</span>))</pre>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgc1b454e">
+<p>
+In the next episode we will start discussing the most important extensibility points in Emacs:
+</p>
+
+<ul class="org-ul">
+<li>Major and minor modes</li>
+<li>Hooks</li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

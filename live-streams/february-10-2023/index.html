@@ -1,0 +1,161 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Improving the Guix Home Experience - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Improving the Guix Home Experience</h1><p class="site-post-meta">February 10, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/zZCfDXlbkXo" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org832906b">
+<ul class="org-ul">
+<li><p>
+The video of my FOSDEM 2023 talk is still not up yet!  Keep an eye on this page:
+</p>
+
+<p>
+<a href="https://fosdem.org/2023/schedule/event/guixhome/">https://fosdem.org/2023/schedule/event/guixhome/</a>
+</p></li>
+
+<li><p>
+Support the channel!
+</p>
+
+<p>
+<b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a>
+More ways to support: <a href="https://systemcrafters.net/support-the-channel/">https://systemcrafters.net/support-the-channel/</a>
+</p></li>
+</ul>
+</div>
+
+<h2><a id="improving-the-guix-home-experience" class="anchor" href="#improving-the-guix-home-experience">¶</a>Improving the Guix Home Experience</h2><div class="outline-text-2" id="text-orgb3d7684">
+<p>
+Today I&rsquo;d like to discuss some ideas I have for how to improve the Guix Home experience for both new and experienced users.  If you&rsquo;ve used Guix Home, I also want to hear your experience and ideas!
+</p>
+</div>
+
+<h3><a id="simpler-ldquoonboardingrdquo-for-existing-configs" class="anchor" href="#simpler-ldquoonboardingrdquo-for-existing-configs">¶</a>Simpler &ldquo;onboarding&rdquo; for existing configs</h3><div class="outline-text-3" id="text-orgaa04e7b">
+<ul class="org-ul">
+<li>Linking existing configuration files</li>
+<li>Templating existing configuration files</li>
+<li>Converting to well-designed &ldquo;home services&rdquo; for a better experience</li>
+</ul>
+
+<p>
+Assumption:
+</p>
+
+<ul class="org-ul">
+<li>Some users won&rsquo;t necessarily want to use a full home service to configure some subset of their programs</li>
+<li>They may have an existing configuration file that they want to parameterize</li>
+</ul>
+
+<p>
+Concerns:
+</p>
+
+<ul class="org-ul">
+<li>Should the configuration files be usable on non-Guix systems too?</li>
+</ul>
+
+<p>
+Check out <code>home-stow-migration-service</code>:
+</p>
+
+<p>
+<a href="https://issues.guix.gnu.org/issue/60521">https://issues.guix.gnu.org/issue/60521</a>
+</p>
+</div>
+
+<h4><a id="experiment-simplified-home-service-for-existing-config-files" class="anchor" href="#experiment-simplified-home-service-for-existing-config-files">¶</a>Experiment: Simplified home service for existing config files</h4><div class="outline-text-4" id="text-orgc540e83">
+<p>
+<code>test-config.scm</code>:
+</p>
+
+<pre>(use-modules
+ (gnu home)
+ (gnu services)
+ (gnu packages base)
+ (daviwil home-services template-file))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">template-files</span> base-path file-list value-alist)
+  (service home-template-file-service-type
+           (home-template-file-configuration
+            (base-path base-path)
+            (files file-list)
+            (values value-alist))))
+
+(home-environment
+ (packages (list grep))
+ (services (list (template-files <span class="org-string">"/home/daviwil/.dotfiles/.files"</span>
+                                 '(<span class="org-string">".config/dunst/dunstrc"</span>
+                                   <span class="org-string">".config/qutebrowser/config.py"</span>)
+                                 '((dunst/font . <span class="org-string">"Iosevka Aile 18"</span>)
+                                   (qutebrowser/zoom . <span class="org-string">"150"</span>))))))</pre>
+
+<p>
+<code>~/.dotfiles/daviwil/utils.scm</code>:
+</p>
+
+<pre>(<span class="org-keyword">define-module</span> (<span class="org-type">daviwil</span> utils)
+  <span class="org-builtin">#:use-module</span> (gnu packages)
+  <span class="org-builtin">#:use-module</span> (gnu services)
+  <span class="org-builtin">#:use-module</span> (gnu home services)
+  <span class="org-builtin">#:use-module</span> (gnu home services shepherd)
+  <span class="org-builtin">#:use-module</span> (gnu packages freedesktop)
+  <span class="org-builtin">#:use-module</span> (gnu services configuration)
+  <span class="org-builtin">#:use-module</span> (guix gexp)
+  <span class="org-builtin">#:use-module</span> (ice-9 regex)
+  <span class="org-builtin">#:use-module</span> (ice-9 pretty-print)
+  <span class="org-builtin">#:use-module</span> (ice-9 textual-ports)
+
+  <span class="org-builtin">#:export</span> (gather-manifest-packages
+            apply-template-file))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">apply-template</span> template-string value-alist)
+  (regexp-substitute/global #f
+                            <span class="org-string">"\\$\\{([A-Za-z/\\-]+)\\}"</span>
+                            template-string
+                            'pre
+                            (<span class="org-keyword">lambda</span> (m)
+                              (<span class="org-keyword">let</span> ((entry (assq (string-&gt;symbol (match:substring m 1))
+                                                 value-alist)))
+                                (<span class="org-keyword">if</span> entry
+                                    (cdr entry)
+                                    <span class="org-string">"VALUE NOT FOUND"</span>)))
+                            'post))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">apply-template-file</span> file-path value-alist)
+  (<span class="org-keyword">call-with-input-file</span> file-path
+    (<span class="org-keyword">lambda</span> (port)
+      (apply-template (get-string-all port)
+                      value-alist))))</pre>
+</div>
+
+<h3><a id="creating-shareable-configuration-layers" class="anchor" href="#creating-shareable-configuration-layers">¶</a>Creating shareable configuration layers</h3><div class="outline-text-3" id="text-orge45f42f">
+<ul class="org-ul">
+<li>This requires well-designed home services, either in the main Guix channel or a community channel</li>
+</ul>
+</div>
+
+<h3><a id="providing-a-unified-configuration-model-for-both-home-and-system-services" class="anchor" href="#providing-a-unified-configuration-model-for-both-home-and-system-services">¶</a>Providing a unified configuration model for both home and system services</h3><div class="outline-text-3" id="text-org6f68da0">
+<p>
+<a href="https://www.youtube.com/channel/UCuj_loxODrOPxSsXDfJmpng">Andrew Tropin</a>&rsquo;s RDE has a concept called &ldquo;features&rdquo; to accomplish this:
+</p>
+
+<p>
+<a href="https://git.sr.ht/~abcdw/rde/tree/master/item/src/rde/features">https://git.sr.ht/~abcdw/rde/tree/master/item/src/rde/features</a>
+</p>
+
+<p>
+Does Guix need something similar?  Maybe.  However, any Guix channel can provide this kind of feature.
+</p>
+</div>
+
+<h3><a id="implementing-a-guix-analogue-to-nix-flakes" class="anchor" href="#implementing-a-guix-analogue-to-nix-flakes">¶</a>Implementing a Guix analogue to Nix Flakes</h3><div class="outline-text-3" id="text-org389dcd2">
+<p>
+Set up your entire system with a single command using a URL directly to your dotfiles repo!
+</p>
+
+<p>
+An example, benoitj&rsquo;s Nix Flake configuration:
+</p>
+
+<p>
+<a href="https://git.sr.ht/~benoit/dotfiles/tree/neo-guix/item/_old/flake.nix">https://git.sr.ht/~benoit/dotfiles/tree/neo-guix/item/_old/flake.nix</a>
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

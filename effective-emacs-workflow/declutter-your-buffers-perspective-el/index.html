@@ -1,0 +1,186 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Declutter Your Emacs Buffers with Perspective.el - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Declutter Your Emacs Buffers with Perspective.el</h1><p class="site-post-meta"></p><div id="content"><p>
+<a href="https://youtu.be/uyMdDzjQFMU">Watch the video</a> on YouTube!
+</p>
+
+<h2><a id="what-is-perspectiveel" class="anchor" href="#what-is-perspectiveel">¶</a>What is Perspective.el?</h2><div class="outline-text-2" id="text-org5c357ef">
+<p>
+There&rsquo;s a question I see pretty often in the <a href="http://systemcrafters.chat">System Crafters Discord</a>:
+</p>
+
+<p>
+<b>&ldquo;How do I get a buffer list for only the files or buffers I want to see?&rdquo;</b>
+</p>
+
+<p>
+In Emacs, running <code>switch-to-buffer</code> or <code>ibuffer</code> shows you every single buffer that is open in Emacs which can be a little overwhelming in long-running Emacs sessions.
+</p>
+
+<p>
+The <b>perspective.el</b> package provides a convenient way to define individual &ldquo;perspectives&rdquo; for managing separate sets of buffers and windows.  You can think of perspectives like the &ldquo;workspace&rdquo; concept you see in some window managers.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/nex3/perspective-el">https://github.com/nex3/perspective-el</a></li>
+</ul>
+
+<p>
+There are other alternatives to this package that have a different take on the workspace concept, we may cover them in future videos.
+</p>
+</div>
+
+<h2><a id="benefits-of-perspectiveel" class="anchor" href="#benefits-of-perspectiveel">¶</a>Benefits of perspective.el</h2><div class="outline-text-2" id="text-orgca7e111">
+<ul class="org-ul">
+<li>Each perspective keeps its own buffer list and window layout</li>
+<li>Perspectives are attached to specific frames</li>
+<li>It works pretty seamlessly with EXWM if you use that too</li>
+<li>Provides functionality for saving perspectives to use in future sessions</li>
+<li>You can write Emacs Lisp code to automate perspective creation</li>
+</ul>
+
+<p>
+I&rsquo;ve been using perspective.el for a few months now and it has become an important part of my workflow!
+</p>
+</div>
+
+<h2><a id="basic-configuration" class="anchor" href="#basic-configuration">¶</a>Basic configuration</h2><div class="outline-text-2" id="text-org295786a">
+<p>
+If you use <code>use-package</code> with <code>package.el</code>, you can copy the following Emacs Lisp into your <code>init.el</code> file and execute it for the first time with <code>C-M-x</code>.
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">perspective</span>
+  <span class="org-builtin">:ensure</span> t  <span class="org-comment-delimiter">; </span><span class="org-comment">use `:straight t` if using straight.el!</span>
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-x k"</span> . persp-kill-buffer*))
+  <span class="org-builtin">:init</span>
+  (persp-mode))</pre>
+
+<p>
+This will install the package and enable it immediately when Emacs starts up.
+</p>
+
+<p>
+<b>TIP:</b> By default the prefix for perspective.el bindings is <code>C-x x</code> but you can change it by setting the variable <code>persp-mode-prefix-key</code>.
+</p>
+
+<p>
+We&rsquo;ll try out perspective.el in a basic Emacs configuration so that we can learn how to use it!
+</p>
+</div>
+
+<h2><a id="the-ldquomainrdquo-perspective" class="anchor" href="#the-ldquomainrdquo-perspective">¶</a>The &ldquo;main&rdquo; perspective</h2><div class="outline-text-2" id="text-org266b285">
+<p>
+By default, <code>perspective.el</code> will create a perspective called &ldquo;main&rdquo; in every frame that Emacs creates.  In the very first frame, all of Emacs&rsquo; starting buffers will be in the &ldquo;main&rdquo; perspective of that frame.
+</p>
+
+<p>
+<b>NOTE:</b> When you create a new frame, a new &ldquo;main&rdquo; perspective will be created but it is <b>NOT</b> the same as the &ldquo;main&rdquo; perspective in other frames!  They have the same name but they are actually different.
+</p>
+
+<p>
+Whenever you open a file or some other buffer inside of a perspective, the buffer then becomes attached to that perspective and won&rsquo;t show up in other perspectives unless it is explicitly added to them.
+</p>
+
+<p>
+<b>TIP:</b> The name of the default perspective can be customized with the variable <code>persp-initial-frame-name</code>.
+</p>
+</div>
+
+<h2><a id="listing-buffers-in-the-perspective" class="anchor" href="#listing-buffers-in-the-perspective">¶</a>Listing buffers in the perspective</h2><div class="outline-text-2" id="text-org5612909">
+<p>
+To list all buffers in the current perspective, use the normal <code>switch-to-buffer</code> command!  This should work great with Emacs&rsquo; built-in completion systems, Helm, and Vertico.
+</p>
+
+<ul class="org-ul">
+<li>If you use Ivy, you might want to use <code>persp-ivy-switch-buffer</code> or <code>persp-counsel-switch-buffer</code> for better integration</li>
+<li>If you use Selectrum, you might want <code>persp-switch-to-buffer*</code> for better integration</li>
+<li>If you prefer an <code>ibuffer</code>-style interface you can use <code>persp-ibuffer</code>.</li>
+</ul>
+
+<p>
+You can also choose from all open buffers and automatically switch to the perspective that &ldquo;owns&rdquo; the buffer with <code>persp-switch-to-buffer</code> (<code>C-x x b</code>).
+</p>
+</div>
+
+<h2><a id="creating-a-perspective" class="anchor" href="#creating-a-perspective">¶</a>Creating a perspective</h2><div class="outline-text-2" id="text-orge7405d9">
+<p>
+Having only one perspective isn&rsquo;t very useful, though, so let&rsquo;s create another!
+</p>
+
+<p>
+The <code>persp-switch</code> command (<code>C-x x s</code>) will prompt you for the name of a perspective to switch to.  If you enter a name for a perspective that doesn&rsquo;t exist yet, it will be created.
+</p>
+
+<p>
+We can now list the buffers of this new perspective using <code>switch-to-buffer</code> or any of the commands mentioned before.
+</p>
+
+<p>
+<b>TIP:</b> All perspectives get their own <code>*scratch*</code> buffer!  This can be useful for keeping temporary notes within a specific workspace.
+</p>
+</div>
+
+<h2><a id="switching-perspectives" class="anchor" href="#switching-perspectives">¶</a>Switching perspectives</h2><div class="outline-text-2" id="text-org83c7d80">
+<p>
+You can select from a list of all perspectives for the current frame using the <code>persp-switch</code> command (<code>C-x x s</code>).
+</p>
+
+<p>
+There are also a couple of helpful commands for cycling between perspectives:
+</p>
+
+<ul class="org-ul">
+<li><code>persp-next</code> (<code>C-x x n</code> or <code>C-x x &lt;right&gt;</code>): switch to the next perspective</li>
+<li><code>persp-prev</code> (<code>C-x x p</code> or <code>C-x x &lt;left&gt;</code>): switch to the previous perspective</li>
+</ul>
+
+<p>
+This is a good time to point out that the list of perspectives for the current frame are displayed in the mode line!
+</p>
+
+<p>
+You can also select between perspectives using the number row keys with <code>C-x x 1</code> through <code>C-x x 0</code> (10).
+</p>
+</div>
+
+<h2><a id="adding-an-existing-buffer-to-a-perspective" class="anchor" href="#adding-an-existing-buffer-to-a-perspective">¶</a>Adding an existing buffer to a perspective</h2><div class="outline-text-2" id="text-org5704431">
+<p>
+Sometimes you&rsquo;ll end up in this situation: you open a file in a perspective and then realize that you should have opened it in a more appropriate perspective.
+</p>
+
+<p>
+There are a few ways to get that buffer into the desired perspective:
+</p>
+
+<ul class="org-ul">
+<li><code>persp-add-buffer</code> (<code>C-x x a</code>) will prompt you for the buffer to add to the <b>current</b> perspective (but it won&rsquo;t switch to that buffer)</li>
+<li><code>persp-set-buffer</code> (<code>C-x x A</code>) will prompt for a buffer to move to the current perspective and remove from all others!</li>
+<li>Use the universal argument key <code>C-u</code> before running <code>switch-to-buffer</code> and select the desired buffer</li>
+</ul>
+</div>
+
+<h2><a id="removing-a-buffer-from-a-perspective" class="anchor" href="#removing-a-buffer-from-a-perspective">¶</a>Removing a buffer from a perspective</h2><div class="outline-text-2" id="text-org04a7423">
+<p>
+If you want to remove a buffer from a perspective, you can use the <code>persp-remove</code> (<code>C-x x k</code>) command.  Once you select a buffer, it will only be removed from the current perspective.
+</p>
+</div>
+
+<h2><a id="killing-perspectives" class="anchor" href="#killing-perspectives">¶</a>Killing perspectives</h2><div class="outline-text-2" id="text-org22cbcc5">
+<p>
+If you&rsquo;re done with a particular perspective, you can &ldquo;kill&rdquo; it using <code>persp-kill</code> (<code>C-x x c</code>).
+</p>
+
+<p>
+The documentation for <code>persp-kill</code> says that only buffers associated with the killed perspective and no others will be killed.  That hasn&rsquo;t been true in my experience, they all seem to remain active, just not visible in other perspectives!
+</p>
+
+<p>
+In a very recent commit a new command named <code>persp-kill-others</code> was added for quickly killing all perspectives in the frame except the current one.
+</p>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgfe73674">
+<p>
+That was just a brief overview of the <code>perspective.el</code> package to get you started!  In future videos we&rsquo;ll cover more ways to customize the your perspective workflow and also how to integrate it with EXWM and Projectile!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

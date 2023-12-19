@@ -1,0 +1,409 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title> - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title"></h1><p class="site-post-meta"></p><div id="content"><p>
+#+titl the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/b927109521b4b8a7e701709dabbdd9c1ea2fc27c/Desktop.org#desktop-notifications-with-dunst">here</a>.
+</p>
+
+<h2><a id="the-final-piece" class="anchor" href="#the-final-piece">¶</a>The final piece</h2><div class="outline-text-2" id="text-orgc59f8ba">
+<p>
+Desktop notifications are pretty common in applications, it&rsquo;s good to support them in our desktop environment.
+</p>
+
+<p>
+It&rsquo;s also a useful tool for our own Emacs extensions and scripts!
+</p>
+
+<p>
+Password sync script (<a href="https://github.com/daviwil/dotfiles/blob/master/.bin/sync-passwords#L5">View on GitHub</a>)
+</p>
+
+<p>
+We&rsquo;ll use a program called Dunst to accomplish this.
+</p>
+</div>
+
+<h2><a id="dunst" class="anchor" href="#dunst">¶</a>Dunst</h2><div class="outline-text-2" id="text-org659ce07">
+<ul class="org-ul">
+<li>Minimal</li>
+<li>Easy to customize</li>
+<li>Keyboard controlled</li>
+<li>Fits in well with Polybar</li>
+</ul>
+
+<p>
+Homepage: <a href="https://dunst-project.org/">https://dunst-project.org/</a>
+</p>
+
+<p>
+On Ubuntu you can install via <code>apt</code>:
+</p>
+
+<pre>sudo apt install dunst</pre>
+
+<p>
+It&rsquo;s pretty commonly available in other Linux distributions as well!
+</p>
+</div>
+
+<h2><a id="launching-dunst" class="anchor" href="#launching-dunst">¶</a>Launching Dunst</h2><div class="outline-text-2" id="text-orgaefdd9f">
+<p>
+It&rsquo;s just as simple as running <code>dunst</code>!  We can run it and see its output with <code>async-shell-command</code> (<code>M-&amp;</code>)
+</p>
+
+<p>
+Now to try it out with <code>notify-send</code>:
+</p>
+
+<pre>notify-send <span class="org-string">"Test!"</span>
+notify-send -u critical <span class="org-string">"Your computer asplode"</span>
+notify-send -i <span class="org-string">"emblem-synchronizing"</span> <span class="org-string">"Passwords synced!"</span></pre>
+
+<p>
+We can also call up previous notifications using the global <code>C-`</code> keybinding!  Useful if you saw a notification but didn&rsquo;t have a chance to read it.
+</p>
+
+<p>
+We can add it to our <code>efs/exwm-init-hook</code> function:
+</p>
+
+<pre>(efs/run-in-background <span class="org-string">"dunst"</span>)</pre>
+</div>
+
+<h2><a id="customizing-dunst" class="anchor" href="#customizing-dunst">¶</a>Customizing Dunst</h2><div class="outline-text-2" id="text-orgf415ff9">
+<p>
+Much of this is boilerplate, you can read more about how to configure Dunst here:
+</p>
+
+<p>
+<a href="https://dunst-project.org/documentation/">https://dunst-project.org/documentation/</a>
+</p>
+
+<p>
+We&rsquo;ll add this to our <code>Desktop.org</code> file:
+</p>
+
+<p>
+<code>:tangle ~/.config/dunst/dunstrc :mkdirp yes</code>
+</p>
+
+<pre>[<span class="org-type">global</span>]
+    <span class="org-comment-delimiter">### </span><span class="org-comment">Display ###</span>
+    <span class="org-variable-name">monitor</span> = 0
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">The geometry of the window:</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">[{width}]x{height}[+/-{x}+/-{y}]</span>
+    <span class="org-variable-name">geometry</span> = <span class="org-string">"500x10-10+50"</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Show how many messages are currently hidden (because of geometry).</span>
+    <span class="org-variable-name">indicate_hidden</span> = yes
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Shrink window if it's smaller than the width.  Will be ignored if</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">width is 0.</span>
+    <span class="org-variable-name">shrink</span> = no
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">The transparency of the window.  Range: [0; 100].</span>
+    <span class="org-variable-name">transparency</span> = 10
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">The height of the entire notification.  If the height is smaller</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">than the font height and padding combined, it will be raised</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">to the font height and padding.</span>
+    <span class="org-variable-name">notification_height</span> = 0
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Draw a line of "separator_height" pixel height between two</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">notifications.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Set to 0 to disable.</span>
+    <span class="org-variable-name">separator_height</span> = 1
+    <span class="org-variable-name">separator_color</span> = frame
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Padding between text and separator.</span>
+    <span class="org-variable-name">padding</span> = 8
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Horizontal padding.</span>
+    <span class="org-variable-name">horizontal_padding</span> = 8
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Defines width in pixels of frame around the notification window.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Set to 0 to disable.</span>
+    <span class="org-variable-name">frame_width</span> = 2
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Defines color of the frame around the notification window.</span>
+    <span class="org-variable-name">frame_color</span> = <span class="org-string">"#89AAEB"</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Sort messages by urgency.</span>
+    <span class="org-variable-name">sort</span> = yes
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Don't remove messages, if the user is idle (no mouse or keyboard input)</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">for longer than idle_threshold seconds.</span>
+    <span class="org-variable-name">idle_threshold</span> = 120
+
+    <span class="org-comment-delimiter">### </span><span class="org-comment">Text ###</span>
+
+    <span class="org-variable-name">font</span> = Cantarell 20
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">The spacing between lines.  If the height is smaller than the</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">font height, it will get raised to the font height.</span>
+    <span class="org-variable-name">line_height</span> = 0
+    <span class="org-variable-name">markup</span> = full
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">The format of the message.  Possible variables are:</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%a  appname</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%s  summary</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%b  body</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%i  iconname (including its path)</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%I  iconname (without its path)</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%p  progress value if set ([  0%] to [100%]) or nothing</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%n  progress value if set without any extra characters</span>
+    <span class="org-comment-delimiter">#   </span><span class="org-comment">%%  Literal %</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Markup is allowed</span>
+    <span class="org-variable-name">format</span> = <span class="org-string">"&lt;b&gt;%s&lt;/b&gt;\n%b"</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Alignment of message text.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Possible values are "left", "center" and "right".</span>
+    <span class="org-variable-name">alignment</span> = left
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Show age of message if message is older than show_age_threshold</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">seconds.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Set to -1 to disable.</span>
+    <span class="org-variable-name">show_age_threshold</span> = 60
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Split notifications into multiple lines if they don't fit into</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">geometry.</span>
+    <span class="org-variable-name">word_wrap</span> = yes
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">When word_wrap is set to no, specify where to make an ellipsis in long lines.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Possible values are "start", "middle" and "end".</span>
+    <span class="org-variable-name">ellipsize</span> = middle
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Ignore newlines '\n' in notifications.</span>
+    <span class="org-variable-name">ignore_newline</span> = no
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Stack together notifications with the same content</span>
+    <span class="org-variable-name">stack_duplicates</span> = true
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Hide the count of stacked notifications with the same content</span>
+    <span class="org-variable-name">hide_duplicate_count</span> = false
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Display indicators for URLs (U) and actions (A).</span>
+    <span class="org-variable-name">show_indicators</span> = yes
+
+    <span class="org-comment-delimiter">### </span><span class="org-comment">Icons ###</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Align icons left/right/off</span>
+    <span class="org-variable-name">icon_position</span> = left
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Scale larger icons down to this size, set to 0 to disable</span>
+    <span class="org-variable-name">max_icon_size</span> = 88
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Paths to default icons.</span>
+    <span class="org-variable-name">icon_path</span> = /home/daviwil/.guix-extra-profiles/desktop/desktop/share/icons/gnome/256x256/status/:/home/daviwil/.guix-extra-profiles/desktop/desktop/share/icons/gnome/256x256/devices/:/home/daviwil/.guix-extra-profiles/desktop/desktop/share/icons/gnome/256x256/emblems/
+
+    <span class="org-comment-delimiter">### </span><span class="org-comment">History ###</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Should a notification popped up from history be sticky or timeout</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">as if it would normally do.</span>
+    <span class="org-variable-name">sticky_history</span> = no
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Maximum amount of notifications kept in history</span>
+    <span class="org-variable-name">history_length</span> = 20
+
+    <span class="org-comment-delimiter">### </span><span class="org-comment">Misc/Advanced ###</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Browser for opening urls in context menu.</span>
+    <span class="org-variable-name">browser</span> = qutebrowser
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Always run rule-defined scripts, even if the notification is suppressed</span>
+    <span class="org-variable-name">always_run_script</span> = true
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Define the title of the windows spawned by dunst</span>
+    <span class="org-variable-name">title</span> = Dunst
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Define the class of the windows spawned by dunst</span>
+    <span class="org-variable-name">class</span> = Dunst
+
+    <span class="org-variable-name">startup_notification</span> = false
+    <span class="org-variable-name">verbosity</span> = mesg
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Define the corner radius of the notification window</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">in pixel size. If the radius is 0, you have no rounded</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">corners.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">The radius will be automatically lowered if it exceeds half of the</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">notification height to avoid clipping text and/or icons.</span>
+    <span class="org-variable-name">corner_radius</span> = 4
+
+    <span class="org-variable-name">mouse_left_click</span> = close_current
+    <span class="org-variable-name">mouse_middle_click</span> = do_action
+    <span class="org-variable-name">mouse_right_click</span> = close_all
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Experimental features that may or may not work correctly. Do not expect them</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">to have a consistent behaviour across releases.</span>
+[<span class="org-type">experimental</span>]
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Calculate the dpi to use on a per-monitor basis.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">If this setting is enabled the Xft.dpi value will be ignored and instead</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">dunst will attempt to calculate an appropriate dpi value for each monitor</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">using the resolution and physical size. This might be useful in setups</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">where there are multiple screens with very different dpi values.</span>
+    <span class="org-variable-name">per_monitor_dpi</span> = false
+
+[<span class="org-type">shortcuts</span>]
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Shortcuts are specified as [modifier+][modifier+]...key</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">"mod3" and "mod4" (windows-key).</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Xev might be helpful to find names for keys.</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Close notification.</span>
+    <span class="org-comment-delimiter">#</span><span class="org-comment">close = ctrl+space</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Close all notifications.</span>
+    <span class="org-comment-delimiter">#</span><span class="org-comment">close_all = ctrl+shift+space</span>
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Redisplay last message(s).</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">On the US keyboard layout "grave" is normally above TAB and left</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">of "1". Make sure this key actually exists on your keyboard layout,</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. check output of 'xmodmap -pke'</span>
+    <span class="org-variable-name">history</span> = ctrl+grave
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Context menu.</span>
+    <span class="org-variable-name">context</span> = ctrl+shift+period
+
+[<span class="org-type">urgency_low</span>]
+    <span class="org-comment-delimiter"># </span><span class="org-comment">IMPORTANT: colors have to be defined in quotation marks.</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Otherwise the "#" and following would be interpreted as a comment.</span>
+    <span class="org-variable-name">background</span> = <span class="org-string">"#222222"</span>
+    <span class="org-variable-name">foreground</span> = <span class="org-string">"#888888"</span>
+    <span class="org-variable-name">timeout</span> = 10
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Icon for notifications with low urgency, uncomment to enable</span>
+    <span class="org-comment-delimiter">#</span><span class="org-comment">icon = /path/to/icon</span>
+
+[<span class="org-type">urgency_normal</span>]
+    <span class="org-variable-name">background</span> = <span class="org-string">"#1c1f26"</span>
+    <span class="org-variable-name">foreground</span> = <span class="org-string">"#ffffff"</span>
+    <span class="org-variable-name">timeout</span> = 10
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Icon for notifications with normal urgency, uncomment to enable</span>
+    <span class="org-comment-delimiter">#</span><span class="org-comment">icon = /path/to/icon</span>
+
+[<span class="org-type">urgency_critical</span>]
+    <span class="org-variable-name">background</span> = <span class="org-string">"#900000"</span>
+    <span class="org-variable-name">foreground</span> = <span class="org-string">"#ffffff"</span>
+    <span class="org-variable-name">frame_color</span> = <span class="org-string">"#ff0000"</span>
+    <span class="org-variable-name">timeout</span> = 0
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Icon for notifications with critical urgency, uncomment to enable</span>
+    <span class="org-comment-delimiter">#</span><span class="org-comment">icon = /path/to/icon</span></pre>
+
+<p>
+To refresh the configuration you&rsquo;ll need to kill and restart Dunst:
+</p>
+
+<pre>pkill dunst &amp;&amp; dunst &amp;</pre>
+
+<p>
+Some things you&rsquo;ll want to consider setting:
+</p>
+
+<ul class="org-ul">
+<li><code>format</code> - Customize how notification text contents are displayed</li>
+<li><code>geometry</code> - Where the notification appears and how large it should be by default</li>
+<li><code>max_icon_size</code> - Constrain icon display since some icons will be larger than others</li>
+<li><code>icon_path</code> - Important if your icons are not in a common location (like when using GNU Guix)</li>
+<li><code>idle_threshold</code> - Wait for user to become active for this long before hiding notifications</li>
+<li><code>mouse_left/right/middle_click</code> - Action to take when clicking a notification</li>
+<li>Any of the key bindings in the <code>shortcuts</code> section (though these are deprecated in 1.5.0, use <code>dunstctl</code>)</li>
+</ul>
+</div>
+
+<h2><a id="control-dunst-with-dunstctl" class="anchor" href="#control-dunst-with-dunstctl">¶</a>Control Dunst with dunstctl</h2><div class="outline-text-2" id="text-org8234ca7">
+<p>
+Starting with Dunst 1.5.0 there is a new command line tool called <code>dunstctl</code> which enables you to set up key bindings in your desktop environment (Emacs!) which launch <code>dunstctl</code> to control the running Dunst instance:
+</p>
+
+<pre>&#955; dunstctl --help
+Usage: dunstctl &lt;command&gt; [parameters]
+Commands:
+  action                         Perform the default action, or open the
+                                 context menu of the notification at the
+                                 given position
+  close                          Close the last notification
+  close-all                      Close the all notifications
+  context                        Open context menu
+  history-pop                    Pop one notification from history
+  is-paused                      Check if dunst is running or paused
+  set-paused [true|false|toggle] Set the pause status
+  debug                          Print debugging information
+  help                           Show this help</pre>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/dunstctl</span> (command)
+  (start-process-shell-command <span class="org-string">"dunstctl"</span> nil (concat <span class="org-string">"dunstctl "</span> command)))
+
+(exwm-input-set-key (kbd <span class="org-string">"s-n"</span>) (<span class="org-keyword">lambda</span> () (<span class="org-keyword">interactive</span>) (efs/dunstctl <span class="org-string">"history-pop"</span>)))
+(exwm-input-set-key (kbd <span class="org-string">"s-N"</span>) (<span class="org-keyword">lambda</span> () (<span class="org-keyword">interactive</span>) (efs/dunstctl <span class="org-string">"close-all"</span>)))</pre>
+</div>
+
+<h2><a id="enabling-and-disabling-notifications" class="anchor" href="#enabling-and-disabling-notifications">¶</a>Enabling and disabling notifications</h2><div class="outline-text-2" id="text-org543e205">
+<p>
+You can use either of the following commands to disable desktop notifications temporarily:
+</p>
+
+<pre>notify-send <span class="org-string">"DUNST_COMMAND_PAUSE"</span>
+
+killall -SIGUSR1 dunst
+
+dunstctl set-paused true  <span class="org-comment-delimiter"># </span><span class="org-comment">Only available form 1.5.0 onward</span></pre>
+
+<p>
+You can resume notifications (and see all the notifications that occurred while disabled) by running any of these commands:
+</p>
+
+<pre>notify-send <span class="org-string">"DUNST_COMMAND_RESUME"</span>
+
+killall -SIGUSR2 dunst
+
+dunstctl set-paused false  <span class="org-comment-delimiter"># </span><span class="org-comment">Only available from 1.5.0 onward</span></pre>
+
+<p>
+It can be useful to create an interactive function to enable/disable notifications so that you can use it in your configuration!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/disable-desktop-notifications</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (start-process-shell-command <span class="org-string">"notify-send"</span> nil <span class="org-string">"notify-send \"DUNST_COMMAND_PAUSE\""</span>))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/enable-desktop-notifications</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (start-process-shell-command <span class="org-string">"notify-send"</span> nil <span class="org-string">"notify-send \"DUNST_COMMAND_RESUME\""</span>))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/toggle-desktop-notifications</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (start-process-shell-command <span class="org-string">"notify-send"</span> nil <span class="org-string">"notify-send \"DUNST_COMMAND_TOGGLE\""</span>))
+
+  (start-process-shell-command <span class="org-string">"notify-send"</span> nil <span class="org-string">"notify-send \"This is from Emacs!\""</span>)</pre>
+</div>
+
+<h2><a id="sending-notifications-from-emacs" class="anchor" href="#sending-notifications-from-emacs">¶</a>Sending notifications from Emacs</h2><div class="outline-text-2" id="text-org8e92cf8">
+<p>
+Now that we can display notifications, we can use them in our Emacs configuration too:
+</p>
+</div>
+
+<h3><a id="built-in-functions" class="anchor" href="#built-in-functions">¶</a>Built-in functions</h3><div class="outline-text-3" id="text-org8700e1b">
+<p>
+Emacs has a built-in function for this:
+</p>
+
+<pre>(notifications-notify <span class="org-builtin">:title</span> <span class="org-string">"Test!"</span>
+                      <span class="org-builtin">:body</span> <span class="org-string">"This is just a test!"</span>)</pre>
+
+<p>
+Manual: <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Desktop-Notifications.html">https://www.gnu.org/software/emacs/manual/html_node/elisp/Desktop-Notifications.html</a>
+</p>
+</div>
+
+<h3><a id="alertel" class="anchor" href="#alertel">¶</a>alert.el</h3><div class="outline-text-3" id="text-org4569c96">
+<p>
+An alternative is alert.el: <a href="https://github.com/jwiegley/alert">https://github.com/jwiegley/alert</a>
+</p>
+
+<pre>(alert <span class="org-string">"This is just a test!"</span> <span class="org-builtin">:title</span> <span class="org-string">"Test!"</span>)</pre>
+
+<p>
+However, this library is usually only preferrable if you are writing a package that needs to show notifications that the user might want to customize.
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

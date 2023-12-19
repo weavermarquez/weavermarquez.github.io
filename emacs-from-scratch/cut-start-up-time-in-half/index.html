@@ -1,0 +1,115 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>How to Cut Emacs Startup Time in Half - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">How to Cut Emacs Startup Time in Half</h1><p class="site-post-meta"></p><div id="content"><ul class="org-ul">
+<li><a href="https://youtu.be/9i_9hse_Y08">Watch the video</a> on YouTube!</li>
+<li>Check out the <a href="https://github.com/daviwil/emacs-from-scratch/blob/d23348b4a52dde97f4f7cbcd66a519b5fd0a143c/Emacs.org">final code</a> on GitHub</li>
+<li>Episode 12 of the <a href="../">Emacs From Scratch</a> series</li>
+</ul>
+
+<h2><a id="why-is-emacs-so-slow-to-start-up" class="anchor" href="#why-is-emacs-so-slow-to-start-up">¶</a>Why is Emacs so slow to start up?</h2><div class="outline-text-2" id="text-orgf398a56">
+<p>
+Is it actually slow with no config? Run <code>emacs -Q</code> to find out!
+</p>
+
+<p>
+So why is it so much slower with our configuration?
+</p>
+</div>
+
+<h2><a id="letrsquos-find-out-how-long-itrsquos-taking" class="anchor" href="#letrsquos-find-out-how-long-itrsquos-taking">¶</a>Let&rsquo;s find out how long it&rsquo;s taking!</h2><div class="outline-text-2" id="text-org64f428b">
+<p>
+Add a function to <code>emacs-startup-hook</code> to print out the duration of Emacs startup:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/display-startup-time</span> ()
+  (message <span class="org-string">"Emacs loaded in %s with %d garbage collections."</span>
+           (format <span class="org-string">"%.2f seconds"</span>
+                   (float-time
+                   (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)</pre>
+
+<p>
+All startup behavior is happening in the <code>normal-top-level</code> function!
+</p>
+
+<p>
+A helpful manual page is <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html">Summary: Sequence of Actions at Startup</a>.
+</p>
+</div>
+
+<h2><a id="the-most-important-tip-donrsquot-load-any-packages" class="anchor" href="#the-most-important-tip-donrsquot-load-any-packages">¶</a>The most important tip: don&rsquo;t load any packages!</h2><div class="outline-text-2" id="text-org314b98e">
+<p>
+<code>use-package</code> gives you a few different ways to defer package loading:
+</p>
+
+<ul class="org-ul">
+<li><code>:hook</code> - Package will be loaded the first time one of the hooks is invoked</li>
+<li><code>:bind</code> - Package will be loaded the first time one of the key bindings is used</li>
+<li><code>:commands</code> - Package will be loaded when one of the commands are used</li>
+<li><code>:mode</code> - Package will be loaded the first time a file with a particular extension is opened</li>
+<li><code>:after</code> - Load this package after other specific packages are loaded</li>
+<li><code>:defer</code> - If you don&rsquo;t use any of the other options, this one will defer loading until after startup</li>
+</ul>
+
+<p>
+There are a <a href="https://github.com/jwiegley/use-package#getting-started">few other options</a> <code>use-package</code> provides, but these are all the most likely ones you would use.
+</p>
+
+<p>
+The strategy is to look at all of your <code>use-package</code> expressions and decide whether it <b>really</b> needs to be loaded immediately at startup!
+</p>
+
+<p>
+If you want to make sure a package gets loaded at startup despite the use of any of the options above, use <code>:demand t</code>.
+</p>
+
+<p>
+Let&rsquo;s try it!
+</p>
+
+<pre><span class="org-string">"fde"</span> '(lambda () (<span class="org-keyword">interactive</span>) (find-file (expand-file-name <span class="org-string">"~/.emacs.d/Emacs.org"</span>)))</pre>
+</div>
+
+<h2><a id="with-eval-after-load-can-be-useful" class="anchor" href="#with-eval-after-load-can-be-useful">¶</a>with-eval-after-load can be useful!</h2><div class="outline-text-2" id="text-org7aac7cb">
+<p>
+<code>with-eval-after-load</code> is a macro that causes a section of code to be executed only after a particular package gets loaded.
+</p>
+
+<pre>(<span class="org-keyword">with-eval-after-load</span> 'org
+  (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . t)
+      (python . t)))
+
+  (<span class="org-keyword">push</span> '(<span class="org-string">"conf-unix"</span> . conf-unix) org-src-lang-modes))</pre>
+
+<p>
+If you need to split up your configuration into multiple sections, this is one way to ensure you don&rsquo;t accidentally cause a package to load too early!
+</p>
+</div>
+
+<h2><a id="tweaking-the-garbage-collector" class="anchor" href="#tweaking-the-garbage-collector">¶</a>Tweaking the garbage collector</h2><div class="outline-text-2" id="text-org5ebd64e">
+<p>
+One other common performance trick is to reduce the number of times the garbage collector will run during the startup process.
+</p>
+
+<p>
+Set the <code>gc-cons-threshold</code> high at the beginning of your <code>init.el</code>:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">The default is 800 kilobytes.  Measured in bytes.</span>
+(<span class="org-keyword">setq</span> gc-cons-threshold (* 50 1000 1000))</pre>
+
+<p>
+Then bring it back down at the end of your <code>init.el</code>:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Make gc pauses faster by decreasing the threshold.</span>
+(<span class="org-keyword">setq</span> gc-cons-threshold (* 2 1000 1000))</pre>
+
+<p>
+Another option is to use Andrea Corrallo&rsquo;s <a href="https://gitlab.com/koral/gcmh/">gcmh package</a> to manage it automatically.
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

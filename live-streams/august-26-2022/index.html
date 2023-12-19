@@ -1,0 +1,108 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Object-Oriented Emacs Lisp with EIEIO - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Object-Oriented Emacs Lisp with EIEIO</h1><p class="site-post-meta">August 26, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/dCmyMCfmUhQ" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgf38d5bb">
+<ul class="org-ul">
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="object-oriented-emacs-lisp-with-eieio" class="anchor" href="#object-oriented-emacs-lisp-with-eieio">¶</a>Object-Oriented Emacs Lisp with EIEIO</h2><div class="outline-text-2" id="text-orgc30d7ad">
+<p>
+Today we&rsquo;re going to look at the EIEIO library that comes built in to Emacs.  This library looks really useful if you want to write more sophisticated code in Emacs Lisp because it enables you to add new types to Emacs with type inheritance, dynamic method dispatch, and a whole lot more.
+</p>
+
+<p>
+It is based on the <a href="https://en.wikipedia.org/wiki/Common_Lisp_Object_System">Common Lisp Object System</a> which is a pretty influential object-oriented programming implementation.  A classic book called <a href="https://amzn.to/3R5q1Mw">The Art of the Metaobject Protocol</a> is said to be a really good source for learning more about it.
+</p>
+
+<p>
+You can read the manual online or by running <code>(info "EIEIO")</code> in Emacs:
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/eieio.html">https://www.gnu.org/software/emacs/manual/html_mono/eieio.html</a>
+</p>
+
+<p>
+I haven&rsquo;t used EIEIO before but I have read a bit about CLOS, so we&rsquo;re going to learn about it together today!
+</p>
+
+<p>
+<b>NOTE:</b> I was working through this block of code live so it&rsquo;s possible that you won&rsquo;t be able to execute it directly!  Try running pieces of it separately if it gives you any errors.
+</p>
+
+<pre>(<span class="org-keyword">defclass</span> <span class="org-type">person</span> ()
+  ((name <span class="org-builtin">:initarg</span> <span class="org-builtin">:name</span>
+         <span class="org-builtin">:initform</span> <span class="org-string">""</span>
+         <span class="org-builtin">:type</span> string
+         <span class="org-builtin">:custom</span> string
+         <span class="org-builtin">:documentation</span> <span class="org-doc">"The name of a person."</span>)
+   (birthday <span class="org-builtin">:initarg</span> <span class="org-builtin">:birthday</span>
+             <span class="org-builtin">:initform</span> <span class="org-string">"Jan 1, 1970"</span>
+             <span class="org-builtin">:custom</span> string
+             <span class="org-builtin">:type</span> string
+             <span class="org-builtin">:documentation</span> <span class="org-doc">"The person's birthday."</span>)
+   (phone <span class="org-builtin">:initarg</span> <span class="org-builtin">:phone</span>
+          <span class="org-builtin">:initform</span> <span class="org-string">""</span>
+          <span class="org-builtin">:documentation</span> <span class="org-doc">"Phone number."</span>))
+  <span class="org-doc">"A class for tracking people I know."</span>)
+
+(<span class="org-keyword">defclass</span> <span class="org-type">employee</span> (person)
+  ((company <span class="org-builtin">:initarg</span> <span class="org-builtin">:company</span>
+            <span class="org-builtin">:initform</span> <span class="org-string">""</span>
+            <span class="org-builtin">:type</span> string
+            <span class="org-builtin">:custom</span> string
+            <span class="org-builtin">:documentation</span> <span class="org-doc">"The company the person works for."</span>)
+   (manager <span class="org-builtin">:initarg</span> <span class="org-builtin">:manager</span>
+            <span class="org-builtin">:initform</span> <span class="org-string">""</span>
+            <span class="org-builtin">:type</span> string
+            <span class="org-builtin">:custom</span> string
+            <span class="org-builtin">:documentation</span> <span class="org-doc">"The person who can fire me."</span>))
+  <span class="org-doc">"A class for tracking my wage slave details."</span>)
+
+(<span class="org-keyword">defclass</span> <span class="org-type">android</span> ()
+  ((name <span class="org-builtin">:initarg</span> <span class="org-builtin">:name</span>
+         <span class="org-builtin">:initform</span> <span class="org-string">""</span>
+         <span class="org-builtin">:type</span> string
+         <span class="org-builtin">:custom</span> string
+         <span class="org-builtin">:documentation</span> <span class="org-doc">"The name of a person."</span>)))
+
+(<span class="org-keyword">setq</span> test-person (employee <span class="org-builtin">:name</span> <span class="org-string">"David"</span>
+                            <span class="org-builtin">:birthday</span> <span class="org-string">"Jan 1, 1970"</span>
+                            <span class="org-builtin">:phone</span> <span class="org-string">"867-5309"</span>
+                            <span class="org-builtin">:company</span> <span class="org-string">"Acme Inc"</span>
+                            <span class="org-builtin">:manager</span> <span class="org-string">"Bob Bobbob"</span>))
+
+(<span class="org-keyword">cl-defmethod</span> <span class="org-function-name">call-person</span> (pers <span class="org-type">&amp;optional</span> scriptname)
+  <span class="org-doc">"Dial the phone for the person PERS.</span>
+<span class="org-doc">   Execute the program SCRIPTNAME to dial the phone."</span>
+  (message <span class="org-string">"Can't call %S!"</span> pers))
+
+(<span class="org-keyword">cl-defmethod</span> <span class="org-function-name">call-person</span> <span class="org-builtin">:after</span> (pers)
+  (message <span class="org-string">"I tried to call!"</span> pers))
+
+(<span class="org-keyword">cl-defmethod</span> <span class="org-function-name">call-person</span> <span class="org-builtin">:after</span> ((pers person))
+  (message <span class="org-string">"I called a person!"</span> pers))
+
+(<span class="org-keyword">cl-defmethod</span> <span class="org-function-name">call-person</span> ((pers person) <span class="org-type">&amp;optional</span> scriptname)
+  <span class="org-doc">"Dial the phone for the person PERS.</span>
+<span class="org-doc">   Execute the program SCRIPTNAME to dial the phone."</span>
+  (message <span class="org-string">"Dialing the phone for %s"</span> (slot-value pers 'name)))
+
+(<span class="org-keyword">cl-defmethod</span> <span class="org-function-name">call-person</span> ((emp employee))
+  <span class="org-doc">"Dial the phone for the employee EMP."</span>
+  (message <span class="org-string">"Dialing the phone for EMPLOYEE %s"</span> (slot-value emp 'name)))
+
+(<span class="org-keyword">cl-defmethod</span> <span class="org-function-name">call-person</span> ((andr android))
+  <span class="org-doc">"Dial the phone for the employee EMP."</span>
+  (message <span class="org-string">"Dialing the phone for ANDROID %s"</span> (slot-value andr 'name)))</pre>
+
+<p>
+You can use the <code>M-x eieio-browse</code> command to look at all classes presently defined in Emacs.
+</p>
+
+<p>
+If you want to try CLOS in Guile Scheme, try GOOPS: <a href="https://www.gnu.org/software/guile/manual/html_node/GOOPS.html">https://www.gnu.org/software/guile/manual/html_node/GOOPS.html</a>
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

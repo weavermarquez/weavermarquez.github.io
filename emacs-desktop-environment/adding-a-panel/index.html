@@ -1,0 +1,341 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>The Perfect Panel: Integrating Polybar with Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">The Perfect Panel: Integrating Polybar with Emacs</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/usCfMstCZ7E" allowfullscreen></iframe></div>
+</p>
+
+<p>
+Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/75f1d4e08512c49ea073c26058df6d4cca3a0d6b/Desktop.org#panel-with-polybar">here</a>.
+</p>
+
+<h2><a id="you-need-a-panel" class="anchor" href="#you-need-a-panel">¶</a>You need a panel!</h2><div class="outline-text-2" id="text-org92af6a8">
+<p>
+Polybar (<a href="https://polybar.github.io/">https://polybar.github.io/</a>) is:
+</p>
+
+<ul class="org-ul">
+<li>Minimal</li>
+<li>Configurable</li>
+<li>Provides a reliable system tray</li>
+<li>Easy to integrate with Emacs!</li>
+</ul>
+</div>
+
+<h2><a id="installing-polybar" class="anchor" href="#installing-polybar">¶</a>Installing Polybar</h2><div class="outline-text-2" id="text-orgc154696">
+<p>
+First install Polybar using your distro&rsquo;s package manager.  Strangely it&rsquo;s not in Ubuntu 20.04!
+</p>
+
+<p>
+Here&rsquo;s <a href="https://github.com/polybar/polybar/wiki/Compiling">how to compile it</a> if your distro doesn&rsquo;t have it (which is rare):
+</p>
+
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Install dependencies on Ubuntu 20.04</span>
+sudo apt update
+sudo apt install build-essential git cmake cmake-data pkg-config <span class="org-sh-escaped-newline">\</span>
+      python3-sphinx libcairo2-dev libxcb1-dev libxcb-util0-dev <span class="org-sh-escaped-newline">\</span>
+      libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto <span class="org-sh-escaped-newline">\</span>
+      libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Clone the repo and compile version</span>
+git clone --recursive https://github.com/polybar/polybar
+<span class="org-builtin">cd</span> polybar
+git checkout 3.5.2
+./build.sh</pre>
+
+<p>
+<b>NOTE:</b> The <code>build.sh</code> script will ask you about features to enable in the Polybar build.  It is <b>necessary</b> to say answer <code>Y</code> to the <code>polybar-msg</code> feature!  You should also answer <code>Y</code> to the question about running <code>sudo make install</code>.
+</p>
+
+<p>
+Also install some icon fonts:
+</p>
+
+<pre>sudo apt install fonts-font-awesome fonts-material-design-icons-iconfont</pre>
+</div>
+
+<h2><a id="basic-polybar-config" class="anchor" href="#basic-polybar-config">¶</a>Basic Polybar config</h2><div class="outline-text-2" id="text-org9b913ab">
+<p>
+Tangle this to <code>.config/polybar/config</code>
+</p>
+
+<pre>; Docs: https://github.com/polybar/polybar
+<span class="org-variable-name">;</span>==========================================================
+
+[<span class="org-type">settings</span>]
+<span class="org-variable-name">screenchange-reload</span> = true
+
+[<span class="org-type">global/wm</span>]
+<span class="org-variable-name">margin-top</span> = 0
+<span class="org-variable-name">margin-bottom</span> = 0
+
+[<span class="org-type">colors</span>]
+<span class="org-variable-name">background</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">f0232635</span>
+<span class="org-variable-name">background-alt</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">576075</span>
+<span class="org-variable-name">foreground</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">A6Accd</span>
+<span class="org-variable-name">foreground-alt</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">555</span>
+<span class="org-variable-name">primary</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">ffb52a</span>
+<span class="org-variable-name">secondary</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">e60053</span>
+<span class="org-variable-name">alert</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">bd2c40</span>
+<span class="org-variable-name">underline-1</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">c792ea</span>
+
+[<span class="org-type">bar/panel</span>]
+<span class="org-variable-name">width</span> = 100%
+<span class="org-variable-name">height</span> = 35
+<span class="org-variable-name">offset-x</span> = 0
+<span class="org-variable-name">offset-y</span> = 0
+<span class="org-variable-name">fixed-center</span> = true
+<span class="org-variable-name">enable-ipc</span> = true
+
+<span class="org-variable-name">background</span> = ${colors.background}
+<span class="org-variable-name">foreground</span> = ${colors.foreground}
+
+<span class="org-variable-name">line-size</span> = 2
+<span class="org-variable-name">line-color</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">f00</span>
+
+<span class="org-variable-name">border-size</span> = 0
+<span class="org-variable-name">border-color</span> = <span class="org-comment-delimiter">#</span><span class="org-comment">00000000</span>
+
+<span class="org-variable-name">padding-top</span> = 5
+<span class="org-variable-name">padding-left</span> = 1
+<span class="org-variable-name">padding-right</span> = 1
+
+<span class="org-variable-name">module-margin</span> = 1
+
+<span class="org-variable-name">font-0</span> = <span class="org-string">"Cantarell:size=18:weight=bold;2"</span>
+<span class="org-variable-name">font-1</span> = <span class="org-string">"Font Awesome:size=14;2"</span>
+<span class="org-variable-name">font-2</span> = <span class="org-string">"Material Icons:size=20;5"</span>
+<span class="org-variable-name">font-3</span> = <span class="org-string">"Fira Mono:size=13;-3"</span>
+
+<span class="org-variable-name">modules-right</span> = cpu temperature battery date
+
+<span class="org-variable-name">tray-position</span> = right
+<span class="org-variable-name">tray-padding</span> = 2
+<span class="org-variable-name">tray-maxsize</span> = 28
+
+<span class="org-variable-name">cursor-click</span> = pointer
+<span class="org-variable-name">cursor-scroll</span> = ns-resize
+
+[<span class="org-type">module/cpu</span>]
+<span class="org-variable-name">type</span> = internal/cpu
+<span class="org-variable-name">interval</span> = 2
+<span class="org-variable-name">format</span> = &#58146;&lt;label&gt; &lt;ramp-coreload&gt;
+<span class="org-variable-name">format-underline</span> = ${colors.underline-1}
+<span class="org-variable-name">click-left</span> = emacsclient -e <span class="org-string">"(proced)"</span>
+<span class="org-variable-name">label</span> = %percentage:2%%
+<span class="org-variable-name">ramp-coreload-spacing</span> = 0
+<span class="org-variable-name">ramp-coreload-0</span> = &#9601;
+<span class="org-variable-name">ramp-coreload-0-foreground</span> = ${colors.foreground-alt}
+<span class="org-variable-name">ramp-coreload-1</span> = &#9602;
+<span class="org-variable-name">ramp-coreload-2</span> = &#9603;
+<span class="org-variable-name">ramp-coreload-3</span> = &#9604;
+<span class="org-variable-name">ramp-coreload-4</span> = &#9605;
+<span class="org-variable-name">ramp-coreload-5</span> = &#9606;
+<span class="org-variable-name">ramp-coreload-6</span> = &#9607;
+
+[<span class="org-type">module/date</span>]
+<span class="org-variable-name">type</span> = internal/date
+<span class="org-variable-name">interval</span> = 5
+
+<span class="org-variable-name">date</span> = <span class="org-string">"%a %b %e"</span>
+<span class="org-variable-name">date-alt</span> = <span class="org-string">"%A %B %d %Y"</span>
+
+<span class="org-variable-name">time</span> = %l:%M %p
+<span class="org-variable-name">time-alt</span> = %H:%M:%S
+
+<span class="org-variable-name">format-prefix-foreground</span> = ${colors.foreground-alt}
+<span class="org-variable-name">format-underline</span> = ${colors.underline-1}
+
+<span class="org-variable-name">label</span> = %date% %time%
+
+[<span class="org-type">module/battery</span>]
+<span class="org-variable-name">type</span> = internal/battery
+<span class="org-variable-name">battery</span> = BAT0
+<span class="org-variable-name">adapter</span> = ADP1
+<span class="org-variable-name">full-at</span> = 98
+<span class="org-variable-name">time-format</span> = %-l:%M
+
+<span class="org-variable-name">label-charging</span> = %percentage%% / %time%
+<span class="org-variable-name">format-charging</span> = &lt;animation-charging&gt; &lt;label-charging&gt;
+<span class="org-variable-name">format-charging-underline</span> = ${colors.underline-1}
+
+<span class="org-variable-name">label-discharging</span> = %percentage%% / %time%
+<span class="org-variable-name">format-discharging</span> = &lt;ramp-capacity&gt; &lt;label-discharging&gt;
+<span class="org-variable-name">format-discharging-underline</span> = ${self.format-charging-underline}
+
+<span class="org-variable-name">format-full</span> = &lt;ramp-capacity&gt; &lt;label-full&gt;
+<span class="org-variable-name">format-full-underline</span> = ${self.format-charging-underline}
+
+<span class="org-variable-name">ramp-capacity-0</span> = &#62020;
+<span class="org-variable-name">ramp-capacity-1</span> = &#62019;
+<span class="org-variable-name">ramp-capacity-2</span> = &#62018;
+<span class="org-variable-name">ramp-capacity-3</span> = &#62017;
+<span class="org-variable-name">ramp-capacity-4</span> = &#62016;
+
+<span class="org-variable-name">animation-charging-0</span> = &#62020;
+<span class="org-variable-name">animation-charging-1</span> = &#62019;
+<span class="org-variable-name">animation-charging-2</span> = &#62018;
+<span class="org-variable-name">animation-charging-3</span> = &#62017;
+<span class="org-variable-name">animation-charging-4</span> = &#62016;
+<span class="org-variable-name">animation-charging-framerate</span> = 750
+
+[<span class="org-type">module/temperature</span>]
+<span class="org-variable-name">type</span> = internal/temperature
+<span class="org-variable-name">thermal-zone</span> = 0
+<span class="org-variable-name">warn-temperature</span> = 60
+
+<span class="org-variable-name">format</span> = &lt;label&gt;
+<span class="org-variable-name">format-underline</span> = ${colors.underline-1}
+<span class="org-variable-name">format-warn</span> = &lt;label-warn&gt;
+<span class="org-variable-name">format-warn-underline</span> = ${self.format-underline}
+
+<span class="org-variable-name">label</span> = %temperature-c%
+<span class="org-variable-name">label-warn</span> = %temperature-c%!
+<span class="org-variable-name">label-warn-foreground</span> = ${colors.secondary}</pre>
+
+<p>
+Launch it with this command:
+</p>
+
+<pre>polybar panel</pre>
+</div>
+
+<h2><a id="starting-polybar-from-emacs" class="anchor" href="#starting-polybar-from-emacs">¶</a>Starting Polybar from Emacs</h2><div class="outline-text-2" id="text-orgacc9495">
+<pre>(<span class="org-keyword">defvar</span> <span class="org-variable-name">efs/polybar-process</span> nil
+  <span class="org-doc">"Holds the process of the running Polybar instance, if any"</span>)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/kill-panel</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">when</span> efs/polybar-process
+    (<span class="org-keyword">ignore-errors</span>
+      (kill-process efs/polybar-process)))
+  (<span class="org-keyword">setq</span> efs/polybar-process nil))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/start-panel</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (efs/kill-panel)
+  (<span class="org-keyword">setq</span> efs/polybar-process (start-process-shell-command <span class="org-string">"polybar"</span> nil <span class="org-string">"polybar panel"</span>)))</pre>
+
+<p>
+Now we can start Polybar when EXWM starts up, inside of <code>efs/exwm-init-hook</code>:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Start the Polybar panel</span>
+(efs/start-panel)</pre>
+
+<p>
+<b>NOTE:</b> Disable <code>exwm-systemtray</code> before restarting Emacs so that the tray works!
+</p>
+</div>
+
+<h2><a id="requesting-information-from-emacs" class="anchor" href="#requesting-information-from-emacs">¶</a>Requesting information from Emacs</h2><div class="outline-text-2" id="text-orga9c6885">
+<p>
+Use the power of <code>emacsclient</code>!  We&rsquo;ll cover this more in a video next week.
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Make sure the server is started (better to do this in your main Emacs config!)</span>
+(server-start)</pre>
+
+<p>
+Use it to get the EXWM workspace number:
+</p>
+
+<pre>emacsclient -e <span class="org-string">"exwm-workspace-current-index"</span></pre>
+
+<p>
+Define a function to call the workspaces whatever you want!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/polybar-exwm-workspace</span> ()
+  (<span class="org-keyword">pcase</span> exwm-workspace-current-index
+    (0 <span class="org-string">"&#59567;"</span>)
+    (1 <span class="org-string">"&#58143;"</span>)
+    (2 <span class="org-string">"&#59540;"</span>)
+    (3 <span class="org-string">"&#59641;"</span>)
+    (4 <span class="org-string">"&#57418;"</span>)))</pre>
+
+<p>
+Try it out:
+</p>
+
+<pre>emacsclient -e <span class="org-string">"exwm-workspace-current-index"</span></pre>
+</div>
+
+<h3><a id="important-caveat" class="anchor" href="#important-caveat">¶</a>Important caveat!</h3><div class="outline-text-3" id="text-org533aa62">
+<p>
+One thing to keep in mind is that this works well for global variables, but not so great for frame parameters!  The timing has to be perfect to get the value of a frame parameter for the workspace frame you land on.  It&rsquo;s possible, but requires more code.
+</p>
+</div>
+
+<h2><a id="adding-a-workspace-indicator-to-the-panel" class="anchor" href="#adding-a-workspace-indicator-to-the-panel">¶</a>Adding a workspace indicator to the panel</h2><div class="outline-text-2" id="text-org3c402e1">
+<pre><span class="org-variable-name">modules-left</span> = exwm-workspace
+
+[<span class="org-type">module/exwm-workspace</span>]
+<span class="org-variable-name">type</span> = custom/ipc
+<span class="org-variable-name">hook-0</span> = emacsclient -e <span class="org-string">"(efs/polybar-exwm-workspace)"</span> | sed -e <span class="org-string">'s/^"//'</span> -e <span class="org-string">'s/"$//'</span>
+<span class="org-variable-name">initial</span> = 1
+<span class="org-variable-name">format-underline</span> = ${colors.underline-1}
+<span class="org-variable-name">format-padding</span> = 1</pre>
+
+<p>
+<b>NOTE:</b> The extra <code>sed</code> part is necessary!  If you don&rsquo;t have this command available, you can install it from your distro&rsquo;s package repository.
+</p>
+</div>
+
+<h2><a id="sending-information-from-emacs-using-hooks" class="anchor" href="#sending-information-from-emacs-using-hooks">¶</a>Sending information from Emacs using hooks</h2><div class="outline-text-2" id="text-org117f6de">
+<p>
+Use the <code>polybar-msg</code> command to invoke a &ldquo;hook index&rdquo; to have the module update itself:
+</p>
+
+<pre>polybar-msg hook exwm 1</pre>
+
+<p>
+Learn more about the IPC module on the Polybar Wiki: <a href="https://github.com/polybar/polybar/wiki/Module:-ipc">https://github.com/polybar/polybar/wiki/Module:-ipc</a>
+</p>
+</div>
+
+<h3><a id="invoking-the-hook-from-within-emacs" class="anchor" href="#invoking-the-hook-from-within-emacs">¶</a>Invoking the hook from within Emacs</h3><div class="outline-text-3" id="text-orgcd0d259">
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/send-polybar-hook</span> (module-name hook-index)
+  (start-process-shell-command <span class="org-string">"polybar-msg"</span> nil (format <span class="org-string">"polybar-msg hook %s %s"</span> module-name hook-index)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/send-polybar-exwm-workspace</span> ()
+  (efs/send-polybar-hook <span class="org-string">"exwm-workspace"</span> 1))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Update panel indicator when workspace changes</span>
+  (add-hook 'exwm-workspace-switch-hook #'efs/send-polybar-exwm-workspace)</pre>
+</div>
+
+<h2><a id="check-out-the-polybar-wiki" class="anchor" href="#check-out-the-polybar-wiki">¶</a>Check out the Polybar wiki</h2><div class="outline-text-2" id="text-orgef313fd">
+<p>
+Learn how to configure everything else in Polybar:
+</p>
+
+<p>
+<a href="https://github.com/polybar/polybar/wiki">https://github.com/polybar/polybar/wiki</a>
+</p>
+
+<p>
+Some useful bits from my own configuration:
+</p>
+</div>
+
+<h3><a id="spotify-now-playing-requires-the-codeplayerctlcode-app" class="anchor" href="#spotify-now-playing-requires-the-codeplayerctlcode-app">¶</a>Spotify now playing (requires the <code>playerctl</code> app)</h3><div class="outline-text-3" id="text-orgf7daaa7">
+<ul class="org-ul">
+<li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L588-L591">Polybar config</a></li>
+<li><a href="https://github.com/daviwil/dotfiles/blob/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/.config/polybar/player-status.sh">player-status.sh</a></li>
+</ul>
+</div>
+
+<h3><a id="mail-indicator-for-mu4e" class="anchor" href="#mail-indicator-for-mu4e">¶</a>Mail indicator for mu4e</h3><div class="outline-text-3" id="text-orgeb8bb76">
+<ul class="org-ul">
+<li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L383-L388">Emacs config</a></li>
+<li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L593-L598">Polybar config</a></li>
+</ul>
+</div>
+
+<h3><a id="chat-indicators-for-trackingel" class="anchor" href="#chat-indicators-for-trackingel">¶</a>Chat indicators for tracking.el</h3><div class="outline-text-3" id="text-orgbe3a5d3">
+<ul class="org-ul">
+<li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L390-L405">Emacs config</a></li>
+<li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L600-L604">Polybar config</a></li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,106 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Optimizing Window Placement in EXWM - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Optimizing Window Placement in EXWM</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/HGGU5Zvljj8" allowfullscreen></iframe></div>
+</p>
+
+<p>
+Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/39f63fe133cd4c41e13bbd1551c6517162851411/Desktop.org#exwm-configuration">here</a>.
+</p>
+
+<h2><a id="customizing-buffer-name-based-on-window-title" class="anchor" href="#customizing-buffer-name-based-on-window-title">¶</a>Customizing buffer name based on window title</h2><div class="outline-text-2" id="text-org9737e54">
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/exwm-update-title</span> ()
+  (<span class="org-keyword">pcase</span> exwm-class-name
+    (<span class="org-string">"Firefox"</span> (exwm-workspace-rename-buffer (format <span class="org-string">"Firefox: %s"</span> exwm-title)))))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">When window title updates, use it to set the buffer name</span>
+  (add-hook 'exwm-update-title-hook #'efs/exwm-update-title)</pre>
+</div>
+
+<h2><a id="configuring-windows-when-they-appear" class="anchor" href="#configuring-windows-when-they-appear">¶</a>Configuring windows when they appear</h2><div class="outline-text-2" id="text-orgf543cbb">
+<p>
+Use the <code>exwm-manage-finish-hook</code>:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/configure-window-by-class</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (message <span class="org-string">"Window '%s' appeared!"</span> exwm-class))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Configure windows as they're created</span>
+  (add-hook 'exwm-manage-finish-hook #'efs/configure-window-by-class)</pre>
+</div>
+
+<h3><a id="sending-programs-to-specific-workspaces" class="anchor" href="#sending-programs-to-specific-workspaces">¶</a>Sending programs to specific workspaces</h3><div class="outline-text-3" id="text-org8761128">
+<pre>(<span class="org-keyword">pcase</span> exwm-class-name
+  (<span class="org-string">"Firefox"</span> (exwm-workspace-move-window 2))
+  (<span class="org-string">"Sol"</span> (exwm-workspace-move-window 3))))</pre>
+</div>
+
+<h3><a id="making-windows-float-automatically" class="anchor" href="#making-windows-float-automatically">¶</a>Making windows float automatically</h3><div class="outline-text-3" id="text-orgd69c30c">
+<p>
+Use the <code>exwm-floating-toggle-floating</code> command (<code>C-c C-t C-f</code>)
+</p>
+
+<pre>(<span class="org-string">"mpv"</span> (exwm-floating-toggle-floating))</pre>
+</div>
+
+<h3><a id="hide-the-mode-line" class="anchor" href="#hide-the-mode-line">¶</a>Hide the mode line</h3><div class="outline-text-3" id="text-org25849c0">
+<p>
+Use the <code>exwm-layout-toggle-mode-line</code> command (<code>C-c C-t RET</code>)
+</p>
+
+<pre>(<span class="org-string">"mpv"</span> (exwm-floating-toggle-floating)
+       (exwm-layout-toggle-mode-line))</pre>
+</div>
+
+<h3><a id="resizing-a-floating-window" class="anchor" href="#resizing-a-floating-window">¶</a>Resizing a floating window</h3><div class="outline-text-3" id="text-org82138af">
+<ul class="org-ul">
+<li><code>exwm-layout-enlarge-window[-horizontally]</code> - Make a window larger by a number of pixels</li>
+<li><code>exwm-layout-shrink-window[-horizontally]</code> - Make a window smaller by a number of pixels</li>
+<li><code>frame-pixel-width</code> / <code>frame-pixel-height</code> functions - get pixel width and height of the frame</li>
+</ul>
+</div>
+
+<h3><a id="positioning-a-floating-window" class="anchor" href="#positioning-a-floating-window">¶</a>Positioning a floating window</h3><div class="outline-text-3" id="text-orgc7f4ccf">
+<ul class="org-ul">
+<li><code>exwm-floating-move</code> - Move a window based on a delta</li>
+<li><code>x-display-pixel-width</code> / <code>x-display-pixel-height</code> - Get the width and height of the display</li>
+</ul>
+</div>
+
+<h3><a id="automatically-enter-char-mode" class="anchor" href="#automatically-enter-char-mode">¶</a>Automatically enter char-mode</h3><div class="outline-text-3" id="text-org68a8c30">
+<ul class="org-ul">
+<li>Use <code>exwm-reset</code> to toggle back to line-mode (bound to <code>s-r</code> in our configuration)</li>
+<li>Use <code>C-c C-k</code> (<code>exwm-input-release-keyboard</code> to toggle back to char-mode)</li>
+</ul>
+</div>
+
+<h2><a id="automatically-move-windows-between-workspaces" class="anchor" href="#automatically-move-windows-between-workspaces">¶</a>Automatically move windows between workspaces</h2><div class="outline-text-2" id="text-org4e9f395">
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Automatically move EXWM buffer to current workspace when selected</span>
+(<span class="org-keyword">setq</span> exwm-layout-show-all-buffers t)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Display all EXWM buffers in every workspace buffer list</span>
+(<span class="org-keyword">setq</span> exwm-workspace-show-all-buffers t)</pre>
+</div>
+
+<h2><a id="automatically-hiding-the-minibuffer" class="anchor" href="#automatically-hiding-the-minibuffer">¶</a>Automatically hiding the minibuffer</h2><div class="outline-text-2" id="text-org60ef43b">
+<p>
+EXWM enables you to &ldquo;detach&rdquo; the minibuffer so that you can auto-hide it with <code>exwm-workspace-toggle-minibuffer</code>:
+</p>
+
+<p>
+<b>NOTE</b>: You must restart EXWM for this to take effect!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Detach the minibuffer (show it with exwm-workspace-toggle-minibuffer)</span>
+(<span class="org-keyword">setq</span> exwm-workspace-minibuffer-position 'bottom)</pre>
+</div>
+
+<h2><a id="miscellaneous-packages-i-mentioned" class="anchor" href="#miscellaneous-packages-i-mentioned">¶</a>Miscellaneous packages I mentioned:</h2><div class="outline-text-2" id="text-orgbbbf3b9">
+<ul class="org-ul">
+<li>Dynamic tiling like xmonad or dwm using Edwina: <a href="https://github.com/ajgrf/edwina">https://github.com/ajgrf/edwina</a></li>
+<li>Hiding the mode line for all Emacs buffers: <a href="https://github.com/hlissner/emacs-hide-mode-line">https://github.com/hlissner/emacs-hide-mode-line</a></li>
+<li>Showing mode line details in the mini buffer: <a href="https://github.com/kiennq/emacs-mini-modeline">https://github.com/kiennq/emacs-mini-modeline</a></li>
+<li>Showing Ivy commands in a centered frame: <a href="https://github.com/tumashu/ivy-posframe">https://github.com/tumashu/ivy-posframe</a></li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

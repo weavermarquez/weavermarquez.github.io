@@ -1,0 +1,123 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Configuring Sway with Scheme - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Configuring Sway with Scheme</h1><p class="site-post-meta">January 20, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/zx_wItkicKE" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org64199fa">
+<ul class="org-ul">
+<li><p>
+Join us on the Fediverse!  <a href="https://emacs.ch">https://emacs.ch</a> or <a href="https://fosstodon.org">https://fosstodon.org</a>
+</p>
+
+<p>
+Follow me: @daviwil@fosstodon.org / <a href="https://fosstodon.org/@daviwil">https://fosstodon.org/@daviwil</a>
+</p></li>
+
+<li><p>
+Support the channel!
+</p>
+
+<p>
+<b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a>
+More ways to support: <a href="https://systemcrafters.net/support-the-channel/">https://systemcrafters.net/support-the-channel/</a>
+</p></li>
+</ul>
+</div>
+
+<h2><a id="configuring-sway-with-scheme" class="anchor" href="#configuring-sway-with-scheme">¶</a>Configuring Sway with Scheme</h2><div class="outline-text-2" id="text-org70ab600">
+<p>
+Today we&rsquo;re going to take a look at the Sway compositor for Wayland.  I&rsquo;ve been playing with it for the last day and I like it so far!
+</p>
+
+<p>
+I&rsquo;d like to try creating a Guile Scheme library that will make it possible to configure Sway using Scheme code, either as a <code>.scm</code> file or at the REPL.
+</p>
+</div>
+
+<h3><a id="what-is-sway" class="anchor" href="#what-is-sway">¶</a>What is Sway?</h3><div class="outline-text-3" id="text-orgbf571e1">
+<p>
+Sway is a Wayland compositor built on wlroots.
+</p>
+
+<ul class="org-ul">
+<li>Pin workspaces to specific displays</li>
+<li>Tabbed full-screen-ish app experience</li>
+</ul>
+</div>
+
+<h3><a id="benefits" class="anchor" href="#benefits">¶</a>Benefits</h3><div class="outline-text-3" id="text-org032147a">
+<ul class="org-ul">
+<li>No <code>xrandr</code> or <code>arandr</code>, configure displays</li>
+<li>No <code>.desktop</code> or <code>.xsession</code> needed, just run <code>sway</code></li>
+<li>You can pin specific workspaces to displays!</li>
+</ul>
+</div>
+
+<h3><a id="drawbacks" class="anchor" href="#drawbacks">¶</a>Drawbacks</h3><div class="outline-text-3" id="text-org14c741a">
+<ul class="org-ul">
+<li>Sometimes hard to make applications play nice with Wayland</li>
+</ul>
+</div>
+
+<h3><a id="the-final-code" class="anchor" href="#the-final-code">¶</a>The final code</h3><div class="outline-text-3" id="text-org6a2c3dc">
+<pre>(<span class="org-keyword">define-module</span> (<span class="org-type">sway</span>)
+  <span class="org-builtin">#:use-module</span> (json)
+  <span class="org-builtin">#:use-module</span> (ice-9 popen)
+  <span class="org-builtin">#:use-module</span> (ice-9 match)
+  <span class="org-builtin">#:use-module</span> (ice-9 rdelim))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">execute-swaymsg</span> command)
+  (read-delimited <span class="org-string">""</span> (open-input-pipe (string-append <span class="org-string">"swaymsg "</span> command))))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">get-outputs</span>)
+  (json-&gt;scm (open-input-pipe (string-append <span class="org-string">"swaymsg -t get_outputs"</span>))))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">get-inputs</span>)
+  (json-&gt;scm (open-input-pipe (string-append <span class="org-string">"swaymsg -t get_inputs"</span>))))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">get-tree</span>)
+  (json-&gt;scm (open-input-pipe (string-append <span class="org-string">"swaymsg -t get_tree"</span>))))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">set-layout!</span> layout)
+  (system (string-append <span class="org-string">"swaymsg layout "</span> (symbol-&gt;string layout))))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">switch-workspace</span> name)
+  (system (string-append <span class="org-string">"swaymsg workspace "</span> name)))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">set-workspace-output!</span> workspace-name output-name)
+  (system (string-append <span class="org-string">"swaymsg workspace "</span> workspace-name <span class="org-string">" output "</span> output-name)))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">move-workspace-to-output!</span> workspace-name output-name)
+  (system (string-append <span class="org-string">"swaymsg workspace "</span> workspace-name))
+  (system (string-append <span class="org-string">"swaymsg move workspace to output "</span> output-name)))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">toggle-fullscreen!</span>)
+  (system <span class="org-string">"swaymsg fullscreen toggle"</span>))
+
+(<span class="org-keyword">define*</span> (<span class="org-function-name">set-output!</span> name <span class="org-builtin">#:key</span> resolution background scale)
+  (<span class="org-keyword">define</span> (<span class="org-function-name">call-output</span> . args)
+    (system (string-join (append (list <span class="org-string">"swaymsg output"</span> name) args) <span class="org-string">" "</span>)))
+
+  (<span class="org-keyword">when</span> scale (call-output <span class="org-string">"scale"</span> (number-&gt;string scale)))
+  (<span class="org-keyword">when</span> resolution (call-output <span class="org-string">"resolution"</span> resolution))
+  (<span class="org-keyword">when</span> background
+      (match background
+        ((path . mode)
+         (call-output <span class="org-string">"background"</span> path mode)))))
+
+(<span class="org-keyword">define*</span> (<span class="org-function-name">set-border!</span> <span class="org-builtin">#:key</span> (style 'normal) (thickness 2))
+  (system (string-append <span class="org-string">"swaymsg border "</span>
+                         (symbol-&gt;string style)
+                         <span class="org-string">" "</span>
+                         (number-&gt;string thickness))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Example Usage</span>
+
+(set-output! <span class="org-string">"HDMI-A-1"</span>
+             <span class="org-builtin">#:scale</span> 2
+             <span class="org-builtin">#:background</span> '(<span class="org-string">"~/.dotfiles/backgrounds/mountains-1412683.jpg"</span> . <span class="org-string">"fill"</span>))
+
+(set-workspace-output! <span class="org-string">"dev"</span> <span class="org-string">"HDMI-A-1"</span>)
+(move-workspace-to-output! <span class="org-string">"comm"</span> <span class="org-string">"HDMI-A-1"</span>)
+(move-workspace-to-output! <span class="org-string">"browser"</span> <span class="org-string">"HDMI-A-1"</span>)
+
+(set-border! <span class="org-builtin">#:style</span> 'pixel <span class="org-builtin">#:thickness</span> 1)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

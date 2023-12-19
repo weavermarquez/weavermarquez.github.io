@@ -1,0 +1,116 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Learning to Use the Emacs Debugger - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Learning to Use the Emacs Debugger</h1><p class="site-post-meta">December 16, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/LfwSc-lfFxM" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgf0d08cc">
+<ul class="org-ul">
+<li><p>
+Join the Emacs Mastodon instance! <a href="https://emacs.ch/">https://emacs.ch/</a>
+</p>
+
+<p>
+Follow me: <code>@daviwil@fosstodon.org</code> / <a href="https://fosstodon.org/@daviwil">https://fosstodon.org/@daviwil</a>
+</p>
+
+<p>
+When you&rsquo;re there, go reply to this post: <a href="https://fosstodon.org/@daviwil/109524207442385802">https://fosstodon.org/@daviwil/109524207442385802</a>
+</p></li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="learning-to-use-the-emacs-debugger" class="anchor" href="#learning-to-use-the-emacs-debugger">¶</a>Learning To Use the Emacs Debugger</h2><div class="outline-text-2" id="text-org6860f0b">
+<p>
+One thing we haven&rsquo;t talked about much on this channel yet is how to diagnose problems in your Emacs configuration beyond just looking at the <code>*Messages*</code> buffer and hoping you can figure out the cryptic error message that appeared.
+</p>
+
+<p>
+Today we&rsquo;re going to take a look at Emacs&rsquo; built-in Emacs Lisp debuggers, <code>debug</code> and <code>edebug</code> (yes, there are two!).  The goal is to figure out some good debugging strategies, not only for your personal configuration but also for Emacs Lisp packages that you use or those that you authored yourself!
+</p>
+
+<p>
+We&rsquo;ll be using the <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Debugging.html#Debugging">Debugging Lisp Programs</a> section of the <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html">Emacs Lisp manual</a> as our resource.  You can get to it inside of Emacs by evaluating the following expression with <code>M-:</code>
+</p>
+
+<pre>(info <span class="org-string">"(elisp) Debugging"</span>)</pre>
+</div>
+
+<h2><a id="features-to-investigate" class="anchor" href="#features-to-investigate">¶</a>Features to Investigate</h2><h3><a id="debug" class="anchor" href="#debug">¶</a>debug</h3><h4><a id="entering-the-debugger" class="anchor" href="#entering-the-debugger">¶</a>Entering the debugger</h4><div class="outline-text-4" id="text-org2ea0853">
+<ul class="org-ul">
+<li><code>M-x toggle-debug-on-error</code></li>
+<li><code>M-x toggle-debug-on-quit</code></li>
+<li><code>(setq debug-on-message "Oops")</code></li>
+<li><code>M-x debug-on-entry</code> / <code>cancel-debug-on-entry</code></li>
+<li><code>M-x debug-on-variable-change</code> / <code>cancel-debug-on-variable-change</code></li>
+<li><code>(debug)</code></li>
+</ul>
+</div>
+
+<h4><a id="inspecting-backtraces" class="anchor" href="#inspecting-backtraces">¶</a>Inspecting backtraces</h4><div class="outline-text-4" id="text-org25e1811">
+<p>
+When the <code>*Backtrace*</code> buffer appears, try these bindings:
+</p>
+
+<ul class="org-ul">
+<li><code>v</code> -&gt; Display local variables of stack frame</li>
+<li><code>p</code> -&gt; Move to previous stack frame</li>
+<li><code>n</code> -&gt; Move to next stack frame</li>
+<li><code>+</code> -&gt; Add line breaks to stack trace to make it readable</li>
+<li><code>-</code> -&gt; Make stack frame expression a single line</li>
+<li><code>#</code> -&gt; Toggle <code>print-circle</code> for frame</li>
+<li><code>:</code> -&gt; Toggle <code>print-gensym</code> for frame</li>
+<li><code>.</code> -&gt; Expand all <code>...</code> forms</li>
+</ul>
+</div>
+
+<h4><a id="debugger-commands" class="anchor" href="#debugger-commands">¶</a>Debugger commands</h4><div class="outline-text-4" id="text-org4456f40">
+<ul class="org-ul">
+<li><code>c</code> -&gt; Continue execution</li>
+<li><code>d</code> -&gt; Continue execution but stop again at the next function call</li>
+<li><code>b</code> -&gt; Flag the current frame so that the debugger stops again when it exits</li>
+<li><code>u</code> -&gt; Undo the flag on the current frame</li>
+<li><code>e</code> -&gt; Eval an expression at the current stack frame</li>
+<li><code>r</code> -&gt; Return a value for the currently executing frame (useful for errors)</li>
+<li><code>l</code> -&gt; List all functions that will cause the debugger to break</li>
+</ul>
+</div>
+
+<h3><a id="edebug" class="anchor" href="#edebug">¶</a>edebug</h3><div class="outline-text-3" id="text-orgb1d450a">
+<p>
+One difference with edebug is that you can actually step through execution of a function!  The downside is that you have to explicitly instrument a function by evaluating it with <code>C-u C-M-x</code> or (<code>M-x edebug-eval-top-level-form</code>).
+</p>
+
+<p>
+You can debug all definitions by setting <code>edebug-all-defs</code> to <code>t</code> before evaluating the code.
+</p>
+
+<p>
+Let&rsquo;s examine the Edebug manual to figure out what to try:
+</p>
+
+<pre>(info <span class="org-string">"(elisp) Edebug Execution Modes"</span>)</pre>
+</div>
+
+<h2><a id="the-example" class="anchor" href="#the-example">¶</a>The Example</h2><div class="outline-text-2" id="text-org7d594c0">
+<p>
+Here&rsquo;s the example I was using in the stream:
+</p>
+
+<pre>(<span class="org-keyword">defvar</span> <span class="org-variable-name">my-variable</span> 5)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">return-something</span> ()
+  (+ 4 1))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">do-bad-thing</span> ()
+  (<span class="org-keyword">let</span> ((x 5)
+        (y 0))
+    (message <span class="org-string">"The result is: %s"</span> (return-something))
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">(/ x y)</span>
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">(cl-do () (nil) (message "Oops!"))</span>
+    ))
+
+(advice-add 'org-cycle-item-indentation <span class="org-builtin">:after</span> #'do-bad-thing)
+(advice-remove 'org-cycle-item-indentation #'do-bad-thing)
+
+(<span class="org-keyword">setq</span> debug-on-message <span class="org-string">"^O"</span>)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

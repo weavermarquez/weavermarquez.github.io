@@ -1,0 +1,117 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Dynamic Tiling Windows in Emacs with Edwina - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Dynamic Tiling Windows in Emacs with Edwina</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/_qXZNfRcNnw" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-is-it" class="anchor" href="#what-is-it">¶</a>What is it?</h2><div class="outline-text-2" id="text-org5401b77">
+<ul class="org-ul">
+<li>Edwina is a dynamic tiling window manager for Emacs</li>
+<li>Provides master/stack window layout like dwm or Xmonad</li>
+<li>Experimental!</li>
+</ul>
+
+<p>
+<a href="https://github.com/ajgrf/edwina">https://github.com/ajgrf/edwina</a>
+</p>
+
+<p>
+Thanks to <b>X VNA</b> for suggesting this package!
+</p>
+</div>
+
+<h2><a id="setting-it-up" class="anchor" href="#setting-it-up">¶</a>Setting it up</h2><div class="outline-text-2" id="text-org6490753">
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">edwina</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> display-buffer-base-action '(display-buffer-below-selected))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(edwina-setup-dwm-keys)</span>
+  (edwina-mode 1))</pre>
+</div>
+
+<h2><a id="keybindings" class="anchor" href="#keybindings">¶</a>Keybindings</h2><div class="outline-text-2" id="text-org2325b45">
+<p>
+By default these keys are prefixed with <code>C-c C-w</code>. Customize <code>edwina-keymap-prefix</code> to change the prefix.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Binding</th>
+<th scope="col" class="org-left">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>r</code>, <code>C-r</code></td>
+<td class="org-left">Arrange windows</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>n</code>, <code>C-n</code>, <code>SPC</code></td>
+<td class="org-left">Move to next window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>p</code>, <code>C-p</code></td>
+<td class="org-left">Move to previous window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>N</code>, <code>C-S-n</code></td>
+<td class="org-left">Swap places with the next window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>P</code>, <code>C-S-p</code></td>
+<td class="org-left">Swap places with the previous window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>%</code>, <code>{</code>, <code>[</code></td>
+<td class="org-left">Decrease the size of the master area</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>^</code>, <code>}</code>, <code>]</code></td>
+<td class="org-left">Increase the size of the master area</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>d</code>, <code>C-d</code></td>
+<td class="org-left">Decrease number of windows in master</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>i</code></td>
+<td class="org-left">Increase number of windows in master</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>k</code>, <code>C-k</code></td>
+<td class="org-left">Delete window</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>RET</code></td>
+<td class="org-left">Cycle window to/from master area</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>c</code>, <code>C-c</code></td>
+<td class="org-left">Clone current window</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>TIP:</b> Set up <code>dwm</code>-inspired keys with <code>(edwina-setup-dwm-keys)</code>
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

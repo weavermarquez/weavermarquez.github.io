@@ -1,0 +1,150 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Exploring the Metaobject Protocol - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Exploring the Metaobject Protocol</h1><p class="site-post-meta">September 23, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/ZKsvmkovXH0" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org45f3d92">
+<ul class="org-ul">
+<li><p>
+The Guix Birthday Event was a great success!  Keep an eye out here for talk recordings, coming soon:
+</p>
+
+<p>
+<a href="https://10years.guix.gnu.org/program/">https://10years.guix.gnu.org/program/</a>
+</p></li>
+
+<li>Ludum Dare 51 is next weekend (October 1)!  I will participate and stream it on my other channel Flux Harmonic.
+
+<ul class="org-ul">
+<li><a href="https://youtube.com/FluxHarmonicLive">https://youtube.com/FluxHarmonicLive</a></li>
+<li><a href="https://ldjam.com/events/ludum-dare/51">https://ldjam.com/events/ludum-dare/51</a></li>
+</ul></li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="exploring-the-metaobject-protocol" class="anchor" href="#exploring-the-metaobject-protocol">¶</a>Exploring the Metaobject Protocol</h2><div class="outline-text-2" id="text-org053a5cd">
+<p>
+Today we&rsquo;ll take a look at the concept of a &ldquo;metaobject protocol&rdquo; from a high level and try to understand it by studying the implementation of Tiny CLOS, a minimal implementation of the metaobject protocol for Scheme.
+</p>
+
+<p>
+If you are interested to study this idea further, you can&rsquo;t beat the book <a href="https://amzn.to/3R5q1Mw">The Art of the Metaobject Protocol</a>.  It is considered the bible on the subject!
+</p>
+</div>
+
+<h3><a id="what-is-it" class="anchor" href="#what-is-it">¶</a>What is it?</h3><div class="outline-text-3" id="text-org7b7944d">
+<p>
+The metaobject &ldquo;protocol&rdquo; is a design pattern that enables a highly flexible object oriented system that goes beyond what you would normally expect from classes and methods in a programming language.
+</p>
+
+<ul class="org-ul">
+<li>An extensible class system where you can even customize how a particular type gets initialized</li>
+<li>Highly flexible method dispatch against specific type signatures</li>
+<li>Modules that add new implementations to a standard generic method</li>
+<li>Control many aspects of class and instance creation by adding new generic method implementations (this is where &ldquo;metaobject&rdquo; comes in)</li>
+<li>Classes and methods can be redefined at runtime, even updating existing class instances with new fields</li>
+<li>More interestingly, you can write such a system as a library in many cases!</li>
+</ul>
+
+<p>
+<a href="https://en.wikipedia.org/wiki/Metaobject">https://en.wikipedia.org/wiki/Metaobject</a>
+</p>
+</div>
+
+<h3><a id="why-should-you-be-interested" class="anchor" href="#why-should-you-be-interested">¶</a>Why should you be interested?</h3><div class="outline-text-3" id="text-orgde00a61">
+<p>
+Because it&rsquo;s cool!
+</p>
+
+<p>
+Also because it adds an interesting new layer onto the functional programming capabilities of Lisps:
+</p>
+
+<pre>(use-modules (oop goops))
+
+(<span class="org-keyword">define-class</span> <span class="org-type">&lt;cat&gt;</span> ())
+(<span class="org-keyword">define-class</span> <span class="org-type">&lt;dog&gt;</span> ())
+(<span class="org-keyword">define-class</span> <span class="org-type">&lt;human&gt;</span> ())
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">speak</span> entity)
+  (display <span class="org-string">"This one doesn't know how to speak!"</span>))
+
+(<span class="org-keyword">define-generic</span> <span class="org-function-name">speak</span>)
+
+(<span class="org-keyword">define-method</span> (<span class="org-function-name">speak</span> (dog <span class="org-type">&lt;dog&gt;</span>))
+  (display <span class="org-string">"Bark!\n"</span>))
+
+(<span class="org-keyword">define-method</span> (<span class="org-function-name">speak</span> (cat <span class="org-type">&lt;cat&gt;</span>))
+  (display <span class="org-string">"Meow!\n"</span>))
+
+(<span class="org-keyword">define-method</span> (<span class="org-function-name">speak</span> (human <span class="org-type">&lt;human&gt;</span>))
+  (display <span class="org-string">"What's for dinner?\n"</span>))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Call `speak` on each item of the list</span>
+(<span class="org-keyword">map</span> speak (list (make-instance <span class="org-type">&lt;cat&gt;</span>)
+                 (make-instance <span class="org-type">&lt;dog&gt;</span>)
+                 (make-instance <span class="org-type">&lt;human&gt;</span>)
+                 <span class="org-comment-delimiter">;; </span><span class="org-comment">"I'm a string!\n"</span>
+                 ))</pre>
+
+<p>
+Interesting aspects:
+</p>
+
+<ul class="org-ul">
+<li>There doesn&rsquo;t need to be any common class in the hierarchy, any classes can have a method</li>
+<li>You can even make methods for primitive types like <code>&lt;string&gt;</code></li>
+</ul>
+</div>
+
+<h3><a id="why-am-i-interested-in-it" class="anchor" href="#why-am-i-interested-in-it">¶</a>Why am I interested in it?</h3><div class="outline-text-3" id="text-orgff0b038">
+<p>
+Because I&rsquo;m implementing it for Mesche!
+</p>
+
+<p>
+<a href="https://github.com/mesche-lang/compiler/commit/8ff6fa21b287d296db665b525191c0a95edcf979">https://github.com/mesche-lang/compiler/commit/8ff6fa21b287d296db665b525191c0a95edcf979</a>
+</p>
+
+<p>
+I believe this feature will give Mesche an interesting advantage in hackability:
+</p>
+
+<ul class="org-ul">
+<li>Well-defined types for important concepts</li>
+<li>Many high-level concepts (<code>equal?</code>, <code>append</code>, <code>map</code>, etc) can be represented as generic methods</li>
+<li>Any library can augment a standard type with new methods</li>
+<li>User code can insert hooks around methods or even instance initialization to customize behavior</li>
+</ul>
+</div>
+
+<h3><a id="letrsquos-dive-in" class="anchor" href="#letrsquos-dive-in">¶</a>Let&rsquo;s dive in!</h3><div class="outline-text-3" id="text-orgb31dec5">
+<p>
+Now we&rsquo;ll take a look at the code for Tiny CLOS and see what we can make of it:
+</p>
+
+<p>
+<a href="https://github.com/kstephens/tinyclos/blob/master/tiny-clos.scm">https://github.com/kstephens/tinyclos/blob/master/tiny-clos.scm</a>
+</p>
+
+<p>
+We can also experiment with Guile&rsquo;s GOOPS some more to try out some of these ideas:
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/guile/manual/html_node/GOOPS.html">https://www.gnu.org/software/guile/manual/html_node/GOOPS.html</a>
+</p>
+</div>
+
+<h3><a id="lisps-with-a-meta-object-protocol" class="anchor" href="#lisps-with-a-meta-object-protocol">¶</a>Lisps with a meta-object protocol</h3><div class="outline-text-3" id="text-org8454912">
+<p>
+If you&rsquo;d like to try out a Lisp with a meta-object protocol, check these out:
+</p>
+
+<ul class="org-ul">
+<li>STklos: <a href="https://stklos.net/">https://stklos.net/</a></li>
+<li>Guile Scheme (GOOPS): <a href="https://git.savannah.gnu.org/cgit/guile.git/tree/module/oop/goops.scm">https://git.savannah.gnu.org/cgit/guile.git/tree/module/oop/goops.scm</a></li>
+<li>Common Lisp (CLOS)</li>
+<li>&#x2026; and probably many others</li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<author><name>David Wilson</name></author>
+<title>System Crafters News</title>
+<description>News and Insights from System Crafters!</description>
+<generator>Emacs webfeeder.el</generator>
+<link>https://weavermarquez.github.io</link>
+<atom:link href="https://weavermarquez.github.io/rss/news.xml" rel="self" type="application/rss+xml"/>
+<lastBuildDate>Tue, 19 Dec 2023 09:37:16 +0000</lastBuildDate>
+<item>
+  <title>Crafted Emacs Update</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+Slow month for Crafted Emacs.  See  <a href="https://jeffbowman.writeas.com/crafted-emacs-november-update">my blog post</a> for the updates!
+</p>
+
+ <p>
+Happy Crafting!
+</p>
+ <ul class="org-ul"> <li>Jeff Bowman</li>
+</ul></div>]]></description>
+  <link>https://weavermarquez.github.io/news/crafted-emacs-november-2023/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/crafted-emacs-november-2023/index.html</guid>
+  <pubDate>Tue, 28 Nov 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Crafted Emacs V2 Release Announcement</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+Crafted Emacs V2 is released!  See my  <a href="https://write.as/jeffbowman/crafted-emacs-v2-pre-release-announcement-8yn4">blog</a> post (sorry, the URL looks weird because I missed an edit on the title).
+</p>
+
+ <p>
+Happy Crafting!
+</p>
+ <ul class="org-ul"> <li>Jeff Bowman</li>
+</ul></div>]]></description>
+  <link>https://weavermarquez.github.io/news/crafted-emacs-v2-release-2023/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/crafted-emacs-v2-release-2023/index.html</guid>
+  <pubDate>Fri, 20 Oct 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Crafted Emacs V2 pre-release Announcement</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+Pre-release announcement! V2 is being released on Friday, 20
+October 2023.  See my  <a href="https://write.as/jeffbowman/crafted-emacs-v2-pre-release-announcement">blog</a> post about it!
+</p>
+
+ <p>
+Happy Crafting!
+</p>
+ <ul class="org-ul"> <li>Jeff Bowman</li>
+</ul></div>]]></description>
+  <link>https://weavermarquez.github.io/news/crafted-emacs-v2announce-2023/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/crafted-emacs-v2announce-2023/index.html</guid>
+  <pubDate>Tue, 17 Oct 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Crafted Emacs Update</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+We are super close to an RC1 release!  So much work has been done getting the documentation in order.  Thanks to Stefan and Judy for all their work.  See my  <a href="https://write.as/jeffbowman/crafted-emacs-update-for-september">blog post</a> to get all the updates for this month!
+</p>
+
+ <p>
+Happy Crafting!
+</p>
+ <ul class="org-ul"> <li>Jeff Bowman</li>
+</ul></div>]]></description>
+  <link>https://weavermarquez.github.io/news/crafted-emacs-september-2023/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/crafted-emacs-september-2023/index.html</guid>
+  <pubDate>Fri, 22 Sep 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Crafted Emacs Update and New Teammate!</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+I have another new teammate on the Crafted Emacs project, Stefan Thesing ( <a href="https://github.com/sthesing">@sthesing</a>) is now a co-maintainer!  I am so excited to be working with him on this project.  There is continuing work on Crafted Emacs, and now with Stefan’s help, even more is being accomplished! We even have a plan for an RC1 release!  See my  <a href="https://write.as/jeffbowman/crafted-emacs-update-for-august-and-another-new-teammate">my blog post</a> to get all the updates for this month!
+</p>
+
+ <p>
+Happy Crafting!
+</p>
+ <ul class="org-ul"> <li>Jeff Bowman</li>
+</ul></div>]]></description>
+  <link>https://weavermarquez.github.io/news/crafted-emacs-august-2023/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/crafted-emacs-august-2023/index.html</guid>
+  <pubDate>Fri, 01 Sep 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Crafted Emacs Update and New Teammate!</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+I have a new teammate on the Crafted Emacs project, Judy ( <a href="https://github.com/jvdydev">@jvdydev</a>) is now a co-maintainer!  I am so excited to be working with her on this project.  It has been a while since I posted an update, but there is continuing work on Crafted Emacs, and now with Judy’s help, even more is being accomplished!  See my  <a href="https://write.as/jeffbowman/crafted-emacs-update-for-july-and-new-teammate">blog post</a> to get all the juicy bits! 
+</p>
+
+ <p>
+Happy Crafting!
+</p>
+ <ul class="org-ul"> <li>Jeff Bowman</li>
+</ul></div>]]></description>
+  <link>https://weavermarquez.github.io/news/crafted-emacs-july-2023/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/crafted-emacs-july-2023/index.html</guid>
+  <pubDate>Thu, 20 Jul 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Crafted Emacs v2 Beta Announcement</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+I have created the  <a href="https://github.com/SystemCrafters/crafted-emacs/tree/craftedv2beta">Crafted Emacs v2 Beta branch</a>!  There has been a lot of work to make it as stable as possible to get to this point, and while there is still work to be done, I feel the project has made it far enough along to get a new “release”.  Please see the README on the site for information on the project, and my  <a href="https://write.as/jeffbowman/crafted-emacs-v2-beta">blog post</a> announcing this release!
+</p>
+
+ <p>
+Happy Crafting!
+</p>
+ <ul class="org-ul"> <li>Jeff Bowman</li>
+</ul></div>]]></description>
+  <link>https://weavermarquez.github.io/news/crafted-emacs-v2-beta/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/crafted-emacs-v2-beta/index.html</guid>
+  <pubDate>Thu, 08 Jun 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Changes to the System Crafters Matrix Channels</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+Since last week’s  <a href="https://systemcrafters.net/news/moving-from-discord-to-matrix-irc/">announcement</a>, we’ve had a lot of activity in the System Crafters Matrix and IRC rooms!  It’s been great to see so many familiar faces joining up.
+</p>
+
+ <p>
+Over the last few days, I’ve been working hard to improve the overall experience on Matrix so that we can bridge IRC channels with full chat history for new people who join and so that folks in IRC can easily see and mention Matrix users.
+</p>
+
+ <p>
+After a lot of trial and error, I’ve finally figured out the right configuration!   <b>The bad news</b> is that people who already joined the SC Matrix channels will have to follow a couple of steps to join the new, better channels.   <b>New users who join today will not be affected!</b>
+</p>
+
+ <h2> <a id="how-to-join-the-new-channels" class="anchor" href="#how-to-join-the-new-channels">¶</a>How to Join the New Channels</h2> <div class="outline-text-2" id="text-org1d5ffaf">
+ <p>
+If you’re already joined to the Matrix channels, here’s how you can fix your setup:
+</p>
+</div>
+
+ <h3> <a id="1-in-matrix-leave-both-the-systemcrafters-and-ldquoemacs---system-craftersrdquo-channels" class="anchor" href="#1-in-matrix-leave-both-the-systemcrafters-and-ldquoemacs---system-craftersrdquo-channels">¶</a>1. In Matrix, leave both the #systemcrafters and “Emacs - System Crafters” channels</h3> <div class="outline-text-3" id="text-org18c01bb">
+ <p>
+Unfortunately it’s necessary to leave these channels first otherwise your IRC presence will be tied to the old, deprecated room instead of the new room.  It will cause Matrix users in the new rooms to see you as an IRC user instead of a matrix user!
+</p>
+</div>
+
+ <h3> <a id="2-join-the-new-channels" class="anchor" href="#2-join-the-new-channels">¶</a>2. Join the new channels</h3> <div class="outline-text-3" id="text-org7dce7c2">
+ <p>
+Here are the new channels to join, you can either take a look at the  <a href="https://matrix.to/#/%23systemcrafters-space:matrix.org">System Crafters Space</a> to join them (I have removed the old channels) or use these channel names to join directly:
+</p>
+
+ <ul class="org-ul"> <li> <code>#systemcrafters-general:matrix.org</code></li>
+ <li> <code>#systemcrafters-emacs:matrix.org</code></li>
+</ul> <p>
+Joining these two channels will put you in the right place, and you’ll also get all of the channel history before you joined!
+</p>
+</div>
+
+ <h3> <a id="3-tell-codeappservicecode-to-reconnect-your-irc-connection" class="anchor" href="#3-tell-codeappservicecode-to-reconnect-your-irc-connection">¶</a>3. Tell  <code>appservice</code> to reconnect your IRC connection</h3> <div class="outline-text-3" id="text-orga6c4bab">
+ <p>
+When you originally joined the #systemcrafters channel, an instant message with an account named  <code>appservice</code> showed up for you in Matrix.  Open that conversation and type in the following line as a message in the chat:
+</p>
+
+ <pre> <span class="org-negation-char">!</span>reconnect</pre>
+
+ <p>
+This will cause your IRC persona to reconnect, hopefully putting you in the right state to be seen to IRC users.
+</p>
+</div>
+
+ <h2> <a id="if-it-didnrsquot-work" class="anchor" href="#if-it-didnrsquot-work">¶</a>If it didn’t work?</h2> <div class="outline-text-2" id="text-org5c522cb">
+ <p>
+If these steps didn’t fix everything for you, please let me or one of the mods know in the Matrix chat!  There may be other steps that some users need to follow.  If all else fails, we may have to kick you from the old channel so that you can rejoin!
+</p>
+</div>
+</div>]]></description>
+  <link>https://weavermarquez.github.io/news/changes-to-matrix-channels/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/changes-to-matrix-channels/index.html</guid>
+  <pubDate>Tue, 23 May 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Community Chat is Moving From Discord to Matrix and IRC</title>
+  <description><![CDATA[<div id="content"> <p>
+Hey Crafters!
+</p>
+
+ <p>
+In 2020, I started making live streams teaching people how to configure Emacs from the ground up using community packages.  After the streams started gaining some interest, I decided to create a Discord so that viewers could gather and discuss their Emacs configurations, ask questions, and just hang out.
+</p>
+
+ <p>
+At the time, Discord seemed to be the best option for creating a community chat because many people already used it and the user experience was pretty good.  However, as time went on I started to regret choosing Discord for a number of reasons:
+</p>
+
+ <ul class="org-ul"> <li>You can’t use unofficial clients or bridges without violating the Terms of Service, meaning that you can’t exercise your freedom in how you connect to the chat</li>
+ <li>The desktop client is quite a drain on resources thanks to the technologies it uses</li>
+ <li>The desktop client is not Free Software, so you can’t modify it to suit your needs</li>
+ <li>The Discord service as a whole is constantly nagging you to buy Nitro, plus whatever else they’re trying to sell</li>
+</ul> <p>
+For these reasons (and probably more that I’m forgetting), I started thinking about how and when I’d move the System Crafters chat to a more appropriate home.  Over time I’ve considered IRC, XMPP, Matrix, RocketChat, Zulip, and more but I struggled to make a decision on which one I thought would be a sufficient replacement.
+</p>
+
+ <h2> <a id="our-new-home-on-matrix-and-irc" class="anchor" href="#our-new-home-on-matrix-and-irc">¶</a>Our new home on Matrix and IRC</h2> <div class="outline-text-2" id="text-org833762c">
+ <p>
+Recently, I finally came to the conclusion that the best option is to use both Matrix and IRC to give you all the best experience and range of choice in clients and ways to join!
+</p>
+
+ <p>
+Matrix provides an experience that should be pretty familiar to Discord users.  It also has really nice desktop and mobile apps which have chat history, emoji reactions, link embeds, and more.  It’s also Free Software and an open protocol with lots of alternative clients (including  <a href="https://github.com/alphapapa/ement.el">Ement.el</a> for Emacs!)
+</p>
+
+ <p>
+IRC is the classic chat protocol that people have used  <a href="https://en.wikipedia.org/wiki/Internet_Relay_Chat">over 30 years</a>, especially in Free Software communities.  Emacs comes with  <b>two</b> IRC clients built in, ERC and rcirc.  It’s a simpler protocol and it doesn’t have some of the modern comforts you would expect (like chat history, reactions, and more) but the flexibility of how you can connect to it is unbeatable.
+</p>
+
+ <p>
+The nice thing for us that there is a bridge between Matrix and  <a href="https://libera.chat/">Libera.Chat</a>, so you can join the same chatroom from both of these protocols!  It doesn’t matter which one you choose, you will see all of us there.
+</p>
+
+ <p>
+I’ve included more details about how to join these channels along with client recommendations on the Community page:
+</p>
+
+ <p>
+ <a href="https://systemcrafters.net/community/#chat-with-us">https://systemcrafters.net/community/#chat-with-us</a>
+</p>
+
+ <p>
+I hope you’ll join us there soon!  It’s really easy to participate from within the comfort of Emacs :)
+</p>
+</div>
+
+ <h2> <a id="why-not-leave-the-discord-running" class="anchor" href="#why-not-leave-the-discord-running">¶</a>Why not leave the Discord running?</h2> <div class="outline-text-2" id="text-orgf8469b1">
+ <p>
+Instead of having there be confusion about why the community is split across multiple chat services, I’ve decided that the Discord should be deactivated as part of this transition.
+</p>
+
+ <p>
+Frankly, I’ve felt guilty over the last year for not being an active part of the community there, and since I don’t really intend to use Discord even for personal use, I think it’s best that I close it down so that it doesn’t eventually turn into a place I wouldn’t be proud of.
+</p>
+
+ <p>
+ <b>The System Crafters Discord will be disabled on July 1, 2023.</b>  The Discord itself will not be deleted, but all channels will be made read-only, pointing users to the new home on Matrix and IRC.
+</p>
+</div>
+
+ <h2> <a id="thank-you-moderators" class="anchor" href="#thank-you-moderators">¶</a>Thank you, moderators!</h2> <div class="outline-text-2" id="text-org30a25ca">
+ <p>
+These fine folks have been moderating the System Crafters Discord over the last year while I haven’t been as active:
+</p>
+
+ <ul class="org-ul"> <li>Ashraz</li>
+ <li> <a href="https://sqrtminusone.xyz/">SqrtMinusOne</a></li>
+ <li> <a href="https://elken.dev/">Elken</a></li>
+ <li> <a href="https://github.com/angrybacon">angrybacon</a></li>
+</ul> <p>
+Thank you all for helping me with the spammers and the bad actors who have showed up over time and also for helping to welcome newcomers to the community!
+</p>
+</div>
+
+ <h2> <a id="please-let-me-know-your-thoughts" class="anchor" href="#please-let-me-know-your-thoughts">¶</a>Please let me know your thoughts!</h2> <div class="outline-text-2" id="text-org05ef35e">
+ <p>
+I know this change might come as a surprise to some since I haven’t mentioned it on the Discord until now.  I apologize for that!  I regret my extended absense on that platform, but I believe that making this change will be better for all of us.
+</p>
+
+ <p>
+If you have any concerns, feel free to send me an email:  <code>david</code> at  <code>systemcrafters.net</code>.  Also, send me an e-mail if you have suggestions for how to make the Matrix and IRC experience better!
+</p>
+
+ <p>
+Thank you all for being a part of this community so far, I’m looking forward to chatting with you all on Matrix and IRC soon!
+</p>
+</div>
+</div>]]></description>
+  <link>https://weavermarquez.github.io/news/moving-from-discord-to-matrix-irc/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/moving-from-discord-to-matrix-irc/index.html</guid>
+  <pubDate>Thu, 18 May 2023 08:00:00 +0000</pubDate>
+</item>
+<item>
+  <title>Unveiling the New System Crafters Site!</title>
+  <description><![CDATA[<div id="content"> <p>
+Welcome to the redesigned and improved System Crafters site!
+</p>
+
+ <p>
+Over the past couple of years, this site has been relatively bare-bones with a simple layout and not much information other than the listings of my YouTube videos and their show notes.  Today, that changes!
+</p>
+
+ <p>
+The new iteration of this site is meant to be the center of the System Crafters universe.  If you want to know about new video releases, scheduled live streams and other announcements, just come to systemcrafters.net!
+</p>
+
+ <p>
+Going forward, one major improvement will be the addition of  <i>comprehensive written guides</i> about the topics we discuss on the System Crafters channel like GNU Emacs, GNU Guix, and related tools.  These guides are currently in development, so make sure you subscribe to the  <a href="/newsletter">Newsletter</a> to be notified as they are released and updated.
+</p>
+
+ <h2> <a id="what-changed" class="anchor" href="#what-changed">¶</a>What Changed?</h2> <div class="outline-text-2" id="text-orga57e4d4">
+ <p>
+On the surface the site may not look very different, so here’s a list of the important changes:
+</p>
+
+ <ul class="org-ul"> <li>All content is now organized under the  <a href="/guides">Guides</a> section to prepare for the future written guides</li>
+
+ <li>All video and live stream pages now have an embedded YouTube player so that you can watch directly in the page</li>
+
+ <li>A  <a href="/news">News</a> page has been added with an associated  <a href="/rss/news.xml">RSS feed</a></li>
+
+ <li>I’ve redesigned the  <a href="/how-to-help">How to Help</a> page to describe more ways to get involved</li>
+
+ <li>A  <a href="/community">Community</a> section has been added to highlight community members and projects</li>
+
+ <li>Live stream show notes pages automatically appear on the  <a href="/live-streams">Live Streams</a> page so you can always find the latest stream!</li>
+
+ <li>The site’s home page now does a better job of pointing you to the learning resources you might be interested in</li>
+
+ <li>The overall design has been updated to use the System Crafters logo and color theme</li>
+</ul> <p>
+I’m really proud of the new site and I hope you like it!  Feel free to send any feedback or issue reports to  <code>david</code> at  <code>systemcrafters.net</code> or file an issue on the  <a href="https://codeberg.org/SystemCrafters/systemcrafters-site">Codeberg repository</a>.
+</p>
+</div>
+
+ <h2> <a id="stay-up-to-date" class="anchor" href="#stay-up-to-date">¶</a>Stay Up to Date!</h2> <div class="outline-text-2" id="text-orga9b25f4">
+ <p>
+With the new site design, we now finally have a single place where you can stay up to date on all news related to System Crafters and the community:
+</p>
+
+ <ul class="org-ul"> <li>New video releases and written guide updates</li>
+ <li>Community project updates (Crafted Emacs, etc)</li>
+ <li>Announcements for the System Crafters Store</li>
+</ul> <p>
+To be notified about important news, you can susbcribe to the  <a href="/rss/news.xml">News RSS Feed</a>.
+</p>
+
+ <p>
+Even better, join the System Crafters Newsletter!  All of the news in the RSS feed will be covered there along with additional articles, news, and tips that you won’t get anywhere else on the website or YouTube channel.  This is going to be really fun, so don’t miss out on it!
+</p>
+
+ <p>
+Sign up below or head to the  <a href="/newsletter">Newsletter</a> page for more details.
+</p>
+</div>
+</div>]]></description>
+  <link>https://weavermarquez.github.io/news/new-systemcrafters-site/index.html</link>
+  <guid isPermaLink="false">https://weavermarquez.github.io/news/new-systemcrafters-site/index.html</guid>
+  <pubDate>Thu, 11 May 2023 08:00:00 +0000</pubDate>
+</item>
+</channel>
+</rss>

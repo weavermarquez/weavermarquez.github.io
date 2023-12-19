@@ -1,0 +1,65 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Crafting a Guix Installer with Guile and GTK - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Crafting a Guix Installer with Guile and GTK</h1><p class="site-post-meta">June 30, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/TuBy-0DmS4E" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org14e2c83">
+<ul class="org-ul">
+<li><p>
+<b>EmacsConf 2023</b> has been announced!
+</p>
+
+<p>
+Submit your talk proposals here: <a href="https://emacsconf.org/2023/cfp/">https://emacsconf.org/2023/cfp/</a>
+</p></li>
+</ul>
+</div>
+
+<h2><a id="guix-needs-a-more-user-friendly-installer" class="anchor" href="#guix-needs-a-more-user-friendly-installer">¶</a>Guix needs a more user-friendly installer</h2><div class="outline-text-2" id="text-orge62e3bf">
+<p>
+If you&rsquo;ve ever tried to install the complete Guix system before, you&rsquo;ve probably used its &ldquo;graphical&rdquo; installer.  It&rsquo;s actually not bad!  However, it isn&rsquo;t the best experience for new users, in my opinion.
+</p>
+
+<p>
+I&rsquo;ve been thinking for a while about what it&rsquo;d be like to write a true graphical installer for Guix.  I briefly investigated using the <a href="https://calamares.io/">Calamares</a> installer framework for this purpose but it seems like that would need to be heavily customized to work well for Guix.
+</p>
+
+<p>
+Guix already has its own installation logic provided as a set of Guile modules.  Why not leverage that code and build a new GTK UI for it using Guile Scheme and <a href="https://spk121.github.io/guile-gi">Guile-GI</a>?
+</p>
+
+<p>
+For now, my plan is to prototype this new installer specifically for Crafted Guix but with a larger goal to make it useful for the official Guix installer and other Guix-based distributions.
+</p>
+
+<p>
+To quickly learn how to use GTK 3 to prototype the UI, we&rsquo;ll be using the <a href="https://wiki.gnome.org/Apps/Glade">Glade</a> UI designer tool to inspect its output.
+</p>
+
+<p>
+I&rsquo;ve created a PR for this work on Codeberg, feel free to check it out and leave comments!
+</p>
+
+<p>
+<a href="https://codeberg.org/SystemCrafters/crafted-guix/pulls/14">https://codeberg.org/SystemCrafters/crafted-guix/pulls/14</a>
+</p>
+</div>
+
+<h3><a id="goals" class="anchor" href="#goals">¶</a>Goals</h3><div class="outline-text-3" id="text-orgc2a310c">
+<p>
+We probably won&rsquo;t get to all these, but it&rsquo;d be nice to show that it is possible!
+</p>
+
+<ul class="org-ul">
+<li>Create a basic installation wizard flow for all the steps of the install process</li>
+<li>Minimally sketch out the first few pages of the installation flow</li>
+<li>Produce a basic Crafted Guix configuration from whatever the user configured</li>
+<li>Produce a minimal installer image which launches this installation UI in a Sway session</li>
+</ul>
+</div>
+
+<h3><a id="resources" class="anchor" href="#resources">¶</a>Resources</h3><div class="outline-text-3" id="text-org4a13db2">
+<ul class="org-ul">
+<li><a href="https://docs.gtk.org/gtk3/class.Assistant.html">https://docs.gtk.org/gtk3/class.Assistant.html</a></li>
+<li><a href="https://github.com/RainMark/gtk3-tutorial/blob/master/_examples/assistant.c">https://github.com/RainMark/gtk3-tutorial/blob/master/_examples/assistant.c</a></li>
+<li><a href="https://spk121.github.io/guile-gi/GObject-Signals.html">https://spk121.github.io/guile-gi/GObject-Signals.html</a></li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,361 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Hey Emacs, Don&rsquo;t Move My Windows! - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Hey Emacs, Don&rsquo;t Move My Windows!</h1><p class="site-post-meta"></p><div id="content">
+<h2><a id="pop-up-windows-are-annoying" class="anchor" href="#pop-up-windows-are-annoying">¶</a>Pop up windows are annoying.</h2><div class="outline-text-2" id="text-org7b52457">
+<p>
+For many &ldquo;transient&rdquo; buffers, Emacs splits your current window to display the buffer!
+</p>
+
+<p>
+This can be disruptive to your workflow, especially when you have split your windows in a particular way to perform a task.
+</p>
+
+<p>
+We&rsquo;ve talked about <code>winner-mode</code> before and how you can use it to &ldquo;undo&rdquo; window layout changes.
+</p>
+
+<p>
+Now let&rsquo;s talk about how to prevent Emacs from changing your artisan window layouts!
+</p>
+</div>
+
+<h2><a id="how-codedisplay-buffercode-works" class="anchor" href="#how-codedisplay-buffercode-works">¶</a>How <code>display-buffer</code> works</h2><div class="outline-text-2" id="text-orga651b5f">
+<p>
+When a new buffer is created for display, Emacs uses the <code>display-buffer</code> function to figure out where this buffer should be placed on screen.
+</p>
+
+<p>
+<code>display-buffer</code> consults a series of sources <b>in order</b> which contain rules for how windows are selected (or created) to display new buffers:
+</p>
+
+<ul class="org-ul">
+<li><code>display-buffer-overriding-action</code> - Used by package code to temporarily override rules</li>
+<li><code>display-buffer-alist</code> - User-defined buffer placement rules (nil by default)</li>
+<li>The <code>action</code> argument of <code>display-buffer</code> - The caller of <code>display-buffer</code> can specify its own rules</li>
+<li><code>display-buffer-base-action</code> - User-defined default placement actions (nil by default)</li>
+<li><code>display-buffer-fallback-action</code> - Emacs&rsquo; default placement rules that you see in action every day</li>
+</ul>
+
+<p>
+<code>display-buffer</code> builds a list of action functions to try by combining all of these sources and then runs each function in order until one of them returns a window in which the buffer can be displayed.  The action function&rsquo;s job is to find (or create) the window (or frame!) in which the buffer will be displayed.
+</p>
+
+<p>
+We can invoke this behavior by evaluating this Emacs Lisp:
+</p>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>)
+(display-buffer (get-buffer-create <span class="org-string">"Test!"</span>))</pre>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Window-Choice">Emacs Manual: Window Choice</a> (How <code>display-buffer</code> works)
+</p>
+</div>
+
+<h2><a id="what-is-an-action-function" class="anchor" href="#what-is-an-action-function">¶</a>What is an action function?</h2><div class="outline-text-2" id="text-org0467d05">
+<p>
+Before we take a look at the default placement actions, let&rsquo;s talk about what an action function actually does.
+</p>
+
+<p>
+Here&rsquo;s the &ldquo;signature&rdquo; of an action function:
+</p>
+
+<pre class="example" id="org8c09f1a">
+
+(display-buffer-same-window BUFFER ALIST)
+
+</pre>
+
+<p>
+<code>display-buffer</code> will pass the buffer to be displayed and an association list that the action function can read to look for customization parameters.
+</p>
+
+<p>
+<b>Quick review:</b> an association list is a list of key/value pairs where values can be accessed by their associated key.
+</p>
+
+<p>
+Here&rsquo;s an example of an <code>alist</code> that might be sent to the display action function:
+</p>
+
+<pre>'((mode . (org-mode helpful-mode help-mode))
+  (reusable-frames . t))</pre>
+
+<p>
+Here are some alist keys you might want to know about:
+</p>
+</div>
+
+<h3><a id="inhibit-same-window" class="anchor" href="#inhibit-same-window">¶</a>inhibit-same-window</h3><div class="outline-text-3" id="text-org0285b60">
+<p>
+Configures whether the currently focused window can (or cannot) be used for displaying the buffer:
+</p>
+
+<ul class="org-ul">
+<li><code>nil</code> - The current window <b>can</b> be used- <code>t</code> - The current window <b>cannot</b> be used</li>
+</ul>
+</div>
+
+<h3><a id="reusable-frames" class="anchor" href="#reusable-frames">¶</a>reusable-frames</h3><div class="outline-text-3" id="text-orgc8b6e12">
+<p>
+Configures whether the buffer shows up on the current frame or other open frames.
+</p>
+
+<ul class="org-ul">
+<li><code>nil</code> - Only consider windows on the current frame</li>
+<li><code>t</code> - Consider windows on any frame</li>
+<li><code>visible</code> - Consider windows only on visible frames</li>
+<li><code>0</code> - Consider windows on visible or &ldquo;iconified&rdquo; frames</li>
+<li>You can also pass a frame object to restrict to only that frame</li>
+</ul>
+</div>
+
+<h3><a id="inhibit-switch-frame" class="anchor" href="#inhibit-switch-frame">¶</a>inhibit-switch-frame</h3><div class="outline-text-3" id="text-org0c03ab8">
+<p>
+Prevents a non-current frame from being &ldquo;raised&rdquo; if the window is placed there if the value is <code>t</code>.
+</p>
+</div>
+
+<h3><a id="mode" class="anchor" href="#mode">¶</a>mode</h3><div class="outline-text-3" id="text-org4fd82ea">
+<p>
+Restricts window selection to those displaying buffers of a certain major mode.  You can pass either a symbol of a major mode or a list of symbols representing major modes:
+</p>
+
+<pre>'((mode . (org-mode helpful-mode help-mode)))</pre>
+</div>
+
+<h3><a id="window-width-and-window-height" class="anchor" href="#window-width-and-window-height">¶</a>window-width and window-height</h3><div class="outline-text-3" id="text-org1198131">
+<p>
+Controls whether the window width or window height might be changed when displaying the buffer and how much it will be changed:
+</p>
+
+<ul class="org-ul">
+<li><code>nil</code> - Don&rsquo;t change the size of the window</li>
+<li>An integer number - total width or height in columns or lines, respectively</li>
+<li>A floating-point number - the percentage relative to the width or height of the window that the window should be</li>
+<li>A function that will be called to return the desired width or height</li>
+</ul>
+</div>
+
+<h3><a id="there-are-other-possibilities" class="anchor" href="#there-are-other-possibilities">¶</a>There are other possibilities!</h3><div class="outline-text-3" id="text-org1819f70">
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Buffer-Display-Action-Alists">Emacs Lisp Manual: Buffer Display Action Alists</a>
+</p>
+
+<p>
+Keep in mind that not every display action function uses all of these settings!  Check the documentation for more details.
+</p>
+</div>
+
+<h2><a id="examining-the-default-placement-actions" class="anchor" href="#examining-the-default-placement-actions">¶</a>Examining the default placement actions</h2><div class="outline-text-2" id="text-orgdd9371d">
+<p>
+Here is the default value of <code>display-buffer-fallback-action</code> (on Emacs 27.1):
+</p>
+
+<pre>((display-buffer--maybe-same-window
+  display-buffer-reuse-window
+  display-buffer--maybe-pop-up-frame-or-window
+  display-buffer-in-previous-window
+  display-buffer-use-some-window
+  display-buffer-pop-up-frame))</pre>
+
+<p>
+Each of these functions are evaluated <b>in order</b> to determine where a new buffer gets placed!
+</p>
+
+<p>
+<b>NOTE:</b> This variable isn&rsquo;t intended to be changed by the user!  We will talk about two ways you can override its behavior in a moment.
+</p>
+
+<p>
+Let&rsquo;s examine what each of these actions do:
+</p>
+</div>
+
+<h3><a id="display-bufferx2013maybe-same-window-display-buffer-same-window" class="anchor" href="#display-bufferx2013maybe-same-window-display-buffer-same-window">¶</a>display-buffer&#x2013;maybe-same-window (display-buffer-same-window)</h3><div class="outline-text-3" id="text-org824bcb7">
+<p>
+This function uses the function <code>same-window-p</code> to decide whether <code>display-buffer-same-window</code> should be used for placing the window.  <code>same-window-p</code> looks at <code>same-window-buffer-names</code> or <code>same-window-regexps</code>, configured by the user, to see if the buffer name matches anything in either of those variables.
+</p>
+
+<p>
+If <code>same-window-p</code> returns <code>t</code> for the buffer, <code>display-buffer-same-window</code> will be invoked.  This function will display the new buffer in the currently selected window, basically the window that has keyboard focus.
+</p>
+
+<p>
+<b>NOTE</b>: Before trying these examples, make sure <code>display-buffer-alist</code> is <code>nil</code> otherwise the actions specified will have no effect!
+</p>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer--maybe-same-window . ()))</pre>
+</div>
+
+<h3><a id="display-buffer-reuse-window" class="anchor" href="#display-buffer-reuse-window">¶</a>display-buffer-reuse-window</h3><div class="outline-text-3" id="text-org87d638b">
+<p>
+This function places the buffer the current window if it&rsquo;s already displaying that buffer or picks another available window in the same frame otherwise.
+</p>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-reuse-window . ()))
+
+(display-buffer (current-buffer)
+                '(display-buffer-reuse-window . ()))
+
+(display-buffer (current-buffer)
+                '(display-buffer-reuse-window . ((inhibit-same-window . t))))</pre>
+</div>
+
+<h3><a id="display-bufferx2013maybe-pop-up-frame-or-window" class="anchor" href="#display-bufferx2013maybe-pop-up-frame-or-window">¶</a>display-buffer&#x2013;maybe-pop-up-frame-or-window</h3><div class="outline-text-3" id="text-org8162337">
+<p>
+Creates a popup frame or window depending on whether <code>pop-up-frames</code> or <code>pop-up-windows</code> is non-nil, respectively.  The default is for <code>pop-up-windows</code> to be <code>t</code>.  This causes many windows to pop up in a separate window!
+</p>
+
+<ul class="org-ul">
+<li><code>display-buffer-pop-up-frame</code> is called when <code>pop-up-frames</code> is non-nil</li>
+<li><code>display-buffer-pop-up-window</code> is called when <code>pop-up-windows</code> is non-nil</li>
+</ul>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer--maybe-pop-up-frame-or-window . ()))</pre>
+</div>
+
+<h3><a id="display-buffer-in-previous-window" class="anchor" href="#display-buffer-in-previous-window">¶</a>display-buffer-in-previous-window</h3><div class="outline-text-3" id="text-org2174233">
+<p>
+Places the buffer in a previously-used window for that buffer:
+</p>
+
+<ul class="org-ul">
+<li>Use the window specified by any <code>previous-window</code> alist entry, provided it is not the selected window.</li>
+<li>Use a window that showed the buffer before, provided it is not the selected window.</li>
+<li>Use the selected window if it is either specified by a <code>previous-window</code> alist entry or showed the before.</li>
+</ul>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-previous-window . ()))
+
+(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-previous-window . ((inhibit-same-window . t))))</pre>
+</div>
+
+<h3><a id="display-buffer-use-some-window" class="anchor" href="#display-buffer-use-some-window">¶</a>display-buffer-use-some-window</h3><div class="outline-text-3" id="text-orgc073b19">
+<p>
+Find any usable window to place the buffer.  Uses a heuristic to determine the best window to pick, like whether the window was most recently used.  Skips any &ldquo;dedicated&rdquo; windows.
+</p>
+</div>
+
+<h3><a id="display-buffer-pop-up-frame" class="anchor" href="#display-buffer-pop-up-frame">¶</a>display-buffer-pop-up-frame</h3><div class="outline-text-3" id="text-org7e361ee">
+<p>
+Displays the buffer in a new frame by calling the function stored in <code>pop-up-frame-function</code>  (<code>make-frame</code> by default).
+</p>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-pop-up-frame . ()))</pre>
+
+<p>
+If no other option is possible (which seems pretty unlikely), Emacs will pop up the buffer in a new frame.
+</p>
+</div>
+
+<h2><a id="other-placement-actions" class="anchor" href="#other-placement-actions">¶</a>Other placement actions</h2><div class="outline-text-2" id="text-org0eaeada">
+<p>
+Aside from those used by default in Emacs, there are even more built-in display action functions that you can use in your own configuration:
+</p>
+</div>
+
+<h3><a id="display-buffer-reuse-mode-window" class="anchor" href="#display-buffer-reuse-mode-window">¶</a>display-buffer-reuse-mode-window</h3><div class="outline-text-3" id="text-orgba84181">
+<p>
+Reuse a window that&rsquo;s already showing a buffer of the same major mode as the new buffer.  With the <code>mode</code> alist entry, you can restrict the set of major modes that apply for this.
+</p>
+
+
+<pre>(display-buffer <span class="org-string">"*helpful command: special-lispy-clone*"</span>
+                '(display-buffer-reuse-mode-window . ((mode . (helpful-mode)))))</pre>
+</div>
+
+<h3><a id="display-buffer-in-side-window" class="anchor" href="#display-buffer-in-side-window">¶</a>display-buffer-in-side-window</h3><div class="outline-text-3" id="text-org1f0ab88">
+<p>
+Displays the buffer in a &ldquo;side window&rdquo; of the current frame.  This one is particularly useful with custom buffer rules which we&rsquo;ll discuss later.
+</p>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-side-window . ()))
+
+(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-side-window . ((side . bottom))))
+
+(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-side-window . ((side . right))))
+
+(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-side-window . ((side . left))))
+
+(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-side-window . ((side . left)
+                                                   (window-width . 15))))
+(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-in-side-window . ((side . top)
+                                                   (window-height . 5))))</pre>
+</div>
+
+<h3><a id="display-buffer-at-bottom" class="anchor" href="#display-buffer-at-bottom">¶</a>display-buffer-at-bottom</h3><div class="outline-text-3" id="text-orgea91135">
+<p>
+Displays the buffer in the bottom-most window of the current frame, either reusing one that is there (if it has the same buffer) or creating one if there is no existing horizontal split.
+</p>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-at-bottom . ()))
+
+(display-buffer (current-buffer)
+                '(display-buffer-at-bottom . ()))</pre>
+</div>
+
+<h3><a id="display-buffer-no-window" class="anchor" href="#display-buffer-no-window">¶</a>display-buffer-no-window</h3><div class="outline-text-3" id="text-orge7e9fc7">
+<p>
+Never display the buffer in a window.  This requires that the <code>allow-no-window</code> option to be set to <code>t</code>!
+</p>
+
+<pre>(display-buffer <span class="org-string">"*scratch*"</span>
+                '(display-buffer-no-window . ((allow-no-window . t))))</pre>
+</div>
+
+<h3><a id="and-even-more" class="anchor" href="#and-even-more">¶</a>And even more!</h3><div class="outline-text-3" id="text-orgeda8f4d">
+<p>
+Check out the wide variety of pre-defined display action functions in the Emacs Lisp manual.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Buffer-Display-Action-Functions">Emacs Lisp Manual: Buffer Display Action Functions</a>
+</p>
+</div>
+
+<h2><a id="overriding-the-default-placement-actions" class="anchor" href="#overriding-the-default-placement-actions">¶</a>Overriding the default placement actions</h2><div class="outline-text-2" id="text-org52e2914">
+<p>
+Instead of changing the <code>display-buffer-fallback-action</code> variable directly, you can change the user-customizable variable <code>display-buffer-base-action</code>.
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Prefer to reuse existing windows, especially those showing a buffer</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">of the same mode</span>
+(<span class="org-keyword">setq</span> display-buffer-base-action
+  '((display-buffer-reuse-window
+     display-buffer-reuse-mode-window
+     display-buffer-same-window
+     display-buffer-in-previous-window)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">You can also customize those actions with an alist</span>
+(<span class="org-keyword">setq</span> display-buffer-base-action
+  '((display-buffer-reuse-window
+     display-buffer-reuse-mode-window
+     display-buffer-same-window
+     display-buffer-in-previous-window)
+    . ((mode . (org-mode helpful-mode help-mode)))))</pre>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org372b8fb">
+<p>
+In the next video we&rsquo;ll go even deeper and learn how to customize buffer placement using custom logic per buffer!
+</p>
+
+<p>
+We will learn how to customize <code>display-buffer-alist</code> for this purpose and we&rsquo;ll also look at how we can write our own custom display action function for even further control!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

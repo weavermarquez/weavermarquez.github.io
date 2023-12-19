@@ -1,0 +1,132 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Debugging with dap-mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Debugging with dap-mode</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/0bilcQVSlbM" allowfullscreen></iframe></div>
+</p>
+
+<p>
+Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/210e517353abf4ed669bc40d4c7daf0fabc10a5c/Emacs.org#debugging-with-dap-mode">here</a>.
+</p>
+
+<h2><a id="basic-configuration" class="anchor" href="#basic-configuration">¶</a>Basic Configuration</h2><div class="outline-text-2" id="text-orgb807914">
+<ul class="org-ul">
+<li>Per-language configuration: <a href="https://emacs-lsp.github.io/dap-mode/page/configuration/">https://emacs-lsp.github.io/dap-mode/page/configuration/</a></li>
+<li>Make sure lsp-mode is active otherwise `workspaceFolder` won&rsquo;t be available</li>
+</ul>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">dap-mode</span>)</pre>
+
+<p>
+In your TypeScript / JavaScript configuration:
+</p>
+
+<pre>(<span class="org-keyword">require</span> '<span class="org-constant">dap-node</span>)
+(dap-node-setup) <span class="org-comment-delimiter">;; </span><span class="org-comment">Automatically installs Node debug adapter if needed</span></pre>
+</div>
+
+<h2><a id="launching-the-debugger" class="anchor" href="#launching-the-debugger">¶</a>Launching the Debugger</h2><div class="outline-text-2" id="text-orgf664195">
+<ul class="org-ul">
+<li><code>dap-debug</code>: Select a template to execute</li>
+<li><code>dap-debug-last</code>: Run the most recent template</li>
+<li><code>dap-debug-recent</code>: Select a recent template to run</li>
+<li><code>dap-disconnect</code>: Disconnect from the debugging session (output buffer retained)</li>
+<li><code>dap-delete-session</code>: Delete the current session (output buffer will be deleted)</li>
+<li><code>dap-delete-all-sessions</code>: Clean up all debugging sessions</li>
+</ul>
+</div>
+
+<h2><a id="creating-a-debug-template" class="anchor" href="#creating-a-debug-template">¶</a>Creating a Debug Template</h2><div class="outline-text-2" id="text-org8ed19fc">
+<ul class="org-ul">
+<li><code>dap-debug-edit-template</code>: Present a debug template for editing</li>
+</ul>
+
+<pre>(dap-register-debug-template
+  <span class="org-string">"Debug Server"</span>
+  (list <span class="org-builtin">:type</span> <span class="org-string">"node"</span>
+        <span class="org-builtin">:request</span> <span class="org-string">"launch"</span>
+        <span class="org-builtin">:program</span> <span class="org-string">"${workspaceFolder}/src/server/index.ts"</span>
+        <span class="org-builtin">:outFiles</span> [<span class="org-string">"${workspaceFolder}/public/src/server/**/*.js"</span>]
+        <span class="org-builtin">:name</span> <span class="org-string">"Debug Server"</span>))</pre>
+</div>
+
+<h2><a id="features" class="anchor" href="#features">¶</a>Features</h2><h3><a id="breakpoints" class="anchor" href="#breakpoints">¶</a>Breakpoints</h3><div class="outline-text-3" id="text-orgcd37eca">
+<ul class="org-ul">
+<li><code>dap-breakpoint-toggle</code>: Toggle a breakpoint on the current line</li>
+<li><code>dap-breakpoint-delete-all</code>: Delete all breakpoints in the workspace</li>
+<li><code>dap-breakpoint-condition</code>: Set condition for breakpoint</li>
+<li><code>dap-breakpoint-hit-condition</code>: Set hit condition, number of hits before breakpoint stops</li>
+<li><code>dap-breakpoint-log-message</code>: Set log message for breakpoint (interpolate expressions with <code>{}</code>)</li>
+<li><code>dap-ui-breakpoints</code>: Show breakpoints panel</li>
+</ul>
+</div>
+
+<h3><a id="hydra" class="anchor" href="#hydra">¶</a>Hydra</h3><div class="outline-text-3" id="text-org66c0f66">
+<ul class="org-ul">
+<li><code>dap-hydra</code>: Quick panel for debugging commands</li>
+<li>Keep in mind, the Hydra will capture keys unexpectedly (M-x, etc)</li>
+<li>Automatically show Hydra when debugger stops:</li>
+</ul>
+
+<pre><span class="org-builtin">:hook</span> (dap-stopped . (<span class="org-keyword">lambda</span> (arg) (call-interactively #'dap-hydra))))</pre>
+</div>
+
+<h3><a id="locals" class="anchor" href="#locals">¶</a>Locals</h3>
+
+<h3><a id="expressions" class="anchor" href="#expressions">¶</a>Expressions</h3><div class="outline-text-3" id="text-orgcccedc0">
+<ul class="org-ul">
+<li><code>dap-ui-expressions-add</code>: Add a watch expression</li>
+<li><code>dap-ui-expressions-remove</code>: Remove a watch expression</li>
+</ul>
+</div>
+
+<h3><a id="repl" class="anchor" href="#repl">¶</a>REPL</h3><div class="outline-text-3" id="text-orgca2bbbc">
+<ul class="org-ul">
+<li><code>dap-ui-repl</code>: Start a debugging REPL for your language (if supported)</li>
+<li><code>M-n / M-p</code>: Go forward/back in REPL command history</li>
+</ul>
+</div>
+
+<h3><a id="tooltips" class="anchor" href="#tooltips">¶</a>Tooltips</h3><div class="outline-text-3" id="text-orga219854">
+<ul class="org-ul">
+<li><code>dap-tooltip-mode</code>: Turns it on</li>
+<li><code>dap-tooltip-at-point</code>: Show the value at the current point</li>
+<li>Not working?</li>
+</ul>
+</div>
+
+<h3><a id="ui-controls" class="anchor" href="#ui-controls">¶</a>UI Controls</h3>
+
+<h3><a id="loading-vs-code-debugging-configurations" class="anchor" href="#loading-vs-code-debugging-configurations">¶</a>Loading VS Code debugging configurations</h3><div class="outline-text-3" id="text-orgb60a81d">
+<p>
+If you&rsquo;re working in a project where other people use VS Code, this is valuable!
+</p>
+
+<ul class="org-ul">
+<li>Use pre-created config</li>
+</ul>
+</div>
+
+<h2><a id="configuration" class="anchor" href="#configuration">¶</a>Configuration</h2><div class="outline-text-2" id="text-org395f4c2">
+<p>
+Here&rsquo;s how to customize the UI to show only what you care about
+</p>
+
+<ul class="org-ul">
+<li><code>dap-auto-configure-features</code></li>
+<li>OR</li>
+<li><code>lsp-enable-dap-auto-configure</code> and <code>dap-ui-mode</code></li>
+<li><code>dap-auto-show-output</code>: If t (default), show output buffer when running</li>
+<li><code>dap-go-to-output-buffer</code></li>
+</ul>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">dap-mode</span>
+  <span class="org-builtin">:custom</span>
+  (dap-auto-configure-features '(sessions locals tooltip))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> lsp-enable-dap-auto-configure nil)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(dap-ui-mode 1)</span>
+  (general-define-key
+    <span class="org-builtin">:keymaps</span> 'lsp-mode-map
+    <span class="org-builtin">:prefix</span> lsp-keymap-prefix
+    <span class="org-string">"d"</span> '(dap-hydra t <span class="org-builtin">:wk</span> <span class="org-string">"debugger"</span>)))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

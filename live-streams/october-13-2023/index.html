@@ -1,0 +1,90 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>This is the Future of Scheme Hacking - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">This is the Future of Scheme Hacking</h1><p class="site-post-meta">October 13, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/Vd9zooWMOsM" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org878fe80">
+<ul class="org-ul">
+<li><p>
+I&rsquo;ll be speaking at LibrePlanet 2024!
+</p>
+
+<p>
+The Free Software Foundation announced my keynote presentation this week:
+</p>
+
+<p>
+<a href="https://www.fsf.org/news/libreplanet-2024-cultivating-community-will-feature-a-keynote-by-david-wilson">https://www.fsf.org/news/libreplanet-2024-cultivating-community-will-feature-a-keynote-by-david-wilson</a>
+</p>
+
+<p>
+More details about the conference on their website:
+</p>
+
+<p>
+<a href="https://libreplanet.org/2024/">https://libreplanet.org/2024/</a>
+</p>
+
+<p>
+<code>shom</code> rightly suggested that I should organize a System Crafters meetup, so I will!  Even if you don&rsquo;t attend LibrePlanet but you can travel to Boston next march, come hang out!
+</p></li>
+
+<li><p>
+Philip Kaludercic (pkal) has created a new ELPA and Emacs Zine:
+</p>
+
+<p>
+<a href="https://amodernist.com/eaez/">https://amodernist.com/eaez/</a>
+</p>
+
+<p>
+This will be a great resource for staying up to date on Emacs development and new ELPA package releases!  He&rsquo;s looking for contributors in a number of areas:
+</p>
+
+<p>
+<a href="https://amodernist.com/eaez/#contributing">https://amodernist.com/eaez/#contributing</a>
+</p></li>
+</ul>
+</div>
+
+<h2><a id="guile-hoot-is-a-big-deal" class="anchor" href="#guile-hoot-is-a-big-deal">¶</a>Guile Hoot is a big deal!</h2><div class="outline-text-2" id="text-orga012cf5">
+<p>
+This week the Spritely Institute published an article describing the latest developments in Guile Hoot, a new toolchain for building WebAssembly applications, particularly with Scheme.
+</p>
+
+<p>
+<a href="https://www.spritely.institute/news/scheme-wireworld-in-browser.html">https://www.spritely.institute/news/scheme-wireworld-in-browser.html</a>
+</p>
+
+<p>
+Here is the truly exciting part of the news:
+</p>
+
+<blockquote>
+<p>
+Hoot differs from most WASM compiler projects in some notable ways:
+</p>
+
+<ul class="org-ul">
+<li>Self-contained toolchain: No emscripten, binaryen, wabt, etc.</li>
+<li>GC reference type usage: The host provides the garbage collector.</li>
+<li>Small programs produce small binaries: Kilobytes, not megabytes.</li>
+<li>Full development environment: <b>Compile and run</b> WASM binaries without leaving Guile.</li>
+</ul>
+</blockquote>
+
+<p>
+In other words, the toolchain is written completely (and hackable!) in Guile Scheme and it targets cutting-edge WebAssembly features that will make Scheme a first-class citizen in the browser.
+</p>
+
+<p>
+Today we&rsquo;re going to try out these new tools to glimpse the future of Scheme programming for the web and more!  We&rsquo;re also going to chat with members of the Spritely team to get some more context on why this effort is such a big deal.
+</p>
+
+<p>
+Try it out for yourself using Guix by following the README instructions:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://gitlab.com/spritely/guile-hoot">https://gitlab.com/spritely/guile-hoot</a></li>
+<li><a href="https://gitlab.com/spritely/scheme-wireworld">https://gitlab.com/spritely/scheme-wireworld</a></li>
+</ul>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

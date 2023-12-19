@@ -1,0 +1,309 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Creating a Custom Minor Mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Creating a Custom Minor Mode</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/JJqchO3fnds" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgbab2c1f">
+<p>
+Today we&rsquo;re going to learn about Emacs&rsquo; concept of modes and then walk through some practical examples of creating a custom minor mode.
+</p>
+
+<p>
+We&rsquo;ll be continuing with the <code>dotcrafter.el</code> project that we started working on earlier in this series!  At this point we have full functionality for managing our dotfiles configuration both from within Org Mode files and with individual files that must be symbolically linked back into your home directory.
+</p>
+
+<p>
+The minor mode that we&rsquo;ll write today will enable us to automatically &ldquo;tangle&rdquo; our Org-based configuration files each time we edit one of them and then link any new output configuration files into our home directory.  We&rsquo;ll also be able to set up a custom key map for dotcrafter commands which will only be activated when the mode is turned on!
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="what-is-a-ldquomoderdquo" class="anchor" href="#what-is-a-ldquomoderdquo">¶</a>What is a &ldquo;mode&rdquo;?</h2><div class="outline-text-2" id="text-org7f07d39">
+<p>
+Much of the user-facing functionality in Emacs is provided by <b>major</b> and <b>minor</b> modes.
+</p>
+
+<ul class="org-ul">
+<li>A <b>major</b> mode is the main mode for a buffer, there can only be one active at any time (example: <code>org-mode</code>)</li>
+<li>A <b>minor</b> mode provides supporting functionality either in a specific buffer or globally in Emacs (example: <code>auto-fill-mode</code>)</li>
+</ul>
+
+<p>
+Both major and minor modes can enable certain types of functionality when they are activated:
+</p>
+
+<ul class="org-ul">
+<li>A key map that is only active when the mode is enabled</li>
+<li>A mode line indicator showing the mode is active</li>
+<li>A hook that is executed so that other functions or modes can be activated along with the mode</li>
+<li>Arbitrary code that gets executed when the mode is activated or deactivated</li>
+</ul>
+
+<p>
+Any mode that is defined will have a command that enables or disables it which can be invoked interactively or in Emacs Lisp:
+</p>
+
+<pre>M-x org-mode
+
+(auto-revert-mode 1)</pre>
+</div>
+
+<h2><a id="writing-a-basic-minor-mode" class="anchor" href="#writing-a-basic-minor-mode">¶</a>Writing a basic minor mode</h2><div class="outline-text-2" id="text-orge1bdd74">
+<p>
+A minor mode is basically a bit of Emacs Lisp code that conforms to a set of conventions on how minor modes should be defined.  Here are the high level things that a custom minor mode needs to work correctly in Emacs:
+</p>
+
+<ul class="org-ul">
+<li>A variable for the mode that ends in <code>-mode</code> like <code>dotcrafter-mode</code>.  This variable will be set to <code>nil</code> when the mode is not active or any other value to indicate that it is active.  If the minor mode is meant to be buffer-local, the <code>make-variable-buffer-local</code> function can be used to make the mode variable buffer-local.</li>
+
+<li><p>
+A command for enabling and disabling the mode which has the same name as the mode variable (e.g. <code>dotcrafter-mode</code>).  It will accept one optional argument which indicates whether the mode should be enabled or disabled, typically <code>t</code> or a positive number to activate the mode or a non-positive number (0 or less than 0) to deactivate the mode.
+</p>
+
+<p>
+When the optional parameter is omitted, assume this means that the mode should be activated when the function is called in Emacs Lisp or that the mode should be toggled when invoked interactively by the user.
+</p></li>
+
+<li>If desired, a keymap for the mode can be enabled by adding an entry to the <code>minor-mode-map-alist</code> which registers.  The entry will be a pair containing the minor mode&rsquo;s variable symbol and the keymap to be used for that mode.</li>
+
+<li>If desired, a &ldquo;lighter&rdquo; for the minor mode can be displayed in the mode line by adding an entry to the <code>minor-mode-alist</code>.  The entry will be a pair containing the minor mode&rsquo;s variable symbol and the string to display in the mode line.</li>
+</ul>
+
+<p>
+The command that is used for enabling and disabling the minor mode can then make whatever changes are needed to the buffer-local or global state of Emacs to enable the mode&rsquo;s behavior.
+</p>
+
+<p>
+Note that the mode command will have to check the mode variable to see if it is already enabled before enabling/disabling the mode functionality!
+</p>
+</div>
+
+<h2><a id="example-creating-a-simple-minor-mode-from-scratch" class="anchor" href="#example-creating-a-simple-minor-mode-from-scratch">¶</a>Example: Creating a simple minor mode from scratch</h2><div class="outline-text-2" id="text-org5aae78a">
+<p>
+Let&rsquo;s follow the conventions we talked about and write a simple minor mode from scratch!  Our minor mode, <code>dotcrafter-basic-mode</code>, will simply set a keymap that can be used when this mode is active and also update the mode line with the string &ldquo;dotcrafter&rdquo; to indicate its state.
+</p>
+
+<pre>(make-variable-buffer-local
+  (<span class="org-keyword">defvar</span> <span class="org-variable-name">dotcrafter-basic-mode</span> nil
+    <span class="org-doc">"Toggle dotcrafter-basic-mode."</span>))
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">dotcrafter-basic-mode-map</span> (make-sparse-keymap)
+  <span class="org-doc">"The keymap for dotcrafter-basic-mode"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Define a key in the keymap</span>
+(define-key dotcrafter-basic-mode-map (kbd <span class="org-string">"C-c C-. t"</span>)
+  (<span class="org-keyword">lambda</span> ()
+    (<span class="org-keyword">interactive</span>)
+    (message <span class="org-string">"dotcrafter key binding used!"</span>)))
+
+(add-to-list 'minor-mode-alist '(dotcrafter-basic-mode <span class="org-string">" dotcrafter"</span>))
+(add-to-list 'minor-mode-map-alist (cons 'dotcrafter-basic-mode dotcrafter-basic-mode-map))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dotcrafter-basic-mode</span> (<span class="org-type">&amp;optional</span> ARG)
+  (<span class="org-keyword">interactive</span> (list 'toggle))
+  (<span class="org-keyword">setq</span> dotcrafter-basic-mode
+        (<span class="org-keyword">if</span> (eq ARG 'toggle)
+            (not dotcrafter-basic-mode)
+          (&gt; ARG 0)))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Take some action when enabled or disabled</span>
+  (<span class="org-keyword">if</span> dotcrafter-basic-mode
+      (message <span class="org-string">"dotcrafter-basic-mode activated!"</span>)
+    (message <span class="org-string">"dotcrafter-basic-mode deactivated!"</span>)))</pre>
+
+<p>
+Note that this doesn&rsquo;t perfectly follow all of the conventions: minor mode commands should also accept numeric prefix arguments for controlling whether the mode gets enabled or disabled, but it&rsquo;s not a hard requirement.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Minor-Mode-Conventions.html">Emacs Lisp Manual: Conventions for Writing Minor Modes</a>
+</p>
+</div>
+
+<h2><a id="creating-a-hook" class="anchor" href="#creating-a-hook">¶</a>Creating a Hook</h2><div class="outline-text-2" id="text-orgebbf781">
+<p>
+One useful thing you might want to provide with your minor mode is a hook.  A hook is a variable that stores a list of functions to be invoked when <i>something</i> happens, like when a mode is activated.
+</p>
+
+<p>
+Defining a hook is easy, you just define a variable that is set to <code>nil</code> or an empty list:
+</p>
+
+<pre>(<span class="org-keyword">defvar</span> <span class="org-variable-name">dotcrafter-basic-mode-hook</span> nil
+  <span class="org-doc">"The hook for dotcrafter-basic-mode."</span>)</pre>
+
+<p>
+To execute a hook, use the <code>run-hooks</code> function:
+</p>
+
+<pre>(run-hooks 'dotcrafter-basic-mode-hook)</pre>
+
+<p>
+Right now it doesn&rsquo;t do anything!  We need to add a function to the hook with <code>add-hook</code>:
+</p>
+
+<pre>(add-hook 'dotcrafter-basic-mode-hook (<span class="org-keyword">lambda</span> () (message <span class="org-string">"Hook was executed!"</span>)))</pre>
+
+<p>
+Now we can update our basic minor mode to invoke this hook:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">dotcrafter-basic-mode</span> (<span class="org-type">&amp;optional</span> ARG)
+  (<span class="org-keyword">interactive</span> (list 'toggle))
+  (<span class="org-keyword">setq</span> dotcrafter-basic-mode
+        (<span class="org-keyword">if</span> (eq ARG 'toggle)
+            (not dotcrafter-basic-mode)
+          (&gt; ARG 0)))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Take some action when enabled or disabled</span>
+  (<span class="org-keyword">if</span> dotcrafter-basic-mode
+        (message <span class="org-string">"dotcrafter-basic-mode activated!"</span>)
+    (message <span class="org-string">"dotcrafter-basic-mode deactivated!"</span>))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Run any registered hooks</span>
+  (run-hooks 'dotcrafter-basic-mode-hook))</pre>
+
+<p>
+You can define as many hooks as you need for your minor mode!  It doesn&rsquo;t have to just be the hook for when the mode gets activated.
+</p>
+
+<p>
+<b>NOTE:</b> Major modes should use the <code>run-mode-hooks</code> function instead!  There is extra logic to be used in that case.  <code>run-hooks</code> is fine for minor mode hooks.
+</p>
+</div>
+
+<h2><a id="using-the-codedefine-minor-modecode-macro" class="anchor" href="#using-the-codedefine-minor-modecode-macro">¶</a>Using the <code>define-minor-mode</code> macro</h2><div class="outline-text-2" id="text-org6eb9371">
+<p>
+Learning how to create your own minor mode from scratch is useful to show how simple they really are in practice, but once you understand it, you shouldn&rsquo;t have to do it that way every time.
+</p>
+
+<p>
+It is much easier to use the <code>define-minor-mode</code> macro to define a minor mode since it does most of the work for you!
+</p>
+
+<p>
+Here&rsquo;s an example of defining a mode called <code>dotcrafter-mode</code> that is exactly like <code>dotcrafter-basic-mode</code> except for how it is defined:
+</p>
+
+<pre>(<span class="org-keyword">define-minor-mode</span> <span class="org-function-name">dotcrafter-mode</span>
+  <span class="org-doc">"Toggles global dotcrafter-mode."</span>
+  nil   <span class="org-comment-delimiter">; </span><span class="org-comment">Initial value, nil for disabled</span>
+  <span class="org-builtin">:global</span> t
+  <span class="org-builtin">:group</span> 'dotfiles
+  <span class="org-builtin">:lighter</span> <span class="org-string">" dotcrafter"</span>
+  <span class="org-builtin">:keymap</span>
+  (list (cons (kbd <span class="org-string">"C-c C-. t"</span>) (<span class="org-keyword">lambda</span> ()
+                              (<span class="org-keyword">interactive</span>)
+                              (message <span class="org-string">"dotcrafter key binding used!"</span>))))
+
+  (<span class="org-keyword">if</span> dotcrafter-mode
+      (message <span class="org-string">"dotcrafter-basic-mode activated!"</span>)
+    (message <span class="org-string">"dotcrafter-basic-mode deactivated!"</span>)))
+
+(add-hook 'dotcrafter-mode-hook (<span class="org-keyword">lambda</span> () (message <span class="org-string">"Hook was executed!"</span>)))
+(add-hook 'dotcrafter-mode-on-hook (<span class="org-keyword">lambda</span> () (message <span class="org-string">"dotcrafter turned on!"</span>)))
+(add-hook 'dotcrafter-mode-off-hook (<span class="org-keyword">lambda</span> () (message <span class="org-string">"dotcrafter turned off!"</span>)))</pre>
+
+<p>
+What we get:
+</p>
+
+<ul class="org-ul">
+<li><code>dotcrafter-mode</code> command</li>
+<li><code>dotcrafter-mode</code> variable</li>
+<li><code>dotcrafter-mode-hook</code> (also <code>dotcrafter-mode-on-hook</code> and <code>dotcrafter-mode-off-hook</code>)</li>
+<li><code>dotcrafter-mode-map</code></li>
+<li>Lighter and mode map registration</li>
+</ul>
+
+<p>
+Let&rsquo;s take a look at the generated <code>dotcrafter-mode</code> command using <code>C-h f</code>!
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Defining-Minor-Modes.html">Emacs Lisp Manual: Defining Minor Modes</a>
+</p>
+</div>
+
+<h2><a id="example-writing-real-behavior-for-codedotcrafter-modecode" class="anchor" href="#example-writing-real-behavior-for-codedotcrafter-modecode">¶</a>Example: Writing real behavior for <code>dotcrafter-mode</code></h2><div class="outline-text-2" id="text-org1cbd6a6">
+<p>
+Now let&rsquo;s take what we&rsquo;ve learned and set up <code>dotcrafter-mode</code> so that we will automatically tangle and update configuration target files for any Org Mode file that lives inside of our dotfiles folder.
+</p>
+
+<pre>(<span class="org-keyword">defcustom</span> <span class="org-variable-name">dotcrafter-keymap-prefix</span> <span class="org-string">"C-c C-."</span>
+  <span class="org-doc">"The prefix for dotcrafter-mode key bindings."</span>
+  <span class="org-builtin">:type</span> 'string
+  <span class="org-builtin">:group</span> 'dotfiles)
+
+(<span class="org-keyword">defcustom</span> <span class="org-variable-name">dotcrafter-tangle-on-save</span> t
+  <span class="org-doc">"When t, automatically tangle Org files on save."</span>
+  <span class="org-builtin">:type</span> 'boolean
+  <span class="org-builtin">:group</span> 'dotfiles)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dotcrafter-tangle-org-file</span> (<span class="org-type">&amp;optional</span> org-file)
+  <span class="org-doc">"Tangles a single .org file relative to the path in</span>
+<span class="org-doc">dotfiles-folder.  If no file is specified, tangle the current</span>
+<span class="org-doc">file if it is an org-mode buffer inside of dotfiles-folder."</span>
+  (<span class="org-keyword">interactive</span>)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Suppress prompts and messages</span>
+  (<span class="org-keyword">let</span> ((org-confirm-babel-evaluate nil)
+        (message-log-max nil)
+        (inhibit-message t))
+    (org-babel-tangle-file (expand-file-name org-file dotcrafter-dotfiles-folder))
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">TODO: Only update files that are generated by this file!</span>
+    (dotcrafter-link-config-files)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dotcrafter--org-mode-hook</span> ()
+  (add-hook 'after-save-hook #'dotcrafter--after-save-handler nil t))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dotcrafter--after-save-handler</span> ()
+  (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> dotcrafter-mode
+             dotcrafter-tangle-on-save
+             (member (file-name-nondirectory buffer-file-name) dotcrafter-org-files)
+             (string-equal (directory-file-name (file-name-directory (buffer-file-name)))
+                           (directory-file-name (expand-file-name dotcrafter-dotfiles-folder))))
+      (message <span class="org-string">"Tangling %s..."</span> (file-name-nondirectory buffer-file-name))
+      (dotcrafter-tangle-org-file buffer-file-name)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dotcrafter--key</span> (key)
+  (kbd (concat dotcrafter-keymap-prefix <span class="org-string">" "</span> key)))
+
+(<span class="org-keyword">define-minor-mode</span> <span class="org-function-name">dotcrafter-mode</span>
+  <span class="org-doc">"Toggles global dotcrafter-mode."</span>
+  nil
+  <span class="org-builtin">:global</span> t
+  <span class="org-builtin">:group</span> 'dotfiles
+  <span class="org-builtin">:lighter</span> <span class="org-string">" dotcrafter"</span>
+  <span class="org-builtin">:keymap</span>
+  (list (cons (dotcrafter--key <span class="org-string">"t"</span>) #'dotcrafter-tangle-org-file)
+        (cons (dotcrafter--key <span class="org-string">"u"</span>) #'dotcrafter-update-dotfiles))
+
+  (<span class="org-keyword">if</span> dotcrafter-mode
+      (add-hook 'org-mode-hook #'dotcrafter--org-mode-hook)
+    (remove-hook 'org-mode-hook #'dotcrafter--org-mode-hook)))</pre>
+
+<p>
+Things to try:
+</p>
+
+<ul class="org-ul">
+<li>Add a new output file to Desktop.org</li>
+<li>Edit <code>README.org</code></li>
+<li>Turn off <code>dotcrafter-tangle-on-save</code></li>
+<li>Turn off <code>dotcrafter-mode</code></li>
+</ul>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org5b4684b">
+<p>
+In the next episode, we&rsquo;ll learn how to write a custom major mode that provides a simple user interface for the <code>dotcrafter.el</code> package!
+</p>
+
+<p>
+We&rsquo;re getting pretty close to having a package worthy of release!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

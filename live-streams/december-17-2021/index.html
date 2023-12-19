@@ -1,0 +1,105 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>The Hidden Value of Emacs&rsquo; Tab Bar - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">The Hidden Value of Emacs&rsquo; Tab Bar</h1><p class="site-post-meta">December 17, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/wqdT0xKMQT8" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgb89353d">
+<ul class="org-ul">
+<li>The <a href="https://www.youtube.com/channel/UCZ4HO8or08HUGUzA0w8Tagw/">Flux Harmonic</a> channel is now live!</li>
+<li>First stream is next Tuesday, December 21, from 1PM to 4PM UTC</li>
+</ul>
+
+<p>
+<a href="https://www.youtube.com/channel/UCZ4HO8or08HUGUzA0w8Tagw">https://www.youtube.com/channel/UCZ4HO8or08HUGUzA0w8Tagw</a>
+</p>
+</div>
+
+<h2><a id="the-hidden-value-of-emacsrsquo-tab-bar" class="anchor" href="#the-hidden-value-of-emacsrsquo-tab-bar">¶</a>The Hidden Value of Emacs&rsquo; Tab Bar</h2><div class="outline-text-2" id="text-org54825ab">
+<p>
+Today we&rsquo;re going to work on customizing Emacs&rsquo; <code>tab-bar-mode</code> to see if it can be used as a replacement for other workspace packages like Perspective.el.
+</p>
+
+<p>
+Lots of new things have been added for it in Emacs 28, so let&rsquo;s try it out!
+</p>
+
+<p>
+<b>The Plan</b>
+</p>
+
+<ul class="org-ul">
+<li>Customizing tab display to show selection better (font, color, emoji?)</li>
+<li>Experiment with tab groups</li>
+<li>Setting the <code>tab-bar-format</code>, a better status panel?</li>
+<li>Open <code>project.el</code> projects in new tabs</li>
+<li>Writing a function to show only desired buffers for a given tab</li>
+<li>Does it work with <code>desktop-save-mode</code>?</li>
+</ul>
+
+<p>
+Using tab-bar solely as a global mode line: <a href="http://ruzkuku.com/texts/emacs-global.html">http://ruzkuku.com/texts/emacs-global.html</a>
+</p>
+</div>
+
+<h2><a id="the-final-code" class="anchor" href="#the-final-code">¶</a>The final code</h2><div class="outline-text-2" id="text-orgbecb8e4">
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Inherit the face of `doom-modeline-panel` for better appearance</span>
+(set-face-attribute 'tab-bar-tab nil <span class="org-builtin">:inherit</span> 'doom-modeline-panel <span class="org-builtin">:foreground</span> nil <span class="org-builtin">:background</span> nil)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Totally customize the format of the tab bar name</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/tab-bar-format</span> (tab i)
+  (propertize
+   (format
+    (concat
+      (<span class="org-keyword">if</span> (eq (car tab) 'current-tab)
+          <span class="org-string">"&#128293; "</span> <span class="org-string">""</span>)
+      <span class="org-string">"%s"</span>)
+    (alist-get 'name tab))
+   'face (list (append
+                  '(<span class="org-builtin">:foreground</span> <span class="org-string">"#FFFFFF"</span>)
+                  (<span class="org-keyword">if</span> (eq (car tab) 'current-tab)
+                      '(<span class="org-builtin">:box</span> t)
+                      '())))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Replace the default tab bar function</span>
+(<span class="org-keyword">setq</span> tab-bar-tab-name-format-function #'my/tab-bar-format)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/tab-bar-tab-name-function</span> ()
+  (<span class="org-keyword">let</span> ((project (project-current)))
+    (<span class="org-keyword">if</span> project
+        (project-root project)
+        (tab-bar-tab-name-current))))
+
+(<span class="org-keyword">setq</span> tab-bar-tab-name-function #'my/tab-bar-tab-name-function)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Only show the tab bar if there are 2 or more tabs</span>
+(<span class="org-keyword">setq</span> tab-bar-show 1)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/tab-bar-string</span> () <span class="org-doc">"HELLO"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Customize the tab bar format to add the global mode line string</span>
+(<span class="org-keyword">setq</span> tab-bar-format '(tab-bar-format-tabs tab-bar-separator tab-bar-format-align-right tab-bar-format-global))
+
+(add-to-list 'global-mode-string <span class="org-string">"HELLO"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Make sure mode line text in the tab bar can be read</span>
+(set-face-attribute 'tab-bar nil <span class="org-builtin">:foreground</span> <span class="org-string">"#FFFFFF"</span>)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/project-create-tab</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (tab-bar-new-tab)
+  (magit-status))
+
+(<span class="org-keyword">setq</span> project-switch-commands #'my/project-create-tab)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/switch-to-tab-buffer</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">if</span> (project-current)
+      (call-interactively #'project-switch-to-buffer)
+    (call-interactively #'switch-to-buffer)))
+
+(global-set-key (kbd <span class="org-string">"C-x b"</span>) #'my/switch-to-tab-buffer)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Turn on tab bar mode after startup</span>
+(tab-bar-mode 1)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Save the desktop session</span>
+(desktop-save-mode 1)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,377 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Host Your Own Forgejo - Part 2 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Host Your Own Forgejo - Part 2</h1><p class="site-post-meta">December  1, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org8c1ce58">
+<ul class="org-ul">
+<li><p>
+EmacsConf 2023 is this weekend! (Dec 2 and 3)
+</p>
+
+<p>
+<a href="https://emacsconf.org/2023/">https://emacsconf.org/2023/</a>
+</p>
+
+<p>
+Check out the talks here: <a href="https://emacsconf.org/2023/talks/">https://emacsconf.org/2023/talks/</a>
+</p></li>
+
+<li><p>
+Hoot 0.2.0 has been released!
+</p>
+
+<p>
+Many important new features!  FFI, record types, more library functions
+<a href="https://spritely.institute/news/guile-hoot-v020-released.html">https://spritely.institute/news/guile-hoot-v020-released.html</a>
+</p>
+
+<p>
+Check out this awesome use case - React-style UI with s-expressions :)
+<a href="https://spritely.institute/news/building-interactive-web-pages-with-guile-hoot.html">https://spritely.institute/news/building-interactive-web-pages-with-guile-hoot.html</a>
+</p></li>
+
+<li><p>
+The Matrix bridge isn&rsquo;t coming back&#x2026;
+</p>
+
+<p>
+<a href="https://matrix.org/blog/2023/11/28/shutting-down-bridge-to-libera-chat/">https://matrix.org/blog/2023/11/28/shutting-down-bridge-to-libera-chat/</a>
+</p></li>
+</ul>
+</div>
+
+<h2><a id="hosting-a-git-forge-on-the-web-with-guix" class="anchor" href="#hosting-a-git-forge-on-the-web-with-guix">¶</a>Hosting a Git Forge on the Web with Guix</h2><div class="outline-text-2" id="text-org089073c">
+<p>
+Let&rsquo;s pick up where we left off on the last stream and get Forgejo running in a Guix container!
+</p>
+
+<p>
+Here&rsquo;s what we&rsquo;ll try to do:
+</p>
+
+<ul class="org-ul">
+<li>Finish getting the container working correctly</li>
+<li>Test out the new Forgejo instance by creating a repo and pushing to it</li>
+<li>Try setting up Laminar for CI</li>
+</ul>
+
+<p>
+Reference:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://forgejo.org/docs/next/admin/installation-binary/">https://forgejo.org/docs/next/admin/installation-binary/</a></li>
+<li><a href="https://forgejo.org/docs/latest/admin/config-cheat-sheet/">https://forgejo.org/docs/latest/admin/config-cheat-sheet/</a></li>
+<li><a href="https://laminar.ohwg.net/docs.html">https://laminar.ohwg.net/docs.html</a></li>
+</ul>
+</div>
+
+<h3><a id="previous-forgejo-package-and-container-config" class="anchor" href="#previous-forgejo-package-and-container-config">¶</a>Previous Forgejo Package and Container Config</h3><div class="outline-text-3" id="text-org65f4963">
+<pre>(use-modules (gnu)
+             (guix gexp)
+             (guix packages)
+             (guix download)
+             (guix build utils)
+             (guix build-system gnu)
+             (guix build-system copy)
+             (nonguix build-system binary)
+             ((guix licenses) <span class="org-builtin">#:prefix</span> license:))
+
+(use-package-modules version-control gcc bash certs admin linux)
+(use-service-modules certbot shepherd configuration networking ssh web)
+
+(<span class="org-keyword">define</span> <span class="org-function-name">forgejo</span>
+  (<span class="org-keyword">let</span> ((version <span class="org-string">"1.20.5-0"</span>))
+    (package
+     (name <span class="org-string">"forgejo"</span>)
+     (version version)
+     (source
+      (origin
+       (method url-fetch)
+       (uri (string-append <span class="org-string">"https://codeberg.org/forgejo/forgejo/releases/download/v"</span> version <span class="org-string">"/forgejo-"</span> version <span class="org-string">"-linux-amd64"</span>))
+       (file-name <span class="org-string">"forgejo"</span>)
+       (sha256
+        (base32 <span class="org-string">"0jj13qwq67acbqsina3gqi5fr2lsm80jxjmm26i1ixxhf0r0w641"</span>))))
+     (build-system binary-build-system)
+     (arguments
+      `(<span class="org-builtin">#:phases</span> (modify-phases %standard-phases
+                                (add-after 'unpack 'chmod-to-allow-patchelf
+                                           (<span class="org-keyword">lambda</span> _
+                                             (chmod <span class="org-string">"forgejo"</span> #o755))))
+        <span class="org-builtin">#:install-plan</span> `((<span class="org-string">"forgejo"</span> <span class="org-string">"bin/"</span>))))
+     (propagated-inputs (list git git-lfs bash))
+     (home-page <span class="org-string">"https://forgejo.org"</span>)
+     (synopsis <span class="org-string">"A self-hosted lightweight software forge."</span>)
+     (description <span class="org-string">"Forgejo is a self-hosted lightweight software forge."</span>)
+     (license license:expat))))
+
+(define-configuration/no-serialization forgejo-configuration
+  (forgejo
+   (file-like forgejo)
+   <span class="org-string">"The forgejo package."</span>)
+
+  (domain
+   (string <span class="org-string">"foo"</span>)
+   <span class="org-string">"The domain name of the server."</span>)
+
+  (user
+   (string <span class="org-string">"git"</span>)
+   <span class="org-string">"The name of the user under which Forgejo will be executed."</span>)
+
+  (group
+   (string <span class="org-string">"git"</span>)
+   <span class="org-string">"The name of the group under which Forgejo will be executed."</span>))
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">forgejo-configuration-&gt;file</span> config)
+  (mixed-text-file <span class="org-string">"forgejo.ini"</span> <span class="org-string">"</span>
+<span class="org-string">APP_NAME = Crafter Tools</span>
+<span class="org-string">RUN_USER = "</span> (forgejo-configuration-user config) <span class="org-string">"</span>
+<span class="org-string">WORK_PATH = /srv/forgejo</span>
+<span class="org-string">RUN_MODE = prod</span>
+
+<span class="org-string">[git]</span>
+<span class="org-string">HOME_PATH = "</span> (forgejo-configuration-user config) <span class="org-string">"</span>
+
+<span class="org-string">[database]</span>
+<span class="org-string">DB_TYPE = sqlite3</span>
+<span class="org-string">HOST = 127.0.0.1:3306</span>
+<span class="org-string">NAME = forgejo</span>
+<span class="org-string">USER = forgejo</span>
+<span class="org-string">PASSWD =</span>
+<span class="org-string">SCHEMA =</span>
+<span class="org-string">SSL_MODE = disable</span>
+<span class="org-string">PATH = /srv/forgejo/data/forgejo.db</span>
+<span class="org-string">LOG_SQL = false</span>
+
+<span class="org-string">[repository]</span>
+<span class="org-string">ROOT = /srv/forgejo/data/forgejo-repositories</span>
+
+<span class="org-string">[server]</span>
+<span class="org-string">SSH_DOMAIN = "</span> (forgejo-configuration-domain config) <span class="org-string">"</span>
+<span class="org-string">DOMAIN = localhost</span>
+<span class="org-string">HTTP_PORT = 3000</span>
+<span class="org-string">ROOT_URL = https://"</span> (forgejo-configuration-domain config) <span class="org-string">":3000/</span>
+<span class="org-string">APP_DATA_PATH = /srv/forgejo/data</span>
+<span class="org-string">DISABLE_SSH = false</span>
+<span class="org-string">SSH_PORT = 22</span>
+<span class="org-string">LFS_START_SERVER = true</span>
+<span class="org-string">LFS_JWT_SECRET = 1_yZPWVD-sFZmGSvMjt9_eMqjiHm1V5_oWEhmw8i3IM</span>
+<span class="org-string">OFFLINE_MODE = false</span>
+
+<span class="org-string">[lfs]</span>
+<span class="org-string">PATH = /srv/forgejo/data/lfs</span>
+
+<span class="org-string">[mailer]</span>
+<span class="org-string">ENABLED = false</span>
+
+<span class="org-string">[service]</span>
+<span class="org-string">REGISTER_EMAIL_CONFIRM = false</span>
+<span class="org-string">ENABLE_NOTIFY_MAIL = false</span>
+<span class="org-string">DISABLE_REGISTRATION = false</span>
+<span class="org-string">ALLOW_ONLY_EXTERNAL_REGISTRATION = false</span>
+<span class="org-string">ENABLE_CAPTCHA = false</span>
+<span class="org-string">REQUIRE_SIGNIN_VIEW = false</span>
+<span class="org-string">DEFAULT_KEEP_EMAIL_PRIVATE = true</span>
+<span class="org-string">DEFAULT_ALLOW_CREATE_ORGANIZATION = true</span>
+<span class="org-string">DEFAULT_ENABLE_TIMETRACKING = true</span>
+<span class="org-string">NO_REPLY_ADDRESS = noreply.localhost</span>
+
+<span class="org-string">[openid]</span>
+<span class="org-string">ENABLE_OPENID_SIGNIN = true</span>
+<span class="org-string">ENABLE_OPENID_SIGNUP = true</span>
+
+<span class="org-string">[cron.update_checker]</span>
+<span class="org-string">ENABLED = false</span>
+
+<span class="org-string">[session]</span>
+<span class="org-string">PROVIDER = file</span>
+
+<span class="org-string">[log]</span>
+<span class="org-string">MODE = console</span>
+<span class="org-string">LEVEL = info</span>
+<span class="org-string">ROOT_PATH = /srv/forgejo/log</span>
+
+<span class="org-string">[repository.pull-request]</span>
+<span class="org-string">DEFAULT_MERGE_STYLE = merge</span>
+
+<span class="org-string">[repository.signing]</span>
+<span class="org-string">DEFAULT_TRUST_MODEL = committer</span>
+
+<span class="org-string">[security]</span>
+<span class="org-string">INSTALL_LOCK = true</span>
+<span class="org-string">INTERNAL_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MDAyNDAwMTh9.3MFnsZWtz-Qu1I5mC1TWIXyhdGN6pDJsYE1iSugEhdM</span>
+<span class="org-string">PASSWORD_HASH_ALGO = pbkdf2_hi</span>
+
+<span class="org-string">[oauth2]</span>
+<span class="org-string">JWT_SECRET = DrvU6DPu8tIRVmeDfpmwLakm5m_IY13Cv00uMWaBo34</span>
+<span class="org-string">"</span>))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">TODO: Generate the tokens using `forgejo generate secret INTERNAL_TOKEN` etc by using a more elaborate gexp:</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">#~(begin</span>
+<span class="org-comment-delimiter">;;     </span><span class="org-comment">(let* ((forgejo (forgejo-configuration-forgejo config))</span>
+<span class="org-comment-delimiter">;;            </span><span class="org-comment">(forgejo-bin (file-append forgejo "/bin/forgejo"))</span>
+<span class="org-comment-delimiter">;;            </span><span class="org-comment">(INTERNAL_TOKEN (system* #$forgejo-bin "generate" "secret" "INTERNAL_TOKEN")))</span>
+<span class="org-comment-delimiter">;;       </span><span class="org-comment">;; Write out the entire configuration file, inserting the generated tokens</span>
+<span class="org-comment-delimiter">;;       </span><span class="org-comment">))</span>
+
+(<span class="org-keyword">define</span> (<span class="org-function-name">forgejo-shepherd-service</span> config)
+  <span class="org-string">"Return a &lt;shepherd-service&gt; for Forgejo with config."</span>
+  (<span class="org-keyword">let*</span> ((forgejo (forgejo-configuration-forgejo config))
+         (forgejo-bin (file-append forgejo <span class="org-string">"/bin/forgejo"</span>))
+         (forgejo-cfg (forgejo-configuration-&gt;file config)))
+    (list (shepherd-service
+           (documentation <span class="org-string">"Run the Forgejo Git forge"</span>)
+           (requirement '(networking user-processes))
+           (provision '(forgejo))
+           (start #~(make-forkexec-constructor
+                     (list #$forgejo-bin <span class="org-string">"--config"</span> #$forgejo-cfg)
+                     <span class="org-builtin">#:user</span> #$(forgejo-configuration-user config)
+                     <span class="org-builtin">#:group</span> #$(forgejo-configuration-group config)
+                     <span class="org-builtin">#:environment-variables</span> (append (default-environment-variables)
+                                                     (list (string-append <span class="org-string">"HOME=/home/"</span>
+                                                                          #$(forgejo-configuration-user config))))))
+           (stop  #~(make-kill-destructor))))))
+
+(<span class="org-keyword">define</span> <span class="org-function-name">%forgejo-accounts</span>
+  (list (user-group (name <span class="org-string">"git"</span>)
+                    (system? #t))
+        (user-account
+         (name <span class="org-string">"git"</span>)
+         (group <span class="org-string">"git"</span>)
+         (system? #t)
+         (comment <span class="org-string">"Forgejo User"</span>)
+         (home-directory <span class="org-string">"/home/git"</span>)
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">(shell (file-append shadow "/sbin/nologin"))</span>
+         )))
+
+(<span class="org-keyword">define</span> <span class="org-function-name">%forgejo-activation</span>
+  #~(<span class="org-keyword">begin</span>
+      (use-modules (guix build utils))
+      (mkdir-p <span class="org-string">"/srv/forgejo"</span>)
+      (<span class="org-keyword">let</span> ((user (getpwnam <span class="org-string">"git"</span>)))
+        (chown <span class="org-string">"/srv/forgejo"</span>
+               (passwd:uid user)
+               (passwd:gid user)))))
+
+(<span class="org-keyword">define</span> <span class="org-function-name">forgejo-service-type</span>
+  (service-type (name 'forgejo)
+                (extensions
+                 (list (service-extension shepherd-root-service-type
+                                          forgejo-shepherd-service)
+                       (service-extension account-service-type
+                                          (const %forgejo-accounts))
+                       (service-extension activation-service-type
+                                          (const %forgejo-activation))))
+                (default-value (forgejo-configuration))
+                (description
+                 <span class="org-string">"Run Forgejo."</span>)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(define (cert-path host file)</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(format #f "/etc/letsencrypt/live/~a/~a.pem" host (symbol-&gt;string file)))</span>
+
+(operating-system
+  (host-name <span class="org-string">"crafter-forge"</span>)
+  (timezone <span class="org-string">"Etc/UTC"</span>)
+  (locale <span class="org-string">"en_US.utf8"</span>)
+
+  (bootloader (bootloader-configuration
+               (bootloader grub-bootloader)
+               (targets '(<span class="org-string">"unused"</span>))))
+
+  (firmware '())
+  (file-systems %base-file-systems)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">minimal packages for remote debugging</span>
+  (packages (list coreutils bash iproute procps forgejo))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">basic services</span>
+  (services (list (service dhcp-client-service-type)
+
+                  <span class="org-comment-delimiter">;; </span><span class="org-comment">(service certbot-service-type</span>
+                  <span class="org-comment-delimiter">;;          </span><span class="org-comment">(certbot-configuration</span>
+                  <span class="org-comment-delimiter">;;           </span><span class="org-comment">(email "david@systemcrafters.net")</span>
+                  <span class="org-comment-delimiter">;;           </span><span class="org-comment">(webroot "/srv/http/certbot")</span>
+                  <span class="org-comment-delimiter">;;           </span><span class="org-comment">(certificates</span>
+                  <span class="org-comment-delimiter">;;            </span><span class="org-comment">(list</span>
+                  <span class="org-comment-delimiter">;;             </span><span class="org-comment">(certificate-configuration</span>
+                  <span class="org-comment-delimiter">;;              </span><span class="org-comment">(domains '("crafter.tools"))</span>
+                  <span class="org-comment-delimiter">;;              </span><span class="org-comment">(deploy-hook</span>
+                  <span class="org-comment-delimiter">;;               </span><span class="org-comment">(program-file</span>
+                  <span class="org-comment-delimiter">;;                </span><span class="org-comment">"nginx-deploy-hook"</span>
+                  <span class="org-comment-delimiter">;;                </span><span class="org-comment">#~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))</span>
+                  <span class="org-comment-delimiter">;;                    </span><span class="org-comment">(kill pid sighup)))))))))</span>
+
+                  <span class="org-comment-delimiter">;; </span><span class="org-comment">(service nginx-service-type</span>
+                  <span class="org-comment-delimiter">;;          </span><span class="org-comment">(nginx-configuration</span>
+                  <span class="org-comment-delimiter">;;           </span><span class="org-comment">(server-blocks</span>
+                  <span class="org-comment-delimiter">;;            </span><span class="org-comment">(list (nginx-server-configuration</span>
+                  <span class="org-comment-delimiter">;;                   </span><span class="org-comment">(listen '("443 ssl http2"</span>
+                  <span class="org-comment-delimiter">;;                             </span><span class="org-comment">"[::]:443 ssl http2"</span>
+                  <span class="org-comment-delimiter">;;                             </span><span class="org-comment">"8448 ssl http2"</span>
+                  <span class="org-comment-delimiter">;;                             </span><span class="org-comment">"[::]:8448 ssl http2"))</span>
+                  <span class="org-comment-delimiter">;;                   </span><span class="org-comment">(server-name '("crafter.tools"))</span>
+                  <span class="org-comment-delimiter">;;                   </span><span class="org-comment">(root "/srv/http/crafter.tools")</span>
+                  <span class="org-comment-delimiter">;;                   </span><span class="org-comment">(ssl-certificate (cert-path "crafter.tools" 'fullchain))</span>
+                  <span class="org-comment-delimiter">;;                   </span><span class="org-comment">(ssl-certificate-key (cert-path "crafter.tools" 'privkey))</span>
+                  <span class="org-comment-delimiter">;;                   </span><span class="org-comment">(raw-content '("client_max_body_size 20m;"))</span>
+                  <span class="org-comment-delimiter">;;                   </span><span class="org-comment">(locations</span>
+                  <span class="org-comment-delimiter">;;                    </span><span class="org-comment">(list (nginx-location-configuration</span>
+                  <span class="org-comment-delimiter">;;                           </span><span class="org-comment">(uri "/_matrix/")</span>
+                  <span class="org-comment-delimiter">;;                           </span><span class="org-comment">;; note: this must be the same as the conduit port!</span>
+                  <span class="org-comment-delimiter">;;                           </span><span class="org-comment">(body '("proxy_pass http://127.0.0.1:6167$request_uri;"</span>
+                  <span class="org-comment-delimiter">;;                                   </span><span class="org-comment">"proxy_set_header host $http_host;"</span>
+                  <span class="org-comment-delimiter">;;                                   </span><span class="org-comment">"proxy_buffering off;"</span>
+                  <span class="org-comment-delimiter">;;                                   </span><span class="org-comment">"proxy_read_timeout 5m;"))))))))))</span>
+
+                  (service syslog-service-type
+                           (syslog-configuration))
+
+                  (service forgejo-service-type
+                           (forgejo-configuration
+                            (domain <span class="org-string">"crafter.tools"</span>))))))</pre>
+</div>
+
+<h4><a id="runsh" class="anchor" href="#runsh">¶</a>run.sh</h4><div class="outline-text-4" id="text-org7c54e52">
+<pre><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/sh</span>
+
+<span class="org-builtin">cd</span> /root
+
+mkdir -p /var/data/letsencrypt
+
+$(guix time-machine -C channels.scm -- system container --network --share=/var/data=/srv --share=/var/data/letsencrypt=/etc/letsencrypt config.scm)</pre>
+</div>
+
+<h4><a id="forgeservice" class="anchor" href="#forgeservice">¶</a>forge.service</h4><div class="outline-text-4" id="text-orgdc451e3">
+<pre>[Unit]
+<span class="org-variable-name">Description</span>=Forge Service
+<span class="org-variable-name">Wants</span>=guix-daemon.service
+
+[Service]
+<span class="org-variable-name">ExecStart</span>=/bin/sh -c /root/run.sh
+
+[Install]
+<span class="org-variable-name">WantedBy</span>=multi-user.target</pre>
+</div>
+
+<h3><a id="setting-up-the-host-vm" class="anchor" href="#setting-up-the-host-vm">¶</a>Setting up the Host VM</h3><div class="outline-text-3" id="text-orgf258cf6">
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Unblock port 80</span>
+<span class="org-builtin">echo</span> net.ipv4.ip_unprivileged_port_start=80 &gt;&gt; /etc/sysctl.conf
+sysctl --system
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Configure the firewall</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">TODO: How to persist across reboots?</span>
+ufw enable
+ufw allow http
+ufw allow https
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Set up the service</span>
+mkdir -p /var/data/certs
+ln -sf /root/cons.service /etc/systemd/system/cons.service
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Run the service for the first time to generate certificates</span>
+/root/run.sh
+guix container exec 6623 /var/lib/certbot/renew-certificates
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Run the service for real</span>
+systemctl enable cons.service
+systemctl start cons.service</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

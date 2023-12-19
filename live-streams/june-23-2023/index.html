@@ -1,0 +1,78 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Taming Your Emacs Packages with Elpaca - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Taming Your Emacs Packages with Elpaca</h1><p class="site-post-meta">June 23, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/11CO1vCpfrs" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><h3><a id="progress-on-crafted-guix" class="anchor" href="#progress-on-crafted-guix">¶</a>Progress on Crafted Guix</h3><div class="outline-text-3" id="text-org480ace1">
+<p>
+This week I made a nice amount of progress on the early design of Crafted Guix!
+</p>
+
+<p>
+<a href="https://codeberg.org/SystemCrafters/crafted-guix/commit/d1a7d0ff62fc800d42832568ba93160043b35095">https://codeberg.org/SystemCrafters/crafted-guix/commit/d1a7d0ff62fc800d42832568ba93160043b35095</a>
+</p>
+
+<p>
+Special thanks to <b>shtwzrd</b> who offered a lot of insightful comments and suggestions!
+</p>
+
+<p>
+Many of the core elements are now in place, so now begins the work of writing shared configuration elements that people might be interested to use in building their own Guix systems.  I&rsquo;ll be updating my personal configuration to use it as soon as I can!
+</p>
+
+<p>
+If you&rsquo;re interested to contribute, I&rsquo;ve filed some issues on the Codeberg repo:
+</p>
+
+<p>
+<a href="https://codeberg.org/SystemCrafters/crafted-guix/issues">https://codeberg.org/SystemCrafters/crafted-guix/issues</a>
+</p>
+
+<p>
+Feel free to file your own issues with requests for window managers or other software that you would like to see added for easy configuration!
+</p>
+</div>
+
+<h3><a id="subscribe-to-the-newsletter" class="anchor" href="#subscribe-to-the-newsletter">¶</a>Subscribe to the Newsletter</h3><div class="outline-text-3" id="text-org3aadf56">
+<p>
+<a href="https://systemcrafters.net/newsletter/">https://systemcrafters.net/newsletter/</a>
+</p>
+
+<p>
+No new issue this week, unfortunately!
+</p>
+</div>
+
+<h3><a id="support-my-work" class="anchor" href="#support-my-work">¶</a>Support my work!</h3><div class="outline-text-3" id="text-orgf78fe5f">
+<p>
+<a href="https://systemcrafters.net/how-to-help/#support-my-work">https://systemcrafters.net/how-to-help/#support-my-work</a>
+</p>
+</div>
+
+<h2><a id="trying-out-elpaca" class="anchor" href="#trying-out-elpaca">¶</a>Trying out Elpaca</h2><div class="outline-text-2" id="text-org44fd03c">
+<p>
+Today we&rsquo;re going to try out the new(ish) package manager for Emacs called Elpaca!
+</p>
+
+<p>
+<a href="https://github.com/progfolio/elpaca">https://github.com/progfolio/elpaca</a>
+</p>
+
+<p>
+It was written by Nicholas Vollmer (<a href="https://github.com/progfolio/">progfolio</a> on GitHub, nv-elisp elsewhere), a contributor to Straight.el and a number of other Emacs packages.
+</p>
+
+<p>
+The GitHub repo lists the following features:
+</p>
+
+<ul class="org-ul">
+<li>Installs packages asynchronously, in parallel for fast, non-blocking installations.</li>
+<li>Includes a flexible UI for finding and operating on packages.</li>
+<li>Downloads packages from their sources for convenient elisp development.</li>
+<li>Supports thousands of elisp packages out of the box (MELPA, NonGNU/GNU ELPA, Org/org-contrib).</li>
+<li>Makes it easy for users to create their own ELPAs.</li>
+</ul>
+
+<p>
+Let&rsquo;s try it out and see what we can learn about it!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,130 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Using Multiple Monitors in EXWM - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Using Multiple Monitors in EXWM</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/eF5NfVN411Q" allowfullscreen></iframe></div>
+</p>
+
+<p>
+Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/5ebd390119a48cac6258843c7d5e570f4591fdd4/Desktop.org#exwm-configuration">here</a>.
+</p>
+
+<h2><a id="how-multiple-monitors-work-in-exwm" class="anchor" href="#how-multiple-monitors-work-in-exwm">¶</a>How multiple monitors work in EXWM</h2><div class="outline-text-2" id="text-orgb1bd992">
+<ul class="org-ul">
+<li>EXWM can use multiple displays via the <code>exwm-randr</code> module</li>
+<li>It doesn&rsquo;t configure the displays for you, though!</li>
+<li>Use xrandr, arandr, etc</li>
+<li>Configure EXWM to assign workspaces to displays</li>
+</ul>
+</div>
+
+<h2><a id="differences-from-other-wms" class="anchor" href="#differences-from-other-wms">¶</a>Differences from other WMs</h2><div class="outline-text-2" id="text-orge62f61b">
+<ul class="org-ul">
+<li>Workspaces do not span multiple screens</li>
+<li>Switching to a workspace moves your focus to the display it is assigned to</li>
+</ul>
+</div>
+
+<h2><a id="enabling-another-display" class="anchor" href="#enabling-another-display">¶</a>Enabling another display</h2><div class="outline-text-2" id="text-org34d44fd">
+<p>
+Use <code>arandr</code>, save configuration, use it to update <code>xrandr</code> call in Desktop.org.
+</p>
+</div>
+
+<h2><a id="workspace-monitor-assignment" class="anchor" href="#workspace-monitor-assignment">¶</a>Workspace monitor assignment</h2><div class="outline-text-2" id="text-org1b32e25">
+<p>
+Tell EXWM which workspaces should be on other displays:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> exwm-randr-workspace-monitor-plist '(2 <span class="org-string">"Virtual-2"</span> 3 <span class="org-string">"Virtual-2"</span>))</pre>
+
+<p>
+<b>NOTE:</b> Use <code>exwm-randr-refresh</code> to update workspace configuration after changing this!
+</p>
+</div>
+
+<h2><a id="mouse-warping" class="anchor" href="#mouse-warping">¶</a>Mouse warping</h2><div class="outline-text-2" id="text-org6cfe42a">
+<p>
+Doesn&rsquo;t work on VM, but does work on actual system config
+</p>
+
+<pre>(<span class="org-keyword">setq</span> exwm-workspace-warp-cursor t)</pre>
+</div>
+
+<h2><a id="focus-follows-mouse" class="anchor" href="#focus-follows-mouse">¶</a>Focus follows mouse</h2><div class="outline-text-2" id="text-org938f569">
+<p>
+<b>NOTE:</b> These need to be configure before <code>exwm-enable</code>!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mouse-autoselect-window t
+      focus-follows-mouse t)</pre>
+</div>
+
+<h2><a id="docking-and-undocking" class="anchor" href="#docking-and-undocking">¶</a>Docking and undocking</h2><div class="outline-text-2" id="text-orge4ea365">
+<p>
+What happens when you disconnect your display?
+</p>
+
+<p>
+Use <code>autorandr</code> to automate this!  <a href="https://github.com/phillipberndt/autorandr">https://github.com/phillipberndt/autorandr</a>
+</p>
+
+<p>
+With your laptop undocked and single screen configured correctly, run:
+</p>
+
+<pre>autorandr --save mobile</pre>
+
+<p>
+Dock your machine and set up the ideal configuration with arandr then run:
+</p>
+
+<pre>autorandr --save docked</pre>
+
+<p>
+Define  a function for handling display connectivity changes:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/update-displays</span> ()
+  (efs/run-in-background <span class="org-string">"autorandr --change --force"</span>)
+  (message <span class="org-string">"Display config: %s"</span>
+           (string-trim (shell-command-to-string <span class="org-string">"autorandr --current"</span>))))</pre>
+
+<p>
+Add this after <code>(exwm-randr-enable)</code>:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">React to display connectivity changes, do initial display update</span>
+(add-hook 'exwm-randr-screen-change-hook #'efs/update-displays)
+(efs/update-displays)</pre>
+
+<p>
+Also make sure to update your wallpaper after changing screens!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Inside efs/update-displays</span>
+(efs/set-wallpaper)</pre>
+
+<p>
+<b>NOTE:</b> If you don&rsquo;t have access to <code>autorandr</code> you can create scripts with <code>arandr</code> that you can launch per machine when the screen layout changes.
+</p>
+
+<p>
+An example from my config: <a href="https://github.com/daviwil/dotfiles/blob/master/.bin/update-screens">https://github.com/daviwil/dotfiles/blob/master/.bin/update-screens</a>
+</p>
+</div>
+
+<h2><a id="per-machine-configuration" class="anchor" href="#per-machine-configuration">¶</a>Per-machine configuration</h2><div class="outline-text-2" id="text-org3798208">
+<p>
+Save <code>autorandr</code> profiles for each machine (e.g. <code>machine1-docked</code>, <code>machine1-mobile</code>, etc)
+</p>
+
+<pre>(<span class="org-keyword">setq</span> exwm-randr-workspace-monitor-plist
+  (<span class="org-keyword">pcase</span> (system-name)
+    (<span class="org-string">"machine1"</span> '(2 <span class="org-string">"Virtual-2"</span> 3 <span class="org-string">"Virtual-2"</span>))
+    (<span class="org-string">"machine2"</span> '(2 <span class="org-string">"HDMI-1"</span> 3 <span class="org-string">"HDM1-2"</span>))))
+(exwm-randr-refresh)</pre>
+
+<p>
+<b>NOTE:</b> If you dock your laptop in more than one place with different screen configurations, you can use <code>autorandr --current</code> to determine the current configuration and set the <code>exwm-randr-workspace-monitor-plist</code> based on that instead!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

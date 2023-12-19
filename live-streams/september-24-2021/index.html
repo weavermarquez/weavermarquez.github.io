@@ -1,0 +1,237 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Investigating use-package Alternatives - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Investigating use-package Alternatives</h1><p class="site-post-meta">September 24, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/ZolOUgXHgbo" allowfullscreen></iframe></div><div id="content">
+<h2><a id="news" class="anchor" href="#news">¶</a>News</h2><div class="outline-text-2" id="text-org77b99fd">
+<ul class="org-ul">
+<li>Proposal deadline for EmacsConf 2021 is Sep 30, Thursday! <a href="https://emacsconf.org/2021/cfp/">https://emacsconf.org/2021/cfp/</a></li>
+</ul>
+</div>
+
+<h2><a id="investigating-use-package-alternatives" class="anchor" href="#investigating-use-package-alternatives">¶</a>Investigating use-package Alternatives</h2><div class="outline-text-2" id="text-org4842275">
+<p>
+Today we&rsquo;ll be taking a look at two alternatives to <code>use-package</code>: <code>setup.el</code> and <code>leaf.el</code>.
+</p>
+
+<p>
+The goal isn&rsquo;t to try and replace <code>use-package</code>, just to investigate the alternate ways that Emacs users have created to simplify configuration authoring!
+</p>
+</div>
+
+<h2><a id="comparing-with-codeuse-packagecode" class="anchor" href="#comparing-with-codeuse-packagecode">¶</a>Comparing with <code>use-package</code></h2><div class="outline-text-2" id="text-orgb342708">
+<p>
+I&rsquo;ll try to put together configurations with <code>setup.el</code> and <code>leaf.el</code> to compare how they would look to an equivalent <code>use-package</code> configuration.
+</p>
+
+<p>
+We&rsquo;ll try to see how to replicate the same features that <code>use-package</code> provides:
+</p>
+
+<ul class="org-ul">
+<li>:ensure - Install package</li>
+<li>:after - Load after another package</li>
+<li>:init - Run code before package loads</li>
+<li>:config - Run code after package loads</li>
+<li>:custom - Set custom variables with concise syntax</li>
+<li>:defer - Defer loading until some later point</li>
+<li>:demand - Ensure loading at startup</li>
+<li>:bind - Bind keys for modes</li>
+<li>:hook - Set hooks that will cause package to load</li>
+<li>:commands - Set autoloaded commands that will cause packag to load</li>
+<li>:mode - Activate mode when particular file types are opened</li>
+</ul>
+</div>
+
+<h2><a id="the-example-configuration" class="anchor" href="#the-example-configuration">¶</a>The example configuration</h2><div class="outline-text-2" id="text-org4478538">
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">evil</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> evil-want-c-u-scroll t)
+  (evil-mode 1))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
+  <span class="org-builtin">:after</span> evil
+  <span class="org-builtin">:demand</span> t)
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">org-roam</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> org-roam-v2-ack t)
+  (<span class="org-keyword">setq</span> dw/daily-note-filename <span class="org-string">"%&lt;%Y-%m-%d&gt;.org"</span>
+        dw/daily-note-header <span class="org-string">"#+title: %&lt;%Y-%m-%d %a&gt;\n\n[[roam:%&lt;%Y-%B&gt;]]\n\n"</span>)
+  <span class="org-builtin">:custom</span>
+  (org-roam-directory <span class="org-string">"~/RoamNotes/"</span>)
+  (org-roam-dailies-directory <span class="org-string">"Journal/"</span>)
+  (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+   '((<span class="org-string">"d"</span> <span class="org-string">"default"</span> plain <span class="org-string">"%?"</span>
+      <span class="org-builtin">:if-new</span> (file+head <span class="org-string">"%&lt;%Y%m%d%H%M%S&gt;-${slug}.org"</span>
+                         <span class="org-string">"#+title: ${title}\n"</span>)
+      <span class="org-builtin">:unnarrowed</span> t)))
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c n l"</span> . org-roam-buffer-toggle)
+         (<span class="org-string">"C-c n f"</span> . org-roam-node-find)
+         <span class="org-builtin">:map</span> org-mode-map
+         ((<span class="org-string">"C-c n i"</span> . org-roam-node-insert)))
+  <span class="org-builtin">:config</span>
+  (org-roam-db-autosync-mode))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">scheme-mode</span>
+  <span class="org-builtin">:mode</span> <span class="org-string">"\\.sld\\'"</span>)
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">rainbow-mode</span>
+  <span class="org-builtin">:defer</span> t
+  <span class="org-builtin">:hook</span> (org-mode
+         emacs-lisp-mode
+         web-mode
+         typescript-mode
+         js2-mode))</pre>
+</div>
+
+<h2><a id="setupel" class="anchor" href="#setupel">¶</a>setup.el</h2><div class="outline-text-2" id="text-orgeaf1935">
+<p>
+<a href="https://git.sr.ht/~pkal/setup">https://git.sr.ht/~pkal/setup</a>
+<a href="https://www.emacswiki.org/emacs/SetupEl">https://www.emacswiki.org/emacs/SetupEl</a>
+</p>
+</div>
+
+<h3><a id="benefits" class="anchor" href="#benefits">¶</a>Benefits</h3><div class="outline-text-3" id="text-orgbe9acca">
+<ul class="org-ul">
+<li>Much easier to to</li>
+<li>Can add conditional logic inside of the macro body to set bindings, hooks, etc only if something is true</li>
+</ul>
+
+<pre>(setup (<span class="org-builtin">:if-package</span> avy)
+  (<span class="org-builtin">:option</span> avy-single-candidate-jump nil)
+  (<span class="org-keyword">if</span> (display-graphic-p)
+      (<span class="org-builtin">:global</span> <span class="org-string">"M-z"</span> #'avy-goto-word-1)
+    (<span class="org-builtin">:global</span> <span class="org-string">"C-z"</span> #'avy-goto-word-1)))</pre>
+</div>
+
+<h3><a id="final-config" class="anchor" href="#final-config">¶</a>Final config</h3><div class="outline-text-3" id="text-org03d5b57">
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">-*- lexical-binding: t; -*-</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Install setup.el</span>
+(<span class="org-keyword">unless</span> (package-installed-p 'setup)
+  (package-install 'setup))
+
+(<span class="org-keyword">require</span> '<span class="org-constant">setup</span>)
+
+(setup-define <span class="org-builtin">:straight</span>
+  (<span class="org-keyword">lambda</span> (recipe)
+    `(straight-use-package ',recipe))
+  <span class="org-builtin">:documentation</span> <span class="org-doc">"Install RECIPE if it hasn't been installed yet.</span>
+<span class="org-doc">This macro can be used as HEAD, and it will replace itself with</span>
+<span class="org-doc">the package name from RECIPE."</span>
+  <span class="org-builtin">:repeatable</span> t
+  <span class="org-builtin">:shorthand</span> #'cadr)
+
+(setup (<span class="org-builtin">:straight</span> evil)
+  (<span class="org-builtin">:also-load</span> org)
+  (<span class="org-keyword">setq</span> evil-want-C-u-scroll t)
+  (evil-mode 1))
+
+(setup org
+  (<span class="org-builtin">:also-load</span> org-roam))
+
+(setup (<span class="org-builtin">:straight</span> org-roam)
+  (<span class="org-keyword">setq</span> org-roam-v2-ack t
+        dw/daily-note-filename <span class="org-string">"%&lt;%Y-%m-%d&gt;.org"</span>
+        dw/daily-note-header <span class="org-string">"#+title: %&lt;%Y-%m-%d %a&gt;\n\n[[roam:%&lt;%Y-%B&gt;]]\n\n"</span>)
+  (<span class="org-builtin">:option</span> org-roam-directory <span class="org-string">"~/RoamNotes/"</span>
+           org-roam-dailies-directory <span class="org-string">"Journal/"</span>
+           org-roam-completion-everywhere t
+           org-roam-capture-templates
+            '((<span class="org-string">"d"</span> <span class="org-string">"default"</span> plain <span class="org-string">"%?"</span>
+               <span class="org-builtin">:if-new</span> (file+head <span class="org-string">"%&lt;%Y%m%d%H%M%S&gt;-${slug}.org"</span>
+                                  <span class="org-string">"#+title: ${title}\n"</span>)
+               <span class="org-builtin">:unnarrowed</span> t)))
+  (<span class="org-builtin">:global</span> <span class="org-string">"C-c n l"</span> org-roam-buffer-toggle
+           <span class="org-string">"C-c n f"</span> org-roam-node-find)
+  (<span class="org-builtin">:with-map</span> org-mode-map
+    (<span class="org-builtin">:bind</span> <span class="org-string">"C-c n i"</span> org-roam-node-insert))
+  (<span class="org-builtin">:when-loaded</span> (org-roam-db-autosync-mode)))
+
+(setup scheme-mode
+  (<span class="org-builtin">:file-match</span> <span class="org-string">"\\.sld\\'"</span>))
+
+(setup (<span class="org-builtin">:straight</span> rainbow-mode)
+  (<span class="org-builtin">:hook</span> org-mode
+         emacs-lisp-mode
+         emacs-lisp-mode
+         web-mode
+         typescript-mode
+         js2-mode))</pre>
+</div>
+
+<h2><a id="leafel" class="anchor" href="#leafel">¶</a>leaf.el</h2><div class="outline-text-2" id="text-orgf753fb3">
+<p>
+<a href="https://github.com/conao3/leaf.el">https://github.com/conao3/leaf.el</a>
+<a href="https://github.com/conao3/leaf.el/issues/257">https://github.com/conao3/leaf.el/issues/257</a>
+<a href="https://github.com/conao3/leaf-defaults.el">https://github.com/conao3/leaf-defaults.el</a>
+</p>
+</div>
+
+<h3><a id="final-config" class="anchor" href="#final-config">¶</a>Final config</h3><div class="outline-text-3" id="text-org7296aba">
+<pre>(<span class="org-keyword">eval-and-compile</span>
+  (customize-set-variable
+   'package-archives '((<span class="org-string">"melpa"</span> . <span class="org-string">"https://melpa.org/packages/"</span>)
+                       (<span class="org-string">"gnu"</span> . <span class="org-string">"https://elpa.gnu.org/packages/"</span>)))
+  (package-initialize)
+  (<span class="org-keyword">unless</span> (package-installed-p 'leaf)
+    (package-refresh-contents)
+    (package-install 'leaf))
+
+  (leaf leaf-keywords
+    <span class="org-builtin">:ensure</span> t
+    <span class="org-builtin">:init</span>
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">optional packages if you want to use :hydra, :el-get, :blackout,,,</span>
+    (leaf hydra <span class="org-builtin">:ensure</span> t)
+    (leaf el-get <span class="org-builtin">:ensure</span> t)
+    (leaf blackout <span class="org-builtin">:ensure</span> t)
+
+    <span class="org-builtin">:config</span>
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">initialize leaf-keywords.el</span>
+    (leaf-keywords-init)))
+
+(leaf evil
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> evil-want-c-u-scroll t)
+  (evil-mode 1))
+
+(leaf org
+  <span class="org-builtin">:after</span> evil
+  <span class="org-builtin">:leaf-defer</span> nil)
+
+(leaf org-roam
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> org-roam-v2-ack t)
+  (<span class="org-keyword">setq</span> dw/daily-note-filename <span class="org-string">"%&lt;%Y-%m-%d&gt;.org"</span>
+        dw/daily-note-header <span class="org-string">"#+title: %&lt;%Y-%m-%d %a&gt;\n\n[[roam:%&lt;%Y-%B&gt;]]\n\n"</span>)
+  <span class="org-builtin">:custom</span>
+  (org-roam-directory . <span class="org-string">"~/RoamNotes/"</span>)
+  (org-roam-dailies-directory . <span class="org-string">"Journal/"</span>)
+  (org-roam-completion-everywhere . t)
+  (org-roam-capture-templates .
+   '((<span class="org-string">"d"</span> <span class="org-string">"default"</span> plain <span class="org-string">"%?"</span>
+      <span class="org-builtin">:if-new</span> (file+head <span class="org-string">"%&lt;%Y%m%d%H%M%S&gt;-${slug}.org"</span>
+                         <span class="org-string">"#+title: ${title}\n"</span>)
+      <span class="org-builtin">:unnarrowed</span> t)))
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c n l"</span> . org-roam-buffer-toggle)
+         (<span class="org-string">"C-c n f"</span> . org-roam-node-find)
+         (<span class="org-builtin">:org-mode-map</span>
+          ((<span class="org-string">"C-c n i"</span> . org-roam-node-insert))))
+  <span class="org-builtin">:config</span>
+  (org-roam-db-autosync-mode))
+
+(leaf scheme-mode
+  <span class="org-builtin">:mode</span> <span class="org-string">"\\.sld\\'"</span>)
+
+(leaf rainbow-mode
+  <span class="org-builtin">:leaf-defer</span> nil
+  <span class="org-builtin">:hook</span> org-mode
+        emacs-lisp-mode
+        web-mode
+        typescript-mode
+        js2-mode)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

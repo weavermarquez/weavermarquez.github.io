@@ -1,0 +1,112 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Are Text-Centric Interfaces Better for Crafters? - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Are Text-Centric Interfaces Better for Crafters?</h1><p class="site-post-meta">October 21, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/U8v32ChA-Rc" allowfullscreen></iframe></div><div id="content"><p>
+<b>NOTE:</b> This stream was unfortunately cut short due to internet problems!
+</p>
+
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orge6fd8b1">
+<ul class="org-ul">
+<li><a href="https://github.com/joaotavora/eglot">Eglot</a> is now a part of Emacs 29 (devel): <a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=83fbda715973f57dc49fe002d255ecaff8273154">https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=83fbda715973f57dc49fe002d255ecaff8273154</a></li>
+
+<li>Support the channel!  <b>Buy Mastering Emacs</b> with this link <a href="https://www.masteringemacs.org/r/systemcrafters">https://www.masteringemacs.org/r/systemcrafters</a></li>
+</ul>
+</div>
+
+<h2><a id="are-text-centric-interfaces-better-for-crafters" class="anchor" href="#are-text-centric-interfaces-better-for-crafters">¶</a>Are Text-Centric Interfaces Better for Crafters?</h2><div class="outline-text-2" id="text-orgc6d40de">
+<p>
+Today I&rsquo;d like to discuss something I&rsquo;ve been thinking about a lot this week: are text-centric interfaces better for people like us?
+</p>
+
+<p>
+I&rsquo;m sure we all have a similar opinion on this topic but I thought it would be interesting to go into a bit more detail to see if there are any unique advantages we haven&rsquo;t considered yet.
+</p>
+
+<p>
+Also, &ldquo;interfaces&rdquo; in this case is not just about user interfaces, it&rsquo;s also about protocols as they are another type of interface we care about!
+</p>
+
+<p>
+For each of these areas, I&rsquo;d like us to discuss a few specific factors:
+</p>
+
+<ul class="org-ul">
+<li>Effectiveness: Can you accomplish more or less with a text-based interace?</li>
+<li>Efficiency: Can you work faster with a text-based interface?</li>
+<li>Hackability: Can you build your own tools around the interface?</li>
+<li>User-Friendliness: Not as much of a concern?</li>
+</ul>
+</div>
+
+<h3><a id="code-collaboration" class="anchor" href="#code-collaboration">¶</a>Code Collaboration</h3><div class="outline-text-3" id="text-org77565c3">
+<p>
+GitHub vs Sourcehut
+</p>
+
+<p>
+GitHub has a full web UI for things like:
+</p>
+
+<ul class="org-ul">
+<li>Issue management</li>
+<li>Project management</li>
+<li>Pull requests</li>
+</ul>
+
+<p>
+You become very dependent on that interface because much of the functionality can only be accessed through it.
+</p>
+
+<p>
+The question is: is an e-mail driven workflow better for crafters/hackers?
+</p>
+</div>
+
+<h4><a id="effectiveness" class="anchor" href="#effectiveness">¶</a>Effectiveness</h4><div class="outline-text-4" id="text-orgefeaf21">
+<p>
+Pros:
+</p>
+
+<ul class="org-ul">
+<li>You can choose which mail client or interface you use to process your email about the project</li>
+<li>Email is a very well-established standard</li>
+<li>You can look at issue emails and patches offline</li>
+<li>You already have access to the patches in the emails, easy to apply and review</li>
+<li>It&rsquo;s easy to discuss specific aspects of a patch because you can just copy/paste parts of the patch into the reply and discuss there</li>
+</ul>
+
+<p>
+Cons:
+</p>
+
+<ul class="org-ul">
+<li>Harder to include demonstration media like GIFs or videos, though you can add them as attachments to the email or use an upload service like 0x0.st</li>
+<li>It&rsquo;s harder to get an idea of how &ldquo;popular&rdquo; or &ldquo;used&rdquo; that a project is on a site like SourceHut which doesn&rsquo;t have signals for that like stars or forks.  However, you could just as easily check the mailing list logs for the project on SourceHut to see how much activity there is.</li>
+<li>Maybe it&rsquo;s harder to read mailing list discussion on mobile</li>
+<li>It might be harder to stay up to date in a fast-moving project that uses diffs; the GitHub PR UI will tell you when your PR is out of date
+<ul class="org-ul">
+<li>The maintainer can tell you if your patch is out of date</li>
+<li>The CI system will throw errors if your code doesn&rsquo;t build</li>
+</ul></li>
+<li>Not as welcoming for newcomers</li>
+</ul>
+</div>
+
+<h3><a id="chat" class="anchor" href="#chat">¶</a>Chat</h3><div class="outline-text-3" id="text-org4a26bbe">
+<p>
+Discord vs Matrix vs IRC
+</p>
+</div>
+
+<h3><a id="system-and-programming-tools" class="anchor" href="#system-and-programming-tools">¶</a>System and Programming Tools</h3><div class="outline-text-3" id="text-orgaeda2ec">
+<p>
+I don&rsquo;t just mean whether Emacs is better than a graphical IDE; this also relates to compilers, linting tools, service managers, system control applications, and many other tools you might use.
+</p>
+</div>
+
+<h3><a id="creative-tools" class="anchor" href="#creative-tools">¶</a>Creative Tools</h3><div class="outline-text-3" id="text-orgdfc155d">
+<p>
+It&rsquo;s slightly harder to imagine a text-centric interface for creating images, videos, or music!
+</p>
+</div>
+
+<h3><a id="what-else" class="anchor" href="#what-else">¶</a>What else?</h3>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

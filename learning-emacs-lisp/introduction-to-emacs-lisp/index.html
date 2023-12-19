@@ -1,0 +1,297 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Introduction to Emacs Lisp - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Introduction to Emacs Lisp</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/RQK_DaaX34Q" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org623009f">
+<p>
+This is meant to be a practical series!
+</p>
+
+<ul class="org-ul">
+<li>Emacs Lisp fundamentals</li>
+<li>Everything about functions and variables</li>
+<li>Manipulating Emacs</li>
+<li>Working with the system</li>
+<li>Creating and using extensibility points</li>
+<li>Writing macros</li>
+<li>Publishing to MELPA</li>
+</ul>
+
+<p>
+We will work on at least one new package as an example!
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="who-is-this-series-for" class="anchor" href="#who-is-this-series-for">¶</a>Who is this series for?</h2><div class="outline-text-2" id="text-org7427832">
+<ul class="org-ul">
+<li>Not only for programmers!</li>
+<li>Everyone should get to enjoy hacking Emacs</li>
+</ul>
+
+<p>
+If you know Lisp well, don&rsquo;t worry if I skip concepts!
+</p>
+</div>
+
+<h2><a id="what-is-lisp" class="anchor" href="#what-is-lisp">¶</a>What is Lisp?</h2><div class="outline-text-2" id="text-orgcf11637">
+<ul class="org-ul">
+<li>That weird language with Lots of Irritating Superfluous Parentheses</li>
+<li>A language and environment based on the idea of interactivity</li>
+<li>The syntax enables new language constructs to be defined</li>
+<li>The ultimate hacker language!</li>
+</ul>
+</div>
+
+<h2><a id="emacs-lisp" class="anchor" href="#emacs-lisp">¶</a>Emacs Lisp</h2><div class="outline-text-2" id="text-orgce5c4d2">
+<ul class="org-ul">
+<li>A dialect of Lisp for configuring and extending Emacs</li>
+<li>Much of Emacs&rsquo; built-in functionality is written with it!</li>
+<li>Has core features geared toward discoverability and extensibility</li>
+<li>APIs and data types for many types special to Emacs (buffers, windows, etc)</li>
+</ul>
+
+<p>
+We will focus on core concepts in this video!
+</p>
+</div>
+
+<h2><a id="lisp-syntax" class="anchor" href="#lisp-syntax">¶</a>Lisp Syntax</h2><div class="outline-text-2" id="text-org1e240b5">
+<p>
+The beauty of Lisp comes from the simplicity of its syntax!
+</p>
+
+<p>
+Lisp syntax is primarily composed of lists, symbols, and values.
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">the-meaning-of-life</span> (answer)
+  (message <span class="org-string">"The answer is %s"</span> answer))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Newlines and whitespace can be added anywhere in lists</span>
+(list 1 2 3
+      4 5 6
+      7 8 9)</pre>
+
+<p>
+The code can also be treated as data!
+</p>
+
+<p>
+You shouldn&rsquo;t be afraid of editing code with parentheses, there are packages for that :)
+</p>
+</div>
+
+<h2><a id="values-or-ldquoobjectsrdquo" class="anchor" href="#values-or-ldquoobjectsrdquo">¶</a>Values (or &ldquo;Objects&rdquo;)</h2><div class="outline-text-2" id="text-orgc360a8c">
+<p>
+Any value, or object, has a type.  It also has a textual representation that may or may not be &ldquo;readable&rdquo;!
+</p>
+</div>
+
+<h3><a id="lisp-types" class="anchor" href="#lisp-types">¶</a>Lisp Types</h3><div class="outline-text-3" id="text-org50db9aa">
+<ul class="org-ul">
+<li>Strings</li>
+<li>Numbers (both integer and float)</li>
+<li>Symbols</li>
+<li>Cons cells</li>
+<li>Arrays and Vectors</li>
+<li>&#x2026; and more</li>
+</ul>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Programming-Types.html#Programming-Types">https://www.gnu.org/software/emacs/manual/html_node/elisp/Programming-Types.html#Programming-Types</a>
+</p>
+</div>
+
+<h3><a id="emacs-types" class="anchor" href="#emacs-types">¶</a>Emacs Types</h3><div class="outline-text-3" id="text-org5635347">
+<p>
+There are many types specific to Emacs as well, most don&rsquo;t have a code representation:
+</p>
+
+<ul class="org-ul">
+<li>Buffers</li>
+<li>Windows</li>
+<li>Frames</li>
+<li>Threads</li>
+<li>Keymaps</li>
+<li>&#x2026;</li>
+</ul>
+
+<p>
+Things we do with these types can affect the Emacs interface:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Get the previous buffer and switch to it</span>
+(switch-to-buffer (other-buffer))</pre>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Editing-Types.html#Editing-Types">https://www.gnu.org/software/emacs/manual/html_node/elisp/Editing-Types.html#Editing-Types</a>
+</p>
+</div>
+
+<h2><a id="forms-and-evaluation" class="anchor" href="#forms-and-evaluation">¶</a>Forms and Evaluation</h2><div class="outline-text-2" id="text-org75e4d02">
+<p>
+A &ldquo;form&rdquo; is any lisp object that can be evaluated.
+</p>
+</div>
+
+<h3><a id="how-evaluation-works" class="anchor" href="#how-evaluation-works">¶</a>How evaluation works</h3><div class="outline-text-3" id="text-orge533421">
+<p>
+Evaluation works differently for:
+</p>
+
+<ul class="org-ul">
+<li>Lists</li>
+<li>Symbols</li>
+<li>All other object types</li>
+</ul>
+
+<p>
+Some are <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Self_002dEvaluating-Forms.html#Self_002dEvaluating-Forms">self-evaluating</a>, meaning that they return their own value:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Primitives are usually self-evaluating</span>
+42
+
+<span class="org-string">"Hello!"</span>
+
+[1 2 (+ 1 2)]
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Not self-evaluating!</span>
+buffer-file-name
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Evaluates a function!</span>
+(+ 300 11)
+
+(300 100)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Some representations can't be evaluated!</span>
+#&lt;buffer Emacs-Lisp-01.org&gt;</pre>
+</div>
+
+<h3><a id="the-ldquoenvironmentrdquo" class="anchor" href="#the-ldquoenvironmentrdquo">¶</a>The &ldquo;Environment&rdquo;</h3><div class="outline-text-3" id="text-org4f82544">
+<p>
+Everything is evaluated in terms of Emacs Lisp&rsquo;s global environment!
+</p>
+
+<p>
+Pros: you can change anything in the environment as you go
+Cons: your environment might get &ldquo;dirty&rdquo; over time in your Emacs session
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Set the initial value</span>
+(<span class="org-keyword">setq</span> efs/our-nice-variable <span class="org-string">"Hello System Crafters!"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Change it to something else (even a different type!)</span>
+(<span class="org-keyword">setq</span> efs/our-nice-variable 1337)</pre>
+</div>
+
+<h3><a id="expressions" class="anchor" href="#expressions">¶</a>Expressions</h3><div class="outline-text-3" id="text-org19da80f">
+<p>
+Lisp is an expression-based language, almost all forms return a value.
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">A very useful function...</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">add-42</span> (num)
+  (+ num 42))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">It returns the result</span>
+(add-42 58)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Using the result in another call</span>
+(* (add-42 58) 100)</pre>
+</div>
+
+<h2><a id="symbols" class="anchor" href="#symbols">¶</a>Symbols</h2><div class="outline-text-2" id="text-org7faadc3">
+<p>
+A symbol is also a type of object, but it&rsquo;s not self-evaluating!
+</p>
+
+<p>
+Symbols can contain alphanumeric characters plus many others:
+</p>
+
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Possible symbol characters</span>
+- + = * / _ ~ ! @ $ % ^ &amp; : &lt; &gt; { } ?</pre>
+
+<p>
+This gives you the ability to ascribe meanings to symbols based on the characters they contain.  Some examples:
+</p>
+
+<ul class="org-ul">
+<li><code>bui-keyword-&gt;symbol</code> - Convert from one type to another</li>
+<li><code>efs/some-name</code> - Define a &ldquo;namespace&rdquo; for the symbol</li>
+<li><code>*pcache-repositories*</code> - Indicates a global variable (not common in Emacs Lisp)</li>
+<li><code>string=</code> - Check if something is equal to something else</li>
+</ul>
+
+<p>
+When a symbol is evaluated, it returns the variable value associated with that binding:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">The example we saw before</span>
+buffer-file-name</pre>
+
+<p>
+Function names can&rsquo;t be evaluated like this though:
+</p>
+
+<pre>get-file-buffer</pre>
+
+<p>
+We will discuss this point more in a future episode.
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Symbol-Type.html#Symbol-Type">https://www.gnu.org/software/emacs/manual/html_node/elisp/Symbol-Type.html#Symbol-Type</a>
+</p>
+</div>
+
+<h2><a id="infix-vs-prefix" class="anchor" href="#infix-vs-prefix">¶</a>Infix vs Prefix</h2><div class="outline-text-2" id="text-org7144f3b">
+<p>
+Lisp expressions use &ldquo;prefix&rdquo; notation:
+</p>
+
+<pre>(+ 300 (- 12 1))</pre>
+
+<p>
+Why is this useful?  Because it puts all functions and operators at the same level of importance, even the ones you define!
+</p>
+</div>
+
+<h2><a id="exercise" class="anchor" href="#exercise">¶</a>Exercise</h2><div class="outline-text-2" id="text-org1ee06de">
+<p>
+Open up the <code>*scratch*</code> buffer and experiment with writing simple expressions.  Use <code>C-x C-e</code> (<code>eval-last-sexp</code>) at the end of each expression to evaluate them.
+</p>
+
+<p>
+Here are some you can try:
+</p>
+
+<pre>42
+
+(* 42 10)
+
+(concat <span class="org-string">"Hello "</span> <span class="org-string">"Emacs!"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Simple list</span>
+'(1 2 3)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Another way to create a list</span>
+(list 1 2 3)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Get the second list item</span>
+(car (cdr '(1 2 3)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">A vector</span>
+[1 2 3]</pre>
+
+<p>
+Also, go take a look at your Emacs configuration and see what things you can recognize about it now!
+</p>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

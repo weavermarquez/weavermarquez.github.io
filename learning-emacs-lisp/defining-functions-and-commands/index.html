@@ -1,0 +1,416 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Defining Functions and Commands - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Defining Functions and Commands</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/EqgkAUHw0Yc" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org93275d8">
+<ul class="org-ul">
+<li>Basic function definitions</li>
+<li>Function parameter types</li>
+<li>Documenting functions</li>
+<li>Invoking functions with <code>funcall</code> and <code>apply</code></li>
+<li>Interactive functions</li>
+<li>Example code!</li>
+</ul>
+</div>
+
+<h2><a id="what-is-a-function" class="anchor" href="#what-is-a-function">¶</a>What is a function?</h2><div class="outline-text-2" id="text-orgf7885c7">
+<ul class="org-ul">
+<li>A reusable piece of code</li>
+<li>Can accept inputs via parameters</li>
+<li>Usually returns a result</li>
+<li>Often has a name, but can be anonymous!</li>
+<li>Can be called by any other code or function</li>
+</ul>
+</div>
+
+<h2><a id="defining-a-function" class="anchor" href="#defining-a-function">¶</a>Defining a function</h2><div class="outline-text-2" id="text-org52c9ffd">
+<p>
+You&rsquo;ve probably seen this before, but let&rsquo;s break it down:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+  (* (+ x 20)
+     (- y 10)))
+
+(do-some-math 100 50)</pre>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Defining-Functions.html">Emacs Lisp Manual: Defining Functions</a>
+</p>
+</div>
+
+<h2><a id="function-arguments" class="anchor" href="#function-arguments">¶</a>Function arguments</h2><div class="outline-text-2" id="text-org8ae5361">
+<p>
+Functions can have different types of arguments:
+</p>
+
+<ul class="org-ul">
+<li>&ldquo;Optional&rdquo; arguments: Arguments that are not required to be provided</li>
+<li>&ldquo;Rest&rdquo; arguments: One variable to contain an arbitrary amount of remaining parameters</li>
+</ul>
+
+<p>
+They can both be used in the same function definition!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">If Y or Z are not provided, use the value 1 in their place</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">multiply-maybe</span> (x <span class="org-type">&amp;optional</span> y z)
+  (* x
+     (<span class="org-keyword">or</span> y 1)
+     (<span class="org-keyword">or</span> z 1)))
+
+(multiply-maybe 5)              <span class="org-comment-delimiter">;; </span><span class="org-comment">5</span>
+(multiply-maybe 5 2)            <span class="org-comment-delimiter">;; </span><span class="org-comment">10</span>
+(multiply-maybe 5 2 10)         <span class="org-comment-delimiter">;; </span><span class="org-comment">100</span>
+(multiply-maybe 5 nil 10)       <span class="org-comment-delimiter">;; </span><span class="org-comment">50</span>
+(multiply-maybe 5 2 10 7)       <span class="org-comment-delimiter">;; </span><span class="org-comment">error</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Multiply any non-nil operands</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">multiply-many</span> (x <span class="org-type">&amp;rest</span> operands)
+  (<span class="org-keyword">dolist</span> (operand operands)
+    (<span class="org-keyword">when</span> operand
+      (<span class="org-keyword">setq</span> x (* x operand))))
+  x)
+
+(multiply-many 5)               <span class="org-comment-delimiter">;; </span><span class="org-comment">5</span>
+(multiply-many 5 2)             <span class="org-comment-delimiter">;; </span><span class="org-comment">10</span>
+(multiply-many 5 2 10)          <span class="org-comment-delimiter">;; </span><span class="org-comment">100</span>
+(multiply-many 5 nil 10)        <span class="org-comment-delimiter">;; </span><span class="org-comment">50</span>
+(multiply-many 5 2 10 7)        <span class="org-comment-delimiter">;; </span><span class="org-comment">700</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Multiply any non-nil operands with an optional operand</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">multiply-two-or-many</span> (x <span class="org-type">&amp;optional</span> y <span class="org-type">&amp;rest</span> operands)
+  (<span class="org-keyword">setq</span> x (* x (<span class="org-keyword">or</span> y 1)))
+  (<span class="org-keyword">dolist</span> (operand operands)
+    (<span class="org-keyword">when</span> operand
+      (<span class="org-keyword">setq</span> x (* x operand))))
+  x)
+
+(multiply-two-or-many 5)        <span class="org-comment-delimiter">;; </span><span class="org-comment">5</span>
+(multiply-two-or-many 5 2)      <span class="org-comment-delimiter">;; </span><span class="org-comment">10</span>
+(multiply-two-or-many 5 2 10)   <span class="org-comment-delimiter">;; </span><span class="org-comment">100</span>
+(multiply-two-or-many 5 nil 10) <span class="org-comment-delimiter">;; </span><span class="org-comment">50</span>
+(multiply-two-or-many 5 2 10 7) <span class="org-comment-delimiter">;; </span><span class="org-comment">700</span></pre>
+</div>
+
+<h2><a id="documenting-functions" class="anchor" href="#documenting-functions">¶</a>Documenting functions</h2><div class="outline-text-2" id="text-orgcf78490">
+<p>
+The first form in the function body can be a string which describes the function!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+  <span class="org-doc">"Multiplies the result of math expressions on the arguments X and Y."</span>
+  (* (+ x 20)
+     (- y 10)))</pre>
+
+<p>
+The convention is to capitalize the names of all parameters to the function.
+</p>
+
+<p>
+Use <code>describe-function</code> to look at <code>alist-get</code> as an example!
+</p>
+
+<p>
+When you need to write a longer documentation string, you can use newlines inside of the string to wrap it.  Don&rsquo;t indent the following lines, though!
+</p>
+
+<p>
+Let&rsquo;s wrap this documentation string:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+    <span class="org-doc">"Multiplies the result of math expressions on the arguments X</span>
+<span class="org-doc">and Y. This documentation string is long so it wraps onto the</span>
+<span class="org-doc">next line. Keep in mind that you should not indent the following</span>
+<span class="org-doc">lines or the documentation string will look bad!"</span>
+    (* (+ x 20)
+       (- y 10)))</pre>
+
+<p>
+You can use <code>M-q</code> inside of the documentation to wrap multi-line documentation strings!
+</p>
+</div>
+
+<h2><a id="functions-without-names" class="anchor" href="#functions-without-names">¶</a>Functions without names</h2><div class="outline-text-2" id="text-org6a1a09d">
+<p>
+Sometimes you need to pass a function to another function (or to a hook) but you don&rsquo;t want to define a named function for it.
+</p>
+
+<p>
+Use a lambda function!
+</p>
+
+<pre>(<span class="org-keyword">lambda</span> (x y)
+  (+ 100 x y))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">You can call a lambda function directly</span>
+((<span class="org-keyword">lambda</span> (x y)
+   (+ 100 x y))
+ 10 20)</pre>
+
+<p>
+Why &ldquo;lambda&rdquo;?  It comes from a mathematical system called <a href="https://en.wikipedia.org/wiki/Lambda_calculus">lambda calculus</a> where the Greek lambda (λ) was used to denote a function definition.
+</p>
+</div>
+
+<h2><a id="invoking-functions" class="anchor" href="#invoking-functions">¶</a>Invoking functions</h2><div class="outline-text-2" id="text-orgc29f57d">
+<p>
+You can store a lambda function or named function reference in a variable:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">The usual way</span>
+(+ 2 2)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Calling it by symbol</span>
+(funcall '+ 2 2)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Define a function that accepts a function</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">gimmie-function</span> (fun x)
+  (message <span class="org-string">"Function: %s -- Result: %d"</span>
+           fun
+           (funcall fun x)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Store a lambda in a variable</span>
+(<span class="org-keyword">setq</span> function-in-variable (<span class="org-keyword">lambda</span> (arg) (+ arg 1)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Define an equivalent function</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">named-version</span> (arg)
+  (+ arg 1))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Invoke lambda from parameter</span>
+(gimmie-function (<span class="org-keyword">lambda</span> (arg) (+ arg 1)) 5)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Invoke lambda stored in variable (same as above)</span>
+(gimmie-function function-in-variable 5)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Invoke function by passing symbol</span>
+(gimmie-function 'named-version 5)</pre>
+
+<p>
+Maybe you have a list of values that you want to pass to a function?  Use <code>apply</code> instead!
+</p>
+
+<pre>(apply '+ '(2 2))
+(funcall '+ 2 2)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Even works with &amp;optional and &amp;rest parameters</span>
+(apply 'multiply-many '(1 2 3 4 5))
+(apply 'multiply-two-or-many '(1 2 3 4 5))</pre>
+</div>
+
+<h2><a id="defining-commands" class="anchor" href="#defining-commands">¶</a>Defining commands</h2><div class="outline-text-2" id="text-org634e2eb">
+<p>
+Interactive functions are meant to be used directly by a user in Emacs!
+</p>
+
+<p>
+In Emacs terminology, an interactive function is considered to be a &ldquo;command.&rdquo;
+</p>
+
+<p>
+They provide a few benefits over normal functions
+</p>
+
+<ul class="org-ul">
+<li>They show up in <code>M-x</code> command list</li>
+<li>Can be used in key bindings</li>
+<li>Can have parameters sent via prefix arguments, <code>C-u</code></li>
+</ul>
+
+<p>
+When you write your own package, your user-facing functions should be defined as commands (unless you are writing a programming library!)
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Defining-Commands.html">Emacs Lisp Manual: Defining Commands</a>
+</p>
+</div>
+
+<h3><a id="defining-an-interactive-function" class="anchor" href="#defining-an-interactive-function">¶</a>Defining an interactive function</h3><div class="outline-text-3" id="text-orgb17200f">
+<p>
+The form <code>(interactive)</code> needs to be the first one in the function definition!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">my-first-command</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (message <span class="org-string">"Hey, it worked!"</span>))</pre>
+
+<p>
+Invoke it using <code>M-x</code>!
+</p>
+
+<p>
+The description will now be different in <code>describe-function</code>.
+</p>
+</div>
+
+<h3><a id="interactive-parameters" class="anchor" href="#interactive-parameters">¶</a>Interactive parameters</h3><div class="outline-text-3" id="text-org2a4c564">
+<p>
+The <code>interactive</code> form accepts parameters that tells Emacs what to do when the command is executed interactively (either via <code>M-x</code> or when used via key binding).  Some examples:
+</p>
+
+<p>
+<b>General arguments</b>
+</p>
+<ul class="org-ul">
+<li><code>N</code> - Prompt for numbers or use a <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Prefix-Command-Arguments.html">numeric prefix argument</a></li>
+<li><code>p</code> - Use numeric prefix without prompting (only prefix arguments)</li>
+<li><code>M</code> - Prompt for a string</li>
+<li><code>i</code> - Skip an &ldquo;irrelevant&rdquo; argument</li>
+</ul>
+
+<p>
+<b>Files, directories, and buffers</b>
+</p>
+<ul class="org-ul">
+<li><code>F</code> - Prompt for a file, providing completions</li>
+<li><code>D</code> - Prompt for a directory, providing completions</li>
+<li><code>b</code> - Prompt for a buffer, providing completions</li>
+</ul>
+
+<p>
+<b>Functions, commands, and variables</b>
+</p>
+<ul class="org-ul">
+<li><code>C</code> - Prompt for a command name</li>
+<li><code>a</code> - Prompt for a function name</li>
+<li><code>v</code> - Prompt for a custom variable name</li>
+</ul>
+
+<p>
+We won&rsquo;t go through every possibility, check the documentation for more:
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes">Emacs Manual: Interactive codes</a>
+</p>
+</div>
+
+<h3><a id="examples" class="anchor" href="#examples">¶</a>Examples</h3><div class="outline-text-3" id="text-org6b053e6">
+<p>
+Try to bind <code>C-c z</code> to <code>do-some-math</code> which we defined earlier:
+</p>
+
+<pre>(global-set-key (kbd <span class="org-string">"C-c z"</span>) 'do-some-math)</pre>
+
+<p>
+Let&rsquo;s run it!
+</p>
+
+<p>
+It tells us that <code>commandp</code> returns false for this function, it&rsquo;s not a command!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+  <span class="org-doc">"Multiplies the result of math expressions on the two arguments"</span>
+  (<span class="org-keyword">interactive</span>)
+  (* (+ x 20)
+     (- y 10)))</pre>
+
+<p>
+Run it again!
+</p>
+
+<p>
+Now it complains about not having arguments for <code>x</code> and <code>y</code>.  Let&rsquo;s fix it!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+  <span class="org-doc">"Multiplies the result of math expressions on the two arguments"</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"N"</span>)
+  (* (+ x 20)
+     (- y 10)))</pre>
+
+<p>
+It needs to prompt for both parameters!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+  <span class="org-doc">"Multiplies the result of math expressions on the two arguments"</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"N\nN"</span>)
+  (* (+ x 20)
+     (- y 10)))</pre>
+
+<p>
+Improve the prompts by adding a descriptive string after each:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+  <span class="org-doc">"Multiplies the result of math expressions on the two arguments"</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"NPlease enter a value for x: \nNy: "</span>)
+  (* (+ x 20)
+     (- y 10)))</pre>
+
+<p>
+Need to write out the result!
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">do-some-math</span> (x y)
+  <span class="org-doc">"Multiplies the result of math expressions on the arguments X and Y."</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"Nx: \nNy: "</span>)
+  (message <span class="org-string">"The result is: %d"</span>
+           (* (+ x 20)
+              (- y 10))))</pre>
+
+<p>
+Try it with numeric prefix argument:
+</p>
+
+<p>
+Let&rsquo;s look at a couple other examples:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">ask-favorite-fruit</span> (fruit-name)
+  (<span class="org-keyword">interactive</span> <span class="org-string">"MEnter your favorite fruit: "</span>)
+  (message <span class="org-string">"Wrong, %s is disgusting!"</span> fruit-name))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">backup-directory</span> (dir-path)
+  (<span class="org-keyword">interactive</span> <span class="org-string">"DSelect a path to back up: "</span>)
+  (message <span class="org-string">"Oops, I deleted %s"</span> dir-path))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">run-a-command</span> (command)
+  (<span class="org-keyword">interactive</span> <span class="org-string">"CPick a command: "</span>)
+  (message <span class="org-string">"Run %s yourself!"</span> command))</pre>
+</div>
+
+<h2><a id="a-real-example" class="anchor" href="#a-real-example">¶</a>A real example!</h2><div class="outline-text-2" id="text-org8a3c08c">
+<p>
+Let&rsquo;s define the project we&rsquo;ll be following for the rest of the series:
+</p>
+
+<ul class="org-ul">
+<li>A package for managing your dotfiles!</li>
+<li>Handles tangling org-mode files containing most of your configuration</li>
+<li>Can also initialize and manage your dotfiles repository</li>
+</ul>
+
+<p>
+Today we&rsquo;ll define a command that automatically tangles the <code>.org</code> files in your dotfiles folder.
+</p>
+</div>
+
+<h3><a id="finished-code" class="anchor" href="#finished-code">¶</a>Finished code</h3><div class="outline-text-3" id="text-org52b8589">
+<pre>(<span class="org-keyword">setq</span> dotfiles-folder <span class="org-string">"~/Projects/Code/emacs-from-scratch"</span>)
+  (<span class="org-keyword">setq</span> dotfiles-org-files '(<span class="org-string">"Emacs.org"</span> <span class="org-string">"Desktop.org"</span>))
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">dotfiles-tangle-org-file</span> (<span class="org-type">&amp;optional</span> org-file)
+    <span class="org-doc">"Tangles a single .org file relative to the path in</span>
+<span class="org-doc">dotfiles-folder.  If no file is specified, tangle the current</span>
+<span class="org-doc">file if it is an org-mode buffer inside of dotfiles-folder."</span>
+    (<span class="org-keyword">interactive</span>)
+   <span class="org-comment-delimiter">;; </span><span class="org-comment">Suppress prompts and messages</span>
+    (<span class="org-keyword">let</span> ((org-confirm-babel-evaluate nil)
+          (message-log-max nil)
+          (inhibit-message t))
+      (org-babel-tangle-file (expand-file-name org-file dotfiles-folder))))
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">dotfiles-tangle-org-files</span> ()
+    <span class="org-doc">"Tangles all of the .org files in the paths specified by the variable dotfiles-folder"</span>
+    (<span class="org-keyword">interactive</span>)
+    (<span class="org-keyword">dolist</span> (org-file dotfiles-org-files)
+      (dotfiles-tangle-org-file org-file))
+    (message <span class="org-string">"Dotfiles are up to date!"</span>))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

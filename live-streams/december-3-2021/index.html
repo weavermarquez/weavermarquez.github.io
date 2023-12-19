@@ -1,0 +1,236 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Can StumpWM Replace EXWM? - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Can StumpWM Replace EXWM?</h1><p class="site-post-meta">December  3, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/g_0raRhGLXs" allowfullscreen></iframe></div><div id="content">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org34021ff">
+<ul class="org-ul">
+<li>EmacsConf 2021 was great!</li>
+<li><a href="https://lists.gnu.org/archive/html/emacs-devel/2021-12/msg00217.html">Emacs 28.0.90</a> (release candidate) has been announced</li>
+<li>This is the first SC stream using <a href="https://pipewire.org/">PipeWire</a>!</li>
+<li>Today is the last day of the holiday sale on the <a href="https://store.systemcrafters.net">System Crafters Store</a>! (code: <b>HOLIDAY</b>)</li>
+</ul>
+</div>
+
+<h2><a id="can-stumpwm-replace-exwm" class="anchor" href="#can-stumpwm-replace-exwm">¶</a>Can StumpWM Replace EXWM?</h2><div class="outline-text-2" id="text-org4e8ebad">
+<p>
+Today we&rsquo;re going to experiment with a well-known Common Lisp window manager called StumpWM!
+</p>
+
+<p>
+I want to try and replicate some of my EXWM workflow or find suitable/better replacements:
+</p>
+
+<ul class="org-ul">
+<li>Single Emacs frame per workspace, each with its own Perspectives (automate creation)</li>
+<li>Launching programs with <code>app-launcher</code> package</li>
+<li>Specific X programs appearing on specific workspaces</li>
+<li>Managing browser windows</li>
+</ul>
+
+<p>
+There are a few other things I want to figure out:
+</p>
+
+<ul class="org-ul">
+<li>Interactive configuration hacking workflow</li>
+<li>Understanding how floating frames work (pin window, movement, switching focus between floating and tiled)</li>
+<li>Managing multiple Emacs frames smoothly</li>
+<li>Controlling where new windows are displayed (group, floating or tiled, etc)</li>
+<li>Communication/automation between Emacs and StumpWM</li>
+<li>Using Emacs as a Rofi-like launcher for programs</li>
+<li>Mode line customization</li>
+</ul>
+</div>
+
+<h3><a id="interactive-repl-notes" class="anchor" href="#interactive-repl-notes">¶</a>Interactive REPL Notes</h3><div class="outline-text-3" id="text-org943504a">
+<p>
+To start the REPL:
+</p>
+
+<pre>(<span class="org-keyword">require</span> <span class="org-constant">:slynk</span>)
+(slynk:create-server <span class="org-builtin">:dont-close</span> t)</pre>
+
+<p>
+Install Sly, use <code>M-x sly-connect</code>, use the default arguments.
+</p>
+
+<ul class="org-ul">
+<li><code>C-c C-d C-d</code>: look up autodoc/documentation for symbol at cursor</li>
+<li><code>C-M-x</code> / <code>C-c C-c</code>: eval form</li>
+</ul>
+</div>
+
+<h3><a id="resources" class="anchor" href="#resources">¶</a>Resources</h3><div class="outline-text-3" id="text-orga56b945">
+<ul class="org-ul">
+<li><a href="https://www.emacswiki.org/emacs/StumpWM">https://www.emacswiki.org/emacs/StumpWM</a></li>
+<li><a href="https://www.youtube.com/watch?v=TdQdBQu3fFM">Gavin Freeborn&rsquo;s StumpWM Video</a></li>
+<li><a href="https://config.phundrak.com/stumpwm.html">Phundrak&rsquo;s StumpWM config</a></li>
+</ul>
+</div>
+
+<h2><a id="final-configuration" class="anchor" href="#final-configuration">¶</a>Final Configuration</h2><div class="outline-text-2" id="text-orge6446bd">
+<p>
+You can check out my latest StumpWM config here:
+</p>
+
+<p>
+<a href="https://github.com/daviwil/dotfiles/blob/guix-home/Stump.org">https://github.com/daviwil/dotfiles/blob/guix-home/Stump.org</a>
+</p>
+
+<p>
+Here is the config we ended up with by the end of the stream:
+</p>
+
+<p>
+<b>~/.emacs.d/init.el</b>
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">dw/stumpwm-send-command</span> (command)
+  (start-process-shell-command <span class="org-string">"stumpish"</span> nil (concat  <span class="org-string">"stumpish "</span> command)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dw/init-stumpwm-workspaces</span> ()
+  (<span class="org-keyword">require</span> '<span class="org-constant">stumpwm-mode</span>)
+  (set-frame-parameter (selected-frame) 'name <span class="org-string">"Emacs"</span>)
+  (select-frame (make-frame '((name . <span class="org-string">"Chat"</span>))))
+  (persp-switch <span class="org-string">"Chat"</span>)
+  (persp-kill <span class="org-string">"Main"</span>)
+  (select-frame-by-name <span class="org-string">"Emacs"</span>))
+
+(add-hook 'after-init-hook #'dw/init-stumpwm-workspaces)</pre>
+
+<p>
+<b>~/.config/stumpwm/config:</b>
+</p>
+
+<pre>(<span class="org-keyword">in-package</span> <span class="org-builtin">:stumpwm</span>)
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Add StumpWM module paths --</span>
+
+(stumpwm:add-to-load-path <span class="org-string">"~/.guix-home/profile/share/common-lisp/sbcl/stumpwm-swm-gaps"</span>)
+(stumpwm:add-to-load-path <span class="org-string">"~/.guix-home/profile/share/common-lisp/sbcl/stumpwm-ttf-fonts"</span>)
+(stumpwm:add-to-load-path <span class="org-string">"~/.guix-home/profile/share/common-lisp/sbcl/stumpwm-stumptray"</span>)
+(stumpwm:add-to-load-path <span class="org-string">"~/.guix-home/profile/share/common-lisp/sbcl/stumpwm-kbd-layouts"</span>)
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Environment setup --</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Set up workspaces</span>
+(run-commands
+  <span class="org-string">"gnewbg chat"</span>
+  <span class="org-string">"gnew dev"</span>
+  <span class="org-string">"gnewbg web"</span>
+  <span class="org-string">"gnewbg comm"</span>
+  <span class="org-string">"gnewbg media"</span>
+  <span class="org-string">"gnewbg-float mpv"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Change the prefix key to Super-d</span>
+(set-prefix-key (kbd <span class="org-string">"s-d"</span>))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Mouse click should focus the window</span>
+(setf *mouse-focus-policy* <span class="org-builtin">:click</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Show messages in the center</span>
+(setq *message-window-gravity* <span class="org-builtin">:center</span>)
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Key Bindings --</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Enable multiple keyboard layouts (English and Greek)</span>
+(load-module <span class="org-string">"kbd-layouts"</span>)
+(kbd-layouts:keyboard-layout-list <span class="org-string">"us"</span> <span class="org-string">"gr"</span>)
+(setf kbd-layouts:*caps-lock-behavior* <span class="org-builtin">:ctrl</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Run xmodmap to remap keys</span>
+(run-shell-command <span class="org-string">"xmodmap ~/.dotfiles/.config/i3/Xmodmap"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Set some super key bindings</span>
+(define-key *top-map* (kbd <span class="org-string">"s-h"</span>) <span class="org-string">"move-focus left"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-l"</span>) <span class="org-string">"move-focus right"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-j"</span>) <span class="org-string">"move-focus down"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-k"</span>) <span class="org-string">"move-focus up"</span>)
+
+(define-key *top-map* (kbd <span class="org-string">"s-C-h"</span>) <span class="org-string">"move-window left"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-C-l"</span>) <span class="org-string">"move-window right"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-C-j"</span>) <span class="org-string">"move-window down"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-C-k"</span>) <span class="org-string">"move-window up"</span>)
+
+(define-key *top-map* (kbd <span class="org-string">"s-f"</span>) <span class="org-string">"fullscreen"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-r"</span>) <span class="org-string">"iresize"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-q"</span>) <span class="org-string">"delete"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-SPC"</span>) <span class="org-string">"run-shell-command emacsclient -e \"(call-interactively #'app-launcher-run-app)\""</span>)
+(define-key *top-map* (kbd <span class="org-string">"C-s-SPC"</span>) <span class="org-string">"switch-keyboard-layout"</span>)
+(define-key *top-map* (kbd <span class="org-string">"C-s-l"</span>) <span class="org-string">"run-shell-command slock"</span>)
+
+(define-key *top-map* (kbd <span class="org-string">"s-TAB"</span>) <span class="org-string">"next-in-frame"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-S-TAB"</span>) <span class="org-string">"prev-in-frame"</span>)
+
+(define-key *top-map* (kbd <span class="org-string">"s-`"</span>) <span class="org-string">"gselect chat"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-1"</span>) <span class="org-string">"gselect dev"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-2"</span>) <span class="org-string">"gselect web"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-3"</span>) <span class="org-string">"gselect comm"</span>)
+(define-key *top-map* (kbd <span class="org-string">"s-4"</span>) <span class="org-string">"gselect media"</span>)
+
+(define-key *top-map* (kbd <span class="org-string">"C-s-`"</span>) <span class="org-string">"gmove chat"</span>)
+(define-key *top-map* (kbd <span class="org-string">"C-s-1"</span>) <span class="org-string">"gmove dev"</span>)
+(define-key *top-map* (kbd <span class="org-string">"C-s-2"</span>) <span class="org-string">"gmove web"</span>)
+(define-key *top-map* (kbd <span class="org-string">"C-s-3"</span>) <span class="org-string">"gmove comm"</span>)
+(define-key *top-map* (kbd <span class="org-string">"C-s-4"</span>) <span class="org-string">"gmove media"</span>)
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Visual Enhancements --</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Get gapped</span>
+(load-module <span class="org-string">"swm-gaps"</span>)
+(setf swm-gaps:*inner-gaps-size* 3)
+<span class="org-comment-delimiter">;</span><span class="org-comment">(run-commands "toggle-gaps-on")</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Enable TTF fonts</span>
+(load-module <span class="org-string">"ttf-fonts"</span>)
+(setf xft:*font-dirs* '(<span class="org-string">"/home/daviwil/.guix-home/profile/share/fonts/"</span>))
+(setf clx-truetype:+font-cache-filename+ <span class="org-string">"/home/daviwil/.local/share/fonts/font-cache.sexp"</span>)
+(xft:cache-fonts)
+
+(set-font (make-instance 'xft:font <span class="org-builtin">:family</span> <span class="org-string">"JetBrains Mono"</span> <span class="org-builtin">:subfamily</span> <span class="org-string">"Regular"</span> <span class="org-builtin">:size</span> 16))
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Mode line --</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Set mode line colors</span>
+(setf *mode-line-background-color* <span class="org-string">"#232635"</span>)
+(setf *mode-line-foreground-color* <span class="org-string">"#A6Accd"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Start the mode line</span>
+(run-commands <span class="org-string">"mode-line"</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Add the system tray module</span>
+(load-module <span class="org-string">"stumptray"</span>)
+(stumptray:stumptray)
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Window Placement Rules --</span>
+
+(define-frame-preference <span class="org-string">"chat"</span>
+  (0 nil T <span class="org-builtin">:title</span> <span class="org-string">"Chat"</span>))
+
+(define-frame-preference <span class="org-string">"dev"</span>
+  (0 T T <span class="org-builtin">:class</span> <span class="org-string">"Emacs"</span>))
+
+(define-frame-preference <span class="org-string">"mpv"</span>
+  (0 T T <span class="org-builtin">:class</span> <span class="org-string">"mpv"</span>))
+
+(define-frame-preference <span class="org-string">"web"</span>
+  (0 T T <span class="org-builtin">:class</span> <span class="org-string">"qutebrowser"</span>)
+  (0 T T <span class="org-builtin">:class</span> <span class="org-string">"Nightly"</span>))
+
+(define-frame-preference <span class="org-string">"media"</span>
+  (0 T T <span class="org-builtin">:class</span> <span class="org-string">"Spotify"</span>))
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Start initial applications --</span>
+
+<span class="org-comment-delimiter">;</span><span class="org-comment">(run-shell-command "polybar panel")</span>
+(run-shell-command <span class="org-string">"feh --bg-scale ~/.dotfiles/backgrounds/samuel-ferrara-uOi3lg8fGl4-unsplash.jpg"</span>)
+(run-shell-command <span class="org-string">"dunst"</span>)
+(run-shell-command <span class="org-string">"nm-applet"</span>)
+(run-shell-command <span class="org-string">"syncthing-gtk --minimized"</span>)
+(run-shell-command <span class="org-string">"redshift -l 37.983810:23.727539 -t 6500:3500"</span>)
+(run-shell-command <span class="org-string">"emacs"</span>)
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">-- Start the REPL --</span>
+
+(<span class="org-keyword">require</span> <span class="org-constant">:slynk</span>)
+(slynk:create-server <span class="org-builtin">:dont-close</span> t)</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

@@ -1,0 +1,408 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Managing Multiple Email Accounts with mu4e and mbsync - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Managing Multiple Email Accounts with mu4e and mbsync</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/olXpfaSnf0o" allowfullscreen></iframe></div>
+</p>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+
+<h2><a id="how-mu4e-manages-e-mail-accounts" class="anchor" href="#how-mu4e-manages-e-mail-accounts">¶</a>How mu4e manages e-mail accounts</h2><div class="outline-text-2" id="text-org1da7be0">
+<ul class="org-ul">
+<li><code>mu4e</code> is a frontend for me <code>mu</code> mail indexer</li>
+<li><code>mu</code> just scans mail folders and indexes them</li>
+<li>You tell <code>mu4e</code> about your mail folders and what searches you want to use</li>
+<li>You can also tell <code>mu4e</code> how to change its configuration for different &ldquo;contexts&rdquo;</li>
+</ul>
+</div>
+
+<h2><a id="laying-the-ground-work" class="anchor" href="#laying-the-ground-work">¶</a>Laying the ground work</h2><div class="outline-text-2" id="text-orgb5bef2e">
+<p>
+Since we will have two accounts under <code>~/Mail</code> now, we need to move the existing mail under a subfolder.
+</p>
+
+<p>
+But first, we need to stop mu4e from syncing!  Run <code>M-x mu4e-quit</code> to stop the background sync timer.
+</p>
+
+<p>
+Now we can move the Gmail folders into <code>~/Mail/Gmail</code>:
+</p>
+
+<pre><span class="org-builtin">cd</span> ~
+mv Mail Gmail
+mkdir Mail
+mv Gmail Mail</pre>
+
+<p>
+We also need to update our <code>.mbsyncrc</code> to use the new folders:
+</p>
+
+<pre>Path ~/Mail/Gmail/
+Inbox ~/Mail/Gmail/Inbox</pre>
+
+<p>
+Test with <code>mbsync</code> to make sure everything syncs correctly:
+</p>
+
+<pre>mbsync -a</pre>
+
+<p>
+Lastly, reindex with <code>mu</code>:
+</p>
+
+<pre>mu index --maildir=~/Mail --my-address=systemcrafters.test@gmail.com</pre>
+</div>
+
+<h2><a id="setting-up-our-first-context" class="anchor" href="#setting-up-our-first-context">¶</a>Setting up our first context</h2><div class="outline-text-2" id="text-orgfeaa49f">
+<p>
+We will update our configuration to configure the Gmail account using <code>mu4e-contexts:</code>
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">mu4e</span>
+  <span class="org-builtin">:ensure</span> nil
+  <span class="org-builtin">:config</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">This is set to 't' to avoid mail syncing issues when using mbsync</span>
+  (<span class="org-keyword">setq</span> mu4e-change-filenames-when-moving t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Refresh mail using isync every 10 minutes</span>
+  (<span class="org-keyword">setq</span> mu4e-update-interval (* 10 60))
+  (<span class="org-keyword">setq</span> mu4e-get-mail-command <span class="org-string">"mbsync -a"</span>)
+  (<span class="org-keyword">setq</span> mu4e-maildir <span class="org-string">"~/Mail"</span>)
+
+  (<span class="org-keyword">setq</span> mu4e-contexts
+        (list
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">Work account</span>
+         (make-mu4e-context
+          <span class="org-builtin">:name</span> <span class="org-string">"Work"</span>
+          <span class="org-builtin">:match-func</span>
+            (<span class="org-keyword">lambda</span> (msg)
+              (<span class="org-keyword">when</span> msg
+                (string-prefix-p <span class="org-string">"/Gmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+          <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafters.test@gmail.com"</span>)
+                  (user-full-name    . <span class="org-string">"System Crafters Gmail"</span>)
+                  (mu4e-drafts-folder  . <span class="org-string">"/Gmail/[Gmail]/Drafts"</span>)
+                  (mu4e-sent-folder  . <span class="org-string">"/Gmail/[Gmail]/Sent Mail"</span>)
+                  (mu4e-refile-folder  . <span class="org-string">"/Gmail/[Gmail]/All Mail"</span>)
+                  (mu4e-trash-folder  . <span class="org-string">"/Gmail/[Gmail]/Trash"</span>)))))
+
+  (<span class="org-keyword">setq</span> mu4e-maildir-shortcuts
+        '((<span class="org-string">"/Gmail/Inbox"</span>             . ?i)
+          (<span class="org-string">"/Gmail/[Gmail]/Sent Mail"</span> . ?s)
+          (<span class="org-string">"/Gmail/[Gmail]/Trash"</span>     . ?t)
+          (<span class="org-string">"/Gmail/[Gmail]/Drafts"</span>    . ?d)
+          (<span class="org-string">"/Gmail/[Gmail]/All Mail"</span>  . ?a))))</pre>
+
+<p>
+Docs: <a href="https://www.djcbsoftware.nl/code/mu/mu4e/Contexts.html">https://www.djcbsoftware.nl/code/mu/mu4e/Contexts.html</a>
+Example: <a href="https://www.djcbsoftware.nl/code/mu/mu4e/Contexts-example.html">https://www.djcbsoftware.nl/code/mu/mu4e/Contexts-example.html</a>
+</p>
+
+<p>
+Try out the new context by evaluating the new configuration and run <code>M-x mu4e</code>.
+</p>
+
+<p>
+You can change how the default context is picked by setting <code>mu4e-context-policy</code> to one of the following values:
+</p>
+
+<ul class="org-ul">
+<li><code>ask-if-none</code> - Ask the first time you enter the view (default)</li>
+<li><code>pick-first</code> - Pick the first context in the <code>mu4e-contexts</code> list</li>
+<li><code>always-ask</code> - Always ask when entering the main view</li>
+</ul>
+</div>
+
+<h2><a id="syncing-the-second-account" class="anchor" href="#syncing-the-second-account">¶</a>Syncing the second account</h2><div class="outline-text-2" id="text-org66fbad8">
+<p>
+We&rsquo;ll be using a Fastmail account (<a href="https://ref.fm/u7703101">https://ref.fm/u7703101</a>) for this example.  It requires an App Password to connect to the IMAP endpoint:
+</p>
+
+<p>
+<a href="https://www.fastmail.com/settings/security/devicekeys/new">https://www.fastmail.com/settings/security/devicekeys/new</a>
+</p>
+
+<p>
+Now we can add the IMAP configuration for the Fastmail account to our <code>.mbsyncrc</code> file:
+</p>
+
+<pre>... Gmail configuration from previous video ...
+
+IMAPAccount fastmail
+Host imap.fastmail.com
+Port 993
+User systemcrafterstest@gmail.com
+PassCmd <span class="org-string">"cat ~/.oh-no-another-insecure-password"</span>
+SSLType IMAPS
+SSLVersions TLSv1.2
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+Path ~/Mail/Fastmail/
+Inbox ~/Mail/Fastmail/INBOX/
+Trash ~/Mail/Fastmail/Trash/
+SubFolders Verbatim
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">With mbsync 1.4.0 and later: Use 'Far' instead of 'Master', and</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">'Near' instead of 'Slave'.</span>
+Channel fastmail
+Master :fastmail-remote:
+Slave :fastmail-local:
+Patterns *
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Both
+SyncState *</pre>
+
+<p>
+Now you can sync the new account:
+</p>
+
+<pre>mkdir ~/Mail/Fastmail
+mbsync -a</pre>
+
+<ul class="org-ul">
+<li><p>
+When using a <code>mu</code> version prior to version 1.4.0:
+</p>
+
+<p>
+You&rsquo;ll also need to reindex with <code>mu</code> to add the new address:
+</p>
+
+<pre>mu index --maildir=~/Mail <span class="org-sh-escaped-newline">\</span>
+    --my-address=systemcrafters.test@gmail.com <span class="org-sh-escaped-newline">\</span>
+    --my-address=systemcrafterstest@fastmail.com</pre></li>
+
+<li><p>
+When using <code>mu</code> version 1.4.0 or later:
+</p>
+
+<p>
+You&rsquo;ll need to rerun <code>mu init</code> to add the new address:
+</p>
+
+<pre>mu init --maildir=~/Mail <span class="org-sh-escaped-newline">\</span>
+    --my-address=systemcrafters.test@gmail.com <span class="org-sh-escaped-newline">\</span>
+    --my-address=systemcrafterstest@fastmail.com
+mu index</pre></li>
+</ul>
+
+<p>
+<b>NOTE:</b> It&rsquo;s possible you will see an error like this -
+</p>
+
+<pre>mu: mu_store_new_writable: xapian error <span class="org-string">'Unable to get write lock on /home/daviwil/.mu/xapian: already locked'</span> (11)</pre>
+
+<p>
+Just kill the running <code>mu</code> process and run <code>mu index</code> again:
+</p>
+
+<pre>pkill mu
+<span class="org-comment-delimiter"># </span><span class="org-comment">run mu index again</span></pre>
+</div>
+
+<h2><a id="adding-the-second-account-to-mu4e" class="anchor" href="#adding-the-second-account-to-mu4e">¶</a>Adding the second account to mu4e</h2><div class="outline-text-2" id="text-org098dbc3">
+<p>
+Now we can add a new context for the account to <code>mu4e-contexts:</code>
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mu4e-contexts
+      (list
+       <span class="org-comment-delimiter">;; </span><span class="org-comment">Work account</span>
+       (make-mu4e-context
+        <span class="org-builtin">:name</span> <span class="org-string">"Work"</span>
+        <span class="org-builtin">:match-func</span>
+          (<span class="org-keyword">lambda</span> (msg)
+            (<span class="org-keyword">when</span> msg
+              (string-prefix-p <span class="org-string">"/Gmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+        <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafters.test@gmail.com"</span>)
+                (user-full-name    . <span class="org-string">"System Crafters Gmail"</span>)
+                (mu4e-drafts-folder  . <span class="org-string">"/Gmail/[Gmail]/Drafts"</span>)
+                (mu4e-sent-folder  . <span class="org-string">"/Gmail/[Gmail]/Sent Mail"</span>)
+                (mu4e-refile-folder  . <span class="org-string">"/Gmail/[Gmail]/All Mail"</span>)
+                (mu4e-trash-folder  . <span class="org-string">"/Gmail/[Gmail]/Trash"</span>)))
+
+       <span class="org-comment-delimiter">;; </span><span class="org-comment">Personal account</span>
+       (make-mu4e-context
+        <span class="org-builtin">:name</span> <span class="org-string">"Personal"</span>
+        <span class="org-builtin">:match-func</span>
+          (<span class="org-keyword">lambda</span> (msg)
+            (<span class="org-keyword">when</span> msg
+              (string-prefix-p <span class="org-string">"/Fastmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+        <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafterstest@fastmail.com"</span>)
+                (user-full-name    . <span class="org-string">"System Crafters Fastmail"</span>)
+                (mu4e-drafts-folder  . <span class="org-string">"/Fastmail/Drafts"</span>)
+                (mu4e-sent-folder  . <span class="org-string">"/Fastmail/Sent"</span>)
+                (mu4e-refile-folder  . <span class="org-string">"/Fastmail/Archive"</span>)
+                (mu4e-trash-folder  . <span class="org-string">"/Fastmail/Trash"</span>)))))</pre>
+
+<p>
+After evaluating this configuration, we can launch <code>mu4e</code> again and switch contexts using the <code>;</code> (semicolon) character.
+</p>
+</div>
+
+<h2><a id="how-to-use-contexts" class="anchor" href="#how-to-use-contexts">¶</a>How to use contexts</h2><div class="outline-text-2" id="text-org58e5c7c">
+<p>
+Examples:
+</p>
+
+<ul class="org-ul">
+<li>Compose new mail in a context</li>
+<li>Archive a message in a context (show which folder it goes to)</li>
+<li>Reply to a message in a merged search</li>
+</ul>
+
+<p>
+You can create bookmarks to show merged views of folders across accounts:
+</p>
+
+<p>
+In mu4e 1.2.0:
+</p>
+
+<pre>(add-to-list 'mu4e-bookmarks '(<span class="org-string">"m:/Fastmail/INBOX or m:/Gmail/Inbox"</span> <span class="org-string">"All Inboxes"</span> ?i))</pre>
+
+<p>
+As of mu4e 1.3.7:
+</p>
+
+<pre>(add-to-list 'mu4e-bookmarks
+             '(<span class="org-builtin">:name</span> <span class="org-string">"All Inboxes"</span> <span class="org-builtin">:query</span> <span class="org-string">"m:/Fastmail/INBOX or m:/Gmail/Inbox"</span> <span class="org-builtin">:key</span> ?i))</pre>
+
+<p>
+This is your e-mail client to build!
+</p>
+</div>
+
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orge71fa5a">
+<ul class="org-ul">
+<li>Composing e-mails</li>
+<li>Displaying unread mail count and notifications</li>
+<li>Even more uses for contexts and search queries</li>
+<li>Org Mode integration</li>
+</ul>
+</div>
+
+<h2><a id="complete-configuration" class="anchor" href="#complete-configuration">¶</a>Complete Configuration</h2><div class="outline-text-2" id="text-org6807c74">
+<p>
+Here&rsquo;s the complete configuration for this episode:
+</p>
+
+<p>
+<b>Emacs.org</b>
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">mu4e</span>
+  <span class="org-builtin">:ensure</span> nil
+  <span class="org-builtin">:config</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">This is set to 't' to avoid mail syncing issues when using mbsync</span>
+  (<span class="org-keyword">setq</span> mu4e-change-filenames-when-moving t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Refresh mail using isync every 10 minutes</span>
+  (<span class="org-keyword">setq</span> mu4e-update-interval (* 10 60))
+  (<span class="org-keyword">setq</span> mu4e-get-mail-command <span class="org-string">"mbsync -a"</span>)
+  (<span class="org-keyword">setq</span> mu4e-maildir <span class="org-string">"~/Mail"</span>)
+
+  (<span class="org-keyword">setq</span> mu4e-contexts
+        (list
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">Work account</span>
+         (make-mu4e-context
+          <span class="org-builtin">:name</span> <span class="org-string">"Work"</span>
+          <span class="org-builtin">:match-func</span>
+            (<span class="org-keyword">lambda</span> (msg)
+              (<span class="org-keyword">when</span> msg
+                (string-prefix-p <span class="org-string">"/Gmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+          <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafters.test@gmail.com"</span>)
+                  (user-full-name    . <span class="org-string">"System Crafters Gmail"</span>)
+                  (mu4e-drafts-folder  . <span class="org-string">"/Gmail/[Gmail]/Drafts"</span>)
+                  (mu4e-sent-folder  . <span class="org-string">"/Gmail/[Gmail]/Sent Mail"</span>)
+                  (mu4e-refile-folder  . <span class="org-string">"/Gmail/[Gmail]/All Mail"</span>)
+                  (mu4e-trash-folder  . <span class="org-string">"/Gmail/[Gmail]/Trash"</span>)))
+
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">Personal account</span>
+         (make-mu4e-context
+          <span class="org-builtin">:name</span> <span class="org-string">"Personal"</span>
+          <span class="org-builtin">:match-func</span>
+            (<span class="org-keyword">lambda</span> (msg)
+              (<span class="org-keyword">when</span> msg
+                (string-prefix-p <span class="org-string">"/Fastmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+          <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafterstest@fastmail.com"</span>)
+                  (user-full-name    . <span class="org-string">"System Crafters Fastmail"</span>)
+                  (mu4e-drafts-folder  . <span class="org-string">"/Fastmail/Drafts"</span>)
+                  (mu4e-sent-folder  . <span class="org-string">"/Fastmail/Sent"</span>)
+                  (mu4e-refile-folder  . <span class="org-string">"/Fastmail/Archive"</span>)
+                  (mu4e-trash-folder  . <span class="org-string">"/Fastmail/Trash"</span>)))))
+
+  (<span class="org-keyword">setq</span> mu4e-maildir-shortcuts
+      '((<span class="org-string">"/Inbox"</span>             . ?i)
+        (<span class="org-string">"/Gmail/[Gmail]/Sent Mail"</span> . ?s)
+        (<span class="org-string">"/Gmail/[Gmail]/Trash"</span>     . ?t)
+        (<span class="org-string">"/Gmail/[Gmail]/Drafts"</span>    . ?d)
+        (<span class="org-string">"/Gmail/[Gmail]/All Mail"</span>  . ?a))))</pre>
+
+<p>
+<b>~/.mbsyncrc</b>
+</p>
+
+<pre>IMAPAccount gmail
+Host imap.gmail.com
+User systemcrafters.test@gmail.com
+PassCmd <span class="org-string">"cat ~/.oh-no-insecure-password"</span>
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Subfolders Verbatim
+Path ~/Mail/Gmail/
+Inbox ~/Mail/Gmail/Inbox
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">For mbsync 1.4.0 and later: Use 'Far' instead of 'Master', and</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">'Near' instead of 'Slave'.</span>
+Channel gmail
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns * ![Gmail]* <span class="org-string">"[Gmail]/Sent Mail"</span> <span class="org-string">"[Gmail]/Starred"</span> <span class="org-string">"[Gmail]/All Mail"</span> <span class="org-string">"[Gmail]/Trash"</span>
+Create Both
+SyncState *
+
+IMAPAccount fastmail
+Host imap.fastmail.com
+Port 993
+User systemcrafterstest@fastmail.com
+PassCmd <span class="org-string">"cat ~/.oh-no-another-insecure-password"</span>
+SSLType IMAPS
+SSLVersions TLSv1.2
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+Path ~/Mail/Fastmail/
+Inbox ~/Mail/Fastmail/INBOX/
+Trash ~/Mail/Fastmail/Trash/
+SubFolders Verbatim
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">With mbsync 1.4.0 and later: Use 'Far' instead of 'Master', and</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">'Near' instead of 'Slave'.</span>
+Channel fastmail
+Master :fastmail-remote:
+Slave :fastmail-local:
+Patterns *
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Both
+SyncState *</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

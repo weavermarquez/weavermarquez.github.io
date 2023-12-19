@@ -1,0 +1,200 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Improving the EXWM Experience - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Improving the EXWM Experience</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/9gfKrrTtyOk" allowfullscreen></iframe></div>
+</p>
+
+<p>
+Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/2805904966dbd5810ee735e25c4b427014761be5/Desktop.org">here</a>.
+</p>
+
+<h2><a id="desktoporg" class="anchor" href="#desktoporg">¶</a>Desktop.org</h2><div class="outline-text-2" id="text-org5ab3449">
+<p>
+Take a look at new Desktop.org file.  We have to update auto-tangle hook to accomodate this:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Automatically tangle our Emacs.org config file when we save it</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">efs/org-babel-tangle-config</span> ()
+  (<span class="org-keyword">when</span> (string-equal (file-name-directory (buffer-file-name))
+                      (expand-file-name <span class="org-string">"~/.emacs.d/"</span>))
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Dynamic scoping to the rescue</span>
+    (<span class="org-keyword">let</span> ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))</pre>
+
+<p>
+Only load desktop.el when EXWM is needed in <code>start-exwm.sh</code>:
+</p>
+
+<pre><span class="org-keyword">exec</span> dbus-launch --exit-with-session emacs -mm --debug-init -l ~/.emacs.d/desktop.el</pre>
+</div>
+
+<h2><a id="configuring-exwm-after-load" class="anchor" href="#configuring-exwm-after-load">¶</a>Configuring EXWM after load</h2><div class="outline-text-2" id="text-org3ba9a96">
+<p>
+Use <code>exwm-init-hook</code>:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/run-in-background</span> (command)
+  (<span class="org-keyword">let</span> ((command-parts (split-string command <span class="org-string">"[ ]+"</span>)))
+    (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">dw/exwm-init-hook</span> ()
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Make workspace 1 be the one where we land at startup</span>
+  (exwm-workspace-switch-create 1)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Open eshell by default</span>
+  <span class="org-comment-delimiter">;;</span><span class="org-comment">(eshell)</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Launch apps that will run in the background</span>
+  (efs/run-in-background <span class="org-string">"nm-applet"</span>))</pre>
+
+<p>
+In <code>use-package exwm</code>:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">When EXWM finishes initialization, do some extra setup</span>
+(add-hook 'exwm-init-hook #'efs/after-exwm-init)</pre>
+</div>
+
+<h2><a id="setting-a-background-image" class="anchor" href="#setting-a-background-image">¶</a>Setting a background image</h2><div class="outline-text-2" id="text-orgf6f8bd2">
+<p>
+Install and run Compton:
+</p>
+
+<pre>sudo apt install compton
+compton &amp;</pre>
+
+<p>
+There&rsquo;s a newer program called Picom for this purpose, but it may not be in all Linux distributions.  Compton is pretty universal.
+</p>
+
+<p>
+Install and run feh:
+</p>
+
+<pre>sudo apt install feh
+feh --bg-scale /usr/share/backgrounds/matt-mcnulty-nyc-2nd-ave.jpg</pre>
+
+<p>
+Set frame transparency and maximize windows by default.
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Set frame transparency</span>
+(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))</pre>
+
+<p>
+Add to your configuration early in EXWM setup:
+</p>
+
+<pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/set-wallpaper</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (start-process-shell-command
+   <span class="org-string">"feh"</span> nil  <span class="org-string">"feh --bg-scale /usr/share/backgrounds/matt-mcnulty-nyc-2nd-ave.jpg"</span>))</pre>
+
+<p>
+Run this function after running <code>xrandr</code> to make sure it stretches to screen size!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Set the wallpaper after setting screen resolution</span>
+(efs/set-wallpaper)</pre>
+
+<p>
+In start-exwm.sh:
+</p>
+
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Enable screen compositing</span>
+compton &amp;</pre>
+</div>
+
+<h2><a id="using-media-keys" class="anchor" href="#using-media-keys">¶</a>Using media keys</h2><div class="outline-text-2" id="text-org0d03fc2">
+<p>
+Use the <code>desktop-environment</code> package!
+</p>
+
+<p>
+<a href="https://github.com/DamienCassou/desktop-environment">https://github.com/DamienCassou/desktop-environment</a>
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">desktop-environment</span>
+  <span class="org-builtin">:after</span> exwm
+  <span class="org-builtin">:config</span> (desktop-environment-mode)
+  <span class="org-builtin">:custom</span>
+  (desktop-environment-brightness-small-increment <span class="org-string">"2%+"</span>)
+  (desktop-environment-brightness-small-decrement <span class="org-string">"2%-"</span>)
+  (desktop-environment-brightness-normal-increment <span class="org-string">"5%+"</span>)
+  (desktop-environment-brightness-normal-decrement <span class="org-string">"5%-"</span>))</pre>
+
+<p>
+Make sure to install dependencies:
+</p>
+
+<pre>sudo apt install scrot brightnessctl playerctl</pre>
+</div>
+
+<h2><a id="computer-status-and-configuration" class="anchor" href="#computer-status-and-configuration">¶</a>Computer status and configuration</h2><h3><a id="tray-apps" class="anchor" href="#tray-apps">¶</a>Tray apps</h3><div class="outline-text-3" id="text-org5a8ebdf">
+<p>
+Tray apps like blueman and pasystray:
+</p>
+
+<pre>sudo apt install blueman pasystray pavucontrol</pre>
+
+<pre>(efs/run-in-background <span class="org-string">"pavucontrol"</span>))
+(efs/run-in-background <span class="org-string">"blueman-applet"</span>))</pre>
+
+<p>
+Make sure to add <code>exwm-systemtray-height</code> to make sure icons appear!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> exwm-systemtray-height 32)</pre>
+</div>
+
+<h3><a id="mode-line-status" class="anchor" href="#mode-line-status">¶</a>Mode line status</h3><div class="outline-text-3" id="text-orgc837d00">
+<p>
+Battery and time display:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Show battery status in the mode line</span>
+(display-battery-mode 1)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Show the time and date in modeline</span>
+(<span class="org-keyword">setq</span> display-time-day-and-date t)
+(display-time-mode 1)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Also take a look at display-time-format and format-time-string</span></pre>
+</div>
+
+<h2><a id="better-app-launcher" class="anchor" href="#better-app-launcher">¶</a>Better app launcher</h2><div class="outline-text-2" id="text-org099e8a2">
+<p>
+Use <code>counsel-linux-app!</code>
+</p>
+
+<p>
+In your <code>use-package counsel:</code>
+</p>
+
+<pre><span class="org-builtin">:custom</span>
+(counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)</pre>
+
+<p>
+In your EXWM config:
+</p>
+
+<pre>(exwm-input-set-key (kbd <span class="org-string">"s-SPC"</span>) 'counsel-linux-app)
+(exwm-input-set-key (kbd <span class="org-string">"s-f"</span>) 'exwm-layout-toggle-fullscreen)</pre>
+</div>
+
+<h2><a id="locking-the-screen" class="anchor" href="#locking-the-screen">¶</a>Locking the screen</h2><div class="outline-text-2" id="text-orgb70aebb">
+<p>
+Use <code>slock</code> and <code>xss-lock</code>!
+</p>
+
+<pre>sudo apt install slock xss-lock</pre>
+
+<p>
+Add this to <code>start-exwm.sh</code>:
+</p>
+
+<pre><span class="org-comment-delimiter"># </span><span class="org-comment">Enable screen locking on suspend</span>
+xss-lock -- slock &amp;</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>

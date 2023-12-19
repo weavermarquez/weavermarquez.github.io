@@ -1,0 +1,351 @@
+<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Compose and Send Email with Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Compose and Send Email with Emacs</h1><p class="site-post-meta"></p><div id="content"><p>
+<div class="video">  <iframe src="https://www.youtube.com/embed/WiyqU7gmKsk" allowfullscreen></iframe></div>
+</p>
+
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org5a2b1c7">
+<ul class="org-ul">
+<li>Configuring Emacs to send email</li>
+<li>Composing email</li>
+<li>Attaching files and images to emails</li>
+<li>Signing emails with GPG</li>
+</ul>
+
+<div class="cta center">
+If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
+</div>
+</div>
+
+<h2><a id="configuring-smtp" class="anchor" href="#configuring-smtp">¶</a>Configuring SMTP</h2><div class="outline-text-2" id="text-org8be6925">
+<p>
+SMTP is <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Simple Mail Transfer Protocol</a>, an old standard for connecting to a server to send email.
+</p>
+
+<p>
+Traditionally, SMTP servers run on port 25 without any kind of encryption.  These days, most will either use SSL or TLS, either of which may use different ports.
+</p>
+
+<ul class="org-ul">
+<li><code>smtpmail-smtp-server</code> - The host where we connect to send mail</li>
+<li><code>smtpmail-smtp-service</code> - The port number of the SMTP service (defaults to 25)</li>
+<li><code>smtpmail-stream-type</code> - Determines whether SSL or TLS should be used when connecting</li>
+</ul>
+
+<p>
+If you only send mail from one account, set the variables the way you would normally do:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> smtpmail-smtp-server <span class="org-string">"smtp.fastmail.com"</span>
+      smtpmail-smtp-service 465
+      smtpmail-stream-type  'ssl)</pre>
+
+<p>
+When using multiple accounts (contexts), you can set the SMTP variables for each context:
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mu4e-contexts
+      (list
+       <span class="org-comment-delimiter">;; </span><span class="org-comment">Work account</span>
+       (make-mu4e-context
+        <span class="org-builtin">:name</span> <span class="org-string">"Work"</span>
+        <span class="org-builtin">:match-func</span>
+          (<span class="org-keyword">lambda</span> (msg)
+            (<span class="org-keyword">when</span> msg
+              (string-prefix-p <span class="org-string">"/Gmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+        <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafters.test@gmail.com"</span>)
+                (user-full-name    . <span class="org-string">"System Crafters Gmail"</span>)
+                (smtpmail-smtp-server  . <span class="org-string">"smtp.gmail.com"</span>)
+                (smtpmail-smtp-service . 465)
+                (smtpmail-stream-type  . ssl)
+                (mu4e-drafts-folder  . <span class="org-string">"/Gmail/[Gmail]/Drafts"</span>)
+                (mu4e-sent-folder  . <span class="org-string">"/Gmail/[Gmail]/Sent Mail"</span>)
+                (mu4e-refile-folder  . <span class="org-string">"/Gmail/[Gmail]/All Mail"</span>)
+                (mu4e-trash-folder  . <span class="org-string">"/Gmail/[Gmail]/Trash"</span>)))
+
+       <span class="org-comment-delimiter">;; </span><span class="org-comment">Personal account</span>
+       (make-mu4e-context
+        <span class="org-builtin">:name</span> <span class="org-string">"Personal"</span>
+        <span class="org-builtin">:match-func</span>
+          (<span class="org-keyword">lambda</span> (msg)
+            (<span class="org-keyword">when</span> msg
+              (string-prefix-p <span class="org-string">"/Fastmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+        <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafterstest@fastmail.com"</span>)
+                (user-full-name    . <span class="org-string">"System Crafters Fastmail"</span>)
+                (smtpmail-smtp-server  . <span class="org-string">"smtp.fastmail.com"</span>)
+                (smtpmail-smtp-service . 465)
+                (smtpmail-stream-type  . ssl)
+                (mu4e-drafts-folder  . <span class="org-string">"/Fastmail/Drafts"</span>)
+                (mu4e-sent-folder  . <span class="org-string">"/Fastmail/Sent"</span>)
+                (mu4e-refile-folder  . <span class="org-string">"/Fastmail/Archive"</span>)
+                (mu4e-trash-folder  . <span class="org-string">"/Fastmail/Trash"</span>)))))</pre>
+</div>
+
+<h2><a id="configure-the-mail-sending-function" class="anchor" href="#configure-the-mail-sending-function">¶</a>Configure the mail-sending function</h2><div class="outline-text-2" id="text-org47870c7">
+<p>
+So that we don&rsquo;t get prompted about how mail should be sent, we will configure the <code>message-send-mail-function</code> variable to automatically call <code>smtpmail-send-it</code>:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Configure the function to use for sending mail</span>
+(<span class="org-keyword">setq</span> message-send-mail-function 'smtpmail-send-it)</pre>
+</div>
+
+<h2><a id="composing-email" class="anchor" href="#composing-email">¶</a>Composing Email</h2><div class="outline-text-2" id="text-org007a66a">
+<p>
+Let&rsquo;s try to compose an e-mail!
+</p>
+
+<p>
+Run <code>M-x mu4e</code> to get to the mail dashboard and then press <code>C</code> (capital C)
+</p>
+
+<p>
+If you have configured multiple contexts (which we have), it will ask you which context to use.
+</p>
+
+<p>
+Now we have some fields to fill in:
+</p>
+
+<ul class="org-ul">
+<li><code>From</code> - This should be automatically populated from your <code>user-full-name</code> and <code>user-full-address</code></li>
+<li><code>To</code> - Enter recipients separated by comma or semicolon.  You can press <code>TAB</code> to complete recipient names!</li>
+<li><code>Subject</code> - The subject of the message (may be pre-populated in replies or forwards)</li>
+</ul>
+
+<p>
+Now we can move our cursor below the line &ldquo;text follows this line&rdquo; to write the message!
+</p>
+
+<p>
+There are three things you can do from here:
+</p>
+
+<ul class="org-ul">
+<li><code>C-c C-c</code> - Send the message</li>
+<li><code>C-c C-k</code> - Discard the message</li>
+<li><code>C-c C-d</code> - Save the message in your Drafts folder</li>
+</ul>
+
+<p>
+Since we want to send this e-mail, let&rsquo;s press <code>C-c C-c</code>!
+</p>
+
+<p>
+We can check our Sent Mail folder to verify that the mail was placed there.
+</p>
+
+<p>
+<a href="https://www.djcbsoftware.nl/code/mu/mu4e/Writing-messages.html">https://www.djcbsoftware.nl/code/mu/mu4e/Writing-messages.html</a>
+</p>
+</div>
+
+<h3><a id="handling-passwords-for-sending-mail" class="anchor" href="#handling-passwords-for-sending-mail">¶</a>Handling passwords for sending mail</h3><div class="outline-text-3" id="text-org5feb05f">
+<p>
+When you attempt to send an e-mail, Emacs will ask you for the password.  Once you enter it, it will ask you if you&rsquo;d like to save it in your <code>~/.authinfo</code> file.  I do not recommend doing this because this file is not encrypted!
+</p>
+
+<p>
+Check out my video <a href="https://youtu.be/nZ_T7Q49B8Y">Encrypt Your Passwords with Emacs</a> to learn more about the <code>auth-source</code> library and how you can use it to store your passwords in an encrypted file so that you don&rsquo;t have to enter them every time you send e-mail!
+</p>
+
+<p>
+You will need to add an entry to your <code>~/.authinfo.gpg</code> file for your SMTP server:
+</p>
+
+<pre>machine smtp.fastmail.com login systemcrafterstest@fastmail.com password b4dp4ssw0rd port 465</pre>
+</div>
+
+<h3><a id="other-ways-to-get-to-the-compose-screen" class="anchor" href="#other-ways-to-get-to-the-compose-screen">¶</a>Other ways to get to the compose screen</h3><div class="outline-text-3" id="text-orgbd67a4c">
+<p>
+You can follow a few other paths to compose e-mail:
+</p>
+
+<ul class="org-ul">
+<li>Press <code>C</code> while in the mail list</li>
+<li>Press <code>R</code> while selecting a mail in the mail list or while viewing an e-mail to compose a reply</li>
+<li>Press <code>F</code> while selecting a mail in the mail list or while viewing an e-mail to compose a forwarded mail</li>
+<li>Run <code>M-x mu4e-compose-new</code> or bind that command to a key!</li>
+</ul>
+</div>
+
+<h3><a id="picking-a-context-for-sending-mail" class="anchor" href="#picking-a-context-for-sending-mail">¶</a>Picking a context for sending mail</h3><div class="outline-text-3" id="text-orgac0e687">
+<p>
+When using multiple contexts, you might want to define which context gets picked automatically for sending email (similar to <code>mu4e-context-policy</code>):
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Only ask if a context hasn't been previously picked</span>
+(<span class="org-keyword">setq</span> mu4e-compose-context-policy 'ask-if-none)</pre>
+</div>
+
+<h2><a id="improving-the-look-of-plain-text-emails" class="anchor" href="#improving-the-look-of-plain-text-emails">¶</a>Improving the look of plain text emails</h2><div class="outline-text-2" id="text-orgf595b4e">
+<p>
+By default all e-mails are sent as plain text.  This can lead to strange wrapping in other email clients when reading your messages.  You can improve this by setting the following variable:
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Make sure plain text mails flow correctly for recipients</span>
+(<span class="org-keyword">setq</span> mu4e-compose-format-flowed t)</pre>
+
+<p>
+<b>NOTE:</b> I made a mistake in mentioning that Gmail and other modern mail clients support <code>format=flowed</code>!  Check out <a href="https://useplaintext.email/#other-clients">this website</a> to see a list of clients that support it.  Thanks to <b>boticelli</b> in the System Crafters Discord for pointing it out!
+</p>
+
+<p>
+We will discuss how to send formatted e-mails using Org Mode in a future episode!
+</p>
+</div>
+
+<h2><a id="adding-a-signature-to-your-emails" class="anchor" href="#adding-a-signature-to-your-emails">¶</a>Adding a signature to your emails</h2><div class="outline-text-2" id="text-org9fdc6bf">
+<p>
+You can set the <code>mu4e-compose-signature</code> variable to a string for the signature to include in your e-mails!
+</p>
+
+<pre>(<span class="org-keyword">setq</span> mu4e-compose-signature <span class="org-string">"David"</span>)</pre>
+
+<p>
+This can also be set per-context.
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">... clipped from full context config ...</span>
+
+ <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafterstest@fastmail.com"</span>)
+         (user-full-name    . <span class="org-string">"System Crafters Fastmail"</span>)
+         (mu4e-compose-signature . <span class="org-string">"- David"</span>)
+         (smtpmail-smtp-server  . <span class="org-string">"smtp.fastmail.com"</span>))</pre>
+
+<p>
+If you want the signature to be multi-line, use the <code>\n</code> character to denote the line breaks:
+</p>
+
+<pre><span class="org-string">"David Wilson\nSystem Crafters on YouTube"</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">or if you want it to be more readable in your config:</span>
+
+(concat
+  <span class="org-string">"David Wilson\n"</span>
+  <span class="org-string">"System Crafters on YouTube"</span>)</pre>
+</div>
+
+<h2><a id="file-attachments" class="anchor" href="#file-attachments">¶</a>File Attachments</h2><div class="outline-text-2" id="text-org28f57e0">
+<p>
+To add an attachment to your e-mail, press <code>C-c C-a</code> in the message buffer and then select the file to be attached.
+</p>
+
+<p>
+It will ask you a few things about the file you&rsquo;re attaching, most importantly the type of the attachment.  It will usually pick the right one for you based on the file extension!
+</p>
+
+<p>
+Drag and drop also works!
+</p>
+</div>
+
+<h2><a id="message-drafts" class="anchor" href="#message-drafts">¶</a>Message Drafts</h2><div class="outline-text-2" id="text-orgadcd2ca">
+<p>
+If you save a message as a draft while editing it (<code>C-c C-d</code>), you can find it in the Drafts folder you configured for that context.
+</p>
+
+<p>
+Select the message in the headers list or open the email and press <code>E</code> (or <code>c e</code> with evil-mode bindings).  You will now be placed back into the message editor!
+</p>
+</div>
+
+<h2><a id="signing-emails" class="anchor" href="#signing-emails">¶</a>Signing Emails</h2><div class="outline-text-2" id="text-org7a98c7a">
+<p>
+If you followed my video <a href="https://youtu.be/nZ_T7Q49B8Y">Encrypt Your Passwords with Emacs</a> then you&rsquo;ve already set up a GPG key for signing emails.
+</p>
+
+<p>
+You can use the <code>mml-secure-message-sign-pgpmime</code> function while composing a mail to mark it to be signed once you send it.  When you press <code>C-c C-c</code> to send the mail, you will be prompted for your passphrase and then the mail will be signed!
+</p>
+
+<pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Use a specific key for signing by referencing its thumbprint</span>
+(<span class="org-keyword">setq</span> mml-secure-openpgp-signers '(<span class="org-string">"53C41E6E41AAFE55335ACA5E446A2ED4D940BF14"</span>))</pre>
+</div>
+
+<h3><a id="automatically-sign-every-email" class="anchor" href="#automatically-sign-every-email">¶</a>Automatically Sign Every Email</h3><div class="outline-text-3" id="text-org125e949">
+<p>
+You can automatically sign every e-mail using the <code>message-send-hook</code>:
+</p>
+
+<pre>(add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)</pre>
+</div>
+
+<h2><a id="encrypting-emails" class="anchor" href="#encrypting-emails">¶</a>Encrypting Emails</h2><div class="outline-text-2" id="text-org8fb1d87">
+<p>
+Similarly to signing emails, you can also encrypt them with <code>mml-secure-message-encrypt-pgpmine</code>!  Anyone with your public key will be able to decrypt the message.
+</p>
+</div>
+
+<h2><a id="complete-configuration" class="anchor" href="#complete-configuration">¶</a>Complete configuration</h2><div class="outline-text-2" id="text-org8480a72">
+<p>
+Here&rsquo;s the complete configuration we made for this episode:
+</p>
+
+<pre>(<span class="org-keyword">use-package</span> <span class="org-constant">mu4e</span>
+  <span class="org-builtin">:ensure</span> nil
+  <span class="org-builtin">:config</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">This is set to 't' to avoid mail syncing issues when using mbsync</span>
+  (<span class="org-keyword">setq</span> mu4e-change-filenames-when-moving t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Refresh mail using isync every 10 minutes</span>
+  (<span class="org-keyword">setq</span> mu4e-update-interval (* 10 60))
+  (<span class="org-keyword">setq</span> mu4e-get-mail-command <span class="org-string">"mbsync -a"</span>)
+  (<span class="org-keyword">setq</span> mu4e-maildir <span class="org-string">"~/Mail"</span>)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Make sure plain text mails flow correctly for recipients</span>
+  (<span class="org-keyword">setq</span> mu4e-compose-format-flowed t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Configure the function to use for sending mail</span>
+  (<span class="org-keyword">setq</span> message-send-mail-function 'smtpmail-send-it)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">NOTE: Only use this if you have set up a GPG key!</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Automatically sign all outgoing mails</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)</span>
+
+  (<span class="org-keyword">setq</span> mu4e-contexts
+          (list
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">Work account</span>
+          (make-mu4e-context
+          <span class="org-builtin">:name</span> <span class="org-string">"Work"</span>
+          <span class="org-builtin">:match-func</span>
+              (<span class="org-keyword">lambda</span> (msg)
+              (<span class="org-keyword">when</span> msg
+                  (string-prefix-p <span class="org-string">"/Gmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+          <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafters.test@gmail.com"</span>)
+                  (user-full-name    . <span class="org-string">"System Crafters Gmail"</span>)
+                  (smtpmail-smtp-server  . <span class="org-string">"smtp.gmail.com"</span>)
+                  (smtpmail-smtp-service . 465)
+                  (smtpmail-stream-type  . ssl)
+                  (mu4e-compose-signature . <span class="org-string">"David via Gmail"</span>)
+                  (mu4e-drafts-folder  . <span class="org-string">"/Gmail/[Gmail]/Drafts"</span>)
+                  (mu4e-sent-folder  . <span class="org-string">"/Gmail/[Gmail]/Sent Mail"</span>)
+                  (mu4e-refile-folder  . <span class="org-string">"/Gmail/[Gmail]/All Mail"</span>)
+                  (mu4e-trash-folder  . <span class="org-string">"/Gmail/[Gmail]/Trash"</span>)))
+
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">Personal account</span>
+          (make-mu4e-context
+          <span class="org-builtin">:name</span> <span class="org-string">"Personal"</span>
+          <span class="org-builtin">:match-func</span>
+              (<span class="org-keyword">lambda</span> (msg)
+              (<span class="org-keyword">when</span> msg
+                  (string-prefix-p <span class="org-string">"/Fastmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+          <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"systemcrafterstest@fastmail.com"</span>)
+                  (user-full-name    . <span class="org-string">"System Crafters Fastmail"</span>)
+                  (smtpmail-smtp-server  . <span class="org-string">"smtp.fastmail.com"</span>)
+                  (smtpmail-smtp-service . 465)
+                  (smtpmail-stream-type  . ssl)
+                  (mu4e-compose-signature . <span class="org-string">"David via Fastmail"</span>)
+                  (mu4e-drafts-folder  . <span class="org-string">"/Fastmail/Drafts"</span>)
+                  (mu4e-sent-folder  . <span class="org-string">"/Fastmail/Sent"</span>)
+                  (mu4e-refile-folder  . <span class="org-string">"/Fastmail/Archive"</span>)
+                  (mu4e-trash-folder  . <span class="org-string">"/Fastmail/Trash"</span>)))))
+
+  (<span class="org-keyword">setq</span> mu4e-maildir-shortcuts
+      '((<span class="org-string">"/Inbox"</span>             . ?i)
+        (<span class="org-string">"/[Gmail]/Sent Mail"</span> . ?s)
+        (<span class="org-string">"/[Gmail]/Trash"</span>     . ?t)
+        (<span class="org-string">"/[Gmail]/Drafts"</span>    . ?d)
+        (<span class="org-string">"/[Gmail]/All Mail"</span>  . ?a))))</pre>
+</div>
+</div></div><div class="list-form center"><div class="list-form-title">Subscribe to the System Crafters Newsletter!</div><form method="POST" action="https://www.simplelists.com/subscribe.php"><input type="hidden" name="format" value="text"/><input type="hidden" name="action" value="subscribe"/><input type="hidden" name="list" value="news@lists.systemcrafters.net"/><div class="list-form-message">Stay up to date with the latest System Crafters news and updates!  Read the <a href="/newsletter/">Newsletter</a> page for more information.</div><div class="row"><div class="column"><div class="row center list-form-label">Name (optional)</div><div class="row"><input type="text" name="name"/></div></div><div class="column"><div class="row center list-form-label">Email Address</div><div class="row"><input type="text" name="email"/></div></div></div><div><input type="submit" value="Subscribe!"/></div></form></div></div><footer class="site-footer"><div class="container"><div class="row"><div class="column"><p><a href="https://weavermarquez.github.io/privacy-policy/">Privacy Policy</a> · <a href="https://weavermarquez.github.io/credits/">Credits</a> · <a href="https://weavermarquez.github.io/rss/">RSS Feeds</a> · <a rel="me" href="https://fosstodon.org/@daviwil">Fediverse</a></p><p>© 2021-2023 System Crafters LLC, and also Weaver Ripped this off</p></div><div class="column align-right"><p><a href="https://github.com/weavermarquez/weavermarquez.github.io"><img src="https://weavermarquez.github.io/img/codeberg.png" style="width: 120px" alt="Contribute on Codeberg"/></a></p></div></div></div></footer></body></html>
