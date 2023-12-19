@@ -1,0 +1,52 @@
+#+title: This is the Future of Scheme Hacking
+#+subtitle: System Crafters Live - October 13, 2023
+#+date: [2023-10-13 Fri]
+#+video: Vd9zooWMOsM
+
+* Updates
+
+- I'll be speaking at LibrePlanet 2024!
+
+  The Free Software Foundation announced my keynote presentation this week:
+
+  https://www.fsf.org/news/libreplanet-2024-cultivating-community-will-feature-a-keynote-by-david-wilson
+
+  More details about the conference on their website:
+
+  https://libreplanet.org/2024/
+
+  =shom= rightly suggested that I should organize a System Crafters meetup, so I will!  Even if you don't attend LibrePlanet but you can travel to Boston next march, come hang out!
+
+- Philip Kaludercic (pkal) has created a new ELPA and Emacs Zine:
+
+  https://amodernist.com/eaez/
+
+  This will be a great resource for staying up to date on Emacs development and new ELPA package releases!  He's looking for contributors in a number of areas:
+
+  https://amodernist.com/eaez/#contributing
+
+* Guile Hoot is a big deal!
+
+This week the Spritely Institute published an article describing the latest developments in Guile Hoot, a new toolchain for building WebAssembly applications, particularly with Scheme.
+
+https://www.spritely.institute/news/scheme-wireworld-in-browser.html
+
+Here is the truly exciting part of the news:
+
+#+begin_quote
+Hoot differs from most WASM compiler projects in some notable ways:
+
+- Self-contained toolchain: No emscripten, binaryen, wabt, etc.
+- GC reference type usage: The host provides the garbage collector.
+- Small programs produce small binaries: Kilobytes, not megabytes.
+- Full development environment: *Compile and run* WASM binaries without leaving Guile.
+#+end_quote
+
+In other words, the toolchain is written completely (and hackable!) in Guile Scheme and it targets cutting-edge WebAssembly features that will make Scheme a first-class citizen in the browser.
+
+Today we're going to try out these new tools to glimpse the future of Scheme programming for the web and more!  We're also going to chat with members of the Spritely team to get some more context on why this effort is such a big deal.
+
+Try it out for yourself using Guix by following the README instructions:
+
+- https://gitlab.com/spritely/guile-hoot
+- https://gitlab.com/spritely/scheme-wireworld

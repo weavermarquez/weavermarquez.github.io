@@ -1,0 +1,58 @@
+#+title: IRC Tips and Configurations
+
+The System Crafters community calls [[https://libera.chat][Libera.Chat]] IRC home!  This page provides some useful tips for chatting with us there.
+
+*NOTE:* This page is under construction, please feel free to [[https://codeberg.org/SystemCrafters/systemcrafters-site/_edit/master/content/community.org][send a pull request]] with additions or changes!
+
+* What is IRC?
+
+[[https://en.wikipedia.org/wiki/Internet_Relay_Chat][IRC]] (Internet Relay Chat) is a battle-tested group chat protocol which has existed since the late 1980s.  The major advantage of IRC is that it is a simple text-based protocol which is very easy to work with, especially for writing clients and bots.
+
+The System Crafters community started on Discord, migrated to a combination of Matrix + IRC, and now we've landed solely on IRC because it is the only truly dependable (and craftable) protocol.
+
+This page is intended to make the IRC transition easier for folks who haven't used IRC before!
+
+* Recommended IRC Clients
+
+The two most interesting IRC clients will be the ones that are built in to Emacs: ERC and rcirc.  Members of the community also use other clients like =irssi=.
+
+** ERC (Emacs)
+
+[[https://www.gnu.org/software/emacs/manual/html_mono/erc.html][ERC]] is the most polished built-in IRC client for Emacs.
+
+You can check out a couple of System Crafters videos for usage and configuration tips:
+
+- [[https://systemcrafters.net/chatting-with-emacs/irc-basics-with-erc/][Chatting in IRC using Emacs and ERC]]
+- [[https://systemcrafters.net/live-streams/june-04-2021/][Improving the IRC experience in ERC]]
+
+** rcirc (Emacs)
+
+[[https://www.gnu.org/software/emacs/manual/html_mono/rcirc.html][rcirc]] is a minimalistic IRC client for Emacs.
+
+** irssi (Terminal)
+
+[[https://irssi.org/][irssi]] is probably the most famous terminal-based IRC client.
+
+** Revolution IRC (Android)
+
+[[https://github.com/MCMrARM/revolution-irc][Revolution IRC]] ([[https://play.google.com/store/apps/details?id=io.mrarm.irc][Play Store]], [[https://f-droid.org/packages/io.mrarm.irc/][F-Droid]]) is an IRC client for Android.
+
+** Palaver (iOS)
+
+[[https://palaverapp.com/][Palaver]] (App Store) is an IRC client for iOS.
+
+* Using Libera Chat
+
+** Registering an account with NickServ
+
+Consult the Libera.Chat documentation for [[https://libera.chat/guides/registration][nickname registration]] until we write more focused documentation for this page (*help wanted!*).
+
+** Cloaking your host details
+
+By default, your IP address will be exposed to other IRC users when you connect.  To avoid this, you can request a "cloak" for your hostname by requesting a user cloak.  After you have registered with =NickServ=, follow the instructions on this page:
+
+[[https://libera.chat/guides/cloaks#requesting-a-self-service-user-cloak][Libera.Chat: Requesting a self-service user cloak]]
+
+* IRC Rules and Etiquette
+
+[To be written.]

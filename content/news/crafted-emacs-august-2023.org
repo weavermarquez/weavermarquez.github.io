@@ -1,0 +1,11 @@
+#+title: Crafted Emacs Update and New Teammate!
+#+date: [2023-09-01 Thu]
+#+author: Jeff Bowman
+#+kind: news
+
+Hey Crafters!
+
+I have another new teammate on the Crafted Emacs project, Stefan Thesing ([[https://github.com/sthesing][@sthesing]]) is now a co-maintainer!  I am so excited to be working with him on this project.  There is continuing work on Crafted Emacs, and now with Stefan's help, even more is being accomplished! We even have a plan for an RC1 release!  See my [[https://write.as/jeffbowman/crafted-emacs-update-for-august-and-another-new-teammate][my blog post]] to get all the updates for this month!
+
+Happy Crafting!
+- Jeff Bowman

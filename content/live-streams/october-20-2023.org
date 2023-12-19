@@ -1,0 +1,51 @@
+#+title: Investigating GNU Hyperbole
+#+subtitle: System Crafters Live - October 20, 2023
+#+date: [2023-10-20 Fri]
+#+video: gvT4DLW7RXY
+
+* Updates
+
+- I'll be speaking at LibrePlanet 2024!
+
+  The Free Software Foundation announced my keynote presentation last week:
+  https://www.fsf.org/news/libreplanet-2024-cultivating-community-will-feature-a-keynote-by-david-wilson
+
+  Registration for the conference is now open:
+ https://www.fsf.org/blogs/community/register-to-be-part-of-libreplanet-2024-cultivating-community
+
+  I'll try to have a System Crafters meetup there, so consider joining!
+
+- The *Autumn Lisp Game Jam* starts today!
+
+  https://itch.io/jam/autumn-lisp-game-jam-2023
+
+  I'll be participating by writing a simple game with Guile Hoot, the Scheme -> WebAssembly toolchain we discussed last week.
+
+  I'll also be live-streaming my work on it over the next week on my other channel Flux Harmonic:
+
+  https://youtube.com/@FluxHarmonicLive
+
+  https://twitch.tv/FluxHarmonicLive
+
+  I'll stream most days between 3-5PM Athens time, check the following link to see the time in your local time zone:
+
+  https://time.is/compare/1500_in_Athens
+
+- Crafted Emacs v2 is releasing today!
+
+  https://jeffbowman.writeas.com/crafted-emacs-v2-pre-release-announcement
+* What's the big deal about Hyperbole?
+
+You've probably heard people talking about GNU Hyperbole more than once on various Emacs forums.  I think we've even looked at it briefly on this channel a couple of times but I could never really grasp the true value of it.
+
+https://www.gnu.org/software/hyperbole
+
+Today we're going to try and get to the bottom of what makes people love this package!  Maybe we'll learn a few things that might be useful for our workflow crafting tasks.
+
+What we'll investigate:
+
+- Smart Keys
+- Buttons of all different types
+- Koutliner: an Org Mode alternative?
+- HyControl: window management
+- HyRolo: information management

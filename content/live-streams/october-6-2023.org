@@ -1,0 +1,133 @@
+#+title: Exploring Denote 2.0 for Emacs
+#+subtitle: System Crafters Live - October 6, 2023
+#+date: [2023-10-06 Fri]
+#+video: cLsByub89VY
+
+* Updates
+
+- Submit proposals for LibrePlanet 2024 until October 25!
+
+  The theme is "Cultivating Community" but there are other categories of talks they are looking for.
+
+  https://libreplanet.org/2024/
+
+- The EmacsConf 2023 talks are posted!
+
+  https://emacsconf.org/2023/talks/
+
+* Let's check out Denote 2.0!
+
+Denote 2.0 by Protesilaos Stavrou was released on July 21 of this year but I haven't had a chance to examine the changelog until now.  Let's take a look together!
+
+- https://protesilaos.com/emacs/denote-changelog
+- https://elpa.gnu.org/packages/denote.html
+
+We'll try out as many of the new features as we have time for to see how they might be useful for our note taking workflows.
+
+* The final configuration
+
+Here's the configuration we worked on during the stream:
+
+#+begin_src emacs-lisp
+
+;; Set an initial theme
+(load-theme 'modus-vivendi t)
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+(use-package marginalia
+  :ensure t
+  :after vertico)
+
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
+  (marginalia-mode)
+
+  ;; Show more candidates
+  (setq vertico-count 10)
+
+  ;; Grow and shrink the Vertico minibuffer
+  (setq vertico-resize t)
+
+  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+  (setq vertico-cycle t)
+
+  ;; Add prompt indicator to `completing-read-multiple'.
+  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t))
+
+(defun dw/denote-rename-buffer-with-prefixed-title (&optional buffer)
+  (denote-rename-buffer-with-title)
+  (rename-buffer (concat "[D] " (buffer-name (or buffer (current-buffer) title :unique)))))
+
+(use-package denote
+  :ensure t
+  :custom
+  (denote-directory "~/denote-test/Notes")
+  (denote-rename-buffer-function 'dw/denote-rename-buffer-with-prefixed-title)
+  :config
+  (denote-rename-buffer-mode)
+  (require 'denote-org-dblock)
+
+  (with-eval-after-load 'org-capture
+    (add-to-list 'org-capture-templates
+		 '("n" "New note (with Denote)" plain
+                   (file denote-last-path)
+                   #'denote-org-capture
+                   :no-save t
+                   :immediate-finish nil
+                   :kill-buffer t
+                   :jump-to-captured t))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(marginalia vertico denote))
+ '(safe-local-variable-values
+   '((denote-known-keywords "food" "drink")
+     (denote-directory . "~/denote/OtherNotes"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+#+end_src
+
+Here is the directory-local variable file (=.dir-locals.el=) that I used to create a "silo" of notes:
+
+#+begin_src emacs-lisp
+
+;;; Directory Local Variables            -*- no-byte-compile: t -*-
+;;; For more information see (info "(emacs) Directory Variables")
+
+((nil . ((denote-directory . "~/denote/OtherNotes")
+	 (denote-known-keywords . ("food" "drink")))))
+
+#+end_src

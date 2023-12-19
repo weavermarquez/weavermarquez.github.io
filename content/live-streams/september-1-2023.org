@@ -1,0 +1,77 @@
+#+title: How to Develop New Guile Libraries
+#+subtitle: System Crafters Live - September 1, 2023
+#+date: [2023-09-01 Fri]
+#+video: o-keXs2Uh7w
+
+* Updates
+
+- Crafted Emacs has a new co-maintainer and RC1 coming soon!
+
+  Welcome to new co-maintainer Stefan Thesing!  Stefan has been helping out a *lot* on Crafted Emacs documentation lately, so we're excited to have him on board.
+
+  Check out Jeff Bowman's post with more news here:
+ https://write.as/jeffbowman/crafted-emacs-update-for-august-and-another-new-teammate
+
+- GNU 40 Year Anniversary Event
+
+  https://www.gnu.org/gnu40/
+* Creating a new Guile Scheme library
+
+Today we're going to experiment with using Guile Hall and Guix to create a new Guile Scheme library from scratch!  Guile Hall is a tool that can create a complete Guile project even with its own Guix packaging configuration.
+
+- https://gitlab.com/a-sassmannshausen/guile-hall
+- https://rednosehacker.com/hall-a-project-manager-for-the-guile-programming-language
+
+** Our Project
+
+To test out the development workflow with these tools, we'll write a simple URL route handling library like you might see in a minimal web programming framework (think Express.js, Flask, etc).
+
+#+begin_src sh
+
+  /api/things
+  /api/things/{thingId}/doSomething
+  /api/widgets/{widgetId}
+
+#+end_src
+
+The goal will be to produce a simple library with basic tests and then consume it from a Guile Scheme script inside of a =guix shell= which has our Guile library installed!
+
+** Steps to use Hall for a project:
+
+#+begin_src sh
+
+  # Creating a project
+  cd ~/projects
+  hall init --author "Your Name" project-name -x
+
+  # Initializing the project build
+  cd project-name
+  hall build -x
+  guix shell -Df guix.scm -- autoreconf -vfi && ./configure && make check
+
+  # Building the project for development
+  guix shell -Df guix.scm -- make check
+
+#+end_src
+
+NOTE: The =guix.scm= file that is written out for =--type local= is wrong by default!  Change =source= to =(local-file "project-name-0.1.tar.gz")=
+
+To use your library as a Guix package:
+
+#+begin_src sh
+
+  # Make the local tarball
+  guix shell -Df guix.scm -- make dist
+
+  # Run a guix shell with the library installed
+  guix shell -f guix.scm guile # The guile part is needed!
+
+#+end_src
+
+Now you can load up your module in an arbitrary script!
+
+** The final code
+
+Check out the code we created at this repository:
+
+https://codeberg.org/daviwil/guile-routes-demo

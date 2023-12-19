@@ -1,0 +1,33 @@
+#+title: System Crafters Live!
+
+We stream (almost) every Friday at 6PM Athens time on [[https://youtube.com/@SystemCrafters/live][YouTube]] and [[https://twitch.tv/SystemCrafters][Twitch]].
+
+You can watch live using =mpv= with =yt-dlp= installed: =mpv https://twitch.tv/SystemCrafters=
+
+Live chat is conducted primarily over IRC, check out the embedded client below!
+
+* Watch Live!
+
+#+BEGIN_EXPORT html
+
+<div class="video" style="border:0; width:100%;">
+<!-- <iframe src="https://youtube.com/embed/live_stream?channel=UCAiiOTio8Yu69c3XnR7nQBQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+<!-- </div> -->
+  <iframe
+      src="https://player.twitch.tv/?channel=systemcrafters&parent=systemcrafters.net"
+      allowfullscreen>
+  </iframe>
+</div>
+<br/>
+
+#+END_EXPORT
+
+* Live Chat
+
+Join our live chat via IRC in the room =#systemcrafters-live= on =irc.libera.chat=!
+
+#+BEGIN_EXPORT html
+
+<iframe src="https://kiwiirc.com/nextclient/?settings=52860fdeda726df9284a3d479494c8ef" style="width:100%;height:450px;border:0;display:block"></iframe>
+
+#+END_EXPORT

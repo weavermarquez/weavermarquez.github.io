@@ -1,0 +1,11 @@
+#+title: Crafted Emacs V2 Release Announcement
+#+date: [2023-10-20 Fri]
+#+author: Jeff Bowman
+#+kind: news
+
+Hey Crafters!
+
+Crafted Emacs V2 is released!  See my [[https://write.as/jeffbowman/crafted-emacs-v2-pre-release-announcement-8yn4][blog]] post (sorry, the URL looks weird because I missed an edit on the title).
+
+Happy Crafting!
+- Jeff Bowman

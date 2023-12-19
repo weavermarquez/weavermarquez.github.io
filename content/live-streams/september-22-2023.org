@@ -1,0 +1,128 @@
+#+title: The Value of Community
+#+subtitle: System Crafters Live - September 22, 2023
+#+date: [2023-09-22 Fri]
+#+video: 71GIs8RcrJM
+
+* Updates
+
+- Submit proposals for LibrePlanet 2024 until October 25!
+
+  The theme is "Cultivating Community" but there are other categories of talks they are looking for.
+
+  https://libreplanet.org/2024/
+
+- The EmacsConf 2023 talks are posted!
+
+  https://emacsconf.org/2023/talks/
+
+- Check out the Crafted Emacs September Update and RC1 announcements!
+
+  https://write.as/jeffbowman/crafted-emacs-update-for-september
+  https://jeffbowman.writeas.com/crafted-emacs-rc1
+
+- Matrix/IRC bridge for Libera Chat has been shut down!
+
+  https://libera.chat/news/matrix-bridge-disabled-retrospective
+
+  This affects the System Crafters Matrix and IRC channels.  We'll be working on a solution to this in the near future.
+* Let's Talk Community
+
+Today I'd like to talk at a high level about community: reasons for joining them, what value they provide to their members, and how they might evolve from a simple hangout to a group of people with a positive mission.
+
+Since this is the System Crafters community I'm looking particularly at what our community means for us, but also at the broader communities we're a part of: free software, Emacs, Guix, Lisp/Scheme, Linux, etc.
+
+I don't have all the answers here!  I am also looking for your ideas and experience about how communities should operate and what they can accomplish.
+
+** Why join a community?
+
+- To get help with a problem
+- To help other people with problems
+- To geek out about things they're interested in
+- To contribute to a mission that is personally meaningful
+- Because you think it sounds cool or you see nice people there
+- To do something productive with your time that you actually want to do
+- To mentor or to be mentored and learn more than you could on your own
+- To keep up with news in a particular area
+- To quickly ramp up in a complex topic area (like Emacs)
+- To socialize with people outside of their local area
+- To share what you've been working on in case others would be interested
+- To find people to collaborate with on your projects (or at least get feedback on them)
+- To find people who understand your weird topical humor
+- To be exposed to views that you are not as familiar with
+
+Generally, to connect with other people!
+
+** What does it mean to "join" a community?
+
+- Join the social mediums for the community (IRC/Matrix, mailing lists, etc)
+- Start contributing to projects
+
+** How do we make it easier for people to join a community?
+
+- Provide a good "onboarding experience"
+- Point them to where they should go to find everyone
+- Make it easy to find projects to contribute to / collaborate on
+- Pointing out easy starting points for contributing (easy issues, documentation, etc)
+- Promote a welcoming atmosphere so that someone doesn't lurk for a long time before joining
+- Members of the community actively helping new people will help them decide to stick around
+- Organizing events like code jams, game jams, etc might attract new people and help them join
+- Being open-minded and not too tied to the commonly used tools or ideas
+
+** Why stay in a community long term?
+
+- Friendships or collaborators
+- You believe in the principles or mission, shared vision
+- It's fun!
+- You enjoy helping people there
+- You get a lot of value out of the projects or communication
+- You continue to learn while participating
+- To see others grow as well
+
+** What value does a community provide for us?
+
+- Gives purpose
+- Learning
+- An outlet for creativity or motivation
+- A way to meet new people, especially collaborators
+- To learn best practices that you would not have figured out yourself
+
+** How does a community give its members a feeling of shared ownership?
+
+- Asking for and listening to their feedback
+- Encouraging them to contribute to projects (code, websites, content, artwork, etc)
+- Having a "democratic" process for accepting and deciding on anyone's ideas
+- "Promoting" long-time members to also help with bigger things
+- Giving them a place to thrive
+
+** What do we want to accomplish together?
+
+- Make it easier for new people to get started with Emacs and Guix (tutorials, Crafted Emacs, Crafted Guix, etc)
+- Help people learn how to program (even if it's just Emacs Lisp)
+- Build the most well-organized learning resource for the tools we use plus the wider sphere of using Linux and free software tools
+- Empower people to take ownership of their computing environment
+- Create a bunch of useful Emacs packages, Guix packages/services, and other cool tools for others to use
+
+** Examples of great communities?
+
+What is great?  Friendly, effective, organized, fun, a pleasure to be a part of
+
+- Debian: super well organized, effective
+- Doom Emacs
+- nushell
+- Guix
+- OCaml
+- Neovim
+- Gentoo
+- Clojure
+- Many functional programming communities
+- Julia Lang
+- ziglang
+- SerenityOS
+- golang
+- Spritely
+- Elixir
+- plaintextaccounting
+- Stardew Valley on Reddit
+- Fitness communities on reddit
+- DIY mechanical keyboard communities
+

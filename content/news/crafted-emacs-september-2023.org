@@ -1,0 +1,11 @@
+#+title: Crafted Emacs Update
+#+date: [2023-09-22 Thu]
+#+author: Jeff Bowman
+#+kind: news
+
+Hey Crafters!
+
+We are super close to an RC1 release!  So much work has been done getting the documentation in order.  Thanks to Stefan and Judy for all their work.  See my [[https://write.as/jeffbowman/crafted-emacs-update-for-september][blog post]] to get all the updates for this month!
+
+Happy Crafting!
+- Jeff Bowman

@@ -1,0 +1,298 @@
+#+title: Host Your Own Forgejo with Guix
+#+subtitle: System Crafters Live - November 17, 2023
+#+date: [2023-11-17 Fri]
+#+video:
+
+* Updates
+
+- Still working on the Matrix / IRC bridge issue
+
+* Hosting a Git Forge on the Web with Guix
+
+One thing I've been thinking about a lot recently is how I might host my own Git repositories, both for my own private repos and also for community projects.
+
+This will become much more interesting when Forgefed makes more progress!
+
+Here's what we'll try to do:
+
+- Package up the binary distribution of Forgejo for Guix
+- Run it locally to ensure it works, generate a basic config
+- Create a local Guix container configuration to host Forgejo behind nginx
+- Host the container in a cloud VM with a domain name and SSL certificate
+- Try setting up Laminar for CI
+
+Reference:
+
+- https://forgejo.org/docs/next/admin/installation-binary/
+- https://forgejo.org/docs/latest/admin/config-cheat-sheet/
+- https://laminar.ohwg.net/docs.html
+
+** Forgejo Package and Container Config
+
+#+begin_src scheme
+  (use-modules (gnu)
+               (guix gexp)
+               (guix packages)
+               (guix download)
+               (guix build utils)
+               (guix build-system gnu)
+               (guix build-system copy)
+               (nonguix build-system binary)
+               ((guix licenses) #:prefix license:))
+
+  (use-package-modules version-control gcc bash certs admin linux)
+  (use-service-modules certbot shepherd configuration networking ssh web)
+
+  (define forgejo
+    (let ((version "1.20.5-0"))
+      (package
+       (name "forgejo")
+       (version version)
+       (source
+        (origin
+         (method url-fetch)
+         (uri (string-append "https://codeberg.org/forgejo/forgejo/releases/download/v" version "/forgejo-" version "-linux-amd64"))
+         (file-name "forgejo")
+         (sha256
+          (base32 "0jj13qwq67acbqsina3gqi5fr2lsm80jxjmm26i1ixxhf0r0w641"))))
+       (build-system binary-build-system)
+       (arguments
+        `(#:phases (modify-phases %standard-phases
+                                  (add-after 'unpack 'chmod-to-allow-patchelf
+                                             (lambda _
+                                               (chmod "forgejo" #o755))))
+          #:install-plan `(("forgejo" "bin/"))))
+       (propagated-inputs (list git git-lfs))
+       (home-page "https://forgejo.org")
+       (synopsis "A self-hosted lightweight software forge.")
+       (description "Forgejo is a self-hosted lightweight software forge.")
+       (license license:expat))))
+
+  (define-configuration/no-serialization forgejo-configuration
+    (forgejo
+     (file-like forgejo)
+     "The forgejo package.")
+
+    (domain
+     (string "foo")
+     "The domain name of the server.")
+
+    (user
+     (string "git")
+     "The name of the user under which Forgejo will be executed.")
+
+    (group
+     (string "git")
+     "The name of the group under which Forgejo will be executed."))
+
+  (define (forgejo-configuration->file config)
+    (mixed-text-file "forgejo.ini" "
+  APP_NAME = Crafter Tools
+  RUN_USER = " (forgejo-configuration-user config) "
+  WORK_PATH = /srv/forgejo
+  RUN_MODE = prod
+
+  [database]
+  DB_TYPE = sqlite3
+  HOST = 127.0.0.1:3306
+  NAME = forgejo
+  USER = forgejo
+  PASSWD =
+  SCHEMA =
+  SSL_MODE = disable
+  PATH = /srv/forgejo/data/forgejo.db
+  LOG_SQL = false
+
+  [repository]
+  ROOT = /srv/forgejo/data/forgejo-repositories
+
+  [server]
+  SSH_DOMAIN = " (forgejo-configuration-domain config) "
+  DOMAIN = localhost
+  HTTP_PORT = 3000
+  ROOT_URL = https://" (forgejo-configuration-domain config) ":3000/
+  APP_DATA_PATH = /srv/forgejo/data
+  DISABLE_SSH = false
+  SSH_PORT = 22
+  LFS_START_SERVER = true
+  LFS_JWT_SECRET = 1_yZPWVD-sFZmGSvMjt9_eMqjiHm1V5_oWEhmw8i3IM
+  OFFLINE_MODE = false
+
+  [lfs]
+  PATH = /srv/forgejo/data/lfs
+
+  [mailer]
+  ENABLED = false
+
+  [service]
+  REGISTER_EMAIL_CONFIRM = false
+  ENABLE_NOTIFY_MAIL = false
+  DISABLE_REGISTRATION = false
+  ALLOW_ONLY_EXTERNAL_REGISTRATION = false
+  ENABLE_CAPTCHA = false
+  REQUIRE_SIGNIN_VIEW = false
+  DEFAULT_KEEP_EMAIL_PRIVATE = true
+  DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+  DEFAULT_ENABLE_TIMETRACKING = true
+  NO_REPLY_ADDRESS = noreply.localhost
+
+  [openid]
+  ENABLE_OPENID_SIGNIN = true
+  ENABLE_OPENID_SIGNUP = true
+
+  [cron.update_checker]
+  ENABLED = false
+
+  [session]
+  PROVIDER = file
+
+  [log]
+  MODE = console
+  LEVEL = info
+  ROOT_PATH = /srv/forgejo/log
+
+  [repository.pull-request]
+  DEFAULT_MERGE_STYLE = merge
+
+  [repository.signing]
+  DEFAULT_TRUST_MODEL = committer
+
+  [security]
+  INSTALL_LOCK = true
+  INTERNAL_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MDAyNDAwMTh9.3MFnsZWtz-Qu1I5mC1TWIXyhdGN6pDJsYE1iSugEhdM
+  PASSWORD_HASH_ALGO = pbkdf2_hi
+
+  [oauth2]
+  JWT_SECRET = DrvU6DPu8tIRVmeDfpmwLakm5m_IY13Cv00uMWaBo34
+  "))
+
+  (define (forgejo-shepherd-service config)
+    "Return a <shepherd-service> for Forgejo with config."
+    (let* ((forgejo (forgejo-configuration-forgejo config))
+           (forgejo-bin (file-append forgejo "/bin/forgejo"))
+           (forgejo-cfg (forgejo-configuration->file config)))
+      (list (shepherd-service
+             (documentation "Run the Forgejo Git forge")
+             (requirement '(networking user-processes))
+             (provision '(forgejo))
+             (start #~(make-forkexec-constructor
+                           (list #$forgejo-bin "--config" #$forgejo-cfg)
+                           #:user #$(forgejo-configuration-user config)
+                           #:group #$(forgejo-configuration-group config)))
+             (stop  #~(make-kill-destructor))))))
+
+  (define %forgejo-accounts
+    (list (user-group (name "git")
+                      (system? #t))
+          (user-account
+           (name "git")
+           (group "git")
+           (system? #t)
+           (comment "Forgejo User")
+           (home-directory "/home/git"))))
+
+  (define %forgejo-activation
+    #~(begin
+        (use-modules (guix build utils))
+        (mkdir-p "/srv/forgejo")
+        (let ((user (getpwnam "git")))
+          (chown "/srv/forgejo"
+                 (passwd:uid user)
+                 (passwd:gid user)))))
+
+  (define forgejo-service-type
+    (service-type (name 'forgejo)
+                  (extensions
+                   (list (service-extension shepherd-root-service-type
+                                            forgejo-shepherd-service)
+                         (service-extension account-service-type
+                                            (const %forgejo-accounts))
+                         (service-extension activation-service-type
+                                            (const %forgejo-activation))))
+                  (default-value (forgejo-configuration))
+                  (description
+                   "Run Forgejo.")))
+
+  (operating-system
+    (host-name "crafter-forge")
+    (timezone "Etc/UTC")
+    (locale "en_US.utf8")
+
+    (bootloader (bootloader-configuration
+                 (bootloader grub-bootloader)
+                 (targets '("unused"))))
+
+    (firmware '())
+    (file-systems %base-file-systems)
+
+    ;; minimal packages for remote debugging
+    (packages (list coreutils bash iproute procps forgejo))
+
+    ;; basic services
+    (services (list (service dhcp-client-service-type)
+
+                    (service syslog-service-type
+                             (syslog-configuration))
+
+                    (service forgejo-service-type
+                             (forgejo-configuration
+                              (domain "crafter.tools"))))))
+#+end_src
+
+*** run.sh
+
+#+begin_src sh
+
+#!/bin/sh
+
+cd /root
+
+mkdir -p /var/data/letsencrypt
+
+$(guix time-machine -C channels.scm -- system container --network --share=/var/data=/srv --share=/var/data/letsencrypt=/etc/letsencrypt config.scm)
+
+#+end_src
+
+*** forge.service
+
+#+begin_src sh
+
+[Unit]
+Description=Forge Service
+Wants=guix-daemon.service
+
+[Service]
+ExecStart=/bin/sh -c /root/run.sh
+
+[Install]
+WantedBy=multi-user.target
+
+#+end_src
+
+** Setting up the Host VM
+
+#+begin_src sh
+
+  # Unblock port 80
+  echo net.ipv4.ip_unprivileged_port_start=80 >> /etc/sysctl.conf
+  sysctl --system
+
+  # Configure the firewall
+  # TODO: How to persist across reboots?
+  ufw enable
+  ufw allow http
+  ufw allow https
+
+  # Set up the service
+  mkdir -p /var/data/certs
+  ln -sf /root/cons.service /etc/systemd/system/cons.service
+
+  # Run the service for the first time to generate certificates
+  /root/run.sh
+  guix container exec 6623 /var/lib/certbot/renew-certificates
+
+  # Run the service for real
+  systemctl enable cons.service
+  systemctl start cons.service
+
+#+end_src

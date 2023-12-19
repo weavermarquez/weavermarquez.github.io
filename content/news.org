@@ -1,0 +1,12 @@
+#+TITLE: System Crafters News
+
+- [[file:crafted-emacs-november-2023.org][Crafted Emacs Update]] - Jeff Bowman · November 28, 2023
+- [[file:crafted-emacs-v2-release-2023.org][Crafted Emacs V2 Release Announcement]] - Jeff Bowman · October 20, 2023
+- [[file:crafted-emacs-v2announce-2023.org][Crafted Emacs V2 pre-release Announcement]] - Jeff Bowman · October 17, 2023
+- [[file:crafted-emacs-september-2023.org][Crafted Emacs Update]] - Jeff Bowman · September 22, 2023
+- [[file:crafted-emacs-august-2023.org][Crafted Emacs Update and New Teammate!]] - Jeff Bowman · September 01, 2023
+- [[file:crafted-emacs-july-2023.org][Crafted Emacs Update and New Teammate!]] - Jeff Bowman · July 20, 2023
+- [[file:crafted-emacs-v2-beta.org][Crafted Emacs v2 Beta Announcement]] - Jeff Bowman · June 08, 2023
+- [[file:changes-to-matrix-channels.org][Changes to the System Crafters Matrix Channels]] - David Wilson · May 23, 2023
+- [[file:moving-from-discord-to-matrix-irc.org][Community Chat is Moving From Discord to Matrix and IRC]] - David Wilson · May 18, 2023
+- [[file:new-systemcrafters-site.org][Unveiling the New System Crafters Site!]] - David Wilson · May 11, 2023

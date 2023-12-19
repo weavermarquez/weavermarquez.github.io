@@ -1,0 +1,11 @@
+#+title: Crafted Emacs Update
+#+date: [2023-11-28 Tue]
+#+author: Jeff Bowman
+#+kind: news
+
+Hey Crafters!
+
+Slow month for Crafted Emacs.  See [[https://jeffbowman.writeas.com/crafted-emacs-november-update][my blog post]] for the updates!
+
+Happy Crafting!
+- Jeff Bowman

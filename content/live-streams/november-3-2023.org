@@ -1,0 +1,18 @@
+#+title: Improving the IRC Experience
+#+subtitle: System Crafters Live - November 3, 2023
+#+date: [2023-11-03 Fri]
+#+video: C1kwStlEick
+
+* Updates
+
+- I finished the Autumn Lisp Game Jam!  Placed #10 out of 16, not too bad
+
+  https://fluxharmonic.itch.io/cybersol
+  https://itch.io/jam/autumn-lisp-game-jam-2023/rate/2341509
+  https://codeberg.org/FluxHarmonic/algj2023-cybersol/
+
+- Today is an experiment!  We're streaming only on Twitch
+
+* What happened to our IRC?
+
+History: https://libera.chat/news/matrix-bridge-disabled-retrospective

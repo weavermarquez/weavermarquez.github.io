@@ -1,0 +1,12 @@
+#+title: Crafted Emacs V2 pre-release Announcement
+#+date: [2023-10-17 Tue]
+#+author: Jeff Bowman
+#+kind: news
+
+Hey Crafters!
+
+Pre-release announcement! V2 is being released on Friday, 20
+October 2023.  See my [[https://write.as/jeffbowman/crafted-emacs-v2-pre-release-announcement][blog]] post about it!
+
+Happy Crafting!
+- Jeff Bowman
