@@ -1,0 +1,25 @@
+#+title: Readme
+* Welcome to my web site
+
+Huge thank you to [[https://daviwil.com/][David Wilson]] of System Crafters. This repository is based on his work configuring and extending the org publishing features to create the [[https://codeberg.org/SystemCrafters/systemcrafters-site][system crafters website]].
+
+* PROJ Next Steps
+- [ ] Comply with source GPLv3 license
+  - Clarify developer/user obligations (i.e., none)
+** Revise website layout, theme to my personal taste
+** Register for domain
+  - add /Frappe Framework/ website in subdomain
+** Erase existing blog posts; upload first blog post
+** Test inclusion of [[https://github.com/alhassy/org-special-block-extras][org-special-block-extras]]
+- Create blog components: character dialogue boxes
+
+Locally, it works! Sweet.
+
+For some reason, my local weaversite gets rid of the div column 2 for =parallel= though...
+
+
+** Test =org-babel= interactions with CICD
+  - What dependencies are necessary for: penrose; ASP clingo; sicstus / scryer prolog; python; elisp; bash; powershell; ledger; calc
+  - Will I have to turn each literate programming article into its own publishing project? Host them on a separate repo?
+  - How will I include dynamic components for Penrose, esp. svg animation?
+

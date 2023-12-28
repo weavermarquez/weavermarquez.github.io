@@ -2,6 +2,39 @@
 
 System Crafters is a community and learning resource for computer enthusiasts who are interested in crafting their computing experience to *increase their enjoyment and productivity*.
 
+* Testing Special Blocks and such
+
+[[blue:][arstarst]]
+
+#+begin_parallel
+[[color:orange][Are you excited to learn some Lisp?]] [[blue:Yes!]]
+
+Pop-quiz: How does doc:apply work?
+#+end_parallel
+
+#+begin_details Answer
+link-here:solution
+Syntactically, ~(apply f '(x0 ... xN)) = (f x0 ... xN)~.
+
+[[remark:Musa][Ain't that cool?]]
+
+#+begin_spoiler aqua
+That is, [[color:magenta][we can ((apply)) a function to a list of arguments!]]
+#+end_spoiler
+
+#+end_details
+
+#+html: <br>
+#+begin_box
+octoicon:report Note that kbd:C-x_C-e evaluates a Lisp form!
+#+end_box
+
+show:GLOSSARY
+
+badge:Thanks|for_reading
+tweet:https://github.com/alhassy/org-special-block-extras
+badge:|buy_me_a_coffee|gray|https://www.buymeacoffee.com/alhassy|buy-me-a-coffee
+
 This website is intended to be the /most comprehensive/ reference on the internet for learning how to leverage tools like [[https://www.gnu.org/software/emacs/][GNU Emacs]], [[https://guix.gnu.org/][GNU Guix]], and [[https://en.wikipedia.org/wiki/Linux][GNU/Linux]] to craft a fully customized workflow using Free Software tools!
 
 The [[https://youtube.com/@SystemCrafters][System Crafters YouTube channel]] also contains almost 200 videos and live stream recordings demonstrating and explaining these tools and broader topics!

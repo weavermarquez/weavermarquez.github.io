@@ -66,6 +66,10 @@
 (use-package webfeeder
   :ensure t)
 
+(use-package org-special-block-extras
+  :ensure t
+  :hook (org-mode . org-special-block-extras-mode))
+
 (defvar yt-iframe-format
   (concat "<div class=\"video\">"
           "  <iframe src=\"https://www.youtube.com/embed/%s\" allowfullscreen></iframe>"
