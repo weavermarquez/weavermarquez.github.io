@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Creating a New Lisp - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Creating a New Lisp</h1><p class="site-post-meta">April 16, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/fo-Px21AyTE" allowfullscreen></iframe></div><div id="content">
-<h2><a id="emacs-news" class="anchor" href="#emacs-news">¶</a>Emacs News</h2><div class="outline-text-2" id="text-org271b565">
+<h2><a id="emacs-news" class="anchor" href="#emacs-news">¶</a>Emacs News</h2><div class="outline-text-2" id="text-org49daf52">
 <ul class="org-ul">
 <li><a href="https://lists.gnu.org/archive/html/emacs-devel/2021-04/msg00484.html">Emacs native-comp branch is being merged into Emacs 28 this weekend!</a></li>
 <li><a href="https://git.savannah.gnu.org/cgit/emacs.git/commit/etc/NEWS?id=5761e9004aa73d3aa7c34be9a064a1e768c3129c">icomplete-vertical-mode merged into Emacs 28</a></li>
@@ -8,7 +8,7 @@
 </ul>
 </div>
 
-<h2><a id="creating-a-new-lisp" class="anchor" href="#creating-a-new-lisp">¶</a>Creating a New Lisp</h2><div class="outline-text-2" id="text-orgd93f413">
+<h2><a id="creating-a-new-lisp" class="anchor" href="#creating-a-new-lisp">¶</a>Creating a New Lisp</h2><div class="outline-text-2" id="text-org6411ec5">
 <p>
 Over the last year, I&rsquo;ve been hacking occasionally on a few different projects in my free time:
 </p>
@@ -32,7 +32,7 @@ What if I could write my own Scheme-inspired language for systems programming?
 </p>
 </div>
 
-<h3><a id="goals" class="anchor" href="#goals">¶</a>Goals</h3><div class="outline-text-3" id="text-org7132b49">
+<h3><a id="goals" class="anchor" href="#goals">¶</a>Goals</h3><div class="outline-text-3" id="text-orga3bdc47">
 <ul class="org-ul">
 <li>Create my own Lisp dialect for writing extensible, high performance applications like video games, multimedia editing tools, text editors, etc.</li>
 
@@ -62,13 +62,13 @@ What if I could write my own Scheme-inspired language for systems programming?
 </ul>
 </div>
 
-<h3><a id="components" class="anchor" href="#components">¶</a>Components</h3><div class="outline-text-3" id="text-orga2c9f67">
+<h3><a id="components" class="anchor" href="#components">¶</a>Components</h3><div class="outline-text-3" id="text-orgf9a93c3">
 <p>
 To accomplish these goals, here are the parts that are needed:
 </p>
 </div>
 
-<h4><a id="compiler" class="anchor" href="#compiler">¶</a>Compiler</h4><div class="outline-text-4" id="text-org2589745">
+<h4><a id="compiler" class="anchor" href="#compiler">¶</a>Compiler</h4><div class="outline-text-4" id="text-org47f4847">
 <p>
 This is the obvious part.  To produce standalone binaries, I&rsquo;m going to need a compiler that can take the code of the language and produce an intermediate representation which can be optimized and ultimately turned into a form of assembly.
 </p>
@@ -90,7 +90,7 @@ One other job of the compiler would be to manage just-in-time (JIT) compilation 
 </p>
 </div>
 
-<h4><a id="assembler" class="anchor" href="#assembler">¶</a>Assembler</h4><div class="outline-text-4" id="text-org7a96e30">
+<h4><a id="assembler" class="anchor" href="#assembler">¶</a>Assembler</h4><div class="outline-text-4" id="text-org1c47cef">
 <p>
 The assembler takes a low-level representation of your code and turns it into machine instructions.  You&rsquo;ve probably seen code that looks like this:
 </p>
@@ -125,7 +125,7 @@ The output of the assembler will be object files, typically in the system&rsquo;
 </p>
 </div>
 
-<h4><a id="linker" class="anchor" href="#linker">¶</a>Linker</h4><div class="outline-text-4" id="text-orgc0c3bc3">
+<h4><a id="linker" class="anchor" href="#linker">¶</a>Linker</h4><div class="outline-text-4" id="text-org7187db7">
 <p>
 The linker&rsquo;s job is to take the object files produced by the assembler and produce a working executable.  For now I&rsquo;m only focused on 64-bit Linux so I have a clear path to follow to produce ELF (Executable and Linkable Format) binaries.
 </p>
@@ -143,7 +143,7 @@ This is the part of the code that is very OS-dependent so I probably won&rsquo;t
 </p>
 </div>
 
-<h4><a id="runtime" class="anchor" href="#runtime">¶</a>Runtime</h4><div class="outline-text-4" id="text-org8532adc">
+<h4><a id="runtime" class="anchor" href="#runtime">¶</a>Runtime</h4><div class="outline-text-4" id="text-org82aee12">
 <p>
 Once I have a toolchain that is capable of compiling basic code, I&rsquo;ll also need some kind of lightweight runtime or standard library that can implement memory management and other low-level tasks like module loading.  My goal is to make this part as small as possible so that the output program isn&rsquo;t weighed down with unneeded code.
 </p>
@@ -153,7 +153,7 @@ Any extra behavior needed by the programmer should be pulled in using modules wh
 </p>
 </div>
 
-<h4><a id="modules" class="anchor" href="#modules">¶</a>Modules</h4><div class="outline-text-4" id="text-org59c3039">
+<h4><a id="modules" class="anchor" href="#modules">¶</a>Modules</h4><div class="outline-text-4" id="text-org6219262">
 <p>
 I&rsquo;ll try to produce a set of modules that feel like a coherent standard library for the language, providing all the functionality and data structures you would need for day to day coding.  The compiler itself may not come with these parts bundled: it could be better if they were installed as dependencies for your project where only the parts you use actually get compiled into the program.
 </p>
@@ -163,7 +163,7 @@ This does mean that compiled programs wouldn&rsquo;t be able to arbitrarily load
 </p>
 </div>
 
-<h3><a id="the-plan" class="anchor" href="#the-plan">¶</a>The Plan</h3><div class="outline-text-3" id="text-org5ecd88c">
+<h3><a id="the-plan" class="anchor" href="#the-plan">¶</a>The Plan</h3><div class="outline-text-3" id="text-org6a457a6">
 <p>
 I&rsquo;m actually starting from the bottom with this project!  I want to write my own standalone toolchain which doesn&rsquo;t depend on anything else aside from the language/compiler needed to bootstrap the project.
 </p>
@@ -187,7 +187,7 @@ Bootstrapping your Lisp with another Lisp is a longstanding tradition!
 </p>
 </div>
 
-<h3><a id="but-why" class="anchor" href="#but-why">¶</a>But why?</h3><div class="outline-text-3" id="text-org40db672">
+<h3><a id="but-why" class="anchor" href="#but-why">¶</a>But why?</h3><div class="outline-text-3" id="text-orgbd2378a">
 <p>
 Primarily to learn!  But also because it&rsquo;s an opportunity to write a fully Lisp-oriented toolchain from the ground up and optimize everything for my goals.  For some reason the idea is irresistable to me: I started thinking about it a year ago and it keeps popping up so now I&rsquo;ve decided to go for it!
 </p>
@@ -205,7 +205,7 @@ What I want in the end is a tool that is tailored to the kinds of projects I wan
 </p>
 </div>
 
-<h3><a id="are-you-interested-in-learning-more" class="anchor" href="#are-you-interested-in-learning-more">¶</a>Are you interested in learning more?</h3><div class="outline-text-3" id="text-org791e1ab">
+<h3><a id="are-you-interested-in-learning-more" class="anchor" href="#are-you-interested-in-learning-more">¶</a>Are you interested in learning more?</h3><div class="outline-text-3" id="text-org31198ae">
 <p>
 Part of the reason I&rsquo;m telling you about this today is to see if you would be interested in hearing more about building a compiler toolchain from scratch.  I&rsquo;m no expert, but I can share what I&rsquo;m learning over time!
 </p>
@@ -236,7 +236,7 @@ Mesche
 </p>
 </div>
 
-<h2><a id="qampa-and-chat" class="anchor" href="#qampa-and-chat">¶</a>Q&amp;A and Chat</h2><h3><a id="what-books-or-resources-am-i-reading-for-this-project-so-far" class="anchor" href="#what-books-or-resources-am-i-reading-for-this-project-so-far">¶</a>What books or resources am I reading for this project so far?</h3><div class="outline-text-3" id="text-orgf62b0cc">
+<h2><a id="qampa-and-chat" class="anchor" href="#qampa-and-chat">¶</a>Q&amp;A and Chat</h2><h3><a id="what-books-or-resources-am-i-reading-for-this-project-so-far" class="anchor" href="#what-books-or-resources-am-i-reading-for-this-project-so-far">¶</a>What books or resources am I reading for this project so far?</h3><div class="outline-text-3" id="text-orga76cfaa">
 <ul class="org-ul">
 <li><a href="https://www.amazon.com/gp/product/1558604960/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=theinvincibleele&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=1558604960&amp;linkId=60ef3399471f4ff99ba8904e10668f21">Linkers and Loaders</a> by John R. Levine</li>
 <li><a href="https://uclibc.org/docs/elf-64-gen.pdf">ELF 64-bit specification</a></li>

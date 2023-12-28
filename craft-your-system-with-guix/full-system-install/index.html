@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Installing Guix as a Complete GNU/Linux System - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Installing Guix as a Complete GNU/Linux System</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/oSy-TmoxG_Y" allowfullscreen></iframe></div><div id="content">
-<h2><a id="the-time-has-come" class="anchor" href="#the-time-has-come">¶</a>The time has come!</h2><div class="outline-text-2" id="text-org118ecff">
+<h2><a id="the-time-has-come" class="anchor" href="#the-time-has-come">¶</a>The time has come!</h2><div class="outline-text-2" id="text-org4e0ae01">
 <p>
 Today we&rsquo;re finally going to learn how to install GNU Guix as a full Linux distribution.  My goal here is to make the installation process as smooth as possible for first-time Guix installers, particularly when you&rsquo;re installing on a machine that has hardware which isn&rsquo;t supported by the Linux kernel that comes with the official Guix installation image.
 </p>
@@ -18,7 +18,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="assumptions" class="anchor" href="#assumptions">¶</a>Assumptions</h2><div class="outline-text-2" id="text-orgf179d08">
+<h2><a id="assumptions" class="anchor" href="#assumptions">¶</a>Assumptions</h2><div class="outline-text-2" id="text-org8b7360c">
 <p>
 I&rsquo;m going to make a few assumptions in this video:
 </p>
@@ -38,7 +38,7 @@ I&rsquo;ll point out any deviations from the official installer when we reach th
 </p>
 </div>
 
-<h2><a id="preparing-the-installer" class="anchor" href="#preparing-the-installer">¶</a>Preparing the installer</h2><div class="outline-text-2" id="text-orgedb6dae">
+<h2><a id="preparing-the-installer" class="anchor" href="#preparing-the-installer">¶</a>Preparing the installer</h2><div class="outline-text-2" id="text-orga1495f8">
 <p>
 First of all, you&rsquo;ll need to download the <code>.iso</code> file for the latest release on this GitHub repository:
 </p>
@@ -79,7 +79,7 @@ If you&rsquo;re on Windows, the program Rufus can be helpful for putting the ima
 </p>
 </div>
 
-<h2><a id="prepare-your-hard-drive" class="anchor" href="#prepare-your-hard-drive">¶</a>Prepare your hard drive</h2><div class="outline-text-2" id="text-orgb2e7aa3">
+<h2><a id="prepare-your-hard-drive" class="anchor" href="#prepare-your-hard-drive">¶</a>Prepare your hard drive</h2><div class="outline-text-2" id="text-org5eb83e7">
 <p>
 The last prerequisite is to make sure you&rsquo;ve prepared your hard drive and partitions before you start the installation process.
 </p>
@@ -98,7 +98,7 @@ You&rsquo;ll also need to make sure you have enough free space to create a new p
 </ul>
 </div>
 
-<h2><a id="booting-the-installer" class="anchor" href="#booting-the-installer">¶</a>Booting the Installer</h2><div class="outline-text-2" id="text-org756a2ea">
+<h2><a id="booting-the-installer" class="anchor" href="#booting-the-installer">¶</a>Booting the Installer</h2><div class="outline-text-2" id="text-org83f8d32">
 <p>
 Let&rsquo;s boot with the installation media!  When you plug in the USB stick (or DVD) you may need to press a key to get to the boot menu and select the device with the installer on it.
 </p>
@@ -116,13 +116,13 @@ If you have an existing configuration, I still recommend starting with the graph
 </p>
 </div>
 
-<h2><a id="using-the-graphical-installer" class="anchor" href="#using-the-graphical-installer">¶</a>Using the graphical installer</h2><div class="outline-text-2" id="text-org80f6c4d">
+<h2><a id="using-the-graphical-installer" class="anchor" href="#using-the-graphical-installer">¶</a>Using the graphical installer</h2><div class="outline-text-2" id="text-org7d1f233">
 <p>
 We&rsquo;re now going to proceed through the installation &ldquo;wizard&rdquo; which will ask us to fill in some information about the system we will be installing.
 </p>
 </div>
 
-<h3><a id="choosing-basic-system-details" class="anchor" href="#choosing-basic-system-details">¶</a>Choosing basic system details</h3><div class="outline-text-3" id="text-org6832d60">
+<h3><a id="choosing-basic-system-details" class="anchor" href="#choosing-basic-system-details">¶</a>Choosing basic system details</h3><div class="outline-text-3" id="text-org283d16d">
 <p>
 The first question is to choose the appropriate timezone for where you are in the world.  You will then be asked about the keyboard layout you use.  There are lots of options for keyboard layouts, so take a moment to look through them!
 </p>
@@ -132,7 +132,7 @@ Next you will be asked for the hostname of the system.  Enter something fun here
 </p>
 </div>
 
-<h3><a id="network-setup" class="anchor" href="#network-setup">¶</a>Network setup</h3><div class="outline-text-3" id="text-org057b080">
+<h3><a id="network-setup" class="anchor" href="#network-setup">¶</a>Network setup</h3><div class="outline-text-3" id="text-orgd185340">
 <p>
 If you&rsquo;re installing on a laptop or a device with a WiFi adapter, select &ldquo;WiFi&rdquo; in the list and press Enter.  It will try to power on your WiFi antenna to find available access points.  If for some reason no access points are returned the first time, press Tab to select &ldquo;Scan&rdquo; and then Enter and then you may get a list of results.
 </p>
@@ -142,19 +142,19 @@ Select the network you want to connect to and enter the password in the next dia
 </p>
 </div>
 
-<h3><a id="enable-substitute-servers" class="anchor" href="#enable-substitute-servers">¶</a>Enable substitute servers</h3><div class="outline-text-3" id="text-org5ebc188">
+<h3><a id="enable-substitute-servers" class="anchor" href="#enable-substitute-servers">¶</a>Enable substitute servers</h3><div class="outline-text-3" id="text-orgf69b73c">
 <p>
 Now you&rsquo;ll be asked if you want to turn on substitute server discovery.  I highly recommend choosing &ldquo;Enable&rdquo; here or you will be building the source for all your packages from scratch!
 </p>
 </div>
 
-<h3><a id="choose-a-root-password" class="anchor" href="#choose-a-root-password">¶</a>Choose a root password</h3><div class="outline-text-3" id="text-orgb46d06a">
+<h3><a id="choose-a-root-password" class="anchor" href="#choose-a-root-password">¶</a>Choose a root password</h3><div class="outline-text-3" id="text-org62d469c">
 <p>
 Enter a root password for the machine in the next prompt.  It doesn&rsquo;t matter what you enter here because we won&rsquo;t finish installation using the graphical installer!
 </p>
 </div>
 
-<h3><a id="create-a-user" class="anchor" href="#create-a-user">¶</a>Create a user</h3><div class="outline-text-3" id="text-org5e687f3">
+<h3><a id="create-a-user" class="anchor" href="#create-a-user">¶</a>Create a user</h3><div class="outline-text-3" id="text-org1ea85cc">
 <p>
 On the &ldquo;User creation&rdquo; dialog, press Enter to raise the dialog to add a user.
 </p>
@@ -168,7 +168,7 @@ The cursor should now be on the OK button, so if you don&rsquo;t need to add mor
 </p>
 </div>
 
-<h3><a id="choosing-a-desktop-environment" class="anchor" href="#choosing-a-desktop-environment">¶</a>Choosing a desktop environment</h3><div class="outline-text-3" id="text-orgd04d3ae">
+<h3><a id="choosing-a-desktop-environment" class="anchor" href="#choosing-a-desktop-environment">¶</a>Choosing a desktop environment</h3><div class="outline-text-3" id="text-org89fe808">
 <p>
 Here&rsquo;s the fun part!  At this point you can choose what your initial desktop environment will be.  You can also select multiple environments if you want to try different ones in your new system!
 </p>
@@ -182,7 +182,7 @@ Use the arrow keys to select &ldquo;Emacs EXWM&rdquo; and press Enter, then use 
 </p>
 </div>
 
-<h3><a id="service-selection" class="anchor" href="#service-selection">¶</a>Service selection</h3><div class="outline-text-3" id="text-orgd92e4cf">
+<h3><a id="service-selection" class="anchor" href="#service-selection">¶</a>Service selection</h3><div class="outline-text-3" id="text-org909939c">
 <p>
 In the next screen you can choose services to add to your system.  The NSS certificate service will be selected by default (don&rsquo;t uncheck it!) and you can add either of the following services by selecting them with the arrow keys and pressing Enter:
 </p>
@@ -197,7 +197,7 @@ Once you&rsquo;ve made your selections, use Tab and Enter to choose OK.
 </p>
 </div>
 
-<h3><a id="partitioning-the-disk" class="anchor" href="#partitioning-the-disk">¶</a>Partitioning the disk</h3><div class="outline-text-3" id="text-org04d2728">
+<h3><a id="partitioning-the-disk" class="anchor" href="#partitioning-the-disk">¶</a>Partitioning the disk</h3><div class="outline-text-3" id="text-org4eb401a">
 <p>
 On this screen, we can choose how we want to partition the disks in our system.  We can either have the installer guide us through the partitioning process or do the work manually.
 </p>
@@ -259,7 +259,7 @@ No matter what you do here, the important thing is to make sure you&rsquo;ve set
 </p>
 </div>
 
-<h3><a id="editing-the-generated-configuration" class="anchor" href="#editing-the-generated-configuration">¶</a>Editing the generated configuration</h3><div class="outline-text-3" id="text-orga0098cd">
+<h3><a id="editing-the-generated-configuration" class="anchor" href="#editing-the-generated-configuration">¶</a>Editing the generated configuration</h3><div class="outline-text-3" id="text-orgec8926b">
 <p>
 We&rsquo;ll now be shown a screen with the final configuration that was generated for our system install.  This is actually the last page we will use on the graphical installer!  We&rsquo;ll use this generated configuration to finish the installation process manually.
 </p>
@@ -296,7 +296,7 @@ That&rsquo;s it!  Save the file (<code>C-x C-s</code> in Emacs) and then exit (<
 </p>
 </div>
 
-<h2><a id="installing-the-system" class="anchor" href="#installing-the-system">¶</a>Installing the system</h2><div class="outline-text-2" id="text-org2a5ce3e">
+<h2><a id="installing-the-system" class="anchor" href="#installing-the-system">¶</a>Installing the system</h2><div class="outline-text-2" id="text-org9b0bdfc">
 <p>
 Now we can start the system installation!
 </p>
@@ -335,7 +335,7 @@ While the reboot is going on, remove the installation media so that it doesn&rsq
 </p>
 </div>
 
-<h2><a id="booting-your-new-system" class="anchor" href="#booting-your-new-system">¶</a>Booting your new system</h2><div class="outline-text-2" id="text-org19ce32c">
+<h2><a id="booting-your-new-system" class="anchor" href="#booting-your-new-system">¶</a>Booting your new system</h2><div class="outline-text-2" id="text-org33da1c7">
 <p>
 Your new system should be installed now!  If you created encrypted partitions, the first thing you will have to do is type in your passphrase before you will reach the Guix boot screen.  It will take a few seconds before booting proceeds after you enter the password.
 </p>
@@ -367,7 +367,7 @@ You can now log in successfully!
 </p>
 </div>
 
-<h2><a id="saving-your-configuration" class="anchor" href="#saving-your-configuration">¶</a>Saving your configuration</h2><div class="outline-text-2" id="text-org8ed1624">
+<h2><a id="saving-your-configuration" class="anchor" href="#saving-your-configuration">¶</a>Saving your configuration</h2><div class="outline-text-2" id="text-org2ad8dc2">
 <p>
 Now that we&rsquo;ve booted into our new system and logged in, we need to copy over the channel and configuration files that we used during installation.  This is important, these files won&rsquo;t exist after we update the system!
 </p>
@@ -408,7 +408,7 @@ The file should now look like this:
               <span class="org-string">"2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"</span>)))))</pre>
 </div>
 
-<h2><a id="updating-the-system" class="anchor" href="#updating-the-system">¶</a>Updating the system</h2><div class="outline-text-2" id="text-orgf643131">
+<h2><a id="updating-the-system" class="anchor" href="#updating-the-system">¶</a>Updating the system</h2><div class="outline-text-2" id="text-org6f5052b">
 <p>
 One last thing you&rsquo;ll want to know how to do is update your system!  Before we can do that, though, make sure to connect to WiFi!
 </p>
@@ -425,7 +425,7 @@ This may take some time depending on how many changes were made to Guix since yo
 </p>
 </div>
 
-<h2><a id="usage-tips" class="anchor" href="#usage-tips">¶</a>Usage tips</h2><div class="outline-text-2" id="text-org7302989">
+<h2><a id="usage-tips" class="anchor" href="#usage-tips">¶</a>Usage tips</h2><div class="outline-text-2" id="text-org7493be8">
 <ol class="org-ol">
 <li>Don&rsquo;t use your <code>system.scm</code> to install packages you want to use day to day, use <code>guix install</code> instead!</li>
 <li>You don&rsquo;t really need to update the full system very often (especially to avoid kernel recompiles)</li>
@@ -444,7 +444,7 @@ Have fun with your new Guix system!
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orga9ecb48">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org902db9a">
 <p>
 I&rsquo;m planning to make more videos to show you how to use Guix as your daily driver Linux distribution!  Here are some topics we will cover:
 </p>

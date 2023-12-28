@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Automated Org Mode Website Publishing with GitHub or SourceHut - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Automated Org Mode Website Publishing with GitHub or SourceHut</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/za99DwdZEyg" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org5c6aa16">
+<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org2178204">
 <p>
 Once you start generating a static website using Org Mode&rsquo;s publishing system, the next thing you&rsquo;ll probably want to know is how to publish the site so that other people can check it out.
 </p>
@@ -17,7 +17,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="getting-started" class="anchor" href="#getting-started">¶</a>Getting started</h2><div class="outline-text-2" id="text-org46bffe1">
+<h2><a id="getting-started" class="anchor" href="#getting-started">¶</a>Getting started</h2><div class="outline-text-2" id="text-orgbce1957">
 <p>
 To get started, make sure you have an account on one of the websites we&rsquo;ll talk about today: GitHub or SourceHut.
 </p>
@@ -43,7 +43,7 @@ There are other ways you can get free service on SourceHut, check out <a href="h
 </p>
 </div>
 
-<h3><a id="which-one-should-i-choose" class="anchor" href="#which-one-should-i-choose">¶</a>Which one should I choose?</h3><div class="outline-text-3" id="text-org8d71077">
+<h3><a id="which-one-should-i-choose" class="anchor" href="#which-one-should-i-choose">¶</a>Which one should I choose?</h3><div class="outline-text-3" id="text-orgd11fe50">
 <p>
 Both are great options and it will be similarly easy to publish sites on each.
 </p>
@@ -57,7 +57,7 @@ SourceHut is a more hacker-focused site with a totally different philosophy that
 </p>
 </div>
 
-<h2><a id="preparing-a-local-repository-for-your-site" class="anchor" href="#preparing-a-local-repository-for-your-site">¶</a>Preparing a local repository for your site</h2><div class="outline-text-2" id="text-org83eb356">
+<h2><a id="preparing-a-local-repository-for-your-site" class="anchor" href="#preparing-a-local-repository-for-your-site">¶</a>Preparing a local repository for your site</h2><div class="outline-text-2" id="text-org2188310">
 <p>
 On either hosting site, you&rsquo;ll need a repository where you store your Org Mode website&rsquo;s content files and the build script that we created in the previous video of this series.  If you haven&rsquo;t seen that yet, check it out here:
 </p>
@@ -71,7 +71,7 @@ We&rsquo;ll be starting from the code in the <a href="https://github.com/SystemC
 </p>
 </div>
 
-<h3><a id="quick-repo-setup" class="anchor" href="#quick-repo-setup">¶</a>Quick Repo Setup</h3><div class="outline-text-3" id="text-org862e117">
+<h3><a id="quick-repo-setup" class="anchor" href="#quick-repo-setup">¶</a>Quick Repo Setup</h3><div class="outline-text-3" id="text-orge87c129">
 <p>
 I won&rsquo;t be going into depth about how to use Git in this episode, but I&rsquo;ll give a brief rundown of the commands you need to know to turn your site files into a Git repository and &ldquo;commit&rdquo; the changes:
 </p>
@@ -104,7 +104,7 @@ I recommend reading the <a href="https://git-scm.com/book/en/v2/Git-Basics-Getti
 </p>
 </div>
 
-<h2><a id="creating-a-hosted-repository-for-website-publishing" class="anchor" href="#creating-a-hosted-repository-for-website-publishing">¶</a>Creating a hosted repository for website publishing</h2><h3><a id="github" class="anchor" href="#github">¶</a>GitHub</h3><div class="outline-text-3" id="text-orgc8bcc0e">
+<h2><a id="creating-a-hosted-repository-for-website-publishing" class="anchor" href="#creating-a-hosted-repository-for-website-publishing">¶</a>Creating a hosted repository for website publishing</h2><h3><a id="github" class="anchor" href="#github">¶</a>GitHub</h3><div class="outline-text-3" id="text-orgac9940b">
 <p>
 To publish a website with GitHub Pages, you&rsquo;ll need to create a repository with a specific name:
 </p>
@@ -146,7 +146,7 @@ You&rsquo;ll need to run this after every commit you make so that the changes go
 </p>
 </div>
 
-<h3><a id="sourcehut" class="anchor" href="#sourcehut">¶</a>SourceHut</h3><div class="outline-text-3" id="text-org4411765">
+<h3><a id="sourcehut" class="anchor" href="#sourcehut">¶</a>SourceHut</h3><div class="outline-text-3" id="text-org0b013cb">
 <p>
 On SourceHut, you can create a new repository by heading to the following link.  It does not require a specific name!
 </p>
@@ -175,7 +175,7 @@ More details can be found in the <a href="https://srht.site/quickstart">quicksta
 </p>
 </div>
 
-<h2><a id="crafting-a-build-configuration" class="anchor" href="#crafting-a-build-configuration">¶</a>Crafting a build configuration</h2><div class="outline-text-2" id="text-org4aa3af4">
+<h2><a id="crafting-a-build-configuration" class="anchor" href="#crafting-a-build-configuration">¶</a>Crafting a build configuration</h2><div class="outline-text-2" id="text-orgae87c6f">
 <p>
 Now we can set up a build configuration that will automatically publish your website every time you push a commit to its repository!
 </p>
@@ -189,7 +189,7 @@ I&rsquo;ll show you example build configurations for both GitHub and SourceHut t
 </p>
 </div>
 
-<h3><a id="github-actions" class="anchor" href="#github-actions">¶</a>GitHub Actions</h3><div class="outline-text-3" id="text-orgf8385f0">
+<h3><a id="github-actions" class="anchor" href="#github-actions">¶</a>GitHub Actions</h3><div class="outline-text-3" id="text-org97dc82d">
 <p>
 This file should be placed in your repository at <code>.github/workflows/publish.yml</code>.  Here&rsquo;s what it does:
 </p>
@@ -246,7 +246,7 @@ After a minute or two your site will now be live!
 </p>
 </div>
 
-<h3><a id="buildssrht" class="anchor" href="#buildssrht">¶</a>builds.sr.ht</h3><div class="outline-text-3" id="text-orgd3e73f1">
+<h3><a id="buildssrht" class="anchor" href="#buildssrht">¶</a>builds.sr.ht</h3><div class="outline-text-3" id="text-orgc00581c">
 <p>
 This file should be placed in your repository at <code>.build.yml</code>.  Here&rsquo;s what it does:
 </p>
@@ -307,7 +307,7 @@ If the build fails, double-check all of the information in your <code>.build.yml
 </p>
 </div>
 
-<h2><a id="setting-up-a-custom-domain-for-your-site" class="anchor" href="#setting-up-a-custom-domain-for-your-site">¶</a>Setting up a custom domain for your site</h2><div class="outline-text-2" id="text-orga268b92">
+<h2><a id="setting-up-a-custom-domain-for-your-site" class="anchor" href="#setting-up-a-custom-domain-for-your-site">¶</a>Setting up a custom domain for your site</h2><div class="outline-text-2" id="text-orgc63a8a4">
 <p>
 I won&rsquo;t go into too many details here because the documentation pages for both GitHub and SourceHut cover this pretty well.
 </p>
@@ -326,7 +326,7 @@ If you don&rsquo;t have a domain for your website yet, you can get one and suppo
 </p>
 </div>
 
-<h2><a id="enjoy-your-new-site" class="anchor" href="#enjoy-your-new-site">¶</a>Enjoy your new site!</h2><div class="outline-text-2" id="text-org68b83b6">
+<h2><a id="enjoy-your-new-site" class="anchor" href="#enjoy-your-new-site">¶</a>Enjoy your new site!</h2><div class="outline-text-2" id="text-orgb7d2d52">
 <p>
 Hopefully these instructions helped you get a new site running using Emacs, Org Mode, and Git.
 </p>

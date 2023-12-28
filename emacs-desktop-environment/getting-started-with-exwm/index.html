@@ -1,4 +1,4 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Getting Started with EXWM - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Getting Started with EXWM</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/f7xB2fFk1tQ" allowfullscreen></iframe></div>
 </p>
@@ -7,7 +7,7 @@
 Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/219c060e1bd695948c7691955a12a5dcaf3a9530/Emacs.org#window-management">here</a>.
 </p>
 
-<h2><a id="what-is-exwm" class="anchor" href="#what-is-exwm">¶</a>What is EXWM?</h2><div class="outline-text-2" id="text-orgdaae292">
+<h2><a id="what-is-exwm" class="anchor" href="#what-is-exwm">¶</a>What is EXWM?</h2><div class="outline-text-2" id="text-orge596b39">
 <p>
 Check out the wiki: <a href="https://github.com/ch11ng/exwm/wiki">https://github.com/ch11ng/exwm/wiki</a>
 </p>
@@ -34,7 +34,7 @@ Check out the wiki: <a href="https://github.com/ch11ng/exwm/wiki">https://github
 </ul>
 </div>
 
-<h2><a id="settings-up-emacsd" class="anchor" href="#settings-up-emacsd">¶</a>Settings up .emacs.d</h2><div class="outline-text-2" id="text-org5de8e5b">
+<h2><a id="settings-up-emacsd" class="anchor" href="#settings-up-emacsd">¶</a>Settings up .emacs.d</h2><div class="outline-text-2" id="text-orgec3941f">
 <p>
 Make sure to install prerequisites:
 </p>
@@ -49,7 +49,7 @@ Make sure to install prerequisites:
 </ul>
 </div>
 
-<h2><a id="how-to-boot-into-emacs" class="anchor" href="#how-to-boot-into-emacs">¶</a>How to boot into Emacs</h2><div class="outline-text-2" id="text-org0a0c321">
+<h2><a id="how-to-boot-into-emacs" class="anchor" href="#how-to-boot-into-emacs">¶</a>How to boot into Emacs</h2><div class="outline-text-2" id="text-org32640b0">
 <p>
 The startup script launches anything that needs to happen before Emacs starts and then starts Emacs with a D-BUS session.
 </p>
@@ -79,7 +79,7 @@ X-LightDM-DesktopName=exwm
 <pre>sudo systemctl restart gdm</pre>
 </div>
 
-<h2><a id="setting-up-exwm" class="anchor" href="#setting-up-exwm">¶</a>Setting up EXWM</h2><div class="outline-text-2" id="text-orgdaacb7a">
+<h2><a id="setting-up-exwm" class="anchor" href="#setting-up-exwm">¶</a>Setting up EXWM</h2><div class="outline-text-2" id="text-org46baa02">
 <pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/exwm-update-class</span> ()
   (exwm-workspace-rename-buffer exwm-class-name)))
 
@@ -138,7 +138,7 @@ X-LightDM-DesktopName=exwm
   (exwm-enable))</pre>
 </div>
 
-<h2><a id="managing-windows" class="anchor" href="#managing-windows">¶</a>Managing windows</h2><div class="outline-text-2" id="text-org6989300">
+<h2><a id="managing-windows" class="anchor" href="#managing-windows">¶</a>Managing windows</h2><div class="outline-text-2" id="text-org49cc317">
 <ul class="org-ul">
 <li>Use <code>M-&amp;</code> to launch a process asynchronously</li>
 <li>Use <code>S-M-&amp;</code> binding from EXWM to launch without popup</li>
@@ -152,7 +152,7 @@ X-LightDM-DesktopName=exwm
 </ul>
 </div>
 
-<h2><a id="workspaces" class="anchor" href="#workspaces">¶</a>Workspaces</h2><div class="outline-text-2" id="text-org3637664">
+<h2><a id="workspaces" class="anchor" href="#workspaces">¶</a>Workspaces</h2><div class="outline-text-2" id="text-org948911c">
 <ul class="org-ul">
 <li><code>s+(0-9)</code> - Switch to numbered workspace</li>
 <li><code>s+w</code> - Workspace selector</li>
@@ -162,7 +162,7 @@ X-LightDM-DesktopName=exwm
 </ul>
 </div>
 
-<h2><a id="rebind-capslock-to-ctrl" class="anchor" href="#rebind-capslock-to-ctrl">¶</a>Rebind CapsLock to Ctrl</h2><div class="outline-text-2" id="text-org33c7d6a">
+<h2><a id="rebind-capslock-to-ctrl" class="anchor" href="#rebind-capslock-to-ctrl">¶</a>Rebind CapsLock to Ctrl</h2><div class="outline-text-2" id="text-org7573e13">
 <p>
 Contents of <code>~/.emacs/exwm/Xmodmap</code>.  Make sure <code>xmodmap</code> is installed!  This swaps CapsLock with Ctrl and places CapsLock on the Ctrl on the right side of the keyboard so you can get to it if needed.
 </p>
@@ -181,7 +181,7 @@ Put this in the EXWM configuration:
 (start-process-shell-command <span class="org-string">"xmodmap"</span> nil <span class="org-string">"xmodmap ~/.emacs.d/exwm/Xmodmap"</span>)</pre>
 </div>
 
-<h2><a id="setting-screen-resolution" class="anchor" href="#setting-screen-resolution">¶</a>Setting screen resolution</h2><div class="outline-text-2" id="text-orgb1f2b84">
+<h2><a id="setting-screen-resolution" class="anchor" href="#setting-screen-resolution">¶</a>Setting screen resolution</h2><div class="outline-text-2" id="text-org9f1bf21">
 <pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure screen updates with xrandr will refresh EXWM frames</span>
 (<span class="org-keyword">require</span> '<span class="org-constant">exwm-randr</span>)
 (exwm-randr-enable)</pre>
@@ -199,7 +199,7 @@ Put this in the EXWM configuration:
 </ul>
 </div>
 
-<h2><a id="set-screen-dpi-optional" class="anchor" href="#set-screen-dpi-optional">¶</a>Set screen DPI (optional)</h2><div class="outline-text-2" id="text-org1c2538b">
+<h2><a id="set-screen-dpi-optional" class="anchor" href="#set-screen-dpi-optional">¶</a>Set screen DPI (optional)</h2><div class="outline-text-2" id="text-orgefc4f57">
 <p>
 This belongs in <code>~/.emacs.d/exwm/Xresources</code>
 </p>
@@ -213,7 +213,7 @@ Add this to <code>start-exwm.sh</code>.  Make sure <code>xrdb</code> is installe
 <pre>xrdb ~/.emacs.d/exwm/Xresources</pre>
 </div>
 
-<h2><a id="system-tray" class="anchor" href="#system-tray">¶</a>System Tray</h2><div class="outline-text-2" id="text-org2d6ea59">
+<h2><a id="system-tray" class="anchor" href="#system-tray">¶</a>System Tray</h2><div class="outline-text-2" id="text-orgb823ec8">
 <pre><span class="org-comment-delimiter">;; </span><span class="org-comment">Load the system tray before exwm-init</span>
 (<span class="org-keyword">require</span> '<span class="org-constant">exwm-systemtray</span>)
 (exwm-systemtray-enable)</pre>
@@ -224,7 +224,7 @@ Add this to <code>start-exwm.sh</code>.  Make sure <code>xrdb</code> is installe
 </ul>
 </div>
 
-<h2><a id="debugging-startup-issues" class="anchor" href="#debugging-startup-issues">¶</a>Debugging startup issues</h2><div class="outline-text-2" id="text-orgd3f4c9b">
+<h2><a id="debugging-startup-issues" class="anchor" href="#debugging-startup-issues">¶</a>Debugging startup issues</h2><div class="outline-text-2" id="text-orgcabf246">
 <ul class="org-ul">
 <li><code>check-parens</code></li>
 <li>Use <code>emacs -q -nw</code> in a virtual terminal</li>
@@ -232,7 +232,7 @@ Add this to <code>start-exwm.sh</code>.  Make sure <code>xrdb</code> is installe
 </ul>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgd1c1b47">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org264033c">
 <ul class="org-ul">
 <li>Setting UI and icon themes</li>
 <li>Desktop notifications</li>

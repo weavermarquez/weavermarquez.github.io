@@ -1,4 +1,4 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Give Emacs Psychic Completion Powers with prescient.el - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Give Emacs Psychic Completion Powers with prescient.el</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/T9kygXveEz0" allowfullscreen></iframe></div>
 </p>
@@ -7,7 +7,7 @@
 If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
 </div>
 
-<h2><a id="completions-are-everywhere" class="anchor" href="#completions-are-everywhere">¶</a>Completions are everywhere</h2><div class="outline-text-2" id="text-org9a052f1">
+<h2><a id="completions-are-everywhere" class="anchor" href="#completions-are-everywhere">¶</a>Completions are everywhere</h2><div class="outline-text-2" id="text-org9db7a5c">
 <ul class="org-ul">
 <li>M-x</li>
 <li>describe-variable / describe-function</li>
@@ -21,7 +21,7 @@ It saves time to make the list of recommendations more tailored to your usage!
 </p>
 </div>
 
-<h2><a id="enter-prescientel" class="anchor" href="#enter-prescientel">¶</a>Enter prescient.el</h2><div class="outline-text-2" id="text-org47804d4">
+<h2><a id="enter-prescientel" class="anchor" href="#enter-prescientel">¶</a>Enter prescient.el</h2><div class="outline-text-2" id="text-org0244533">
 <p>
 Prescient is a sorting and filtering extension for Ivy, <code>company-mode</code>, and Selectrum.  It provides:
 </p>
@@ -32,7 +32,7 @@ Prescient is a sorting and filtering extension for Ivy, <code>company-mode</code
 </ul>
 </div>
 
-<h2><a id="ivy" class="anchor" href="#ivy">¶</a>Ivy</h2><div class="outline-text-2" id="text-org37ab5bb">
+<h2><a id="ivy" class="anchor" href="#ivy">¶</a>Ivy</h2><div class="outline-text-2" id="text-org6bc6cb1">
 <p>
 Since we&rsquo;ve been using Ivy in the configuration for this channel, let&rsquo;s try Prescient with it.
 </p>
@@ -65,7 +65,7 @@ Prescient is remembering the selections you&rsquo;ve made for <code>M-x</code> (
 </p>
 </div>
 
-<h3><a id="trying-prescient-with-other-ivy-commands" class="anchor" href="#trying-prescient-with-other-ivy-commands">¶</a>Trying Prescient with other Ivy commands</h3><div class="outline-text-3" id="text-org173b089">
+<h3><a id="trying-prescient-with-other-ivy-commands" class="anchor" href="#trying-prescient-with-other-ivy-commands">¶</a>Trying Prescient with other Ivy commands</h3><div class="outline-text-3" id="text-orgcb8013e">
 <ul class="org-ul">
 <li><code>counsel-find-file</code></li>
 <li><code>counsel-describe-variable</code></li>
@@ -73,7 +73,7 @@ Prescient is remembering the selections you&rsquo;ve made for <code>M-x</code> (
 </ul>
 </div>
 
-<h3><a id="excluding-certain-ivy-commands-from-sorting" class="anchor" href="#excluding-certain-ivy-commands-from-sorting">¶</a>Excluding certain Ivy commands from sorting</h3><div class="outline-text-3" id="text-orgdacb0ab">
+<h3><a id="excluding-certain-ivy-commands-from-sorting" class="anchor" href="#excluding-certain-ivy-commands-from-sorting">¶</a>Excluding certain Ivy commands from sorting</h3><div class="outline-text-3" id="text-org3a73ab9">
 <ul class="org-ul">
 <li>Commands to exclude: <code>ivy-prescient-sort-commands</code></li>
 </ul>
@@ -83,7 +83,7 @@ By default it contains <code>ivy-switch-buffer</code> which <code>counsel-switch
 </p>
 </div>
 
-<h3><a id="disabling-length-based-sorting" class="anchor" href="#disabling-length-based-sorting">¶</a>Disabling length-based sorting</h3><div class="outline-text-3" id="text-org7878694">
+<h3><a id="disabling-length-based-sorting" class="anchor" href="#disabling-length-based-sorting">¶</a>Disabling length-based sorting</h3><div class="outline-text-3" id="text-orgaadf84b">
 <p>
 You might have noticed <code>M-x</code> is now sorting all commands by shortest-first.  If this is distracting to you, it can be disabled!
 </p>
@@ -91,7 +91,7 @@ You might have noticed <code>M-x</code> is now sorting all commands by shortest-
 <pre>(<span class="org-keyword">setq</span> prescient-sort-length-enable nil)</pre>
 </div>
 
-<h3><a id="changing-the-filtering-method" class="anchor" href="#changing-the-filtering-method">¶</a>Changing the filtering method</h3><div class="outline-text-3" id="text-org4be5697">
+<h3><a id="changing-the-filtering-method" class="anchor" href="#changing-the-filtering-method">¶</a>Changing the filtering method</h3><div class="outline-text-3" id="text-org42d8a8b">
 <p>
 Set <code>prescient-filter-method</code>:
 </p>
@@ -114,7 +114,7 @@ Set <code>prescient-filter-method</code>:
 </ul>
 </div>
 
-<h3><a id="going-back-to-ivyrsquos-filtering" class="anchor" href="#going-back-to-ivyrsquos-filtering">¶</a>Going back to Ivy&rsquo;s filtering</h3><div class="outline-text-3" id="text-orge9d4a23">
+<h3><a id="going-back-to-ivyrsquos-filtering" class="anchor" href="#going-back-to-ivyrsquos-filtering">¶</a>Going back to Ivy&rsquo;s filtering</h3><div class="outline-text-3" id="text-orge4e9e5e">
 <p>
 If you are too used to Ivy&rsquo;s filtering styles, you can use those while still keeping Prescient&rsquo;s sorting:
 </p>
@@ -126,7 +126,7 @@ If you are too used to Ivy&rsquo;s filtering styles, you can use those while sti
 </p>
 </div>
 
-<h3><a id="getting-the-old-highlighting-back" class="anchor" href="#getting-the-old-highlighting-back">¶</a>Getting the old highlighting back</h3><div class="outline-text-3" id="text-org8bb175c">
+<h3><a id="getting-the-old-highlighting-back" class="anchor" href="#getting-the-old-highlighting-back">¶</a>Getting the old highlighting back</h3><div class="outline-text-3" id="text-org81c5f2e">
 <p>
 <code>ivy-prescient</code> changes how results are highlighted when you start typing.  To emulate the old highlighting you can use <code>ivy-prescient-retain-classic-highlighting</code>:
 </p>
@@ -134,7 +134,7 @@ If you are too used to Ivy&rsquo;s filtering styles, you can use those while sti
 <pre>(<span class="org-keyword">setq</span> ivy-prescient-retain-classic-highlighting t)</pre>
 </div>
 
-<h2><a id="company-mode" class="anchor" href="#company-mode">¶</a>Company Mode</h2><div class="outline-text-2" id="text-org76fd9f6">
+<h2><a id="company-mode" class="anchor" href="#company-mode">¶</a>Company Mode</h2><div class="outline-text-2" id="text-orga037045">
 <p>
 Prescient also has an extension for Company to provide candidate sorting based on frequency:
 </p>
@@ -149,7 +149,7 @@ Prescient also has an extension for Company to provide candidate sorting based o
 </p>
 </div>
 
-<h2><a id="remembering-history-between-sessions" class="anchor" href="#remembering-history-between-sessions">¶</a>Remembering history between sessions</h2><div class="outline-text-2" id="text-orgf5dce85">
+<h2><a id="remembering-history-between-sessions" class="anchor" href="#remembering-history-between-sessions">¶</a>Remembering history between sessions</h2><div class="outline-text-2" id="text-orgbe24c5f">
 <p>
 Remembering your history is great, but it&rsquo;s even better when it is remembered each time you start Emacs:
 </p>
@@ -158,7 +158,7 @@ Remembering your history is great, but it&rsquo;s even better when it is remembe
 (prescient-persist-mode 1)</pre>
 </div>
 
-<h2><a id="with-all-that-saidx2026" class="anchor" href="#with-all-that-saidx2026">¶</a>With all that said&#x2026;</h2><div class="outline-text-2" id="text-org9e6e01e">
+<h2><a id="with-all-that-saidx2026" class="anchor" href="#with-all-that-saidx2026">¶</a>With all that said&#x2026;</h2><div class="outline-text-2" id="text-org7ac3df2">
 <p>
 <code>ivy-prescient</code> needs a new maintainer: <a href="https://github.com/raxod502/prescient.el/issues/65">https://github.com/raxod502/prescient.el/issues/65</a>
 </p>
@@ -168,7 +168,7 @@ If you like using Prescient with Ivy, consider helping out!
 </p>
 </div>
 
-<h2><a id="selectrum" class="anchor" href="#selectrum">¶</a>Selectrum</h2><div class="outline-text-2" id="text-org630042f">
+<h2><a id="selectrum" class="anchor" href="#selectrum">¶</a>Selectrum</h2><div class="outline-text-2" id="text-org038ee15">
 <p>
 We will talk about Selectrum in another video; we&rsquo;ll hook it up to Prescient then!
 </p>

@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>5 Org Roam Hacks for Better Productivity in Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">5 Org Roam Hacks for Better Productivity in Emacs</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/CUkuyW6hr18" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-orgb4607e3">
+<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org5b32bf0">
 <p>
 Org Roam is an excellent tool for writing and organizing your thoughts, but when you leverage more of the functions it provides, you can create highly efficient custom workflows for common tasks.
 </p>
@@ -17,7 +17,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="the-starting-configuration" class="anchor" href="#the-starting-configuration">¶</a>The starting configuration</h2><div class="outline-text-2" id="text-orgb6b1744">
+<h2><a id="the-starting-configuration" class="anchor" href="#the-starting-configuration">¶</a>The starting configuration</h2><div class="outline-text-2" id="text-orgaba5d38">
 <p>
 Before we start, make sure you&rsquo;ve got Org Roam set up already.
 </p>
@@ -54,7 +54,7 @@ You can get started quickly by copying the configuration below, but you&rsquo;ll
   (org-roam-db-autosync-mode))</pre>
 </div>
 
-<h2><a id="lots-of-code-ahead" class="anchor" href="#lots-of-code-ahead">¶</a>Lots of code ahead!</h2><div class="outline-text-2" id="text-org3a706a5">
+<h2><a id="lots-of-code-ahead" class="anchor" href="#lots-of-code-ahead">¶</a>Lots of code ahead!</h2><div class="outline-text-2" id="text-org385f4b4">
 <p>
 In this video, I&rsquo;m going to show you a lot of custom code that I wrote to produce these workflow improvements.  If you haven&rsquo;t studied Emacs Lisp much yet some of it might not be 100% clear, but that is OK!
 </p>
@@ -72,7 +72,7 @@ Please feel free to ask any questions in the comments and I&rsquo;ll try to clar
 </p>
 </div>
 
-<h2><a id="fast-note-insertion-for-a-smoother-writing-flow" class="anchor" href="#fast-note-insertion-for-a-smoother-writing-flow">¶</a>Fast note insertion for a smoother writing flow</h2><div class="outline-text-2" id="text-orga2c8779">
+<h2><a id="fast-note-insertion-for-a-smoother-writing-flow" class="anchor" href="#fast-note-insertion-for-a-smoother-writing-flow">¶</a>Fast note insertion for a smoother writing flow</h2><div class="outline-text-2" id="text-org0b30241">
 <p>
 Sometimes while writing, you&rsquo;ll want to create a new node in your Org Roam notes without interrupting your writing flow!  Typically you would use <code>org-roam-node-insert</code>, but when you create a new note with this command, it will open the new note after it gets created.
 </p>
@@ -102,7 +102,7 @@ Thanks to <a href="https://www.youtube.com/watch?v=AyhPmypHDEw&amp;lc=Ugw7bYrPOc
 </p>
 </div>
 
-<h2><a id="build-your-org-agenda-from-org-roam-notes" class="anchor" href="#build-your-org-agenda-from-org-roam-notes">¶</a>Build your Org agenda from Org Roam notes</h2><div class="outline-text-2" id="text-org95db2fa">
+<h2><a id="build-your-org-agenda-from-org-roam-notes" class="anchor" href="#build-your-org-agenda-from-org-roam-notes">¶</a>Build your Org agenda from Org Roam notes</h2><div class="outline-text-2" id="text-org979010f">
 <p>
 One of the most useful features of Org Mode is the agenda view.  You can actually use your Org Roam notes as the source for this view!
 </p>
@@ -148,7 +148,7 @@ For best results, make sure to add the desired tag to new note files as part of 
 </p>
 </div>
 
-<h3><a id="tip-improving-the-appearance-of-notes-in-the-agenda-view" class="anchor" href="#tip-improving-the-appearance-of-notes-in-the-agenda-view">¶</a>TIP: Improving the appearance of notes in the agenda view</h3><div class="outline-text-3" id="text-orgb948efe">
+<h3><a id="tip-improving-the-appearance-of-notes-in-the-agenda-view" class="anchor" href="#tip-improving-the-appearance-of-notes-in-the-agenda-view">¶</a>TIP: Improving the appearance of notes in the agenda view</h3><div class="outline-text-3" id="text-org2a4160c">
 <p>
 You may notice that the agenda lines that come from your Org Roam files look a little unattractive due to the timestamped file names.  We can fix this by adding a <code>category</code> to the header lines of one of our project files like so:
 </p>
@@ -166,7 +166,7 @@ Typically you will want to have the category contain the same name as the note s
  <span class="org-builtin">:unnarrowed</span> t)</pre>
 </div>
 
-<h2><a id="selecting-from-a-list-of-notes-with-a-specific-tag" class="anchor" href="#selecting-from-a-list-of-notes-with-a-specific-tag">¶</a>Selecting from a list of notes with a specific tag</h2><div class="outline-text-2" id="text-org5553b7a">
+<h2><a id="selecting-from-a-list-of-notes-with-a-specific-tag" class="anchor" href="#selecting-from-a-list-of-notes-with-a-specific-tag">¶</a>Selecting from a list of notes with a specific tag</h2><div class="outline-text-2" id="text-orgba738e9">
 <p>
 The <code>org-roam-node-find</code> function gives us the ability to filter the list of notes that get displayed for selection.
 </p>
@@ -216,7 +216,7 @@ One useful aspect of this snippet is that the <code>org-capture-after-finalize-h
 </p>
 </div>
 
-<h2><a id="streamlined-custom-capture-for-tasks-and-notes" class="anchor" href="#streamlined-custom-capture-for-tasks-and-notes">¶</a>Streamlined custom capture for tasks and notes</h2><div class="outline-text-2" id="text-org6b05733">
+<h2><a id="streamlined-custom-capture-for-tasks-and-notes" class="anchor" href="#streamlined-custom-capture-for-tasks-and-notes">¶</a>Streamlined custom capture for tasks and notes</h2><div class="outline-text-2" id="text-orgf32546d">
 <p>
 Org Roam provides a low-level function called <code>org-roam-capture-</code> (yes, the hyphen is there!) which allows you to invoke note capture functionality in a very flexible way.  More information can be found in the Org Roam manual: <a href="https://www.orgroam.com/manual.html#Extending-the-Capture-System">Extending the Capture System</a>.
 </p>
@@ -230,7 +230,7 @@ Here are a couple of ways you might use it:
 </p>
 </div>
 
-<h3><a id="keep-an-inbox-of-notes-and-tasks" class="anchor" href="#keep-an-inbox-of-notes-and-tasks">¶</a>Keep an inbox of notes and tasks</h3><div class="outline-text-3" id="text-orgdb796d9">
+<h3><a id="keep-an-inbox-of-notes-and-tasks" class="anchor" href="#keep-an-inbox-of-notes-and-tasks">¶</a>Keep an inbox of notes and tasks</h3><div class="outline-text-3" id="text-org56f536c">
 <p>
 If you want to quickly capture new notes and tasks with a single keybinding into a place that you can review later, we can use <code>org-roam-capture-</code> to capture to a single-specific file like <code>Inbox.org</code>!
 </p>
@@ -248,7 +248,7 @@ Even though this file won&rsquo;t have the timestamped filename, it will still b
 (global-set-key (kbd <span class="org-string">"C-c n b"</span>) #'my/org-roam-capture-inbox)</pre>
 </div>
 
-<h3><a id="capture-a-task-directly-into-a-specific-project" class="anchor" href="#capture-a-task-directly-into-a-specific-project">¶</a>Capture a task directly into a specific project</h3><div class="outline-text-3" id="text-orga03a8ad">
+<h3><a id="capture-a-task-directly-into-a-specific-project" class="anchor" href="#capture-a-task-directly-into-a-specific-project">¶</a>Capture a task directly into a specific project</h3><div class="outline-text-3" id="text-orgb138fe8">
 <p>
 If you&rsquo;ve set up project note files like we mentioned earlier, you can set up a capture template that allows you to quickly capture tasks for any project.
 </p>
@@ -282,7 +282,7 @@ We&rsquo;re also using the <code>my/org-roam-project-finalize-hook</code> functi
 </p>
 </div>
 
-<h2><a id="automatically-copy-or-move-completed-tasks-to-dailies" class="anchor" href="#automatically-copy-or-move-completed-tasks-to-dailies">¶</a>Automatically copy (or move) completed tasks to dailies</h2><div class="outline-text-2" id="text-org87396bb">
+<h2><a id="automatically-copy-or-move-completed-tasks-to-dailies" class="anchor" href="#automatically-copy-or-move-completed-tasks-to-dailies">¶</a>Automatically copy (or move) completed tasks to dailies</h2><div class="outline-text-2" id="text-org3216b17">
 <p>
 One interesting use for daily files is to keep a log of tasks that were completed on that particular day.  What if we could automatically copy completed tasks in <b>any</b> Org Mode file to today&rsquo;s daily file?
 </p>
@@ -328,7 +328,7 @@ This code is a little more advanced, so consult the next section to learn more a
 </p>
 </div>
 
-<h3><a id="how-it-works" class="anchor" href="#how-it-works">¶</a>How it works</h3><div class="outline-text-3" id="text-orgc1a948c">
+<h3><a id="how-it-works" class="anchor" href="#how-it-works">¶</a>How it works</h3><div class="outline-text-3" id="text-orgf6d1fca">
 <p>
 To be notified on changes to <code>TODO</code> item states, we add the <code>my/org-roam-copy-todo-to-today</code> function to the <code>org-after-todo-state-change-hook</code> list.
 </p>
@@ -342,7 +342,7 @@ If the file being captured to is not the file for the current date, we call <cod
 </p>
 </div>
 
-<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org17f2a08">
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org33e8bd1">
 <p>
 <b>Very important note!</b>  Make sure that the configuration file where you use this code has the following line at the very top!
 </p>

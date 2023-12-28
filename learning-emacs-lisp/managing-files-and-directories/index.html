@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Managing Files and Directories in Practice - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Managing Files and Directories in Practice</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/nq-gqNGmayI" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org6b114f9">
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-orgb47c6fd">
 <p>
 Today we&rsquo;re going to talk about the many ways you can interact with files and directories using Emacs Lisp!
 </p>
@@ -21,7 +21,7 @@ The final code from this episode can be found <a href="https://github.com/daviwi
 </p>
 </div>
 
-<h3><a id="explaining-symbolic-links" class="anchor" href="#explaining-symbolic-links">¶</a>Explaining symbolic links</h3><div class="outline-text-3" id="text-orgecb6ba2">
+<h3><a id="explaining-symbolic-links" class="anchor" href="#explaining-symbolic-links">¶</a>Explaining symbolic links</h3><div class="outline-text-3" id="text-org55f5697">
 <p>
 But first, what is a symbolic link?
 </p>
@@ -31,7 +31,7 @@ It is an entry in the file system that points to a file or directory somewhere e
 </p>
 </div>
 
-<h3><a id="our-project-dotcrafterel" class="anchor" href="#our-project-dotcrafterel">¶</a>Our project: dotcrafter.el</h3><div class="outline-text-3" id="text-orgbe6cd66">
+<h3><a id="our-project-dotcrafterel" class="anchor" href="#our-project-dotcrafterel">¶</a>Our project: dotcrafter.el</h3><div class="outline-text-3" id="text-org4f44b62">
 <p>
 As we talked about in previous videos in this series, we are working on a dotfiles management package for Emacs.
 </p>
@@ -67,7 +67,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="getting-the-current-directory" class="anchor" href="#getting-the-current-directory">¶</a>Getting the current directory</h2><div class="outline-text-2" id="text-org118e3d6">
+<h2><a id="getting-the-current-directory" class="anchor" href="#getting-the-current-directory">¶</a>Getting the current directory</h2><div class="outline-text-2" id="text-orgc2b9dc2">
 <p>
 Emacs will resolve most file paths relative to the current directory which is determine by the variable <code>default-directory</code>.  This buffer-local variable will be different for each buffer you open.
 </p>
@@ -91,7 +91,7 @@ You can also change <code>default-directory</code> if necessary!
 </p>
 </div>
 
-<h2><a id="manipulating-file-paths" class="anchor" href="#manipulating-file-paths">¶</a>Manipulating file paths</h2><div class="outline-text-2" id="text-org1173b7b">
+<h2><a id="manipulating-file-paths" class="anchor" href="#manipulating-file-paths">¶</a>Manipulating file paths</h2><div class="outline-text-2" id="text-org4bafa8e">
 <p>
 When you want to automate file operations in Emacs, you&rsquo;ll often need to grab different parts of a path so that you can build new paths.  There are a few functions for this purpose!
 </p>
@@ -142,7 +142,7 @@ NOTE: The file paths you pass to these functions do not have to exist!
 </p>
 </div>
 
-<h2><a id="resolving-file-paths" class="anchor" href="#resolving-file-paths">¶</a>Resolving file paths</h2><div class="outline-text-2" id="text-org918196a">
+<h2><a id="resolving-file-paths" class="anchor" href="#resolving-file-paths">¶</a>Resolving file paths</h2><div class="outline-text-2" id="text-orgb518d61">
 <p>
 It is a good idea to resolve file paths any time you use them to ensure they are being used for the location you expect!
 </p>
@@ -181,7 +181,7 @@ What about resolving paths containing environment variables?
 </p>
 </div>
 
-<h2><a id="example-resolving-the-destination-path-of-a-configuration-file" class="anchor" href="#example-resolving-the-destination-path-of-a-configuration-file">¶</a>Example: Resolving the destination path of a configuration file</h2><div class="outline-text-2" id="text-orge60fffb">
+<h2><a id="example-resolving-the-destination-path-of-a-configuration-file" class="anchor" href="#example-resolving-the-destination-path-of-a-configuration-file">¶</a>Example: Resolving the destination path of a configuration file</h2><div class="outline-text-2" id="text-org4615586">
 <p>
 We can use a few of the functions we just discussed to find where a file inside of the dotfiles folder should be linked in the home directory!
 </p>
@@ -245,7 +245,7 @@ We&rsquo;re also going to define a variable that holds the specific subpath of t
 (example--resolve-config-file-target <span class="org-string">"~/Projects/Code/dotcrafter/example/.files/.emacs.d/init.el"</span>)</pre>
 </div>
 
-<h2><a id="checking-if-files-and-directories-exist" class="anchor" href="#checking-if-files-and-directories-exist">¶</a>Checking if files and directories exist</h2><div class="outline-text-2" id="text-org66791f1">
+<h2><a id="checking-if-files-and-directories-exist" class="anchor" href="#checking-if-files-and-directories-exist">¶</a>Checking if files and directories exist</h2><div class="outline-text-2" id="text-org595ae84">
 <p>
 The <code>file-exists-p</code> function returns <code>t</code> if a file or directory exists or <code>nil</code> otherwise:
 </p>
@@ -268,7 +268,7 @@ There are a few more functions that you can use to check if the user has access 
 </p>
 </div>
 
-<h2><a id="creating-directories" class="anchor" href="#creating-directories">¶</a>Creating directories</h2><div class="outline-text-2" id="text-org5c56eb2">
+<h2><a id="creating-directories" class="anchor" href="#creating-directories">¶</a>Creating directories</h2><div class="outline-text-2" id="text-org5607f45">
 <p>
 You can easily create a directory with the <code>make-directory</code> command.
 </p>
@@ -293,7 +293,7 @@ You can also set the second parameter to <code>t</code> to ensure that <code>mak
 </p>
 </div>
 
-<h2><a id="example-creating-expected-directories-before-linking" class="anchor" href="#example-creating-expected-directories-before-linking">¶</a>Example: Creating expected directories before linking</h2><div class="outline-text-2" id="text-orgf68b858">
+<h2><a id="example-creating-expected-directories-before-linking" class="anchor" href="#example-creating-expected-directories-before-linking">¶</a>Example: Creating expected directories before linking</h2><div class="outline-text-2" id="text-org6095e27">
 <p>
 When we begin creating symbolic links into the home directory, one thing we will need to be careful of is creating symbolic links too close to the home directory for commonly-used folders like <code>~/.config</code> or <code>~/.local/share</code>.
 </p>
@@ -321,7 +321,7 @@ The solution here is to make sure that these directories already exist so that t
 (example--ensure-output-directories)</pre>
 </div>
 
-<h2><a id="listing-files-in-directories" class="anchor" href="#listing-files-in-directories">¶</a>Listing files in directories</h2><div class="outline-text-2" id="text-org7a3355b">
+<h2><a id="listing-files-in-directories" class="anchor" href="#listing-files-in-directories">¶</a>Listing files in directories</h2><div class="outline-text-2" id="text-org828a419">
 <p>
 One thing you will probably want to do at some point is get a list of files in a given directory, possibly even for all child directories under that path as well.
 </p>
@@ -354,7 +354,7 @@ The <code>directory-files</code> and <code>directory-files-recursively</code> fu
 </p>
 </div>
 
-<h2><a id="example-finding-the-list-of-all-configuration-files-to-be-linked" class="anchor" href="#example-finding-the-list-of-all-configuration-files-to-be-linked">¶</a>Example: Finding the list of all configuration files to be linked</h2><div class="outline-text-2" id="text-org8dd8075">
+<h2><a id="example-finding-the-list-of-all-configuration-files-to-be-linked" class="anchor" href="#example-finding-the-list-of-all-configuration-files-to-be-linked">¶</a>Example: Finding the list of all configuration files to be linked</h2><div class="outline-text-2" id="text-org225ae5d">
 <p>
 As we talked about earlier, the goal of what we&rsquo;re doing today is to produce some code that will mirror a folder of configuration files in your dotfiles folder into the home folder using symbolic links.
 </p>
@@ -374,7 +374,7 @@ We&rsquo;ll use the <code>directory-files-recursively</code> function to list al
 (example--find-all-files-to-link)</pre>
 </div>
 
-<h2><a id="copying-moving-and-deleting-files-and-directories" class="anchor" href="#copying-moving-and-deleting-files-and-directories">¶</a>Copying, moving, and deleting files and directories</h2><div class="outline-text-2" id="text-org903c908">
+<h2><a id="copying-moving-and-deleting-files-and-directories" class="anchor" href="#copying-moving-and-deleting-files-and-directories">¶</a>Copying, moving, and deleting files and directories</h2><div class="outline-text-2" id="text-orgb756a4d">
 <p>
 You can perform common file management tasks like copying, moving, and deleting files and directories with a few different Emacs Lisp functions.
 </p>
@@ -385,7 +385,7 @@ You can perform common file management tasks like copying, moving, and deleting 
 </p>
 </div>
 
-<h3><a id="copying" class="anchor" href="#copying">¶</a>Copying</h3><div class="outline-text-3" id="text-org6f2f213">
+<h3><a id="copying" class="anchor" href="#copying">¶</a>Copying</h3><div class="outline-text-3" id="text-org9049818">
 <ul class="org-ul">
 <li><code>copy-file</code>: Copy the contents of one file to another</li>
 <li><code>copy-directory</code>: Copy the contents of one directory to another, including all subdirectories</li>
@@ -405,7 +405,7 @@ You can perform common file management tasks like copying, moving, and deleting 
 (copy-directory <span class="org-string">"~/.emacs.d/eshell"</span> <span class="org-string">"/tmp/lisp"</span> t t t)</pre>
 </div>
 
-<h3><a id="renaming--moving" class="anchor" href="#renaming--moving">¶</a>Renaming / Moving</h3><div class="outline-text-3" id="text-org85ad442">
+<h3><a id="renaming--moving" class="anchor" href="#renaming--moving">¶</a>Renaming / Moving</h3><div class="outline-text-3" id="text-org012f6f7">
 <ul class="org-ul">
 <li><code>rename-file</code>: Rename a file or directory</li>
 </ul>
@@ -420,7 +420,7 @@ You can perform common file management tasks like copying, moving, and deleting 
 (rename-file <span class="org-string">"/tmp/lisp-two"</span> <span class="org-string">"/tmp/lisp"</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">OK</span></pre>
 </div>
 
-<h3><a id="deleting" class="anchor" href="#deleting">¶</a>Deleting</h3><div class="outline-text-3" id="text-orgaa5b042">
+<h3><a id="deleting" class="anchor" href="#deleting">¶</a>Deleting</h3><div class="outline-text-3" id="text-orgeeef2e7">
 <ul class="org-ul">
 <li><code>delete-file</code>: Delete a file, optionally moving it to the trash folder</li>
 <li><code>delete-directory</code>: Deletes a directory, including files if desired</li>
@@ -433,7 +433,7 @@ You can perform common file management tasks like copying, moving, and deleting 
 (delete-directory <span class="org-string">"/tmp/lisp"</span> t)</pre>
 </div>
 
-<h2><a id="example-migrating-configuration-files-to-the-dotfiles-folder" class="anchor" href="#example-migrating-configuration-files-to-the-dotfiles-folder">¶</a>Example: Migrating configuration files to the dotfiles folder</h2><div class="outline-text-2" id="text-org5347e47">
+<h2><a id="example-migrating-configuration-files-to-the-dotfiles-folder" class="anchor" href="#example-migrating-configuration-files-to-the-dotfiles-folder">¶</a>Example: Migrating configuration files to the dotfiles folder</h2><div class="outline-text-2" id="text-org649ca92">
 <p>
 As we continue building our configurations, it&rsquo;s likely that we&rsquo;ll want to migrate a configuration folder into our dotfiles repository.  Let&rsquo;s define a function that will make this really easy for the user:
 </p>
@@ -476,7 +476,7 @@ As we continue building our configurations, it&rsquo;s likely that we&rsquo;ll w
     <span class="org-comment-delimiter">;; </span><span class="org-comment">TODO: Link this path back into the dotcrafter-output-directory</span></pre>
 </div>
 
-<h2><a id="creating-symbolic-links" class="anchor" href="#creating-symbolic-links">¶</a>Creating symbolic links</h2><div class="outline-text-2" id="text-org146fabf">
+<h2><a id="creating-symbolic-links" class="anchor" href="#creating-symbolic-links">¶</a>Creating symbolic links</h2><div class="outline-text-2" id="text-org7ce90ed">
 <p>
 Using symbolic links, we&rsquo;re able to keep our configuration files in a local Git repository and then make them appear in our home folder.
 </p>
@@ -505,7 +505,7 @@ You can also check if a file is a symbolic link using <code>file-symlink-p</code
 </p>
 </div>
 
-<h2><a id="example-creating-symbolic-links-for-all-configuration-files" class="anchor" href="#example-creating-symbolic-links-for-all-configuration-files">¶</a>Example: Creating symbolic links for all configuration files</h2><div class="outline-text-2" id="text-org5add699">
+<h2><a id="example-creating-symbolic-links-for-all-configuration-files" class="anchor" href="#example-creating-symbolic-links-for-all-configuration-files">¶</a>Example: Creating symbolic links for all configuration files</h2><div class="outline-text-2" id="text-orgc280ff2">
 <p>
 Here&rsquo;s where everything in this episode finally comes together!
 </p>
@@ -519,7 +519,7 @@ If you&rsquo;ve ever used GNU Stow, this will look pretty familiar!
 </p>
 </div>
 
-<h3><a id="the-process" class="anchor" href="#the-process">¶</a>The Process</h3><div class="outline-text-3" id="text-org2455e4f">
+<h3><a id="the-process" class="anchor" href="#the-process">¶</a>The Process</h3><div class="outline-text-3" id="text-orga94d596">
 <p>
 This is what we&rsquo;ll do:
 </p>
@@ -543,7 +543,7 @@ Here&rsquo;s a clearer depicton of what this means:
                                L applications exists? NO, create link!</pre>
 </div>
 
-<h3><a id="the-code" class="anchor" href="#the-code">¶</a>The Code</h3><div class="outline-text-3" id="text-orge826346">
+<h3><a id="the-code" class="anchor" href="#the-code">¶</a>The Code</h3><div class="outline-text-3" id="text-org93f8be8">
 <p>
 Let&rsquo;s walk through the code line by line before running it!
 </p>
@@ -607,7 +607,7 @@ Let&rsquo;s walk through the code line by line before running it!
       (dotcrafter--link-config-file file))))</pre>
 </div>
 
-<h2><a id="the-final-code-in-action" class="anchor" href="#the-final-code-in-action">¶</a>The final code in action</h2><div class="outline-text-2" id="text-org62dbb39">
+<h2><a id="the-final-code-in-action" class="anchor" href="#the-final-code-in-action">¶</a>The final code in action</h2><div class="outline-text-2" id="text-orge4d52cd">
 <p>
 One last piece will bring together everything we&rsquo;ve done in the past few episodes is this function:
 </p>
@@ -639,7 +639,7 @@ We can also run this function multiple times and it will work just fine!
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org7b99998">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgd4872ba">
 <p>
 Now that we&rsquo;ve got a functioning package, it&rsquo;s time to take things to the next level by creating major and minor modes for it!
 </p>

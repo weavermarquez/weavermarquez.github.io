@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>A Rough Introduction to Guile Scheme - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">A Rough Introduction to Guile Scheme</h1><p class="site-post-meta">September  2, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/vgFLtW_6Ui4" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgfca593b">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgf210788">
 <ul class="org-ul">
 <li>Next week I will be streaming on this channel around <b>7AM to 9AM UTC</b> on Monday and Wednesday!  We&rsquo;ll be working on improvements to my Scheme-inspired programming language <a href="https://github.com/mesche-lang/compiler">Mesche</a>.</li>
 
@@ -8,7 +8,7 @@
 </ul>
 </div>
 
-<h2><a id="a-rough-introduction-to-guile-scheme" class="anchor" href="#a-rough-introduction-to-guile-scheme">¶</a>A Rough Introduction to Guile Scheme</h2><div class="outline-text-2" id="text-orgb8f0f5c">
+<h2><a id="a-rough-introduction-to-guile-scheme" class="anchor" href="#a-rough-introduction-to-guile-scheme">¶</a>A Rough Introduction to Guile Scheme</h2><div class="outline-text-2" id="text-orgad7913d">
 <p>
 Today we&rsquo;re going to discuss the language Scheme through the lens of Guile Scheme!  This will mainly be geared toward those who have some experience with Lisp languages like Emacs Lisp or Common Lisp already.  If there&rsquo;s enough interest, I&rsquo;ll be happy to create a video series going more in depth!
 </p>
@@ -30,7 +30,7 @@ I&rsquo;ll give you a rough (unprepared) walkthrough of the following topics:
 </ul>
 </div>
 
-<h2><a id="the-code-we-wrote" class="anchor" href="#the-code-we-wrote">¶</a>The code we wrote</h2><div class="outline-text-2" id="text-org358db19">
+<h2><a id="the-code-we-wrote" class="anchor" href="#the-code-we-wrote">¶</a>The code we wrote</h2><div class="outline-text-2" id="text-org4b6395c">
 <pre>(<span class="org-keyword">define-module</span> (<span class="org-type">system-crafters</span> guile-demo)
   <span class="org-builtin">#:export</span> (find find-x))
 

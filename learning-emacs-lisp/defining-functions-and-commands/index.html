@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Defining Functions and Commands - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Defining Functions and Commands</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/EqgkAUHw0Yc" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org93275d8">
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org8b52318">
 <ul class="org-ul">
 <li>Basic function definitions</li>
 <li>Function parameter types</li>
@@ -14,7 +14,7 @@
 </ul>
 </div>
 
-<h2><a id="what-is-a-function" class="anchor" href="#what-is-a-function">¶</a>What is a function?</h2><div class="outline-text-2" id="text-orgf7885c7">
+<h2><a id="what-is-a-function" class="anchor" href="#what-is-a-function">¶</a>What is a function?</h2><div class="outline-text-2" id="text-orgded308f">
 <ul class="org-ul">
 <li>A reusable piece of code</li>
 <li>Can accept inputs via parameters</li>
@@ -24,7 +24,7 @@
 </ul>
 </div>
 
-<h2><a id="defining-a-function" class="anchor" href="#defining-a-function">¶</a>Defining a function</h2><div class="outline-text-2" id="text-org52c9ffd">
+<h2><a id="defining-a-function" class="anchor" href="#defining-a-function">¶</a>Defining a function</h2><div class="outline-text-2" id="text-orgbc87b91">
 <p>
 You&rsquo;ve probably seen this before, but let&rsquo;s break it down:
 </p>
@@ -40,7 +40,7 @@ You&rsquo;ve probably seen this before, but let&rsquo;s break it down:
 </p>
 </div>
 
-<h2><a id="function-arguments" class="anchor" href="#function-arguments">¶</a>Function arguments</h2><div class="outline-text-2" id="text-org8ae5361">
+<h2><a id="function-arguments" class="anchor" href="#function-arguments">¶</a>Function arguments</h2><div class="outline-text-2" id="text-org793af5b">
 <p>
 Functions can have different types of arguments:
 </p>
@@ -94,7 +94,7 @@ They can both be used in the same function definition!
 (multiply-two-or-many 5 2 10 7) <span class="org-comment-delimiter">;; </span><span class="org-comment">700</span></pre>
 </div>
 
-<h2><a id="documenting-functions" class="anchor" href="#documenting-functions">¶</a>Documenting functions</h2><div class="outline-text-2" id="text-orgcf78490">
+<h2><a id="documenting-functions" class="anchor" href="#documenting-functions">¶</a>Documenting functions</h2><div class="outline-text-2" id="text-org1575bd0">
 <p>
 The first form in the function body can be a string which describes the function!
 </p>
@@ -133,7 +133,7 @@ You can use <code>M-q</code> inside of the documentation to wrap multi-line docu
 </p>
 </div>
 
-<h2><a id="functions-without-names" class="anchor" href="#functions-without-names">¶</a>Functions without names</h2><div class="outline-text-2" id="text-org6a1a09d">
+<h2><a id="functions-without-names" class="anchor" href="#functions-without-names">¶</a>Functions without names</h2><div class="outline-text-2" id="text-orgd747cfc">
 <p>
 Sometimes you need to pass a function to another function (or to a hook) but you don&rsquo;t want to define a named function for it.
 </p>
@@ -155,7 +155,7 @@ Why &ldquo;lambda&rdquo;?  It comes from a mathematical system called <a href="h
 </p>
 </div>
 
-<h2><a id="invoking-functions" class="anchor" href="#invoking-functions">¶</a>Invoking functions</h2><div class="outline-text-2" id="text-orgc29f57d">
+<h2><a id="invoking-functions" class="anchor" href="#invoking-functions">¶</a>Invoking functions</h2><div class="outline-text-2" id="text-org1d00d25">
 <p>
 You can store a lambda function or named function reference in a variable:
 </p>
@@ -200,7 +200,7 @@ Maybe you have a list of values that you want to pass to a function?  Use <code>
 (apply 'multiply-two-or-many '(1 2 3 4 5))</pre>
 </div>
 
-<h2><a id="defining-commands" class="anchor" href="#defining-commands">¶</a>Defining commands</h2><div class="outline-text-2" id="text-org634e2eb">
+<h2><a id="defining-commands" class="anchor" href="#defining-commands">¶</a>Defining commands</h2><div class="outline-text-2" id="text-org16e6996">
 <p>
 Interactive functions are meant to be used directly by a user in Emacs!
 </p>
@@ -228,7 +228,7 @@ When you write your own package, your user-facing functions should be defined as
 </p>
 </div>
 
-<h3><a id="defining-an-interactive-function" class="anchor" href="#defining-an-interactive-function">¶</a>Defining an interactive function</h3><div class="outline-text-3" id="text-orgb17200f">
+<h3><a id="defining-an-interactive-function" class="anchor" href="#defining-an-interactive-function">¶</a>Defining an interactive function</h3><div class="outline-text-3" id="text-org9a55875">
 <p>
 The form <code>(interactive)</code> needs to be the first one in the function definition!
 </p>
@@ -246,7 +246,7 @@ The description will now be different in <code>describe-function</code>.
 </p>
 </div>
 
-<h3><a id="interactive-parameters" class="anchor" href="#interactive-parameters">¶</a>Interactive parameters</h3><div class="outline-text-3" id="text-org2a4c564">
+<h3><a id="interactive-parameters" class="anchor" href="#interactive-parameters">¶</a>Interactive parameters</h3><div class="outline-text-3" id="text-orga6ec58d">
 <p>
 The <code>interactive</code> form accepts parameters that tells Emacs what to do when the command is executed interactively (either via <code>M-x</code> or when used via key binding).  Some examples:
 </p>
@@ -288,7 +288,7 @@ We won&rsquo;t go through every possibility, check the documentation for more:
 </p>
 </div>
 
-<h3><a id="examples" class="anchor" href="#examples">¶</a>Examples</h3><div class="outline-text-3" id="text-org6b053e6">
+<h3><a id="examples" class="anchor" href="#examples">¶</a>Examples</h3><div class="outline-text-3" id="text-org6a4d57e">
 <p>
 Try to bind <code>C-c z</code> to <code>do-some-math</code> which we defined earlier:
 </p>
@@ -375,7 +375,7 @@ Let&rsquo;s look at a couple other examples:
   (message <span class="org-string">"Run %s yourself!"</span> command))</pre>
 </div>
 
-<h2><a id="a-real-example" class="anchor" href="#a-real-example">¶</a>A real example!</h2><div class="outline-text-2" id="text-org8a3c08c">
+<h2><a id="a-real-example" class="anchor" href="#a-real-example">¶</a>A real example!</h2><div class="outline-text-2" id="text-org89f6274">
 <p>
 Let&rsquo;s define the project we&rsquo;ll be following for the rest of the series:
 </p>
@@ -391,7 +391,7 @@ Today we&rsquo;ll define a command that automatically tangles the <code>.org</co
 </p>
 </div>
 
-<h3><a id="finished-code" class="anchor" href="#finished-code">¶</a>Finished code</h3><div class="outline-text-3" id="text-org52b8589">
+<h3><a id="finished-code" class="anchor" href="#finished-code">¶</a>Finished code</h3><div class="outline-text-3" id="text-org514bc80">
 <pre>(<span class="org-keyword">setq</span> dotfiles-folder <span class="org-string">"~/Projects/Code/emacs-from-scratch"</span>)
   (<span class="org-keyword">setq</span> dotfiles-org-files '(<span class="org-string">"Emacs.org"</span> <span class="org-string">"Desktop.org"</span>))
 

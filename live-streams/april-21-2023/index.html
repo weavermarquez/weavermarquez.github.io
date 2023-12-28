@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Emacs Packages for Modal Editing - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Emacs Packages for Modal Editing</h1><p class="site-post-meta">April 21, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/MPSkyfOp5H8" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orga7ac6a2">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org0cfdf8e">
 <ul class="org-ul">
 <li>Updated my Emacs configuration to remove Straight.el and setup.el, now back to <code>use-package</code> and <code>package.el</code> in Emacs 29!</li>
 
@@ -23,7 +23,7 @@ Support the channel!
 </ul>
 </div>
 
-<h2><a id="moving-to-matrix-feedback-wanted" class="anchor" href="#moving-to-matrix-feedback-wanted">¶</a>Moving to Matrix, Feedback Wanted!</h2><div class="outline-text-2" id="text-org53ad5a8">
+<h2><a id="moving-to-matrix-feedback-wanted" class="anchor" href="#moving-to-matrix-feedback-wanted">¶</a>Moving to Matrix, Feedback Wanted!</h2><div class="outline-text-2" id="text-orga421f9d">
 <p>
 I&rsquo;ve been mulling over this for a while and I think I&rsquo;m finally ready to proceed: the System Crafters community chat will be moving from Discord to Matrix and IRC!
 </p>
@@ -62,7 +62,7 @@ More info on how to connect to IRC/Matrix: <a href="http://systemcrafters.chat">
 </p>
 </div>
 
-<h2><a id="emacs-packages-for-modal-editing" class="anchor" href="#emacs-packages-for-modal-editing">¶</a>Emacs Packages for Modal Editing</h2><div class="outline-text-2" id="text-org68a6918">
+<h2><a id="emacs-packages-for-modal-editing" class="anchor" href="#emacs-packages-for-modal-editing">¶</a>Emacs Packages for Modal Editing</h2><div class="outline-text-2" id="text-org6ce1278">
 <ul class="org-ul">
 <li>god-mode: <a href="https://github.com/emacsorphanage/god-mode">https://github.com/emacsorphanage/god-mode</a></li>
 <li>boon: <a href="https://github.com/jyp/boon">https://github.com/jyp/boon</a></li>
@@ -72,7 +72,7 @@ More info on how to connect to IRC/Matrix: <a href="http://systemcrafters.chat">
 </ul>
 </div>
 
-<h3><a id="god-mode" class="anchor" href="#god-mode">¶</a>God Mode</h3><div class="outline-text-3" id="text-orge56eeca">
+<h3><a id="god-mode" class="anchor" href="#god-mode">¶</a>God Mode</h3><div class="outline-text-3" id="text-org1336c66">
 <p>
 This package is pretty nice!  You can just press single letters for many vanilla Emacs key bindings.  Check the README of the repository for more information.
 </p>
@@ -82,13 +82,13 @@ This package is pretty nice!  You can just press single letters for many vanilla
 (define-key god-local-mode-map (kbd <span class="org-string">"i"</span>) 'god-local-mode)</pre>
 </div>
 
-<h3><a id="boon" class="anchor" href="#boon">¶</a>Boon</h3><div class="outline-text-3" id="text-org3032963">
+<h3><a id="boon" class="anchor" href="#boon">¶</a>Boon</h3><div class="outline-text-3" id="text-orgc4b0abc">
 <pre>(straight-use-package 'boon)
 (<span class="org-keyword">require</span> '<span class="org-constant">boon-qwerty</span>)
 (turn-on-boon-mode)</pre>
 </div>
 
-<h3><a id="meow" class="anchor" href="#meow">¶</a>Meow</h3><div class="outline-text-3" id="text-org9091e0d">
+<h3><a id="meow" class="anchor" href="#meow">¶</a>Meow</h3><div class="outline-text-3" id="text-org6f215b3">
 <p>
 Meow is definitely worth trying!  Run the tutorial with <code>M-x meow-tutor</code> after setting up this configuration:
 </p>
@@ -186,7 +186,7 @@ Meow is definitely worth trying!  Run the tutorial with <code>M-x meow-tutor</co
 (meow-global-mode 1)</pre>
 </div>
 
-<h3><a id="repeat-mode" class="anchor" href="#repeat-mode">¶</a>Repeat Mode</h3><div class="outline-text-3" id="text-org5df7d10">
+<h3><a id="repeat-mode" class="anchor" href="#repeat-mode">¶</a>Repeat Mode</h3><div class="outline-text-3" id="text-orgfeb37df">
 <p>
 This is not really a modal editing feature, but you can repeat key bindings easily.
 </p>

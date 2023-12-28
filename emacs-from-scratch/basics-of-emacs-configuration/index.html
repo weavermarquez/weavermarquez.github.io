@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>The Basics of Emacs Configuration - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">The Basics of Emacs Configuration</h1><p class="site-post-meta">January 31, 2022</p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/OaF-N-FuGtc" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org501edf5">
+<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org09caca1">
 <p>
 The most valuable aspect of Emacs is the ability it gives you to customize your environment and workflow perfectly for whatever it is you want to do.
 </p>
@@ -21,7 +21,7 @@ Click like 👍 on the video if you&rsquo;re excited to get started!
 </p>
 </div>
 
-<h2><a id="getting-started" class="anchor" href="#getting-started">¶</a>Getting started</h2><div class="outline-text-2" id="text-org59c4f57">
+<h2><a id="getting-started" class="anchor" href="#getting-started">¶</a>Getting started</h2><div class="outline-text-2" id="text-org5bb9e88">
 <p>
 In this video I won&rsquo;t show you how to install or use Emacs!  If you are a new Emacs user, check out my video <a href="https://youtu.be/48JlgiBpw_I">The Absolute Beginner&rsquo;s Guide To Emacs</a> where I give a very thorough introduction for how you can get started.
 </p>
@@ -39,7 +39,7 @@ As we go, I&rsquo;ll also give pointers on alternative ways to get some of the s
 </p>
 </div>
 
-<h3><a id="finding-emacs-28" class="anchor" href="#finding-emacs-28">¶</a>Finding Emacs 28</h3><div class="outline-text-3" id="text-org4076b3b">
+<h3><a id="finding-emacs-28" class="anchor" href="#finding-emacs-28">¶</a>Finding Emacs 28</h3><div class="outline-text-3" id="text-org0a4394b">
 <p>
 Here are some pointers to find or build Emacs 28 on your operating system.  If you have trouble getting it, leave a note in the comments or come find us in the <a href="http://systemcrafters.chat">Discord or IRC</a>.
 </p>
@@ -54,7 +54,7 @@ Here are some pointers to find or build Emacs 28 on your operating system.  If y
 brew install emacs-plus@28</pre>
 </div>
 
-<h2><a id="where-is-the-configuration" class="anchor" href="#where-is-the-configuration">¶</a>Where is the configuration?</h2><div class="outline-text-2" id="text-org8bf53fd">
+<h2><a id="where-is-the-configuration" class="anchor" href="#where-is-the-configuration">¶</a>Where is the configuration?</h2><div class="outline-text-2" id="text-orgdf144d4">
 <p>
 The primary way to configure Emacs is to edit its configuration file which is written in a language called Emacs Lisp.  This means that your Emacs configuration is actually code!  Don&rsquo;t worry, I&rsquo;ll explain everything.
 </p>
@@ -86,7 +86,7 @@ Be aware that I&rsquo;m editing my <code>init.el</code> from a different folder 
 </p>
 </div>
 
-<h2><a id="the-basics-of-configuration" class="anchor" href="#the-basics-of-configuration">¶</a>The basics of configuration</h2><div class="outline-text-2" id="text-org6b34d6c">
+<h2><a id="the-basics-of-configuration" class="anchor" href="#the-basics-of-configuration">¶</a>The basics of configuration</h2><div class="outline-text-2" id="text-org66c44f3">
 <p>
 Now that we&rsquo;re in our <code>init.el</code> file, let&rsquo;s learn how you can actually configure Emacs with it!
 </p>
@@ -101,7 +101,7 @@ The two most common things you will do in your <code>init.el</code> file:
 </ul>
 </div>
 
-<h2><a id="setting-configuration-variables" class="anchor" href="#setting-configuration-variables">¶</a>Setting configuration variables</h2><div class="outline-text-2" id="text-org207090b">
+<h2><a id="setting-configuration-variables" class="anchor" href="#setting-configuration-variables">¶</a>Setting configuration variables</h2><div class="outline-text-2" id="text-orgbbfa74f">
 <p>
 Let&rsquo;s take a look at how you would set a configuration variable and then we&rsquo;ll break down the syntax to understand Emacs Lisp a little better:
 </p>
@@ -146,7 +146,7 @@ Let&rsquo;s try it out!  Add this line to your <code>init.el</code> file, save i
 </p>
 </div>
 
-<h2><a id="setting-variables-without-restarting-emacs" class="anchor" href="#setting-variables-without-restarting-emacs">¶</a>Setting variables without restarting Emacs</h2><div class="outline-text-2" id="text-orge5654cf">
+<h2><a id="setting-variables-without-restarting-emacs" class="anchor" href="#setting-variables-without-restarting-emacs">¶</a>Setting variables without restarting Emacs</h2><div class="outline-text-2" id="text-org8921d56">
 <p>
 It wouldn&rsquo;t be great if you had to restart Emacs every time you changed your configuration file.  Luckily you can evaluate parts of your configuration while Emacs is running!
 </p>
@@ -176,7 +176,7 @@ If you don&rsquo;t like the flashing behavior of <code>visual-bell</code> then l
 </p>
 </div>
 
-<h2><a id="enabling-or-disabling-features" class="anchor" href="#enabling-or-disabling-features">¶</a>Enabling or disabling features</h2><div class="outline-text-2" id="text-orgd406fc5">
+<h2><a id="enabling-or-disabling-features" class="anchor" href="#enabling-or-disabling-features">¶</a>Enabling or disabling features</h2><div class="outline-text-2" id="text-org0b9e7fe">
 <p>
 Many features of Emacs are controlled by something called a &ldquo;mode.&rdquo;  A mode is basically a collection of functionality that can be applied either to a single Emacs buffer or to the entire editor.
 </p>
@@ -198,7 +198,7 @@ Now that we&rsquo;ve added this code to our configuration and saved it with <cod
 </p>
 </div>
 
-<h2><a id="setting-the-theme" class="anchor" href="#setting-the-theme">¶</a>Setting the theme</h2><div class="outline-text-2" id="text-org766111e">
+<h2><a id="setting-the-theme" class="anchor" href="#setting-the-theme">¶</a>Setting the theme</h2><div class="outline-text-2" id="text-org3efe745">
 <p>
 Another way to configure certain parts of Emacs is by calling individual functions.  There are a ton of functions you can call in Emacs!
 </p>
@@ -224,7 +224,7 @@ We&rsquo;ll talk about visual customization more in a later video.
 </ul>
 </div>
 
-<h2><a id="how-to-find-more-things-to-configure" class="anchor" href="#how-to-find-more-things-to-configure">¶</a>How to find more things to configure</h2><div class="outline-text-2" id="text-org177370c">
+<h2><a id="how-to-find-more-things-to-configure" class="anchor" href="#how-to-find-more-things-to-configure">¶</a>How to find more things to configure</h2><div class="outline-text-2" id="text-org579b3aa">
 <p>
 The two most useful functions in Emacs when you&rsquo;re learning how to configure it are:
 </p>
@@ -248,7 +248,7 @@ You can also get suggestions for variable and function names right in your <code
 </p>
 </div>
 
-<h2><a id="try-it-out" class="anchor" href="#try-it-out">¶</a>Try it out!</h2><div class="outline-text-2" id="text-org3de5ba0">
+<h2><a id="try-it-out" class="anchor" href="#try-it-out">¶</a>Try it out!</h2><div class="outline-text-2" id="text-org836fd5f">
 <p>
 Now it&rsquo;s your turn to experiment with what you&rsquo;ve learned in this video!
 </p>
@@ -265,7 +265,7 @@ When you try what I showed in this video, let me know in the comments how it wen
 </p>
 </div>
 
-<h2><a id="bonus-my-emacs-demo-launcher" class="anchor" href="#bonus-my-emacs-demo-launcher">¶</a>Bonus: My Emacs demo launcher</h2><div class="outline-text-2" id="text-org8dfeaf9">
+<h2><a id="bonus-my-emacs-demo-launcher" class="anchor" href="#bonus-my-emacs-demo-launcher">¶</a>Bonus: My Emacs demo launcher</h2><div class="outline-text-2" id="text-org9e7111a">
 <p>
 If you&rsquo;re curious, here&rsquo;s the command I&rsquo;m using in my own Emacs configuration to quickly launch my demo Emacs session!
 </p>

@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Everyday Git Workflow in Emacs with Magit - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Everyday Git Workflow in Emacs with Magit</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/qPfJoeQCIvA" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org0aad209">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org7256141">
 <p>
 In this video, I&rsquo;m going to show how you can use Magit to perform your day to day Git operations much more efficiently than what you might do with <code>git</code> on the command line.
 </p>
@@ -25,7 +25,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="cloning-a-repository" class="anchor" href="#cloning-a-repository">¶</a>Cloning a repository</h2><div class="outline-text-2" id="text-org4e76459">
+<h2><a id="cloning-a-repository" class="anchor" href="#cloning-a-repository">¶</a>Cloning a repository</h2><div class="outline-text-2" id="text-org6373f61">
 <p>
 While it&rsquo;s not something you might do every day, you will eventually need to clone a Git repository from a remote location, typically a collaboration site like GitHub, GitLab, or Sourcehut.
 </p>
@@ -51,14 +51,14 @@ After the repository has finished cloning, the <code>magit-status</code> buffer 
 </p>
 </div>
 
-<h3><a id="preparing-for-later-examples" class="anchor" href="#preparing-for-later-examples">¶</a>Preparing for later examples</h3><div class="outline-text-3" id="text-orgf026d36">
+<h3><a id="preparing-for-later-examples" class="anchor" href="#preparing-for-later-examples">¶</a>Preparing for later examples</h3><div class="outline-text-3" id="text-orgc8a42fa">
 <pre>(<span class="org-keyword">let</span> ((default-directory (expand-file-name <span class="org-string">"~/Projects/Code/dotfiles"</span>)))
   (magit-reset-hard <span class="org-string">"1e0fa45a5e7fd9fd45c2d385b5970d7de53eb205"</span>)
   (copy-file <span class="org-string">"../Emacs-edit.org"</span> <span class="org-string">"./Emacs.org"</span> t)
   (find-file-noselect <span class="org-string">"Emacs.org"</span>))</pre>
 </div>
 
-<h2><a id="looking-at-the-commit-history" class="anchor" href="#looking-at-the-commit-history">¶</a>Looking at the commit history</h2><div class="outline-text-2" id="text-org0c731f5">
+<h2><a id="looking-at-the-commit-history" class="anchor" href="#looking-at-the-commit-history">¶</a>Looking at the commit history</h2><div class="outline-text-2" id="text-orga22b440">
 <p>
 Before we get into the more interesting and useful features of Magit, let&rsquo;s take a look at how you can view the commit history of your Git repository.
 </p>
@@ -68,7 +68,7 @@ Other Magit operations like cherry-picking and rebasing will use this commit log
 </p>
 </div>
 
-<h3><a id="viewing-commits-from-the-current-branch" class="anchor" href="#viewing-commits-from-the-current-branch">¶</a>Viewing commits from the current branch</h3><div class="outline-text-3" id="text-org646a7c1">
+<h3><a id="viewing-commits-from-the-current-branch" class="anchor" href="#viewing-commits-from-the-current-branch">¶</a>Viewing commits from the current branch</h3><div class="outline-text-3" id="text-org98a983b">
 <p>
 The most obvious thing you might want to do is view the commit history for the current branch.  You can view the log for the current branch using one of these entrypoints:
 </p>
@@ -95,7 +95,7 @@ By default, only a limited number of commits will be displayed, but you can pres
 </p>
 </div>
 
-<h3><a id="viewing-commits-from-a-specific-branch" class="anchor" href="#viewing-commits-from-a-specific-branch">¶</a>Viewing commits from a specific branch</h3><div class="outline-text-3" id="text-org5e6db72">
+<h3><a id="viewing-commits-from-a-specific-branch" class="anchor" href="#viewing-commits-from-a-specific-branch">¶</a>Viewing commits from a specific branch</h3><div class="outline-text-3" id="text-org2d68fca">
 <p>
 This path will ask you for a branch using the prompt &ldquo;Log rev,s&rdquo; which isn&rsquo;t very clear, but you can type in the name of any branch here, either local or remote.  You can also press the <code>TAB</code> key to get a completion list of all the branch names.
 </p>
@@ -110,7 +110,7 @@ Once you select a branch to be listed, the commit listing for that branch will b
 </ul>
 </div>
 
-<h2><a id="commiting-only-one-section-of-a-modified-file" class="anchor" href="#commiting-only-one-section-of-a-modified-file">¶</a>Commiting only one section of a modified file</h2><div class="outline-text-2" id="text-org34509cf">
+<h2><a id="commiting-only-one-section-of-a-modified-file" class="anchor" href="#commiting-only-one-section-of-a-modified-file">¶</a>Commiting only one section of a modified file</h2><div class="outline-text-2" id="text-org36e2d03">
 <p>
 If you&rsquo;ve been using Git for a little while, you&rsquo;re probably familiar with staging whole files to be committed using <code>git add filename</code>.
 </p>
@@ -144,7 +144,7 @@ I use this functionality very frequently, both for my dotfiles repository and th
 </p>
 </div>
 
-<h2><a id="adding-a-file-or-change-to-the-most-recent-commit" class="anchor" href="#adding-a-file-or-change-to-the-most-recent-commit">¶</a>Adding a file or change to the most recent commit</h2><div class="outline-text-2" id="text-org4112de1">
+<h2><a id="adding-a-file-or-change-to-the-most-recent-commit" class="anchor" href="#adding-a-file-or-change-to-the-most-recent-commit">¶</a>Adding a file or change to the most recent commit</h2><div class="outline-text-2" id="text-org75d44c8">
 <p>
 So what if we forgot some lines that we wanted to add to this commit?  Magit makes it really easy to &ldquo;extend&rdquo; your most recent commit with additional changes.
 </p>
@@ -166,7 +166,7 @@ If you only want to edit the commit message without adding any staged changes, u
 </p>
 </div>
 
-<h2><a id="adding-a-file-or-change-to-a-specific-commit" class="anchor" href="#adding-a-file-or-change-to-a-specific-commit">¶</a>Adding a file or change to a specific commit</h2><div class="outline-text-2" id="text-orgc016690">
+<h2><a id="adding-a-file-or-change-to-a-specific-commit" class="anchor" href="#adding-a-file-or-change-to-a-specific-commit">¶</a>Adding a file or change to a specific commit</h2><div class="outline-text-2" id="text-org6d32b75">
 <p>
 Maybe you&rsquo;ve already made other commits after the commit you need to edit, how can you add new changes to the earlier commit?
 </p>
@@ -192,7 +192,7 @@ You&rsquo;ll be presented with Magit&rsquo;s commit log view which shows the cur
 </p>
 </div>
 
-<h2><a id="create-a-new-branch-from-the-changes-of-the-current-branch" class="anchor" href="#create-a-new-branch-from-the-changes-of-the-current-branch">¶</a>Create a new branch from the changes of the current branch</h2><div class="outline-text-2" id="text-orgcf155a7">
+<h2><a id="create-a-new-branch-from-the-changes-of-the-current-branch" class="anchor" href="#create-a-new-branch-from-the-changes-of-the-current-branch">¶</a>Create a new branch from the changes of the current branch</h2><div class="outline-text-2" id="text-org8797ab1">
 <p>
 Magit has a really convenient interface for creating branches through <code>M-x magit-branch</code> or the <code>b</code> key in the <code>magit-status</code> buffer.
 </p>
@@ -218,7 +218,7 @@ We can then use <code>b b</code> in the status buffer to switch back to <code>ma
 </p>
 </div>
 
-<h2><a id="pushing-a-local-branch-to-a-remote" class="anchor" href="#pushing-a-local-branch-to-a-remote">¶</a>Pushing a local branch to a remote</h2><div class="outline-text-2" id="text-orgb508cce">
+<h2><a id="pushing-a-local-branch-to-a-remote" class="anchor" href="#pushing-a-local-branch-to-a-remote">¶</a>Pushing a local branch to a remote</h2><div class="outline-text-2" id="text-org1310f5c">
 <p>
 Once you&rsquo;ve made a few commits to a branch, you&rsquo;ll eventually need to push those commits to a remote location (like GitHub) so that you can share or collarborate with others.
 </p>
@@ -228,7 +228,7 @@ Magit has a very convenient interface for this which enables you to do all the t
 </p>
 </div>
 
-<h3><a id="pushing-a-new-local-branch-to-a-remote" class="anchor" href="#pushing-a-new-local-branch-to-a-remote">¶</a>Pushing a new local branch to a remote</h3><div class="outline-text-3" id="text-orgfa19f2b">
+<h3><a id="pushing-a-new-local-branch-to-a-remote" class="anchor" href="#pushing-a-new-local-branch-to-a-remote">¶</a>Pushing a new local branch to a remote</h3><div class="outline-text-3" id="text-org9a3c07f">
 <p>
 Usually when you create a new branch, there won&rsquo;t be a matching branch on the remote repository yet.
 </p>
@@ -246,7 +246,7 @@ You can also see that the &ldquo;Push:&rdquo; entry in the repo status section a
 </p>
 </div>
 
-<h3><a id="pushing-new-changes-to-an-existing-branch" class="anchor" href="#pushing-new-changes-to-an-existing-branch">¶</a>Pushing new changes to an existing branch</h3><div class="outline-text-3" id="text-org9588052">
+<h3><a id="pushing-new-changes-to-an-existing-branch" class="anchor" href="#pushing-new-changes-to-an-existing-branch">¶</a>Pushing new changes to an existing branch</h3><div class="outline-text-3" id="text-org1be2eca">
 <p>
 If you make a new commit on the current branch, you can push it to the same remote branch by pressing <code>P p</code> in the status buffer again.
 </p>
@@ -256,7 +256,7 @@ Magit remembers the branch that you pushed to the last time so you can always us
 </p>
 </div>
 
-<h3><a id="pushing-a-branch-that-has-had-its-commits-modified" class="anchor" href="#pushing-a-branch-that-has-had-its-commits-modified">¶</a>Pushing a branch that has had its commits modified</h3><div class="outline-text-3" id="text-org6d463b5">
+<h3><a id="pushing-a-branch-that-has-had-its-commits-modified" class="anchor" href="#pushing-a-branch-that-has-had-its-commits-modified">¶</a>Pushing a branch that has had its commits modified</h3><div class="outline-text-3" id="text-org0eebf3a">
 <p>
 In a couple of examples before, I showed how you can edit existing commits by adding more changes or rewording the commit message.
 </p>
@@ -270,7 +270,7 @@ If you&rsquo;ve done this, the only way to push those changes to the same branch
 </p>
 </div>
 
-<h2><a id="saving-local-changes-for-later" class="anchor" href="#saving-local-changes-for-later">¶</a>Saving local changes for later</h2><div class="outline-text-2" id="text-org39d6ead">
+<h2><a id="saving-local-changes-for-later" class="anchor" href="#saving-local-changes-for-later">¶</a>Saving local changes for later</h2><div class="outline-text-2" id="text-orgdedd632">
 <p>
 There will be times where you&rsquo;ll need to move uncommitted local changes out of the way so that you can perform some other Git operation like a pull or rebase.
 </p>
@@ -292,7 +292,7 @@ You can restore the latest stash by running <code>z p</code> (Stash -&gt; Pop) w
 </p>
 </div>
 
-<h2><a id="pulling-new-commits-from-a-remote-into-a-local-branch" class="anchor" href="#pulling-new-commits-from-a-remote-into-a-local-branch">¶</a>Pulling new commits from a remote into a local branch</h2><div class="outline-text-2" id="text-orgfdf9bc9">
+<h2><a id="pulling-new-commits-from-a-remote-into-a-local-branch" class="anchor" href="#pulling-new-commits-from-a-remote-into-a-local-branch">¶</a>Pulling new commits from a remote into a local branch</h2><div class="outline-text-2" id="text-org7a06d12">
 <p>
 Regardless of whether you&rsquo;re working on your dotfiles repo or collaborating with others on a project, you&rsquo;ll eventually need to pull commits from a remote repository.
 </p>
@@ -314,7 +314,7 @@ If you receive an error saying that there are uncommitted local changes, use the
 </p>
 </div>
 
-<h3><a id="pulling-new-changes-from-another-branch" class="anchor" href="#pulling-new-changes-from-another-branch">¶</a>Pulling new changes from another branch</h3><div class="outline-text-3" id="text-org15f152f">
+<h3><a id="pulling-new-changes-from-another-branch" class="anchor" href="#pulling-new-changes-from-another-branch">¶</a>Pulling new changes from another branch</h3><div class="outline-text-3" id="text-org9f3a4c2">
 <p>
 The option I use more often when working on a branch is <code>F u</code> which enables you to pull from an &ldquo;upstream&rdquo; branch, local or remote, for example <code>origin/main</code> or <code>origin/master</code>.
 </p>
@@ -324,7 +324,7 @@ You can also use <code>F e</code> to choose any local or remote branch without s
 </p>
 </div>
 
-<h3><a id="rebasing-local-changes-onto-the-new-commits" class="anchor" href="#rebasing-local-changes-onto-the-new-commits">¶</a>Rebasing local changes onto the new commits</h3><div class="outline-text-3" id="text-orgb20b261">
+<h3><a id="rebasing-local-changes-onto-the-new-commits" class="anchor" href="#rebasing-local-changes-onto-the-new-commits">¶</a>Rebasing local changes onto the new commits</h3><div class="outline-text-3" id="text-org955764d">
 <p>
 You&rsquo;ll inevitably need to pull new commits from another branch (like <code>main</code> or <code>master</code>) into your current branch before you can merge it back into the main branch.
 </p>
@@ -346,7 +346,7 @@ We&rsquo;ll cover how you can deal with merge conflicts in the next episode of t
 </p>
 </div>
 
-<h3><a id="fetching-without-pulling-changes" class="anchor" href="#fetching-without-pulling-changes">¶</a>Fetching without pulling changes</h3><div class="outline-text-3" id="text-orgdb25dd2">
+<h3><a id="fetching-without-pulling-changes" class="anchor" href="#fetching-without-pulling-changes">¶</a>Fetching without pulling changes</h3><div class="outline-text-3" id="text-org17b3d07">
 <p>
 If you merely want to fetch the latest branches and commits from the remote repository without pulling them into your local branch, you can follow a different path:
 </p>
@@ -356,7 +356,7 @@ Open <code>magit-status</code> and press <code>f p</code> to fetch the <code>ori
 </p>
 </div>
 
-<h2><a id="discarding-unwanted-changes" class="anchor" href="#discarding-unwanted-changes">¶</a>Discarding unwanted changes</h2><div class="outline-text-2" id="text-orgfe5f6ba">
+<h2><a id="discarding-unwanted-changes" class="anchor" href="#discarding-unwanted-changes">¶</a>Discarding unwanted changes</h2><div class="outline-text-2" id="text-org83aff9e">
 <p>
 Let&rsquo;s say you&rsquo;ve been making changes in your repo that you later decide that you no longer need.  Instead of going back to those files to undo the changes, you can use the <b>Discard</b> action of the status buffer to get rid of them!
 </p>
@@ -374,7 +374,7 @@ This also works for untracked files!  This is usually faster than going to the c
 </p>
 </div>
 
-<h2><a id="adding-a-file-to-gitignore" class="anchor" href="#adding-a-file-to-gitignore">¶</a>Adding a file to .gitignore</h2><div class="outline-text-2" id="text-org63f5a82">
+<h2><a id="adding-a-file-to-gitignore" class="anchor" href="#adding-a-file-to-gitignore">¶</a>Adding a file to .gitignore</h2><div class="outline-text-2" id="text-org1421e7d">
 <p>
 Perhaps you&rsquo;ve got a file in the repository that you never want to see in the <b>Untracked Files</b> section because it doesn&rsquo;t belong in the repository.  Normally you&rsquo;d add that to your <code>.gitignore</code> file in the repo.
 </p>
@@ -398,7 +398,7 @@ Magit will now create the <code>.gitignore</code> file if it doesn&rsquo;t exist
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org665f554">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org6c2b703">
 <p>
 In the next video, I&rsquo;ll show you how to do even more advanced Git operations like rebasing, cherry picking, and managing the reflog.  If you&rsquo;re a programmer that uses Git to collaborate with others on a daily basis, Magit will make your life a lot easier!
 </p>

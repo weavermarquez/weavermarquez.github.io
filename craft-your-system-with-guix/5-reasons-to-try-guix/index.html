@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>5 Reasons to Try GNU Guix in 2022 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">5 Reasons to Try GNU Guix in 2022</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/7ZdMRLPZhFs" allowfullscreen></iframe></div><div id="content">
-<h2><a id="what-is-gnu-guix" class="anchor" href="#what-is-gnu-guix">¶</a>What is GNU Guix?</h2><div class="outline-text-2" id="text-orgb4a4af9">
+<h2><a id="what-is-gnu-guix" class="anchor" href="#what-is-gnu-guix">¶</a>What is GNU Guix?</h2><div class="outline-text-2" id="text-org7531540">
 <p>
 Guix is a package manager and system configuration tool which enables you to safely and repeatably install software and an entire GNU/Linux environment on your computer.
 </p>
@@ -22,7 +22,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="follow-along" class="anchor" href="#follow-along">¶</a>Follow along!</h2><div class="outline-text-2" id="text-orgddc1156">
+<h2><a id="follow-along" class="anchor" href="#follow-along">¶</a>Follow along!</h2><div class="outline-text-2" id="text-org29bf009">
 <p>
 In this video I&rsquo;ll demonstrate a few Guix features using a virtual machine.  If you&rsquo;d like to follow along, you can find instructions on how to set up a standard Guix VM image <a href="https://guix.gnu.org/manual/en/html_node/Running-Guix-in-a-VM.html">in the Guix manual</a>.
 </p>
@@ -40,7 +40,7 @@ qemu-system-x86_64 <span class="org-sh-escaped-newline">\</span>
   -drive <span class="org-variable-name">if</span>=none,<span class="org-variable-name">file</span>=$<span class="org-variable-name">HOME</span>/Downloads/guix-vm.qcow2,<span class="org-variable-name">id</span>=guix-demo</pre>
 </div>
 
-<h2><a id="1-yoursquoll-never-lose-your-configuration-again" class="anchor" href="#1-yoursquoll-never-lose-your-configuration-again">¶</a>1. You&rsquo;ll never lose your configuration again</h2><div class="outline-text-2" id="text-orgba0dbc3">
+<h2><a id="1-yoursquoll-never-lose-your-configuration-again" class="anchor" href="#1-yoursquoll-never-lose-your-configuration-again">¶</a>1. You&rsquo;ll never lose your configuration again</h2><div class="outline-text-2" id="text-orga303838">
 <p>
 In other GNU/Linux distributions, you install your system and then manually make changes to the configuration:
 </p>
@@ -111,7 +111,7 @@ You can even share the same base configuration between multiple machines with cu
 </p>
 </div>
 
-<h2><a id="2-changing-your-configuration-is-safe" class="anchor" href="#2-changing-your-configuration-is-safe">¶</a>2. Changing your configuration is safe</h2><div class="outline-text-2" id="text-org7e844d0">
+<h2><a id="2-changing-your-configuration-is-safe" class="anchor" href="#2-changing-your-configuration-is-safe">¶</a>2. Changing your configuration is safe</h2><div class="outline-text-2" id="text-org1226796">
 <p>
 If you&rsquo;ve used distributions like Arch, Gentoo, or even Ubuntu, you&rsquo;ve probably experienced a system-breaking upgrade at some point.
 </p>
@@ -141,7 +141,7 @@ We can check for the user we added just like last time:
 <pre>cat /etc/passwd | grep david  <span class="org-comment-delimiter"># </span><span class="org-comment">The user is gone!</span></pre>
 </div>
 
-<h2><a id="3-you-can-also-use-it-for-managing-your-dotfiles" class="anchor" href="#3-you-can-also-use-it-for-managing-your-dotfiles">¶</a>3. You can also use it for managing your dotfiles</h2><div class="outline-text-2" id="text-orga5d3331">
+<h2><a id="3-you-can-also-use-it-for-managing-your-dotfiles" class="anchor" href="#3-you-can-also-use-it-for-managing-your-dotfiles">¶</a>3. You can also use it for managing your dotfiles</h2><div class="outline-text-2" id="text-orga49ff7a">
 <p>
 Last year, an important new feature called <code>guix home</code> was added which enables you to apply the same declarative configuration style (including rollbacks) to your user-level configuration.
 </p>
@@ -181,7 +181,7 @@ This might take a while, so be patient!
 </p>
 </div>
 
-<h3><a id="example-home-configuration" class="anchor" href="#example-home-configuration">¶</a>Example Home Configuration</h3><div class="outline-text-3" id="text-orgff093da">
+<h3><a id="example-home-configuration" class="anchor" href="#example-home-configuration">¶</a>Example Home Configuration</h3><div class="outline-text-3" id="text-org06d6989">
 <pre>(use-modules (gnu home)
              (gnu home services)
              (gnu home services shepherd)
@@ -219,7 +219,7 @@ More information: <a href="https://guix.gnu.org/manual/devel/en/html_node/Home-C
 </p>
 </div>
 
-<h2><a id="4-you-can-easily-create-isolated-development-environments" class="anchor" href="#4-you-can-easily-create-isolated-development-environments">¶</a>4. You can easily create isolated development environments</h2><div class="outline-text-2" id="text-org5d598b9">
+<h2><a id="4-you-can-easily-create-isolated-development-environments" class="anchor" href="#4-you-can-easily-create-isolated-development-environments">¶</a>4. You can easily create isolated development environments</h2><div class="outline-text-2" id="text-orge3fae48">
 <p>
 If you&rsquo;re a software developer, you&rsquo;ve probably had to work a variety of different projects, all with their own platforms and tools and different versions of the same libraries.  This can quickly become a nightmare if you have to install all these things directly into your system!
 </p>
@@ -262,7 +262,7 @@ make</pre>
 </p>
 </div>
 
-<h2><a id="5-you-can-get-many-of-these-benefits-on-your-current-linux-distribution" class="anchor" href="#5-you-can-get-many-of-these-benefits-on-your-current-linux-distribution">¶</a>5. You can get many of these benefits on your current Linux distribution</h2><div class="outline-text-2" id="text-orgae4e3e9">
+<h2><a id="5-you-can-get-many-of-these-benefits-on-your-current-linux-distribution" class="anchor" href="#5-you-can-get-many-of-these-benefits-on-your-current-linux-distribution">¶</a>5. You can get many of these benefits on your current Linux distribution</h2><div class="outline-text-2" id="text-org70d94de">
 <p>
 You don&rsquo;t need to install the full Guix System to benefit from Guix!  You can install the Guix package manager on many other Linux distributions, either from the distro package manager or by using the <a href="https://guix.gnu.org/manual/en/html_node/Binary-Installation.html">installation script</a> provided by the Guix maintainers.
 </p>
@@ -276,7 +276,7 @@ Check out <a href="https://youtu.be/Nk8sprN7oZ0">my video</a> about this for mor
 </p>
 </div>
 
-<h2><a id="how-to-get-started" class="anchor" href="#how-to-get-started">¶</a>How to get started</h2><div class="outline-text-2" id="text-org89d024e">
+<h2><a id="how-to-get-started" class="anchor" href="#how-to-get-started">¶</a>How to get started</h2><div class="outline-text-2" id="text-orgd20e168">
 <p>
 Last year I made <a href="https://www.youtube.com/watch?v=iBaqOK75cho&amp;list=PLEoMzSkcN8oNxnj7jm5V2ZcGc52002pQU">a number of videos</a> showing how to get started with Guix:
 </p>
@@ -294,7 +294,7 @@ The <a href="https://guix.gnu.org/manual/en/guix.html">GNU Guix Reference Manual
 </p>
 </div>
 
-<h2><a id="more-videos-coming-soon" class="anchor" href="#more-videos-coming-soon">¶</a>More videos coming soon!</h2><div class="outline-text-2" id="text-orge0d4e99">
+<h2><a id="more-videos-coming-soon" class="anchor" href="#more-videos-coming-soon">¶</a>More videos coming soon!</h2><div class="outline-text-2" id="text-org968a335">
 <p>
 This year I&rsquo;ll be making a lot more videos about GNU Guix to help with day to day usage and also going deeper into how you can write your own customizations and package definitions:
 </p>
@@ -309,7 +309,7 @@ This year I&rsquo;ll be making a lot more videos about GNU Guix to help with day
 </ul>
 </div>
 
-<h2><a id="i-want-to-hear-from-you" class="anchor" href="#i-want-to-hear-from-you">¶</a>I want to hear from you!</h2><div class="outline-text-2" id="text-orgf37cece">
+<h2><a id="i-want-to-hear-from-you" class="anchor" href="#i-want-to-hear-from-you">¶</a>I want to hear from you!</h2><div class="outline-text-2" id="text-org9caf509">
 <p>
 Now I want to hear from all of you, especially those who are finding this channel for the first time.
 </p>

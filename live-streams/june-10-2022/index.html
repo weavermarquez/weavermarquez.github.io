@@ -1,18 +1,18 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Modular Emacs Configuration Strategies - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Modular Emacs Configuration Strategies</h1><p class="site-post-meta">June 10, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/y7E18HpG1wU" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orge714500">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgc02d5eb">
 <ul class="org-ul">
 <li>Video on Modus Themes coming out tomorrow!</li>
 </ul>
 </div>
 
-<h2><a id="modular-emacs-configuration-strategies" class="anchor" href="#modular-emacs-configuration-strategies">¶</a>Modular Emacs Configuration Strategies</h2><div class="outline-text-2" id="text-orgc7ccb7e">
+<h2><a id="modular-emacs-configuration-strategies" class="anchor" href="#modular-emacs-configuration-strategies">¶</a>Modular Emacs Configuration Strategies</h2><div class="outline-text-2" id="text-org8aa6cee">
 <p>
 Today I want to discuss how to create an Emacs configuration that can satisfy a few goals:
 </p>
 </div>
 
-<h3><a id="works-well-across-multiple-platforms-linux-windows-macos-even-mobile-via-termux" class="anchor" href="#works-well-across-multiple-platforms-linux-windows-macos-even-mobile-via-termux">¶</a>Works well across multiple platforms (Linux, Windows, macOS, even mobile via Termux)</h3><div class="outline-text-3" id="text-org294d93c">
+<h3><a id="works-well-across-multiple-platforms-linux-windows-macos-even-mobile-via-termux" class="anchor" href="#works-well-across-multiple-platforms-linux-windows-macos-even-mobile-via-termux">¶</a>Works well across multiple platforms (Linux, Windows, macOS, even mobile via Termux)</h3><div class="outline-text-3" id="text-orgbabb348">
 <ul class="org-ul">
 <li>Use <code>system-type</code> variable to choose which configuration parts to load</li>
 <li><i>Maybe</i> use <code>system-name</code> to do machine-specific configurations when multiple machines use the same OS</li>
@@ -21,7 +21,7 @@ Today I want to discuss how to create an Emacs configuration that can satisfy a 
 </ul>
 </div>
 
-<h3><a id="can-be-configured-with-guix" class="anchor" href="#can-be-configured-with-guix">¶</a>Can be configured with Guix</h3><div class="outline-text-3" id="text-org5d459e6">
+<h3><a id="can-be-configured-with-guix" class="anchor" href="#can-be-configured-with-guix">¶</a>Can be configured with Guix</h3><div class="outline-text-3" id="text-org74301b6">
 <ul class="org-ul">
 <li>All configuration modules are written in a slightly platform-agnostic way (maybe some special-casing)</li>
 <li>Configuration points of these modules are exposed via <code>defcustom</code> and <code>defvar</code></li>
@@ -41,7 +41,7 @@ Case&rsquo;s module: <a href="https://github.com/duckwork/machine.el">https://gi
 </p>
 </div>
 
-<h3><a id="enables-standalone-emacs-sessions" class="anchor" href="#enables-standalone-emacs-sessions">¶</a>Enables standalone Emacs sessions</h3><div class="outline-text-3" id="text-org1d8ee78">
+<h3><a id="enables-standalone-emacs-sessions" class="anchor" href="#enables-standalone-emacs-sessions">¶</a>Enables standalone Emacs sessions</h3><div class="outline-text-3" id="text-org1ac0200">
 <ul class="org-ul">
 <li>Working on multiple projects at the same time, managing all the buffers and windows in Emacs can be challenging</li>
 <li>Obviously there are lots of packages for dealing with this, but it&rsquo;s still not perfect</li>
@@ -64,13 +64,13 @@ Why?
 </p>
 </div>
 
-<h3><a id="things-to-look-at" class="anchor" href="#things-to-look-at">¶</a>Things to look at</h3><div class="outline-text-3" id="text-orgcbb13fc">
+<h3><a id="things-to-look-at" class="anchor" href="#things-to-look-at">¶</a>Things to look at</h3><div class="outline-text-3" id="text-org942c1ba">
 <ul class="org-ul">
 <li>New Emacs command line option for different config directories</li>
 </ul>
 </div>
 
-<h2><a id="modular-configuration-style" class="anchor" href="#modular-configuration-style">¶</a>Modular configuration style</h2><div class="outline-text-2" id="text-orgd27830a">
+<h2><a id="modular-configuration-style" class="anchor" href="#modular-configuration-style">¶</a>Modular configuration style</h2><div class="outline-text-2" id="text-org8ee1198">
 <ul class="org-ul">
 <li>Like Rational Emacs, split various parts of functionality into separate Emacs Lisp modules that are part of your own configuration</li>
 <li>The ideal model is to have an <code>init.el</code> file that purely just loads in the necessary modules for a given machine, plus any additional modules that are context-specific</li>
@@ -80,7 +80,7 @@ Why?
 </ul>
 </div>
 
-<h2><a id="speculative-macro-syntax" class="anchor" href="#speculative-macro-syntax">¶</a>Speculative macro syntax</h2><div class="outline-text-2" id="text-orgabfdd59">
+<h2><a id="speculative-macro-syntax" class="anchor" href="#speculative-macro-syntax">¶</a>Speculative macro syntax</h2><div class="outline-text-2" id="text-org82cdfa7">
 <p>
 Something we might try to implement someday:
 </p>

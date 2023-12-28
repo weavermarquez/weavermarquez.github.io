@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Capturing Notes Efficiently with Org Roam - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Capturing Notes Efficiently with Org Roam</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/YxgA5z2R08I" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-orgfac6c27">
+<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org4a0ce60">
 <p>
 When building a personal knowledge system, one of the most important things you can do is create an efficient workflow for capturing new information.
 </p>
@@ -17,7 +17,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="the-need-for-a-good-capture-workflow" class="anchor" href="#the-need-for-a-good-capture-workflow">¶</a>The need for a good capture workflow</h2><div class="outline-text-2" id="text-org7583369">
+<h2><a id="the-need-for-a-good-capture-workflow" class="anchor" href="#the-need-for-a-good-capture-workflow">¶</a>The need for a good capture workflow</h2><div class="outline-text-2" id="text-orge0b5752">
 <p>
 In the previous video, I gave an overview of using a package called Org Roam to build a personal knowledgebase in Org Mode.
 </p>
@@ -42,7 +42,7 @@ Org Roam provides a way to define templates for the information you capture so t
 </p>
 </div>
 
-<h2><a id="how-org-roam-note-templates-work" class="anchor" href="#how-org-roam-note-templates-work">¶</a>How Org Roam note templates work</h2><div class="outline-text-2" id="text-orgb7fe24f">
+<h2><a id="how-org-roam-note-templates-work" class="anchor" href="#how-org-roam-note-templates-work">¶</a>How Org Roam note templates work</h2><div class="outline-text-2" id="text-orgcdda74b">
 <p>
 Org Roam includes its own specialization of Org Mode capture templates.  If you&rsquo;ve never used capture templates before, don&rsquo;t worry, creating and using Org Roam templates is pretty straightforward.
 </p>
@@ -64,7 +64,7 @@ But after you define your own custom note templates, you will be prompted for wh
 </p>
 </div>
 
-<h2><a id="understanding-the-default-template" class="anchor" href="#understanding-the-default-template">¶</a>Understanding the default template</h2><div class="outline-text-2" id="text-org6585696">
+<h2><a id="understanding-the-default-template" class="anchor" href="#understanding-the-default-template">¶</a>Understanding the default template</h2><div class="outline-text-2" id="text-orge539e98">
 <p>
 To understand Org Roam templates, let&rsquo;s start by looking at the default capture template.  We&rsquo;ll do this by setting the <code>org-roam-capture-templates</code> variable in the Org Roam configuration that we built in the last video.
 </p>
@@ -108,7 +108,7 @@ The initial note text has its own special format which can be read about in the 
 </p>
 </div>
 
-<h3><a id="the-complete-starting-configuration" class="anchor" href="#the-complete-starting-configuration">¶</a>The complete starting configuration</h3><div class="outline-text-3" id="text-org93245fe">
+<h3><a id="the-complete-starting-configuration" class="anchor" href="#the-complete-starting-configuration">¶</a>The complete starting configuration</h3><div class="outline-text-3" id="text-orged7d55c">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">org-roam</span>
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:init</span>
@@ -130,7 +130,7 @@ The initial note text has its own special format which can be read about in the 
   (org-roam-setup))</pre>
 </div>
 
-<h2><a id="creating-a-topic-specific-template" class="anchor" href="#creating-a-topic-specific-template">¶</a>Creating a topic-specific template</h2><div class="outline-text-2" id="text-orgbc1af3d">
+<h2><a id="creating-a-topic-specific-template" class="anchor" href="#creating-a-topic-specific-template">¶</a>Creating a topic-specific template</h2><div class="outline-text-2" id="text-org775312c">
 <p>
 Let&rsquo;s take a look at a simple example of how to create a new template.  We&rsquo;re going to continue with the notes we were using in the previous Org Roam video and add a template for capturing details about a programming language.
 </p>
@@ -149,7 +149,7 @@ The capture window that appears is filled with the format that we entered into t
 </p>
 </div>
 
-<h2><a id="creating-a-literature-reference-template" class="anchor" href="#creating-a-literature-reference-template">¶</a>Creating a literature reference template</h2><div class="outline-text-2" id="text-org33cc3dc">
+<h2><a id="creating-a-literature-reference-template" class="anchor" href="#creating-a-literature-reference-template">¶</a>Creating a literature reference template</h2><div class="outline-text-2" id="text-orge06b16e">
 <p>
 We can add even more structure to our data entry by using Org Mode&rsquo;s template expansion syntax.
 </p>
@@ -180,7 +180,7 @@ There are other interesting things you can do with template expansion prompts, s
 </p>
 </div>
 
-<h2><a id="creating-a-project-template" class="anchor" href="#creating-a-project-template">¶</a>Creating a project template</h2><div class="outline-text-2" id="text-orgdeb280a">
+<h2><a id="creating-a-project-template" class="anchor" href="#creating-a-project-template">¶</a>Creating a project template</h2><div class="outline-text-2" id="text-org567864e">
 <p>
 Another useful template you might want to create is for capturing details about a new project that you&rsquo;ve started, particularly the tasks, goals, and any important dates you might need to remember.
 </p>
@@ -206,7 +206,7 @@ An example I&rsquo;ll show you in a later video is how you can look up all your 
 </p>
 </div>
 
-<h2><a id="storing-templates-in-org-files" class="anchor" href="#storing-templates-in-org-files">¶</a>Storing templates in Org files</h2><div class="outline-text-2" id="text-org58bd491">
+<h2><a id="storing-templates-in-org-files" class="anchor" href="#storing-templates-in-org-files">¶</a>Storing templates in Org files</h2><div class="outline-text-2" id="text-org422fde3">
 <p>
 Let&rsquo;s talk about how you can write your capture templates in real Org files so that you don&rsquo;t have to edit strings inside of your Emacs configuration.
 </p>
@@ -228,7 +228,7 @@ Here&rsquo;s how we would need to change the book notes template to refer to a t
  <span class="org-builtin">:unnarrowed</span> t)</pre>
 </div>
 
-<h2><a id="customizing-the-default-template" class="anchor" href="#customizing-the-default-template">¶</a>Customizing the default template</h2><div class="outline-text-2" id="text-org0cdaedc">
+<h2><a id="customizing-the-default-template" class="anchor" href="#customizing-the-default-template">¶</a>Customizing the default template</h2><div class="outline-text-2" id="text-org5f422e2">
 <p>
 You can also customize the default template!
 </p>
@@ -250,7 +250,7 @@ Keep in mind that you&rsquo;ll need to replicate your <code>:if-new</code> setti
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgd1bbe03">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org29c6075">
 <p>
 Org Roam provides another useful feature for capturing thoughts and ideas that occur during the day called &ldquo;dailies&rdquo;.  In the next video, I&rsquo;ll show you how you can use this feature for keeping a journal, a daily log of your work, and for any random things you want to remember!
 </p>

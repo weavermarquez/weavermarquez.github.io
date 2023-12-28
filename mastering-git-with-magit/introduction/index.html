@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Mastering Git with Magit - Getting Started - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Mastering Git with Magit - Getting Started</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/_zfvQkJsYwI" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org3a36372">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org5ad112f">
 <p>
 In this episode I&rsquo;m going to show you the basics of how to use the preeminent Git interface for Emacs called Magit!
 </p>
@@ -29,7 +29,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="what-is-magit" class="anchor" href="#what-is-magit">¶</a>What is Magit?</h2><div class="outline-text-2" id="text-org5c1959d">
+<h2><a id="what-is-magit" class="anchor" href="#what-is-magit">¶</a>What is Magit?</h2><div class="outline-text-2" id="text-org092bb64">
 <p>
 Magit is a Git &ldquo;porcelain&rdquo;, or in other words it&rsquo;s a user-friendly interface for the Git source control tool.
 </p>
@@ -61,7 +61,7 @@ Check out the <a href="https://magit.vc/manual/magit/index.html#Top">Magit manua
 </p>
 </div>
 
-<h2><a id="installing-magit" class="anchor" href="#installing-magit">¶</a>Installing Magit</h2><div class="outline-text-2" id="text-org312a67c">
+<h2><a id="installing-magit" class="anchor" href="#installing-magit">¶</a>Installing Magit</h2><div class="outline-text-2" id="text-orga793fe2">
 <p>
 The easiest way to install Magit is with <code>use-package</code> and <code>package.el</code>.  If you have <code>use-package</code> set up, you merely need to include this in your Emacs configuration:
 </p>
@@ -74,7 +74,7 @@ Other installation approaches are covered in the <a href="https://magit.vc/manua
 </p>
 </div>
 
-<h3><a id="evil-integration" class="anchor" href="#evil-integration">¶</a>Evil Integration</h3><div class="outline-text-3" id="text-orgffddc97">
+<h3><a id="evil-integration" class="anchor" href="#evil-integration">¶</a>Evil Integration</h3><div class="outline-text-3" id="text-org6f61a45">
 <p>
 If you want to use Vim-style keybindings with Magit, all you need is evil-collection and this bit of configuration:
 </p>
@@ -86,7 +86,7 @@ If you want to use Vim-style keybindings with Magit, all you need is evil-collec
   (evil-collection-init))</pre>
 </div>
 
-<h2><a id="the-status-interface" class="anchor" href="#the-status-interface">¶</a>The Status Interface</h2><div class="outline-text-2" id="text-orgd102317">
+<h2><a id="the-status-interface" class="anchor" href="#the-status-interface">¶</a>The Status Interface</h2><div class="outline-text-2" id="text-org85ea68b">
 <p>
 The primary interface you will use to interact with Git repositories is the status interface.  It gives you an overview of the current state of your repository and provides key bindings for quickly launching all of the operations you might want to perform.
 </p>
@@ -116,13 +116,13 @@ In this case you can press the <code>g</code> key when you switch back to the st
 </p>
 </div>
 
-<h2><a id="status-sections" class="anchor" href="#status-sections">¶</a>Status Sections</h2><div class="outline-text-2" id="text-orge69abe0">
+<h2><a id="status-sections" class="anchor" href="#status-sections">¶</a>Status Sections</h2><div class="outline-text-2" id="text-orgb7190e5">
 <p>
 The <code>magit-status</code> interface is composed of a number of sections that display information about the Git repository:
 </p>
 </div>
 
-<h3><a id="repository-status" class="anchor" href="#repository-status">¶</a>Repository Status</h3><div class="outline-text-3" id="text-orgc7e8caf">
+<h3><a id="repository-status" class="anchor" href="#repository-status">¶</a>Repository Status</h3><div class="outline-text-3" id="text-org458efbe">
 <p>
 This section tells you which commit is currently the &ldquo;HEAD&rdquo; of 3 important locations:
 </p>
@@ -147,7 +147,7 @@ It also gives you information on the following:
 </p>
 </div>
 
-<h3><a id="untracked-files" class="anchor" href="#untracked-files">¶</a>Untracked Files</h3><div class="outline-text-3" id="text-org37f569f">
+<h3><a id="untracked-files" class="anchor" href="#untracked-files">¶</a>Untracked Files</h3><div class="outline-text-3" id="text-orga958ea4">
 <p>
 This section displays the list of files under the repository directory that are not checked in to source control.  This section is useful for 2 purposes:
 </p>
@@ -163,7 +163,7 @@ Keep in mind that if you edit your <code>.gitignore</code> file without closing 
 </p>
 </div>
 
-<h3><a id="unstaged-changes" class="anchor" href="#unstaged-changes">¶</a>Unstaged Changes</h3><div class="outline-text-3" id="text-org35db5fc">
+<h3><a id="unstaged-changes" class="anchor" href="#unstaged-changes">¶</a>Unstaged Changes</h3><div class="outline-text-3" id="text-orgafde155">
 <p>
 This section displays the list of tracked files which have been changed since the last commit.
 </p>
@@ -177,7 +177,7 @@ This section may also show parts of your code with merge conflicts when you are 
 </p>
 </div>
 
-<h3><a id="staged-changes" class="anchor" href="#staged-changes">¶</a>Staged Changes</h3><div class="outline-text-3" id="text-orga9b08c7">
+<h3><a id="staged-changes" class="anchor" href="#staged-changes">¶</a>Staged Changes</h3><div class="outline-text-3" id="text-org6a5b552">
 <p>
 This section displays the list of tracked files with changes that have been &ldquo;staged&rdquo;, meaning that they&rsquo;re marked for inclusion into the next commit that the user creates.
 </p>
@@ -195,7 +195,7 @@ Note that we&rsquo;re not going to talk about staging/unstaging changes yet in t
 </p>
 </div>
 
-<h3><a id="stashes" class="anchor" href="#stashes">¶</a>Stashes</h3><div class="outline-text-3" id="text-orgd57861c">
+<h3><a id="stashes" class="anchor" href="#stashes">¶</a>Stashes</h3><div class="outline-text-3" id="text-orgbe243e1">
 <p>
 This section displays the list of &ldquo;stashes&rdquo; created with the <code>git stash</code> command.  These are basically just diffs of changes that are saved to be used later without being committed to the repository.
 </p>
@@ -205,7 +205,7 @@ Unfortunately stashes can&rsquo;t be expanded with <code>TAB</code> but you can 
 </p>
 </div>
 
-<h3><a id="unpushed-changes" class="anchor" href="#unpushed-changes">¶</a>Unpushed Changes</h3><div class="outline-text-3" id="text-org856c90c">
+<h3><a id="unpushed-changes" class="anchor" href="#unpushed-changes">¶</a>Unpushed Changes</h3><div class="outline-text-3" id="text-orgd9badd2">
 <p>
 This section displays the list of commits in the local branch that haven&rsquo;t been pushed to the usual remote branch.  It&rsquo;s very useful for keeping track of the work you&rsquo;ve been doing which hasn&rsquo;t been merged yet!
 </p>
@@ -215,25 +215,25 @@ You might not see this section if you haven&rsquo;t pushed the local branch anyw
 </p>
 </div>
 
-<h3><a id="unmerged-changes" class="anchor" href="#unmerged-changes">¶</a>Unmerged Changes</h3><div class="outline-text-3" id="text-org78b7f6a">
+<h3><a id="unmerged-changes" class="anchor" href="#unmerged-changes">¶</a>Unmerged Changes</h3><div class="outline-text-3" id="text-org6ebf407">
 <p>
 This section displays changes from the remote branch which haven&rsquo;t been merged or rebased into the local branch.  This section will usually be populated when you fetch the latest commits from the remote branch and Git detects that there is a deviation in the commit histories that needs to be merged.
 </p>
 </div>
 
-<h3><a id="unpulled-changes" class="anchor" href="#unpulled-changes">¶</a>Unpulled Changes</h3><div class="outline-text-3" id="text-orgc754e0b">
+<h3><a id="unpulled-changes" class="anchor" href="#unpulled-changes">¶</a>Unpulled Changes</h3><div class="outline-text-3" id="text-org00a71c3">
 <p>
 This section displays changes from the remote branch which haven&rsquo;t been pulled into the local branch.  This indicates that there are new commits that can be pulled cleanly into the local branch without merging.
 </p>
 </div>
 
-<h3><a id="other-sections" class="anchor" href="#other-sections">¶</a>Other Sections</h3><div class="outline-text-3" id="text-org8521eea">
+<h3><a id="other-sections" class="anchor" href="#other-sections">¶</a>Other Sections</h3><div class="outline-text-3" id="text-orgaa6de1d">
 <p>
 Other sections may appear in the status buffer depending on whether you have packages like <a href="https://magit.vc/manual/forge/">Forge</a> or <a href="https://github.com/alphapapa/magit-todos">Magit Todos</a> installed!
 </p>
 </div>
 
-<h2><a id="navigating-sections" class="anchor" href="#navigating-sections">¶</a>Navigating Sections</h2><div class="outline-text-2" id="text-org58febf9">
+<h2><a id="navigating-sections" class="anchor" href="#navigating-sections">¶</a>Navigating Sections</h2><div class="outline-text-2" id="text-orgfb764b6">
 <p>
 Magit has some very efficient movement key bindings set up by default:
 </p>
@@ -265,7 +265,7 @@ These bindings are useful
 </p>
 </div>
 
-<h2><a id="the-command-panel" class="anchor" href="#the-command-panel">¶</a>The Command Panel</h2><div class="outline-text-2" id="text-orgc478000">
+<h2><a id="the-command-panel" class="anchor" href="#the-command-panel">¶</a>The Command Panel</h2><div class="outline-text-2" id="text-org548b10c">
 <p>
 In the status buffer, there are many quick command bindings that you will want to learn to make your day-to-day Git operations incredibly efficient.
 </p>
@@ -291,7 +291,7 @@ Keep in mind that if you use <code>evil-collection</code> to enable Vim-style ke
 </p>
 </div>
 
-<h2><a id="our-first-commit" class="anchor" href="#our-first-commit">¶</a>Our First Commit!</h2><div class="outline-text-2" id="text-org59c8e3e">
+<h2><a id="our-first-commit" class="anchor" href="#our-first-commit">¶</a>Our First Commit!</h2><div class="outline-text-2" id="text-orgb126dcd">
 <p>
 Since I want to make sure you come away from this episode with something actionable to use, I&rsquo;m going to jump ahead a bit and show you how to make your first commit with Magit!
 </p>
@@ -317,7 +317,7 @@ Once you&rsquo;re finished writing your commit message, press <code>C-c C-c</cod
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org1e36964">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org6f17809">
 <p>
 In the next video I&rsquo;ll go more in depth on the workflow for using Magit for everyday source control tasks like creating branches, making commits, and pushing those commits to a remote repository.  We&rsquo;ll also learn how to extend and amend our commits to fix them if we made mistakes or forgot to include changes.
 </p>

@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Compose and Send Email with Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Compose and Send Email with Emacs</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/WiyqU7gmKsk" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org5a2b1c7">
+<h2><a id="what-will-we-cover" class="anchor" href="#what-will-we-cover">¶</a>What will we cover?</h2><div class="outline-text-2" id="text-org94ec3a1">
 <ul class="org-ul">
 <li>Configuring Emacs to send email</li>
 <li>Composing email</li>
@@ -16,7 +16,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="configuring-smtp" class="anchor" href="#configuring-smtp">¶</a>Configuring SMTP</h2><div class="outline-text-2" id="text-org8be6925">
+<h2><a id="configuring-smtp" class="anchor" href="#configuring-smtp">¶</a>Configuring SMTP</h2><div class="outline-text-2" id="text-org1e8a277">
 <p>
 SMTP is <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Simple Mail Transfer Protocol</a>, an old standard for connecting to a server to send email.
 </p>
@@ -80,7 +80,7 @@ When using multiple accounts (contexts), you can set the SMTP variables for each
                 (mu4e-trash-folder  . <span class="org-string">"/Fastmail/Trash"</span>)))))</pre>
 </div>
 
-<h2><a id="configure-the-mail-sending-function" class="anchor" href="#configure-the-mail-sending-function">¶</a>Configure the mail-sending function</h2><div class="outline-text-2" id="text-org47870c7">
+<h2><a id="configure-the-mail-sending-function" class="anchor" href="#configure-the-mail-sending-function">¶</a>Configure the mail-sending function</h2><div class="outline-text-2" id="text-orgc56b60f">
 <p>
 So that we don&rsquo;t get prompted about how mail should be sent, we will configure the <code>message-send-mail-function</code> variable to automatically call <code>smtpmail-send-it</code>:
 </p>
@@ -89,7 +89,7 @@ So that we don&rsquo;t get prompted about how mail should be sent, we will confi
 (<span class="org-keyword">setq</span> message-send-mail-function 'smtpmail-send-it)</pre>
 </div>
 
-<h2><a id="composing-email" class="anchor" href="#composing-email">¶</a>Composing Email</h2><div class="outline-text-2" id="text-org007a66a">
+<h2><a id="composing-email" class="anchor" href="#composing-email">¶</a>Composing Email</h2><div class="outline-text-2" id="text-org436d8bb">
 <p>
 Let&rsquo;s try to compose an e-mail!
 </p>
@@ -139,7 +139,7 @@ We can check our Sent Mail folder to verify that the mail was placed there.
 </p>
 </div>
 
-<h3><a id="handling-passwords-for-sending-mail" class="anchor" href="#handling-passwords-for-sending-mail">¶</a>Handling passwords for sending mail</h3><div class="outline-text-3" id="text-org5feb05f">
+<h3><a id="handling-passwords-for-sending-mail" class="anchor" href="#handling-passwords-for-sending-mail">¶</a>Handling passwords for sending mail</h3><div class="outline-text-3" id="text-orgf06019d">
 <p>
 When you attempt to send an e-mail, Emacs will ask you for the password.  Once you enter it, it will ask you if you&rsquo;d like to save it in your <code>~/.authinfo</code> file.  I do not recommend doing this because this file is not encrypted!
 </p>
@@ -155,7 +155,7 @@ You will need to add an entry to your <code>~/.authinfo.gpg</code> file for your
 <pre>machine smtp.fastmail.com login systemcrafterstest@fastmail.com password b4dp4ssw0rd port 465</pre>
 </div>
 
-<h3><a id="other-ways-to-get-to-the-compose-screen" class="anchor" href="#other-ways-to-get-to-the-compose-screen">¶</a>Other ways to get to the compose screen</h3><div class="outline-text-3" id="text-orgbd67a4c">
+<h3><a id="other-ways-to-get-to-the-compose-screen" class="anchor" href="#other-ways-to-get-to-the-compose-screen">¶</a>Other ways to get to the compose screen</h3><div class="outline-text-3" id="text-orgd9e13b4">
 <p>
 You can follow a few other paths to compose e-mail:
 </p>
@@ -168,7 +168,7 @@ You can follow a few other paths to compose e-mail:
 </ul>
 </div>
 
-<h3><a id="picking-a-context-for-sending-mail" class="anchor" href="#picking-a-context-for-sending-mail">¶</a>Picking a context for sending mail</h3><div class="outline-text-3" id="text-orgac0e687">
+<h3><a id="picking-a-context-for-sending-mail" class="anchor" href="#picking-a-context-for-sending-mail">¶</a>Picking a context for sending mail</h3><div class="outline-text-3" id="text-org53f4575">
 <p>
 When using multiple contexts, you might want to define which context gets picked automatically for sending email (similar to <code>mu4e-context-policy</code>):
 </p>
@@ -177,7 +177,7 @@ When using multiple contexts, you might want to define which context gets picked
 (<span class="org-keyword">setq</span> mu4e-compose-context-policy 'ask-if-none)</pre>
 </div>
 
-<h2><a id="improving-the-look-of-plain-text-emails" class="anchor" href="#improving-the-look-of-plain-text-emails">¶</a>Improving the look of plain text emails</h2><div class="outline-text-2" id="text-orgf595b4e">
+<h2><a id="improving-the-look-of-plain-text-emails" class="anchor" href="#improving-the-look-of-plain-text-emails">¶</a>Improving the look of plain text emails</h2><div class="outline-text-2" id="text-orgd306590">
 <p>
 By default all e-mails are sent as plain text.  This can lead to strange wrapping in other email clients when reading your messages.  You can improve this by setting the following variable:
 </p>
@@ -194,7 +194,7 @@ We will discuss how to send formatted e-mails using Org Mode in a future episode
 </p>
 </div>
 
-<h2><a id="adding-a-signature-to-your-emails" class="anchor" href="#adding-a-signature-to-your-emails">¶</a>Adding a signature to your emails</h2><div class="outline-text-2" id="text-org9fdc6bf">
+<h2><a id="adding-a-signature-to-your-emails" class="anchor" href="#adding-a-signature-to-your-emails">¶</a>Adding a signature to your emails</h2><div class="outline-text-2" id="text-org6ae5703">
 <p>
 You can set the <code>mu4e-compose-signature</code> variable to a string for the signature to include in your e-mails!
 </p>
@@ -225,7 +225,7 @@ If you want the signature to be multi-line, use the <code>\n</code> character to
   <span class="org-string">"System Crafters on YouTube"</span>)</pre>
 </div>
 
-<h2><a id="file-attachments" class="anchor" href="#file-attachments">¶</a>File Attachments</h2><div class="outline-text-2" id="text-org28f57e0">
+<h2><a id="file-attachments" class="anchor" href="#file-attachments">¶</a>File Attachments</h2><div class="outline-text-2" id="text-orgebd13bb">
 <p>
 To add an attachment to your e-mail, press <code>C-c C-a</code> in the message buffer and then select the file to be attached.
 </p>
@@ -239,7 +239,7 @@ Drag and drop also works!
 </p>
 </div>
 
-<h2><a id="message-drafts" class="anchor" href="#message-drafts">¶</a>Message Drafts</h2><div class="outline-text-2" id="text-orgadcd2ca">
+<h2><a id="message-drafts" class="anchor" href="#message-drafts">¶</a>Message Drafts</h2><div class="outline-text-2" id="text-org232108a">
 <p>
 If you save a message as a draft while editing it (<code>C-c C-d</code>), you can find it in the Drafts folder you configured for that context.
 </p>
@@ -249,7 +249,7 @@ Select the message in the headers list or open the email and press <code>E</code
 </p>
 </div>
 
-<h2><a id="signing-emails" class="anchor" href="#signing-emails">¶</a>Signing Emails</h2><div class="outline-text-2" id="text-org7a98c7a">
+<h2><a id="signing-emails" class="anchor" href="#signing-emails">¶</a>Signing Emails</h2><div class="outline-text-2" id="text-org068189c">
 <p>
 If you followed my video <a href="https://youtu.be/nZ_T7Q49B8Y">Encrypt Your Passwords with Emacs</a> then you&rsquo;ve already set up a GPG key for signing emails.
 </p>
@@ -262,7 +262,7 @@ You can use the <code>mml-secure-message-sign-pgpmime</code> function while comp
 (<span class="org-keyword">setq</span> mml-secure-openpgp-signers '(<span class="org-string">"53C41E6E41AAFE55335ACA5E446A2ED4D940BF14"</span>))</pre>
 </div>
 
-<h3><a id="automatically-sign-every-email" class="anchor" href="#automatically-sign-every-email">¶</a>Automatically Sign Every Email</h3><div class="outline-text-3" id="text-org125e949">
+<h3><a id="automatically-sign-every-email" class="anchor" href="#automatically-sign-every-email">¶</a>Automatically Sign Every Email</h3><div class="outline-text-3" id="text-org0701185">
 <p>
 You can automatically sign every e-mail using the <code>message-send-hook</code>:
 </p>
@@ -270,13 +270,13 @@ You can automatically sign every e-mail using the <code>message-send-hook</code>
 <pre>(add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)</pre>
 </div>
 
-<h2><a id="encrypting-emails" class="anchor" href="#encrypting-emails">¶</a>Encrypting Emails</h2><div class="outline-text-2" id="text-org8fb1d87">
+<h2><a id="encrypting-emails" class="anchor" href="#encrypting-emails">¶</a>Encrypting Emails</h2><div class="outline-text-2" id="text-orgc39833f">
 <p>
 Similarly to signing emails, you can also encrypt them with <code>mml-secure-message-encrypt-pgpmine</code>!  Anyone with your public key will be able to decrypt the message.
 </p>
 </div>
 
-<h2><a id="complete-configuration" class="anchor" href="#complete-configuration">¶</a>Complete configuration</h2><div class="outline-text-2" id="text-org8480a72">
+<h2><a id="complete-configuration" class="anchor" href="#complete-configuration">¶</a>Complete configuration</h2><div class="outline-text-2" id="text-orgeed2993">
 <p>
 Here&rsquo;s the complete configuration we made for this episode:
 </p>

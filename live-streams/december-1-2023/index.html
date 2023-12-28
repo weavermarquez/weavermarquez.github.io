@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Host Your Own Forgejo - Part 2 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Host Your Own Forgejo - Part 2</h1><p class="site-post-meta">December  1, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org8c1ce58">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org3f9b73a">
 <ul class="org-ul">
 <li><p>
 EmacsConf 2023 is this weekend! (Dec 2 and 3)
@@ -38,7 +38,7 @@ The Matrix bridge isn&rsquo;t coming back&#x2026;
 </ul>
 </div>
 
-<h2><a id="hosting-a-git-forge-on-the-web-with-guix" class="anchor" href="#hosting-a-git-forge-on-the-web-with-guix">¶</a>Hosting a Git Forge on the Web with Guix</h2><div class="outline-text-2" id="text-org089073c">
+<h2><a id="hosting-a-git-forge-on-the-web-with-guix" class="anchor" href="#hosting-a-git-forge-on-the-web-with-guix">¶</a>Hosting a Git Forge on the Web with Guix</h2><div class="outline-text-2" id="text-orgbc99f35">
 <p>
 Let&rsquo;s pick up where we left off on the last stream and get Forgejo running in a Guix container!
 </p>
@@ -64,7 +64,7 @@ Reference:
 </ul>
 </div>
 
-<h3><a id="previous-forgejo-package-and-container-config" class="anchor" href="#previous-forgejo-package-and-container-config">¶</a>Previous Forgejo Package and Container Config</h3><div class="outline-text-3" id="text-org65f4963">
+<h3><a id="previous-forgejo-package-and-container-config" class="anchor" href="#previous-forgejo-package-and-container-config">¶</a>Previous Forgejo Package and Container Config</h3><div class="outline-text-3" id="text-org53c5adf">
 <pre>(use-modules (gnu)
              (guix gexp)
              (guix packages)
@@ -329,7 +329,7 @@ Reference:
                             (domain <span class="org-string">"crafter.tools"</span>))))))</pre>
 </div>
 
-<h4><a id="runsh" class="anchor" href="#runsh">¶</a>run.sh</h4><div class="outline-text-4" id="text-org7c54e52">
+<h4><a id="runsh" class="anchor" href="#runsh">¶</a>run.sh</h4><div class="outline-text-4" id="text-org9027ea5">
 <pre><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/sh</span>
 
 <span class="org-builtin">cd</span> /root
@@ -339,7 +339,7 @@ mkdir -p /var/data/letsencrypt
 $(guix time-machine -C channels.scm -- system container --network --share=/var/data=/srv --share=/var/data/letsencrypt=/etc/letsencrypt config.scm)</pre>
 </div>
 
-<h4><a id="forgeservice" class="anchor" href="#forgeservice">¶</a>forge.service</h4><div class="outline-text-4" id="text-orgdc451e3">
+<h4><a id="forgeservice" class="anchor" href="#forgeservice">¶</a>forge.service</h4><div class="outline-text-4" id="text-orga682985">
 <pre>[Unit]
 <span class="org-variable-name">Description</span>=Forge Service
 <span class="org-variable-name">Wants</span>=guix-daemon.service
@@ -351,7 +351,7 @@ $(guix time-machine -C channels.scm -- system container --network --share=/var/d
 <span class="org-variable-name">WantedBy</span>=multi-user.target</pre>
 </div>
 
-<h3><a id="setting-up-the-host-vm" class="anchor" href="#setting-up-the-host-vm">¶</a>Setting up the Host VM</h3><div class="outline-text-3" id="text-orgf258cf6">
+<h3><a id="setting-up-the-host-vm" class="anchor" href="#setting-up-the-host-vm">¶</a>Setting up the Host VM</h3><div class="outline-text-3" id="text-org331c518">
 <pre><span class="org-comment-delimiter"># </span><span class="org-comment">Unblock port 80</span>
 <span class="org-builtin">echo</span> net.ipv4.ip_unprivileged_port_start=80 &gt;&gt; /etc/sysctl.conf
 sysctl --system

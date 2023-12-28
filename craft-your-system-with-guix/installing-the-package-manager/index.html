@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Installing the GNU Guix Package Manager - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Installing the GNU Guix Package Manager</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/Xy0YgnXFt1M" allowfullscreen></iframe></div><div id="content">
-<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgf20bc7b">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgd01c0c8">
 <p>
 Today I&rsquo;m going to show you how you can install the GNU Guix package manager on your existing Linux system so that you can start learning the basics of how to use it.
 </p>
@@ -22,7 +22,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="supported-linux-distributions" class="anchor" href="#supported-linux-distributions">¶</a>Supported Linux distributions</h2><div class="outline-text-2" id="text-org982fa1f">
+<h2><a id="supported-linux-distributions" class="anchor" href="#supported-linux-distributions">¶</a>Supported Linux distributions</h2><div class="outline-text-2" id="text-org791e5d2">
 <p>
 The Guix installer supports distributions with the following init systems:
 </p>
@@ -43,7 +43,7 @@ It is necessary to run the <code>guix-daemon</code> service <i>somehow</i> becau
 </p>
 </div>
 
-<h2><a id="running-the-installer-script" class="anchor" href="#running-the-installer-script">¶</a>Running the installer script</h2><div class="outline-text-2" id="text-org33aae1c">
+<h2><a id="running-the-installer-script" class="anchor" href="#running-the-installer-script">¶</a>Running the installer script</h2><div class="outline-text-2" id="text-orgfcccdd4">
 <p>
 Let&rsquo;s install GNU Guix!
 </p>
@@ -76,7 +76,7 @@ It will also ask you a question about downloading pre-built package binaries, an
 </p>
 </div>
 
-<h2><a id="installing-a-package" class="anchor" href="#installing-a-package">¶</a>Installing a package</h2><div class="outline-text-2" id="text-org7622d94">
+<h2><a id="installing-a-package" class="anchor" href="#installing-a-package">¶</a>Installing a package</h2><div class="outline-text-2" id="text-org1003996">
 <p>
 Now that Guix is installed, let&rsquo;s try installing a program to see if it works!
 </p>
@@ -106,7 +106,7 @@ Other things to notice:
 </p>
 </div>
 
-<h2><a id="ensuring-your-guix-profile-gets-loaded" class="anchor" href="#ensuring-your-guix-profile-gets-loaded">¶</a>Ensuring your Guix profile gets loaded</h2><div class="outline-text-2" id="text-orgf119e84">
+<h2><a id="ensuring-your-guix-profile-gets-loaded" class="anchor" href="#ensuring-your-guix-profile-gets-loaded">¶</a>Ensuring your Guix profile gets loaded</h2><div class="outline-text-2" id="text-orgca6d2ba">
 <p>
 Now let&rsquo;s try to run Emacs:
 </p>
@@ -145,7 +145,7 @@ Let&rsquo;s take a look at this folder briefly.
 </p>
 </div>
 
-<h2><a id="pulling-the-latest-guix" class="anchor" href="#pulling-the-latest-guix">¶</a>Pulling the Latest Guix</h2><div class="outline-text-2" id="text-org329eb27">
+<h2><a id="pulling-the-latest-guix" class="anchor" href="#pulling-the-latest-guix">¶</a>Pulling the Latest Guix</h2><div class="outline-text-2" id="text-org5702fac">
 <p>
 The first time you install Guix on your distribution, it actually won&rsquo;t have the latest package definitions since it comes bundled with an older set.  At the time of this recording, Guix actually has the latest version of Emacs, 27.2, but we only got 27.1!
 </p>
@@ -161,7 +161,7 @@ It might take a while to run the first time, so be patient!
 </p>
 </div>
 
-<h3><a id="important-adding-another-guix_profile" class="anchor" href="#important-adding-another-guix_profile">¶</a>Important! Adding another GUIX_PROFILE</h3><div class="outline-text-3" id="text-org94bdbe9">
+<h3><a id="important-adding-another-guix_profile" class="anchor" href="#important-adding-another-guix_profile">¶</a>Important! Adding another GUIX_PROFILE</h3><div class="outline-text-3" id="text-orgc81a573">
 <p>
 One <b>very important</b> message gets printed out at the end of this very first <code>pull</code> operation!  We need to update our login profile (<code>~/.bash_profile</code>) to add another <code>GUIX_PROFILE</code> path:
 </p>
@@ -178,7 +178,7 @@ Just to clarify, you are adding these lines <b>in addition to</b> the lines you 
 </p>
 </div>
 
-<h2><a id="upgrading-packages" class="anchor" href="#upgrading-packages">¶</a>Upgrading Packages</h2><div class="outline-text-2" id="text-orge2d1a8a">
+<h2><a id="upgrading-packages" class="anchor" href="#upgrading-packages">¶</a>Upgrading Packages</h2><div class="outline-text-2" id="text-orgc342d50">
 <p>
 Now let&rsquo;s run <code>guix pull</code> one more time just to make sure things are up to date!
 </p>
@@ -220,7 +220,7 @@ If you&rsquo;re itching to learn more, check out this section of the Guix manual
 </p>
 </div>
 
-<h2><a id="setting-the-locale-correctly" class="anchor" href="#setting-the-locale-correctly">¶</a>Setting the locale correctly</h2><div class="outline-text-2" id="text-orga633439">
+<h2><a id="setting-the-locale-correctly" class="anchor" href="#setting-the-locale-correctly">¶</a>Setting the locale correctly</h2><div class="outline-text-2" id="text-org676e709">
 <p>
 As we saw while installing the <code>emacs</code> package, <code>guix</code> will repeatedly write out warnings about <code>setlocale: LC_ALL: cannot change locale</code>.  You can fix this issue by running this command (as <b>sudo</b>!):
 </p>
@@ -239,7 +239,7 @@ Now you shouldn&rsquo;t see the <code>setlocale</code> warning anymore when you 
 </p>
 </div>
 
-<h2><a id="upgrading-guix" class="anchor" href="#upgrading-guix">¶</a>Upgrading Guix</h2><div class="outline-text-2" id="text-orgb6d68de">
+<h2><a id="upgrading-guix" class="anchor" href="#upgrading-guix">¶</a>Upgrading Guix</h2><div class="outline-text-2" id="text-orgd210110">
 <p>
 As we talked about before, Guix needs the <code>guix-daemon</code> to be running as a system service so that it can build and install all your packages correctly.  Sometimes this daemon and the <code>guix</code> tools will need to be updated!
 </p>
@@ -285,7 +285,7 @@ For other init systems, consult your documentation for instructions on how to re
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgffef13a">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org9037baa">
 <p>
 In the next video, I&rsquo;m going to teach you everything you need to know about using the Guix package manager so that you can use it for installing and managing your day to day programs.  I&rsquo;ll also show you some of the special features of using Guix that you can&rsquo;t get from your distro&rsquo;s package manager!
 </p>

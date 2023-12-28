@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Using Multiple Emacs Configurations with Chemacs2 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Using Multiple Emacs Configurations with Chemacs2</h1><p class="site-post-meta"></p><div id="content"><p>
 <a href="https://www.youtube.com/watch?v=hHdM2wVM1PI">Watch the video</a> on YouTube!
 </p>
 
-<h2><a id="the-challenge-of-multiple-emacs-configurations" class="anchor" href="#the-challenge-of-multiple-emacs-configurations">¶</a>The challenge of multiple Emacs configurations</h2><div class="outline-text-2" id="text-orgad995d5">
+<h2><a id="the-challenge-of-multiple-emacs-configurations" class="anchor" href="#the-challenge-of-multiple-emacs-configurations">¶</a>The challenge of multiple Emacs configurations</h2><div class="outline-text-2" id="text-orgac60666">
 <p>
 When you start using Emacs, you typically either build up your own configuration from scratch little by little or adopt one of the many pre-built configurations like Doom Emacs, Spacemacs, or Prelude.
 </p>
@@ -25,7 +25,7 @@ There must be a better way to solve this problem&#x2026;
 </p>
 </div>
 
-<h2><a id="enter-chemacs2" class="anchor" href="#enter-chemacs2">¶</a>Enter Chemacs2</h2><div class="outline-text-2" id="text-org4f7d15e">
+<h2><a id="enter-chemacs2" class="anchor" href="#enter-chemacs2">¶</a>Enter Chemacs2</h2><div class="outline-text-2" id="text-orga3589ba">
 <p>
 Chemacs2 is a very small Emacs configuration &ldquo;shim&rdquo; which allows you to set up multiple Emacs configuration profiles so that you can easily switch between them or use them all simultaneously!
 </p>
@@ -55,7 +55,7 @@ It&rsquo;s called Chemacs2 because it&rsquo;s the successor to the original Chem
 </p>
 </div>
 
-<h2><a id="setting-it-up" class="anchor" href="#setting-it-up">¶</a>Setting it up</h2><div class="outline-text-2" id="text-org3de759f">
+<h2><a id="setting-it-up" class="anchor" href="#setting-it-up">¶</a>Setting it up</h2><div class="outline-text-2" id="text-orgbe5b63a">
 <p>
 To set up Chemacs2, you first need to move your existing Emacs configuration out of the way.  Typically your Emacs configuration folder would be in one of two places:
 </p>
@@ -81,7 +81,7 @@ This merely sets up the Chemacs configuration shim so that it gets loaded first 
 </p>
 </div>
 
-<h2><a id="managing-your-emacs-profiles" class="anchor" href="#managing-your-emacs-profiles">¶</a>Managing your Emacs profiles</h2><div class="outline-text-2" id="text-org28ff034">
+<h2><a id="managing-your-emacs-profiles" class="anchor" href="#managing-your-emacs-profiles">¶</a>Managing your Emacs profiles</h2><div class="outline-text-2" id="text-org9247970">
 <p>
 To tell Chemacs2 where to get your Emacs configuration, create a file in your home directory called <code>~/.emacs-profiles.el</code> and populate it with this line:
 </p>
@@ -97,7 +97,7 @@ Now that we have this file in place, let&rsquo;s start Emacs to verify that it w
 </p>
 </div>
 
-<h3><a id="adding-a-profile" class="anchor" href="#adding-a-profile">¶</a>Adding a profile</h3><div class="outline-text-3" id="text-orgdab79f4">
+<h3><a id="adding-a-profile" class="anchor" href="#adding-a-profile">¶</a>Adding a profile</h3><div class="outline-text-3" id="text-org9518229">
 <p>
 Let&rsquo;s imagine that we wanted to create a new configuration to run alongside the current one.  This is just as easy as adding a new entry to the <code>~/.emacs-profiles.el</code> file:
 </p>
@@ -106,7 +106,7 @@ Let&rsquo;s imagine that we wanted to create a new configuration to run alongsid
  (<span class="org-string">"newconfig"</span> . ((user-emacs-directory . <span class="org-string">"~/.my-new-emacs"</span>))))</pre>
 </div>
 
-<h3><a id="setting-the-default-profile" class="anchor" href="#setting-the-default-profile">¶</a>Setting the default profile</h3><div class="outline-text-3" id="text-org3f45190">
+<h3><a id="setting-the-default-profile" class="anchor" href="#setting-the-default-profile">¶</a>Setting the default profile</h3><div class="outline-text-3" id="text-org1d2f5e8">
 <p>
 When you have multiple profiles set up in this way, you can easily specify which one gets chosen as the default by creating the file <code>~/.emacs-profile</code> and writing the name of the default profile there:
 </p>
@@ -114,7 +114,7 @@ When you have multiple profiles set up in this way, you can easily specify which
 <pre><span class="org-builtin">echo</span> <span class="org-string">'myconfig'</span> &gt; ~/.emacs-profile</pre>
 </div>
 
-<h2><a id="a-real-example" class="anchor" href="#a-real-example">¶</a>A real example!</h2><div class="outline-text-2" id="text-org7845b65">
+<h2><a id="a-real-example" class="anchor" href="#a-real-example">¶</a>A real example!</h2><div class="outline-text-2" id="text-orga947c7e">
 <p>
 Here&rsquo;s an example of using Chemacs2 to use 4 different Emacs configurations:
 </p>
@@ -148,7 +148,7 @@ Also note that we have a a profile named <code>default</code>, this will automat
 </p>
 </div>
 
-<h3><a id="doom-emacs-tip" class="anchor" href="#doom-emacs-tip">¶</a>Doom Emacs Tip</h3><div class="outline-text-3" id="text-org8aa25e7">
+<h3><a id="doom-emacs-tip" class="anchor" href="#doom-emacs-tip">¶</a>Doom Emacs Tip</h3><div class="outline-text-3" id="text-org59f47e8">
 <p>
 If you originally cloned Doom Emacs to the <code>~/.emacs.d</code> folder and you now had to move it to make room for Chemacs, you might need to do one of two things to ensure that the configuration works!
 </p>
@@ -164,7 +164,7 @@ If that doesn&rsquo;t work, you will need to delete the Doom config repo folder 
 </p>
 </div>
 
-<h2><a id="using-chemacs2-in-your-dotfiles-repository" class="anchor" href="#using-chemacs2-in-your-dotfiles-repository">¶</a>Using Chemacs2 in your dotfiles repository</h2><div class="outline-text-2" id="text-org7b86c99">
+<h2><a id="using-chemacs2-in-your-dotfiles-repository" class="anchor" href="#using-chemacs2-in-your-dotfiles-repository">¶</a>Using Chemacs2 in your dotfiles repository</h2><div class="outline-text-2" id="text-org8656942">
 <p>
 If you have a dotfiles repository (you should!), you can make the Chemacs2 repo a submodule of your dotfiles repository so that you can replicate your multi-Emacs configuration setup on any of your machines.
 </p>
@@ -191,7 +191,7 @@ This will both your dotfiles repository and also any submodule repositories that
 </p>
 </div>
 
-<h2><a id="setting-the-codeeln-cachecode-path-correctly" class="anchor" href="#setting-the-codeeln-cachecode-path-correctly">¶</a>Setting the <code>eln-cache</code> path correctly</h2><div class="outline-text-2" id="text-org0c43028">
+<h2><a id="setting-the-codeeln-cachecode-path-correctly" class="anchor" href="#setting-the-codeeln-cachecode-path-correctly">¶</a>Setting the <code>eln-cache</code> path correctly</h2><div class="outline-text-2" id="text-org93ef630">
 <p>
 One thing I noticed while using Chemacs2 with Emacs 28 and native compilation functionality turned on: the compiler output files were being sent to Chemacs&rsquo; config folder instead of the real folder where my personal configuration lives.  To send those files to the right location, add this line to your configuration:
 </p>
@@ -207,7 +207,7 @@ Doom Emacs seems to have adjusted for this but I can&rsquo;t see it done in Spac
 </p>
 </div>
 
-<h2><a id="what-will-you-use-chemacs2-for" class="anchor" href="#what-will-you-use-chemacs2-for">¶</a>What will you use Chemacs2 for?</h2><div class="outline-text-2" id="text-orgad95050">
+<h2><a id="what-will-you-use-chemacs2-for" class="anchor" href="#what-will-you-use-chemacs2-for">¶</a>What will you use Chemacs2 for?</h2><div class="outline-text-2" id="text-org4436076">
 <p>
 Hopefully this gives you some interesing ideas for how you can use Chemacs2 for managing your Emacs configurations!
 </p>

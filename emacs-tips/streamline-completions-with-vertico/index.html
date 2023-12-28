@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Streamline Your Emacs Completions with Vertico - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Streamline Your Emacs Completions with Vertico</h1><p class="site-post-meta"></p><div id="content"><p>
 <a href="https://youtu.be/J0OaRy85MOo">Watch the video</a> on YouTube!
 </p>
 
-<h2><a id="completions-in-emacs" class="anchor" href="#completions-in-emacs">¶</a>Completions in Emacs</h2><div class="outline-text-2" id="text-orgece8bff">
+<h2><a id="completions-in-emacs" class="anchor" href="#completions-in-emacs">¶</a>Completions in Emacs</h2><div class="outline-text-2" id="text-orgb14f102">
 <p>
 In Emacs, one of the most important features of the user interface is the way in which the user makes selections from lists of items.  For example:
 </p>
@@ -31,7 +31,7 @@ I&rsquo;ve been using Vertico for this purpose recently and I really like it!
 </p>
 </div>
 
-<h2><a id="what-is-vertico" class="anchor" href="#what-is-vertico">¶</a>What is Vertico?</h2><div class="outline-text-2" id="text-orgf295ce5">
+<h2><a id="what-is-vertico" class="anchor" href="#what-is-vertico">¶</a>What is Vertico?</h2><div class="outline-text-2" id="text-orgcb0c235">
 <p>
 Vertico is a relatively new Emacs package which provides a streamlined interface for minibuffer completions which doesn&rsquo;t include any of the other cruft that comes along with the more heavy-weight third party options.
 </p>
@@ -45,7 +45,7 @@ Read more at the GitHub repository: <a href="https://github.com/minad/vertico">h
 </p>
 </div>
 
-<h2><a id="setting-it-up" class="anchor" href="#setting-it-up">¶</a>Setting it up</h2><div class="outline-text-2" id="text-org89697dc">
+<h2><a id="setting-it-up" class="anchor" href="#setting-it-up">¶</a>Setting it up</h2><div class="outline-text-2" id="text-org08cf2ee">
 <p>
 Getting started with Vertico is very easy!  It&rsquo;s on <a href="http://elpa.gnu.org/packages/vertico.html">GNU ELPA</a> so you can install it easily with <code>package.el</code> and <code>use-package</code>:
 </p>
@@ -71,7 +71,7 @@ Try these out:
 </ul>
 </div>
 
-<h2><a id="improving-the-configuration" class="anchor" href="#improving-the-configuration">¶</a>Improving the configuration</h2><div class="outline-text-2" id="text-org35b6031">
+<h2><a id="improving-the-configuration" class="anchor" href="#improving-the-configuration">¶</a>Improving the configuration</h2><div class="outline-text-2" id="text-org5bb8cf8">
 <p>
 Now that we&rsquo;ve got the basic completion UI set up, let&rsquo;s polish it a bit.  The following configuration will add a few improvements:
 </p>
@@ -109,7 +109,7 @@ Now that we&rsquo;ve got the basic completion UI set up, let&rsquo;s polish it a
   (marginalia-mode))</pre>
 </div>
 
-<h2><a id="any-downsides" class="anchor" href="#any-downsides">¶</a>Any downsides?</h2><div class="outline-text-2" id="text-org5e11a3d">
+<h2><a id="any-downsides" class="anchor" href="#any-downsides">¶</a>Any downsides?</h2><div class="outline-text-2" id="text-org5b65e71">
 <p>
 At the moment there are a small number of downsides to using Vertico:
 </p>
@@ -121,7 +121,7 @@ At the moment there are a small number of downsides to using Vertico:
 </ul>
 </div>
 
-<h2><a id="other-useful-packages" class="anchor" href="#other-useful-packages">¶</a>Other useful packages</h2><div class="outline-text-2" id="text-orgd1ef8b4">
+<h2><a id="other-useful-packages" class="anchor" href="#other-useful-packages">¶</a>Other useful packages</h2><div class="outline-text-2" id="text-orgae077e2">
 <ul class="org-ul">
 <li><a href="https://github.com/minad/consult">Consult</a>: A collection of commands (like Counsel for Ivy) which provide additional completions</li>
 <li><a href="https://github.com/oantolin/embark">Embark</a>: Provides actions for the current selection in Vertico completion lists</li>

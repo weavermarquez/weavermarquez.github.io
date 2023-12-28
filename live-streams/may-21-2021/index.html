@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Replacing Ivy and Counsel with Vertico and Consult - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Replacing Ivy and Counsel with Vertico and Consult</h1><p class="site-post-meta">May 21, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/UtqE-lR2HCA" allowfullscreen></iframe></div><div id="content">
-<h2><a id="replacing-ivy-and-counsel-with-vertico-and-consult" class="anchor" href="#replacing-ivy-and-counsel-with-vertico-and-consult">¶</a>Replacing Ivy and Counsel with Vertico and Consult</h2><div class="outline-text-2" id="text-orgaa2884d">
+<h2><a id="replacing-ivy-and-counsel-with-vertico-and-consult" class="anchor" href="#replacing-ivy-and-counsel-with-vertico-and-consult">¶</a>Replacing Ivy and Counsel with Vertico and Consult</h2><div class="outline-text-2" id="text-orga5ff87e">
 <p>
 If you tried out Vertico after the video on Monday, you probably wondered how you can get back to the level of functionality you had with Ivy.
 </p>
@@ -14,7 +14,7 @@ I&rsquo;ll be making a video on this soon, but today we&rsquo;ll be figuring it 
 </p>
 </div>
 
-<h3><a id="mapping-ivyswipercounsel-to-consult" class="anchor" href="#mapping-ivyswipercounsel-to-consult">¶</a>Mapping Ivy/Swiper/Counsel to Consult</h3><div class="outline-text-3" id="text-org26b07eb">
+<h3><a id="mapping-ivyswipercounsel-to-consult" class="anchor" href="#mapping-ivyswipercounsel-to-consult">¶</a>Mapping Ivy/Swiper/Counsel to Consult</h3><div class="outline-text-3" id="text-org550fef9">
 <ul class="org-ul">
 <li><code>swiper</code> -&gt; <code>consult-line</code></li>
 <li><code>counsel-rg</code> -&gt; <code>consult-ripgrep</code></li>
@@ -31,7 +31,7 @@ I&rsquo;ll be making a video on this soon, but today we&rsquo;ll be figuring it 
     (projectile-project-root)))</pre>
 </div>
 
-<h3><a id="other-useful-commands" class="anchor" href="#other-useful-commands">¶</a>Other useful commands</h3><div class="outline-text-3" id="text-org0947ee4">
+<h3><a id="other-useful-commands" class="anchor" href="#other-useful-commands">¶</a>Other useful commands</h3><div class="outline-text-3" id="text-org10298be">
 <ul class="org-ul">
 <li><code>consult-mark</code>: Show a list of previous mark locations</li>
 <li><code>consult-outline</code>: Show a list of headings in the current file depending on type</li>
@@ -43,7 +43,7 @@ I&rsquo;ll be making a video on this soon, but today we&rsquo;ll be figuring it 
 </ul>
 </div>
 
-<h3><a id="going-up-a-directory-in-codefind-filecode" class="anchor" href="#going-up-a-directory-in-codefind-filecode">¶</a>Going up a directory in <code>find-file</code></h3><div class="outline-text-3" id="text-orgece50f2">
+<h3><a id="going-up-a-directory-in-codefind-filecode" class="anchor" href="#going-up-a-directory-in-codefind-filecode">¶</a>Going up a directory in <code>find-file</code></h3><div class="outline-text-3" id="text-org7467bd5">
 <p>
 One bit of functionality I got used to in Ivy was how the <code>counsel-find-file</code> command would go up a directory whenever I pressed Backspace.  Here&rsquo;s how to replicate it in Vertico!
 </p>
@@ -65,21 +65,21 @@ One bit of functionality I got used to in Ivy was how the <code>counsel-find-fil
          (<span class="org-string">"&lt;backspace&gt;"</span> . dw/minibuffer-backward-kill)))</pre>
 </div>
 
-<h3><a id="other-consult-packages" class="anchor" href="#other-consult-packages">¶</a>Other Consult packages</h3><div class="outline-text-3" id="text-org485a9e3">
+<h3><a id="other-consult-packages" class="anchor" href="#other-consult-packages">¶</a>Other Consult packages</h3><div class="outline-text-3" id="text-orgf0e8605">
 <ul class="org-ul">
 <li><a href="https://github.com/gagbo/consult-lsp">lsp-mode interface for Consult</a></li>
 <li><a href="https://github.com/SebastienWae/app-launcher">App launching like counsel-linux-app with app-launcher</a></li>
 </ul>
 </div>
 
-<h3><a id="other-resources" class="anchor" href="#other-resources">¶</a>Other resources</h3><div class="outline-text-3" id="text-org74d0114">
+<h3><a id="other-resources" class="anchor" href="#other-resources">¶</a>Other resources</h3><div class="outline-text-3" id="text-orgcce5422">
 <ul class="org-ul">
 <li><a href="https://github.com/minad/consult/wiki">The Consult wiki</a></li>
 <li><a href="https://github.com/minad/consult/issues/6">Consult command wishlist</a> - has some good pointers on where to find replacement functionality</li>
 </ul>
 </div>
 
-<h2><a id="emacs-news" class="anchor" href="#emacs-news">¶</a>Emacs News</h2><div class="outline-text-2" id="text-orgd57754f">
+<h2><a id="emacs-news" class="anchor" href="#emacs-news">¶</a>Emacs News</h2><div class="outline-text-2" id="text-orgc683022">
 <ul class="org-ul">
 <li><a href="https://github.com/minad/affe">New package: minad/affe</a></li>
 <li><a href="https://www.reddit.com/r/emacs/comments/n9ts4j/gccemacs_prebuilt_package_on_windows_10/">Prebuilt Emacs 28 package for Windows with native compilation</a></li>

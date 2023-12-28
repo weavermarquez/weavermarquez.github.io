@@ -1,4 +1,4 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Managing Multiple Email Accounts with mu4e and mbsync - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Managing Multiple Email Accounts with mu4e and mbsync</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/olXpfaSnf0o" allowfullscreen></iframe></div>
 </p>
@@ -7,7 +7,7 @@
 If you find this guide helpful, please consider supporting System Crafters via the links on the <a href="/how-to-help/#support-my-work">How to Help</a> page!
 </div>
 
-<h2><a id="how-mu4e-manages-e-mail-accounts" class="anchor" href="#how-mu4e-manages-e-mail-accounts">¶</a>How mu4e manages e-mail accounts</h2><div class="outline-text-2" id="text-org1da7be0">
+<h2><a id="how-mu4e-manages-e-mail-accounts" class="anchor" href="#how-mu4e-manages-e-mail-accounts">¶</a>How mu4e manages e-mail accounts</h2><div class="outline-text-2" id="text-org3aef9a2">
 <ul class="org-ul">
 <li><code>mu4e</code> is a frontend for me <code>mu</code> mail indexer</li>
 <li><code>mu</code> just scans mail folders and indexes them</li>
@@ -16,7 +16,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </ul>
 </div>
 
-<h2><a id="laying-the-ground-work" class="anchor" href="#laying-the-ground-work">¶</a>Laying the ground work</h2><div class="outline-text-2" id="text-orgb5bef2e">
+<h2><a id="laying-the-ground-work" class="anchor" href="#laying-the-ground-work">¶</a>Laying the ground work</h2><div class="outline-text-2" id="text-orgafa7df5">
 <p>
 Since we will have two accounts under <code>~/Mail</code> now, we need to move the existing mail under a subfolder.
 </p>
@@ -54,7 +54,7 @@ Lastly, reindex with <code>mu</code>:
 <pre>mu index --maildir=~/Mail --my-address=systemcrafters.test@gmail.com</pre>
 </div>
 
-<h2><a id="setting-up-our-first-context" class="anchor" href="#setting-up-our-first-context">¶</a>Setting up our first context</h2><div class="outline-text-2" id="text-orgfeaa49f">
+<h2><a id="setting-up-our-first-context" class="anchor" href="#setting-up-our-first-context">¶</a>Setting up our first context</h2><div class="outline-text-2" id="text-org3165589">
 <p>
 We will update our configuration to configure the Gmail account using <code>mu4e-contexts:</code>
 </p>
@@ -114,7 +114,7 @@ You can change how the default context is picked by setting <code>mu4e-context-p
 </ul>
 </div>
 
-<h2><a id="syncing-the-second-account" class="anchor" href="#syncing-the-second-account">¶</a>Syncing the second account</h2><div class="outline-text-2" id="text-org66fbad8">
+<h2><a id="syncing-the-second-account" class="anchor" href="#syncing-the-second-account">¶</a>Syncing the second account</h2><div class="outline-text-2" id="text-orgbb482c0">
 <p>
 We&rsquo;ll be using a Fastmail account (<a href="https://ref.fm/u7703101">https://ref.fm/u7703101</a>) for this example.  It requires an App Password to connect to the IMAP endpoint:
 </p>
@@ -207,7 +207,7 @@ Just kill the running <code>mu</code> process and run <code>mu index</code> agai
 <span class="org-comment-delimiter"># </span><span class="org-comment">run mu index again</span></pre>
 </div>
 
-<h2><a id="adding-the-second-account-to-mu4e" class="anchor" href="#adding-the-second-account-to-mu4e">¶</a>Adding the second account to mu4e</h2><div class="outline-text-2" id="text-org098dbc3">
+<h2><a id="adding-the-second-account-to-mu4e" class="anchor" href="#adding-the-second-account-to-mu4e">¶</a>Adding the second account to mu4e</h2><div class="outline-text-2" id="text-org86cfcc2">
 <p>
 Now we can add a new context for the account to <code>mu4e-contexts:</code>
 </p>
@@ -247,7 +247,7 @@ After evaluating this configuration, we can launch <code>mu4e</code> again and s
 </p>
 </div>
 
-<h2><a id="how-to-use-contexts" class="anchor" href="#how-to-use-contexts">¶</a>How to use contexts</h2><div class="outline-text-2" id="text-org58e5c7c">
+<h2><a id="how-to-use-contexts" class="anchor" href="#how-to-use-contexts">¶</a>How to use contexts</h2><div class="outline-text-2" id="text-org698bfdd">
 <p>
 Examples:
 </p>
@@ -280,7 +280,7 @@ This is your e-mail client to build!
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orge71fa5a">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgf7bfa5c">
 <ul class="org-ul">
 <li>Composing e-mails</li>
 <li>Displaying unread mail count and notifications</li>
@@ -289,7 +289,7 @@ This is your e-mail client to build!
 </ul>
 </div>
 
-<h2><a id="complete-configuration" class="anchor" href="#complete-configuration">¶</a>Complete Configuration</h2><div class="outline-text-2" id="text-org6807c74">
+<h2><a id="complete-configuration" class="anchor" href="#complete-configuration">¶</a>Complete Configuration</h2><div class="outline-text-2" id="text-org244eee3">
 <p>
 Here&rsquo;s the complete configuration for this episode:
 </p>

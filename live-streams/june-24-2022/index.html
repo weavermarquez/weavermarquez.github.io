@@ -1,13 +1,13 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Configuring HerbstluftWM with Emacs Lisp - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Configuring HerbstluftWM with Emacs Lisp</h1><p class="site-post-meta">June 24, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/OMcpd9ixPOU" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org4710824">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgd2cabae">
 <ul class="org-ul">
 <li>I&rsquo;ve replaced EXWM with HerbstluftWM in my configuration and I like it!</li>
 <li>Next video will be about how I show &ldquo;presentation&rdquo; slides in Org Mode like in my videos</li>
 </ul>
 </div>
 
-<h2><a id="configuring-herbstluftwm-with-emacs-lisp" class="anchor" href="#configuring-herbstluftwm-with-emacs-lisp">¶</a>Configuring HerbstluftWM with Emacs Lisp</h2><div class="outline-text-2" id="text-orgcf3f14f">
+<h2><a id="configuring-herbstluftwm-with-emacs-lisp" class="anchor" href="#configuring-herbstluftwm-with-emacs-lisp">¶</a>Configuring HerbstluftWM with Emacs Lisp</h2><div class="outline-text-2" id="text-org041c08f">
 <p>
 Today we&rsquo;re going to try and write an Emacs Lisp package that can control the venerable <a href="https://herbstluftwm.org/">Herbstluft Window Manager</a>.
 </p>
@@ -39,7 +39,7 @@ Here are a few of the things we&rsquo;ll try to script:
 
 <h3><a id="window-management" class="anchor" href="#window-management">¶</a>Window management</h3>
 
-<h2><a id="the-final-code" class="anchor" href="#the-final-code">¶</a>The final code</h2><div class="outline-text-2" id="text-orgf357948">
+<h2><a id="the-final-code" class="anchor" href="#the-final-code">¶</a>The final code</h2><div class="outline-text-2" id="text-org1a73217">
 <pre>(<span class="org-keyword">require</span> '<span class="org-constant">cl-lib</span>)
 
 (<span class="org-keyword">defun</span> <span class="org-function-name">herbst-run-command</span> (command)

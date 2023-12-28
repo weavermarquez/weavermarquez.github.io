@@ -1,13 +1,13 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Configuring Emacs with Only the UI? - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Configuring Emacs with Only the UI?</h1><p class="site-post-meta">February  4, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/76jp8qkLZC8" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgb1f57c9">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org8b67055">
 <ul class="org-ul">
 <li>I&rsquo;ll be shutting down the System Crafters Store next week (it will be back!)</li>
 <li>Slackware 15 released: <a href="http://www.slackware.com/announce/15.0.php">http://www.slackware.com/announce/15.0.php</a></li>
 </ul>
 </div>
 
-<h2><a id="irsquod-love-your-opinion" class="anchor" href="#irsquod-love-your-opinion">¶</a>I&rsquo;d love your opinion!</h2><div class="outline-text-2" id="text-org61608c1">
+<h2><a id="irsquod-love-your-opinion" class="anchor" href="#irsquod-love-your-opinion">¶</a>I&rsquo;d love your opinion!</h2><div class="outline-text-2" id="text-org174e324">
 <p>
 I&rsquo;m interested to try and publish a eBook on a topic that you all would find valuable, something related to what we talk about on this channel.
 </p>
@@ -33,7 +33,7 @@ What format?
 <li>info</li>
 </ul>
 </div>
-<h2><a id="using-the-customize-ui-to-build-an-emacs-configuration" class="anchor" href="#using-the-customize-ui-to-build-an-emacs-configuration">¶</a>Using the Customize UI to Build an Emacs Configuration</h2><div class="outline-text-2" id="text-org560c2c0">
+<h2><a id="using-the-customize-ui-to-build-an-emacs-configuration" class="anchor" href="#using-the-customize-ui-to-build-an-emacs-configuration">¶</a>Using the Customize UI to Build an Emacs Configuration</h2><div class="outline-text-2" id="text-orge18549e">
 <p>
 Mickey Petersen of Mastering Emacs fame wrote a blog post recently titled &ldquo;Bad Emacs Advice&rdquo;:
 </p>
@@ -55,7 +55,7 @@ We&rsquo;ll also take a look at the resulting configuration file to see what it 
 </p>
 </div>
 
-<h3><a id="configuration-goals" class="anchor" href="#configuration-goals">¶</a>Configuration Goals</h3><div class="outline-text-3" id="text-org055e4a5">
+<h3><a id="configuration-goals" class="anchor" href="#configuration-goals">¶</a>Configuration Goals</h3><div class="outline-text-3" id="text-org53b2a35">
 <ul class="org-ul">
 <li>Set theme and font</li>
 <li>Add hooks to configure modes</li>
@@ -72,7 +72,7 @@ What else?
 </p>
 </div>
 
-<h3><a id="conclusions" class="anchor" href="#conclusions">¶</a>Conclusions</h3><div class="outline-text-3" id="text-orga1b73cf">
+<h3><a id="conclusions" class="anchor" href="#conclusions">¶</a>Conclusions</h3><div class="outline-text-3" id="text-org1049333">
 <ul class="org-ul">
 <li>Customize system can write out your init.el file to be loaded again on future sessions</li>
 <li>You can add custom elisp inside of the file</li>
@@ -81,7 +81,7 @@ What else?
 </ul>
 </div>
 
-<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-org5d54a16">
+<h2><a id="the-final-configuration" class="anchor" href="#the-final-configuration">¶</a>The final configuration</h2><div class="outline-text-2" id="text-orgf165997">
 <p>
 <b>init.el:</b>
 </p>

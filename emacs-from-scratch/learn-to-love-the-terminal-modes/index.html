@@ -1,11 +1,11 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Learn to Love the Terminal Modes - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Learn to Love the Terminal Modes</h1><p class="site-post-meta"></p><div id="content"><ul class="org-ul">
 <li><a href="https://youtu.be/wa_wZIuT9Vw">Watch the video</a> on YouTube!</li>
 <li>Check out the <a href="https://github.com/daviwil/emacs-from-scratch/tree/bbfbc77b3afab0c14149e07d0ab08d275d4ba575">final code</a> on GitHub</li>
 <li>Episode 9 of the <a href="../">Emacs From Scratch</a> series</li>
 </ul>
 
-<h2><a id="term-mode" class="anchor" href="#term-mode">¶</a>term-mode</h2><div class="outline-text-2" id="text-org3612e49">
+<h2><a id="term-mode" class="anchor" href="#term-mode">¶</a>term-mode</h2><div class="outline-text-2" id="text-orgebc4cee">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">term</span>
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">setq</span> explicit-shell-file-name <span class="org-string">"bash"</span>)
@@ -25,7 +25,7 @@ NOTE: term-mode doesn&rsquo;t work on Windows: &ldquo;Spawning child process: in
 </p>
 </div>
 
-<h3><a id="for-better-color-support" class="anchor" href="#for-better-color-support">¶</a>For better color support</h3><div class="outline-text-3" id="text-org537fb32">
+<h3><a id="for-better-color-support" class="anchor" href="#for-better-color-support">¶</a>For better color support</h3><div class="outline-text-3" id="text-orgc6c2948">
 <p>
 Make sure the <code>tic</code> program is available on your machine (could be part of <code>ncurses</code> package).
 </p>
@@ -36,7 +36,7 @@ Make sure the <code>tic</code> program is available on your machine (could be pa
 <pre><span class="org-builtin">echo</span> <span class="org-string">"Hello System Crafters!"</span> | cowsay | lolcat -h 0.7</pre>
 </div>
 
-<h3><a id="ansi-term" class="anchor" href="#ansi-term">¶</a>ansi-term</h3><div class="outline-text-3" id="text-org7819a73">
+<h3><a id="ansi-term" class="anchor" href="#ansi-term">¶</a>ansi-term</h3><div class="outline-text-3" id="text-org5e4fffe">
 <p>
 <code>ansi-term</code> is a specialization of <code>term-mode.</code>
 </p>
@@ -54,7 +54,7 @@ Same caveats for Windows still apply.
 </p>
 </div>
 
-<h2><a id="vterm-emacs-libvterm" class="anchor" href="#vterm-emacs-libvterm">¶</a>vterm (emacs-libvterm)</h2><div class="outline-text-2" id="text-org6d69508">
+<h2><a id="vterm-emacs-libvterm" class="anchor" href="#vterm-emacs-libvterm">¶</a>vterm (emacs-libvterm)</h2><div class="outline-text-2" id="text-org25ce7bb">
 <p>
 <a href="https://github.com/akermu/emacs-libvterm/">vterm</a> on GitHub
 </p>
@@ -88,7 +88,7 @@ Differences to <code>term</code>:
 </p>
 </div>
 
-<h2><a id="shell-mode" class="anchor" href="#shell-mode">¶</a>shell-mode</h2><div class="outline-text-2" id="text-org4907c05">
+<h2><a id="shell-mode" class="anchor" href="#shell-mode">¶</a>shell-mode</h2><div class="outline-text-2" id="text-org8d44de2">
 <p>
 Runs a shell program on your computer in a more controlled buffer.  Does not operate as a terminal emulator.
 </p>
@@ -133,7 +133,7 @@ In Windows if you like PowerShell you can use this config:
 (<span class="org-keyword">setq</span> explicit-powershell.exe-args '())</pre>
 </div>
 
-<h2><a id="eshell" class="anchor" href="#eshell">¶</a>Eshell</h2><div class="outline-text-2" id="text-org8ff119d">
+<h2><a id="eshell" class="anchor" href="#eshell">¶</a>Eshell</h2><div class="outline-text-2" id="text-org5ec6a93">
 <pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/configure-eshell</span> ()
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Save command history when commands are entered</span>
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
@@ -206,7 +206,7 @@ Interesting articles:
 </ul>
 </div>
 
-<h2><a id="recommendations" class="anchor" href="#recommendations">¶</a>Recommendations</h2><div class="outline-text-2" id="text-orgb24b7b0">
+<h2><a id="recommendations" class="anchor" href="#recommendations">¶</a>Recommendations</h2><div class="outline-text-2" id="text-orge22dd4e">
 <ul class="org-ul">
 <li>Use <code>term</code> or <code>ansi-term</code> if you&rsquo;re on Linux / macOS and don&rsquo;t care as much about output speed</li>
 <li>Use <code>vterm</code> if you&rsquo;re on Linux / macOS and want faster output and better terminal emulation</li>

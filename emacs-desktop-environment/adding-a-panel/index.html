@@ -1,4 +1,4 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>The Perfect Panel: Integrating Polybar with Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">The Perfect Panel: Integrating Polybar with Emacs</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/usCfMstCZ7E" allowfullscreen></iframe></div>
 </p>
@@ -7,7 +7,7 @@
 Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/75f1d4e08512c49ea073c26058df6d4cca3a0d6b/Desktop.org#panel-with-polybar">here</a>.
 </p>
 
-<h2><a id="you-need-a-panel" class="anchor" href="#you-need-a-panel">¶</a>You need a panel!</h2><div class="outline-text-2" id="text-org92af6a8">
+<h2><a id="you-need-a-panel" class="anchor" href="#you-need-a-panel">¶</a>You need a panel!</h2><div class="outline-text-2" id="text-orgd0f4bb2">
 <p>
 Polybar (<a href="https://polybar.github.io/">https://polybar.github.io/</a>) is:
 </p>
@@ -20,7 +20,7 @@ Polybar (<a href="https://polybar.github.io/">https://polybar.github.io/</a>) is
 </ul>
 </div>
 
-<h2><a id="installing-polybar" class="anchor" href="#installing-polybar">¶</a>Installing Polybar</h2><div class="outline-text-2" id="text-orgc154696">
+<h2><a id="installing-polybar" class="anchor" href="#installing-polybar">¶</a>Installing Polybar</h2><div class="outline-text-2" id="text-orgfe55f4d">
 <p>
 First install Polybar using your distro&rsquo;s package manager.  Strangely it&rsquo;s not in Ubuntu 20.04!
 </p>
@@ -53,7 +53,7 @@ Also install some icon fonts:
 <pre>sudo apt install fonts-font-awesome fonts-material-design-icons-iconfont</pre>
 </div>
 
-<h2><a id="basic-polybar-config" class="anchor" href="#basic-polybar-config">¶</a>Basic Polybar config</h2><div class="outline-text-2" id="text-org9b913ab">
+<h2><a id="basic-polybar-config" class="anchor" href="#basic-polybar-config">¶</a>Basic Polybar config</h2><div class="outline-text-2" id="text-org589f29a">
 <p>
 Tangle this to <code>.config/polybar/config</code>
 </p>
@@ -199,7 +199,7 @@ Launch it with this command:
 <pre>polybar panel</pre>
 </div>
 
-<h2><a id="starting-polybar-from-emacs" class="anchor" href="#starting-polybar-from-emacs">¶</a>Starting Polybar from Emacs</h2><div class="outline-text-2" id="text-orgacc9495">
+<h2><a id="starting-polybar-from-emacs" class="anchor" href="#starting-polybar-from-emacs">¶</a>Starting Polybar from Emacs</h2><div class="outline-text-2" id="text-orgbfd8d9c">
 <pre>(<span class="org-keyword">defvar</span> <span class="org-variable-name">efs/polybar-process</span> nil
   <span class="org-doc">"Holds the process of the running Polybar instance, if any"</span>)
 
@@ -227,7 +227,7 @@ Now we can start Polybar when EXWM starts up, inside of <code>efs/exwm-init-hook
 </p>
 </div>
 
-<h2><a id="requesting-information-from-emacs" class="anchor" href="#requesting-information-from-emacs">¶</a>Requesting information from Emacs</h2><div class="outline-text-2" id="text-orga9c6885">
+<h2><a id="requesting-information-from-emacs" class="anchor" href="#requesting-information-from-emacs">¶</a>Requesting information from Emacs</h2><div class="outline-text-2" id="text-org71bf3fe">
 <p>
 Use the power of <code>emacsclient</code>!  We&rsquo;ll cover this more in a video next week.
 </p>
@@ -260,13 +260,13 @@ Try it out:
 <pre>emacsclient -e <span class="org-string">"exwm-workspace-current-index"</span></pre>
 </div>
 
-<h3><a id="important-caveat" class="anchor" href="#important-caveat">¶</a>Important caveat!</h3><div class="outline-text-3" id="text-org533aa62">
+<h3><a id="important-caveat" class="anchor" href="#important-caveat">¶</a>Important caveat!</h3><div class="outline-text-3" id="text-orgfe9e1fa">
 <p>
 One thing to keep in mind is that this works well for global variables, but not so great for frame parameters!  The timing has to be perfect to get the value of a frame parameter for the workspace frame you land on.  It&rsquo;s possible, but requires more code.
 </p>
 </div>
 
-<h2><a id="adding-a-workspace-indicator-to-the-panel" class="anchor" href="#adding-a-workspace-indicator-to-the-panel">¶</a>Adding a workspace indicator to the panel</h2><div class="outline-text-2" id="text-org3c402e1">
+<h2><a id="adding-a-workspace-indicator-to-the-panel" class="anchor" href="#adding-a-workspace-indicator-to-the-panel">¶</a>Adding a workspace indicator to the panel</h2><div class="outline-text-2" id="text-orgca73a4c">
 <pre><span class="org-variable-name">modules-left</span> = exwm-workspace
 
 [<span class="org-type">module/exwm-workspace</span>]
@@ -281,7 +281,7 @@ One thing to keep in mind is that this works well for global variables, but not 
 </p>
 </div>
 
-<h2><a id="sending-information-from-emacs-using-hooks" class="anchor" href="#sending-information-from-emacs-using-hooks">¶</a>Sending information from Emacs using hooks</h2><div class="outline-text-2" id="text-org117f6de">
+<h2><a id="sending-information-from-emacs-using-hooks" class="anchor" href="#sending-information-from-emacs-using-hooks">¶</a>Sending information from Emacs using hooks</h2><div class="outline-text-2" id="text-orgd016b51">
 <p>
 Use the <code>polybar-msg</code> command to invoke a &ldquo;hook index&rdquo; to have the module update itself:
 </p>
@@ -293,7 +293,7 @@ Learn more about the IPC module on the Polybar Wiki: <a href="https://github.com
 </p>
 </div>
 
-<h3><a id="invoking-the-hook-from-within-emacs" class="anchor" href="#invoking-the-hook-from-within-emacs">¶</a>Invoking the hook from within Emacs</h3><div class="outline-text-3" id="text-orgcd0d259">
+<h3><a id="invoking-the-hook-from-within-emacs" class="anchor" href="#invoking-the-hook-from-within-emacs">¶</a>Invoking the hook from within Emacs</h3><div class="outline-text-3" id="text-org3bbbd3e">
 <pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/send-polybar-hook</span> (module-name hook-index)
   (start-process-shell-command <span class="org-string">"polybar-msg"</span> nil (format <span class="org-string">"polybar-msg hook %s %s"</span> module-name hook-index)))
 
@@ -304,7 +304,7 @@ Learn more about the IPC module on the Polybar Wiki: <a href="https://github.com
   (add-hook 'exwm-workspace-switch-hook #'efs/send-polybar-exwm-workspace)</pre>
 </div>
 
-<h2><a id="check-out-the-polybar-wiki" class="anchor" href="#check-out-the-polybar-wiki">¶</a>Check out the Polybar wiki</h2><div class="outline-text-2" id="text-orgef313fd">
+<h2><a id="check-out-the-polybar-wiki" class="anchor" href="#check-out-the-polybar-wiki">¶</a>Check out the Polybar wiki</h2><div class="outline-text-2" id="text-org2459951">
 <p>
 Learn how to configure everything else in Polybar:
 </p>
@@ -318,21 +318,21 @@ Some useful bits from my own configuration:
 </p>
 </div>
 
-<h3><a id="spotify-now-playing-requires-the-codeplayerctlcode-app" class="anchor" href="#spotify-now-playing-requires-the-codeplayerctlcode-app">¶</a>Spotify now playing (requires the <code>playerctl</code> app)</h3><div class="outline-text-3" id="text-orgf7daaa7">
+<h3><a id="spotify-now-playing-requires-the-codeplayerctlcode-app" class="anchor" href="#spotify-now-playing-requires-the-codeplayerctlcode-app">¶</a>Spotify now playing (requires the <code>playerctl</code> app)</h3><div class="outline-text-3" id="text-org9f38ace">
 <ul class="org-ul">
 <li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L588-L591">Polybar config</a></li>
 <li><a href="https://github.com/daviwil/dotfiles/blob/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/.config/polybar/player-status.sh">player-status.sh</a></li>
 </ul>
 </div>
 
-<h3><a id="mail-indicator-for-mu4e" class="anchor" href="#mail-indicator-for-mu4e">¶</a>Mail indicator for mu4e</h3><div class="outline-text-3" id="text-orgeb8bb76">
+<h3><a id="mail-indicator-for-mu4e" class="anchor" href="#mail-indicator-for-mu4e">¶</a>Mail indicator for mu4e</h3><div class="outline-text-3" id="text-org5f1587c">
 <ul class="org-ul">
 <li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L383-L388">Emacs config</a></li>
 <li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L593-L598">Polybar config</a></li>
 </ul>
 </div>
 
-<h3><a id="chat-indicators-for-trackingel" class="anchor" href="#chat-indicators-for-trackingel">¶</a>Chat indicators for tracking.el</h3><div class="outline-text-3" id="text-orgbe3a5d3">
+<h3><a id="chat-indicators-for-trackingel" class="anchor" href="#chat-indicators-for-trackingel">¶</a>Chat indicators for tracking.el</h3><div class="outline-text-3" id="text-orge80561c">
 <ul class="org-ul">
 <li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L390-L405">Emacs config</a></li>
 <li><a href="https://github.com/daviwil/dotfiles/blame/fa30ecb85b5c6fa4c9ee63e460f2e375756a5c10/Desktop.org#L600-L604">Polybar config</a></li>

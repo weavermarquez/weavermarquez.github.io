@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Using Encrypted Passwords in Emacs - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Using Encrypted Passwords in Emacs</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/nZ_T7Q49B8Y" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="the-auth-source-library" class="anchor" href="#the-auth-source-library">¶</a>The Auth Source Library</h2><div class="outline-text-2" id="text-org1feadef">
+<h2><a id="the-auth-source-library" class="anchor" href="#the-auth-source-library">¶</a>The Auth Source Library</h2><div class="outline-text-2" id="text-org940592f">
 <p>
 The <code>auth-source</code> library provides Emacs with a way to look up passwords when connecting to other machines.
 </p>
@@ -32,7 +32,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="authentication-sources" class="anchor" href="#authentication-sources">¶</a>Authentication Sources</h2><div class="outline-text-2" id="text-org68f0493">
+<h2><a id="authentication-sources" class="anchor" href="#authentication-sources">¶</a>Authentication Sources</h2><div class="outline-text-2" id="text-orgdcfa43d">
 <p>
 The <code>auth-source</code> library looks for passwords in a set of sources configured by the variable <code>auth-sources.</code>
 </p>
@@ -63,7 +63,7 @@ You should try the <code>customize</code> UI for configuring the possible option
 </p>
 </div>
 
-<h2><a id="the-authinfo-file" class="anchor" href="#the-authinfo-file">¶</a>The .authinfo file</h2><div class="outline-text-2" id="text-org2eaa763">
+<h2><a id="the-authinfo-file" class="anchor" href="#the-authinfo-file">¶</a>The .authinfo file</h2><div class="outline-text-2" id="text-org5c4ae4e">
 <p>
 Directly inspired by <a href="https://ec.haxx.se/usingcurl/usingcurl-netrc">.netrc</a> files which have existed in UNIX for a long time.
 </p>
@@ -94,7 +94,7 @@ The benefit of using <code>.authinfo</code> is that it&rsquo;s a file you have c
 </p>
 </div>
 
-<h2><a id="encrypting-authinfo" class="anchor" href="#encrypting-authinfo">¶</a>Encrypting .authinfo</h2><div class="outline-text-2" id="text-org5df0532">
+<h2><a id="encrypting-authinfo" class="anchor" href="#encrypting-authinfo">¶</a>Encrypting .authinfo</h2><div class="outline-text-2" id="text-org70a76a4">
 <p>
 However, this file is plaintext by default, which is unsafe from a security standpoint!
 </p>
@@ -108,7 +108,7 @@ Emacs uses GnuPG via the <code>epa</code> library to automatically encrypt and d
 </p>
 </div>
 
-<h3><a id="creating-an-encryption-key" class="anchor" href="#creating-an-encryption-key">¶</a>Creating an encryption key</h3><div class="outline-text-3" id="text-org9adeaf1">
+<h3><a id="creating-an-encryption-key" class="anchor" href="#creating-an-encryption-key">¶</a>Creating an encryption key</h3><div class="outline-text-3" id="text-org5ddccc8">
 <p>
 But first, we need to generate an encryption key!  The following command (in GPG 2.2 and above) will walk you through the process of creating a new key:
 </p>
@@ -173,7 +173,7 @@ You will need to move your keyboard cursor to the line with the key you would li
 </p>
 </div>
 
-<h3><a id="verifying-that-it-works" class="anchor" href="#verifying-that-it-works">¶</a>Verifying that it works</h3><div class="outline-text-3" id="text-orgd023e0f">
+<h3><a id="verifying-that-it-works" class="anchor" href="#verifying-that-it-works">¶</a>Verifying that it works</h3><div class="outline-text-3" id="text-orgc7ab834">
 <p>
 You can verify that the file is encrypted by trying to read it at the shell:
 </p>
@@ -189,7 +189,7 @@ You can also double-check that the passwords are accessible to <code>auth-source
 (auth-source-search <span class="org-builtin">:host</span> <span class="org-string">"mailprovider.com"</span> <span class="org-builtin">:user</span> <span class="org-string">"mailuser"</span> <span class="org-builtin">:port</span> 433)</pre>
 </div>
 
-<h3><a id="starting-gpg-agent" class="anchor" href="#starting-gpg-agent">¶</a>Starting gpg-agent</h3><div class="outline-text-3" id="text-org9cb1880">
+<h3><a id="starting-gpg-agent" class="anchor" href="#starting-gpg-agent">¶</a>Starting gpg-agent</h3><div class="outline-text-3" id="text-orgaaaa0ee">
 <p>
 The <code>gpg-agent</code> manages access to your PGP keys and assists with encryption and decryption of files.  It can also cache your passphrase so that you don&rsquo;t get prompted for it every time you try to encrypt or decrypt a file.
 </p>
@@ -213,7 +213,7 @@ In Ubuntu 20.04, it seems to be started as a user service.  If it isn&rsquo;t ru
 </p>
 </div>
 
-<h2><a id="accessing-passwords-outside-of-emacs" class="anchor" href="#accessing-passwords-outside-of-emacs">¶</a>Accessing passwords outside of Emacs</h2><div class="outline-text-2" id="text-orge4dfc72">
+<h2><a id="accessing-passwords-outside-of-emacs" class="anchor" href="#accessing-passwords-outside-of-emacs">¶</a>Accessing passwords outside of Emacs</h2><div class="outline-text-2" id="text-org8ff4c5d">
 <p>
 If you have Emacs running as a daemon or in server mode (see <a href="https://youtu.be/ZjCRxAMPdNc">my video</a> on that) you can use <code>emacsclient</code> to access your passwords from other programs (like <code>mbsync</code>, etc).
 </p>
@@ -263,7 +263,7 @@ The command looks a little weird because of all the escaping, but it works!
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org1bab741">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgcbf2307">
 <p>
 In a future video, we&rsquo;ll cover a program called <a href="https://passwordstore.org">pass</a> that simplifies the management of passwords for multiple accounts and makes it possible for us to sync them between multiple computers using a Git repository!
 </p>

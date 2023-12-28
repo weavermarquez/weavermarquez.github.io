@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Advanced Emacs Package Management with straight.el - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Advanced Emacs Package Management with straight.el</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/UmbVeqphGlc" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org9903fb0">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org89166ba">
 <p>
 Today I&rsquo;m going to show you a different way to install all of the community packages you use in your Emacs configuration with an alternative package manager called <code>straight.el</code>.
 </p>
@@ -21,7 +21,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="what-is-straightel" class="anchor" href="#what-is-straightel">¶</a>What is straight.el?</h2><div class="outline-text-2" id="text-orgfdc9ac8">
+<h2><a id="what-is-straightel" class="anchor" href="#what-is-straightel">¶</a>What is straight.el?</h2><div class="outline-text-2" id="text-org62b7cd3">
 <p>
 <code>straight.el</code> describes itself as a &ldquo;next-generation, purely functional package manager for Emacs.&rdquo;  What&rsquo;s that?
 </p>
@@ -43,7 +43,7 @@ You can learn more about <code>straight.el</code> from its <a href="https://gith
 </p>
 </div>
 
-<h2><a id="straightel-features" class="anchor" href="#straightel-features">¶</a>straight.el features</h2><div class="outline-text-2" id="text-orgf69e9c9">
+<h2><a id="straightel-features" class="anchor" href="#straightel-features">¶</a>straight.el features</h2><div class="outline-text-2" id="text-org565414d">
 <p>
 Practically, <code>straight.el</code> is an alternative to Emacs&rsquo; built in package manager, <code>package.el</code>.  It provides some useful benefits you might be interested in:
 </p>
@@ -63,7 +63,7 @@ It may sound like <code>straight.el</code> is only meant for power users, but ev
 </p>
 </div>
 
-<h2><a id="installing-straightel" class="anchor" href="#installing-straightel">¶</a>Installing straight.el</h2><div class="outline-text-2" id="text-orgcbf1375">
+<h2><a id="installing-straightel" class="anchor" href="#installing-straightel">¶</a>Installing straight.el</h2><div class="outline-text-2" id="text-orgb021d36">
 <p>
 Since <code>straight.el</code> doesn&rsquo;t come with Emacs, we need a way to make sure it can be installed <i>without</i> using <code>package.el</code>.  The maintainers provide a short &ldquo;bootstrapping&rdquo; script which will download and configure <code>straight.el</code> for you.
 </p>
@@ -94,7 +94,7 @@ If <code>straight.el</code> is already installed, this script won&rsquo;t try to
 </p>
 </div>
 
-<h2><a id="installing-a-package-with-straightel" class="anchor" href="#installing-a-package-with-straightel">¶</a>Installing a package with straight.el</h2><div class="outline-text-2" id="text-org17226ed">
+<h2><a id="installing-a-package-with-straightel" class="anchor" href="#installing-a-package-with-straightel">¶</a>Installing a package with straight.el</h2><div class="outline-text-2" id="text-org6221429">
 <p>
 Now that we&rsquo;ve installed <code>straight.el</code>, let&rsquo;s see how to install a package with it.  This part is a little different than what you might be familiar with from <code>package.el</code>.
 </p>
@@ -122,7 +122,7 @@ One thing to point out: the name <code>straight-use-package</code> implies some 
 </p>
 </div>
 
-<h3><a id="tip-using-codestraight-use-packagecode-interactively-to-list-packages" class="anchor" href="#tip-using-codestraight-use-packagecode-interactively-to-list-packages">¶</a>TIP: Using <code>straight-use-package</code> interactively to list packages</h3><div class="outline-text-3" id="text-org7acde32">
+<h3><a id="tip-using-codestraight-use-packagecode-interactively-to-list-packages" class="anchor" href="#tip-using-codestraight-use-packagecode-interactively-to-list-packages">¶</a>TIP: Using <code>straight-use-package</code> interactively to list packages</h3><div class="outline-text-3" id="text-org86d25f2">
 <p>
 If you want an easy way to see a list of all packages that you might want to install run <code>M-x straight-use-package</code>!  If you have a good completion system enabled, you will be able to filter the package list to find interesting packages to install.
 </p>
@@ -132,7 +132,7 @@ If you want an easy way to see a list of all packages that you might want to ins
 </p>
 </div>
 
-<h2><a id="understanding-package-recipes" class="anchor" href="#understanding-package-recipes">¶</a>Understanding package recipes</h2><div class="outline-text-2" id="text-org9ad313b">
+<h2><a id="understanding-package-recipes" class="anchor" href="#understanding-package-recipes">¶</a>Understanding package recipes</h2><div class="outline-text-2" id="text-org375aa12">
 <p>
 I mentioned before that <code>straight.el</code> is installing all packages from their associated Git repositories.  How does it know where to find them?
 </p>
@@ -164,7 +164,7 @@ For example, the recipe for <code>org-mode</code>:
      <span class="org-builtin">:files</span> (<span class="org-builtin">:defaults</span> <span class="org-string">"lisp/*.el"</span> (<span class="org-string">"etc/styles/"</span> <span class="org-string">"etc/styles/*"</span>)))</pre>
 </div>
 
-<h2><a id="installing-a-package-from-a-git-repository" class="anchor" href="#installing-a-package-from-a-git-repository">¶</a>Installing a package from a Git repository</h2><div class="outline-text-2" id="text-orgb01ee75">
+<h2><a id="installing-a-package-from-a-git-repository" class="anchor" href="#installing-a-package-from-a-git-repository">¶</a>Installing a package from a Git repository</h2><div class="outline-text-2" id="text-orgca33c40">
 <p>
 <code>straight.el</code> makes it really easy to install Emacs packages directly from Git repositories.  Here&rsquo;s an example of how to install my <code>dotcrafter.el</code> package directly from GitHub:
 </p>
@@ -182,7 +182,7 @@ There are <a href="https://github.com/raxod502/straight.el#git-backend">other pa
 </p>
 </div>
 
-<h2><a id="upgrading-packages" class="anchor" href="#upgrading-packages">¶</a>Upgrading packages</h2><div class="outline-text-2" id="text-orgf324598">
+<h2><a id="upgrading-packages" class="anchor" href="#upgrading-packages">¶</a>Upgrading packages</h2><div class="outline-text-2" id="text-orgb7eb5ae">
 <p>
 <code>straight.el</code> allows you to upgrade packages individually or all at once.  Package upgrades are performed by pulling a newer version of a package from the associated Git repository.
 </p>
@@ -202,7 +202,7 @@ If you want to activate the upgraded version of a package while Emacs is running
 </p>
 </div>
 
-<h2><a id="removing-a-package" class="anchor" href="#removing-a-package">¶</a>Removing a package</h2><div class="outline-text-2" id="text-org9a241f5">
+<h2><a id="removing-a-package" class="anchor" href="#removing-a-package">¶</a>Removing a package</h2><div class="outline-text-2" id="text-orga32ecf3">
 <p>
 Removing or uninstalling a package works a bit differently with <code>straight.el</code>; there is no explicit &ldquo;uninstall&rdquo; command for packages.
 </p>
@@ -224,7 +224,7 @@ If you really want to make sure those unused repository folders are gone, you ca
 </p>
 </div>
 
-<h2><a id="integrating-with-use-package" class="anchor" href="#integrating-with-use-package">¶</a>Integrating with use-package</h2><div class="outline-text-2" id="text-org8dd96a6">
+<h2><a id="integrating-with-use-package" class="anchor" href="#integrating-with-use-package">¶</a>Integrating with use-package</h2><div class="outline-text-2" id="text-org45ba061">
 <p>
 If you use <code>use-package</code> to simplify your configuration patterns, you can easily set up <code>straight.el</code> to be used with it:
 </p>
@@ -243,7 +243,7 @@ This is equivalent to setting <code>use-package-always-ensure</code> to <code>t<
 </p>
 </div>
 
-<h2><a id="locking-package-versions" class="anchor" href="#locking-package-versions">¶</a>Locking package versions</h2><div class="outline-text-2" id="text-org60e08f7">
+<h2><a id="locking-package-versions" class="anchor" href="#locking-package-versions">¶</a>Locking package versions</h2><div class="outline-text-2" id="text-org07d4b0e">
 <p>
 If you&rsquo;d like to have a more consistent and repeatable configuration across multiple machines, you can create a &ldquo;lockfile&rdquo; which ensures that all of the packages you install are locked to specific commits of the associated repositories.
 </p>
@@ -275,7 +275,7 @@ If you freeze newer versions of packages after running <code>M-x straight-pull-a
 </p>
 </div>
 
-<h3><a id="important-note" class="anchor" href="#important-note">¶</a>Important note!</h3><div class="outline-text-3" id="text-org2a42fa4">
+<h3><a id="important-note" class="anchor" href="#important-note">¶</a>Important note!</h3><div class="outline-text-3" id="text-org3b9245b">
 <p>
 The package freezing behavior requires you to set up your configuration in a way where the <code>straight-use-package</code> lines are executed consistently every time Emacs loads!
 </p>
@@ -289,7 +289,7 @@ In practice, this means that you shouldn&rsquo;t put <code>straight-use-package<
 </p>
 </div>
 
-<h2><a id="converting-an-existing-configuration-to-straightel" class="anchor" href="#converting-an-existing-configuration-to-straightel">¶</a>Converting an existing configuration to straight.el</h2><div class="outline-text-2" id="text-orge7eb6cc">
+<h2><a id="converting-an-existing-configuration-to-straightel" class="anchor" href="#converting-an-existing-configuration-to-straightel">¶</a>Converting an existing configuration to straight.el</h2><div class="outline-text-2" id="text-org118a2bc">
 <p>
 While you can use both <code>package.el</code> and <code>straight.el</code> at the same time, I recommend that you only one use one of them just to make sure you don&rsquo;t have any weird issues resulting from it.
 </p>
@@ -333,7 +333,7 @@ The final config:
 (<span class="org-keyword">setq</span> straight-use-package-by-default t)</pre>
 </div>
 
-<h2><a id="why-should-i-use-straightel" class="anchor" href="#why-should-i-use-straightel">¶</a>Why should I use straight.el?</h2><div class="outline-text-2" id="text-orgb7e84a4">
+<h2><a id="why-should-i-use-straightel" class="anchor" href="#why-should-i-use-straightel">¶</a>Why should I use straight.el?</h2><div class="outline-text-2" id="text-orgc8a7182">
 <p>
 Now that we&rsquo;ve taken a look at all of the functionality provided by <code>straight.el</code>, let&rsquo;s talk about why you might want to try it:
 </p>
@@ -357,7 +357,7 @@ If you&rsquo;d like to see detailed comparisons between <code>straight.el</code>
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgd99d0eb">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgbb52612">
 <p>
 We&rsquo;ve covered most everything you will need to know about <code>straight.el</code> to use it effectively day to day!  If you&rsquo;ve got any questions or tips to share, please feel free to leave them in the comments and I might make a follow-up video to address them!
 </p>

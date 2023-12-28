@@ -1,6 +1,54 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:36 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Welcome! - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Welcome!</h1><p class="site-post-meta"></p><div id="content"><p>
 System Crafters is a community and learning resource for computer enthusiasts who are interested in crafting their computing experience to <b>increase their enjoyment and productivity</b>.
+</p>
+
+<h2><a id="testing-special-blocks-and-such" class="anchor" href="#testing-special-blocks-and-such">¶</a>Testing Special Blocks and such</h2><div class="outline-text-2" id="text-org0be5d74">
+<p>
+<span style="color:blue;">arstarst</span>
+</p>
+
+<p>
+<span style="color:orange;">Are you excited to learn some Lisp?</span> <span style="color:blue;">Yes!</span>
+</p>
+
+<p>
+Pop-quiz: How does <abbr class="tooltip" title="Call FUNCTION with our remaining args, using our last arg as list of args.<br>Then return the value FUNCTION returns.<br>Thus, (apply '+ 1 2 '(3 4)) returns 10.<br><br>(fn FUNCTION &rest ARGUMENTS)">apply</abbr> work?
+</p>
+
+<p>
+<a class="anchor" aria-hidden="true" id="solution" href="#solution"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16
+   16" width="16" height="16"><path fill-rule="evenodd"
+   d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69
+   3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10
+   5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0
+   2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5
+   0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55
+   13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>
+Syntactically, <code>(apply f '(x0 ... xN)) = (f x0 ... xN)</code>.
+</p>
+
+<p>
+<p style="color: black;"><span style="border-width:1px;border-style:solid;padding:5px"><strong>[Musa:</strong></span> Ain&rsquo;t that cool?  <span style="border-width:1px;border-style:solid;padding:5px"><strong>]</strong></span></p>
+</p>
+
+<p>
+That is, <span style="color:magenta;">we can <span id="g84"> apply </span> a function to a list of arguments!</span>
+</p>
+
+<br>
+<p>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M0 2a1 1 0 011-1h14a1 1 0 011 1v9a1 1 0 01-1 1H7l-4 4v-4H1a1 1 0 01-1-1V2zm1 0h14v9H6.5L4 13.5V11H1V2zm6 6h2v2H7V8zm0-5h2v4H7V3z"></path></svg> Note that <abbr class="tooltip" style="border: none; text-decoration: none;" title="C-x C-e ∷ eval-last-sexp<br>Evaluate sexp before point; print value in the echo area.<br>Interactively, with a non ‘-’ prefix argument, print output into<br>current buffer.<br><br>Normally, this function truncates long output according to the<br>value of the variables ‘eval-expression-print-length’ and<br>‘eval-expression-print-level’.&emsp;With a prefix argument of zero,<br>however, there is no such truncation.<br>Integer values are printed in several formats (decimal, octal,<br>and hexadecimal).&emsp;When the prefix argument is -1 or the value<br>doesn’t exceed ‘eval-expression-print-maximum-character’, an<br>integer value is also printed as a character of that codepoint.<br><br>If ‘eval-expression-debug-on-error’ is non-nil, which is the default,<br>this command arranges for all errors to enter the debugger.<br><br>(fn EVAL-LAST-SEXP-ARG-INTERNAL)"><kbd style="border-color: red">C-x C-e</kbd></abbr> evaluates a Lisp form!
+</p>
+
+<p>
+<abbr class="tooltip" title="Call FUNCTION with our remaining args, using our last arg as list of args.<br>Then return the value FUNCTION returns.<br>Thus, (apply '+ 1 2 '(3 4)) returns 10.<br><br>(fn FUNCTION &rest ARGUMENTS)">apply</abbr>
+</p>
+
+<p>
+<img src="https://img.shields.io/badge/Thanks-for_reading-nil?logo=nil">
+<a href="https://twitter.com/intent/tweet?text=This looks super neat (•̀ᴗ•́)و::&url=https://github.com/alhassy/org-special-block-extras"><img src="https://img.shields.io/twitter/url?url=https://github.com/alhassy/org-special-block-extras"></a>
+<a href="https://www.buymeacoffee.com/alhassy"><img src="https://img.shields.io/badge/-buy_me_a_coffee-gray?logo=buy-me-a-coffee"></a>
 </p>
 
 <p>
@@ -10,8 +58,9 @@ This website is intended to be the <i>most comprehensive</i> reference on the in
 <p>
 The <a href="https://youtube.com/@SystemCrafters">System Crafters YouTube channel</a> also contains almost 200 videos and live stream recordings demonstrating and explaining these tools and broader topics!
 </p>
+</div>
 
-<h2><a id="start-here" class="anchor" href="#start-here">¶</a>Start Here!</h2><div class="outline-text-2" id="text-org4f7b001">
+<h2><a id="start-here" class="anchor" href="#start-here">¶</a>Start Here!</h2><div class="outline-text-2" id="text-orgf2cf7f3">
 <p>
 If you are just getting started with <b>GNU Emacs</b> and want to learn the basics, check out <a href="emacs-essentials/absolute-beginners-guide-to-emacs">The Absolute Beginner&rsquo;s Guide to Emacs</a>!
 </p>
@@ -29,7 +78,7 @@ You can also check out the many <a href="videos">video series</a> I&rsquo;ve cre
 </p>
 </div>
 
-<h2><a id="need-help" class="anchor" href="#need-help">¶</a>Need Help?</h2><div class="outline-text-2" id="text-orgc2c89a4">
+<h2><a id="need-help" class="anchor" href="#need-help">¶</a>Need Help?</h2><div class="outline-text-2" id="text-org4b3dbe7">
 <p>
 If you need help on specific topics, there are a few resources to consider:
 </p>
@@ -41,7 +90,7 @@ If you need help on specific topics, there are a few resources to consider:
 </ul>
 </div>
 
-<h2><a id="live-streams" class="anchor" href="#live-streams">¶</a>Live Streams</h2><div class="outline-text-2" id="text-org1bd13b9">
+<h2><a id="live-streams" class="anchor" href="#live-streams">¶</a>Live Streams</h2><div class="outline-text-2" id="text-org82265e2">
 <p>
 Join us <b>every Friday</b> for our weekly show <b><a href="live">System Crafters Live!</a></b> The stream is broadcast on both <a href="https://youtube.com/@SystemCrafters">YouTube</a> and <a href="https://twitch.tv/SystemCrafters">Twitch</a>.  Recordings and show notes for all streams can be found on the <a href="live-streams">Live Streams</a> section.
 </p>
@@ -55,7 +104,7 @@ In these streams we usually experiment with new packages, configurations, and cu
 </p>
 </div>
 
-<h2><a id="stay-up-to-date" class="anchor" href="#stay-up-to-date">¶</a>Stay Up to Date!</h2><div class="outline-text-2" id="text-orgc8769aa">
+<h2><a id="stay-up-to-date" class="anchor" href="#stay-up-to-date">¶</a>Stay Up to Date!</h2><div class="outline-text-2" id="text-org9909429">
 <p>
 Check out new <a href="/news">News page</a> to see the latest updates for the website and community.  You can also subscribe to <a href="/rss">RSS Feeds</a> for various parts of the site.
 </p>

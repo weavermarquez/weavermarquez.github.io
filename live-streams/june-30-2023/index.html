@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Crafting a Guix Installer with Guile and GTK - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Crafting a Guix Installer with Guile and GTK</h1><p class="site-post-meta">June 30, 2023</p><div class="video">  <iframe src="https://www.youtube.com/embed/TuBy-0DmS4E" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org14e2c83">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgc11990d">
 <ul class="org-ul">
 <li><p>
 <b>EmacsConf 2023</b> has been announced!
@@ -12,7 +12,7 @@ Submit your talk proposals here: <a href="https://emacsconf.org/2023/cfp/">https
 </ul>
 </div>
 
-<h2><a id="guix-needs-a-more-user-friendly-installer" class="anchor" href="#guix-needs-a-more-user-friendly-installer">¶</a>Guix needs a more user-friendly installer</h2><div class="outline-text-2" id="text-orge62e3bf">
+<h2><a id="guix-needs-a-more-user-friendly-installer" class="anchor" href="#guix-needs-a-more-user-friendly-installer">¶</a>Guix needs a more user-friendly installer</h2><div class="outline-text-2" id="text-org2d5711d">
 <p>
 If you&rsquo;ve ever tried to install the complete Guix system before, you&rsquo;ve probably used its &ldquo;graphical&rdquo; installer.  It&rsquo;s actually not bad!  However, it isn&rsquo;t the best experience for new users, in my opinion.
 </p>
@@ -42,7 +42,7 @@ I&rsquo;ve created a PR for this work on Codeberg, feel free to check it out and
 </p>
 </div>
 
-<h3><a id="goals" class="anchor" href="#goals">¶</a>Goals</h3><div class="outline-text-3" id="text-orgc2a310c">
+<h3><a id="goals" class="anchor" href="#goals">¶</a>Goals</h3><div class="outline-text-3" id="text-org95636bb">
 <p>
 We probably won&rsquo;t get to all these, but it&rsquo;d be nice to show that it is possible!
 </p>
@@ -55,7 +55,7 @@ We probably won&rsquo;t get to all these, but it&rsquo;d be nice to show that it
 </ul>
 </div>
 
-<h3><a id="resources" class="anchor" href="#resources">¶</a>Resources</h3><div class="outline-text-3" id="text-org4a13db2">
+<h3><a id="resources" class="anchor" href="#resources">¶</a>Resources</h3><div class="outline-text-3" id="text-org4ec09c2">
 <ul class="org-ul">
 <li><a href="https://docs.gtk.org/gtk3/class.Assistant.html">https://docs.gtk.org/gtk3/class.Assistant.html</a></li>
 <li><a href="https://github.com/RainMark/gtk3-tutorial/blob/master/_examples/assistant.c">https://github.com/RainMark/gtk3-tutorial/blob/master/_examples/assistant.c</a></li>

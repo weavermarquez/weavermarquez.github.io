@@ -1,11 +1,11 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>How to Cut Emacs Startup Time in Half - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">How to Cut Emacs Startup Time in Half</h1><p class="site-post-meta"></p><div id="content"><ul class="org-ul">
 <li><a href="https://youtu.be/9i_9hse_Y08">Watch the video</a> on YouTube!</li>
 <li>Check out the <a href="https://github.com/daviwil/emacs-from-scratch/blob/d23348b4a52dde97f4f7cbcd66a519b5fd0a143c/Emacs.org">final code</a> on GitHub</li>
 <li>Episode 12 of the <a href="../">Emacs From Scratch</a> series</li>
 </ul>
 
-<h2><a id="why-is-emacs-so-slow-to-start-up" class="anchor" href="#why-is-emacs-so-slow-to-start-up">¶</a>Why is Emacs so slow to start up?</h2><div class="outline-text-2" id="text-orgf398a56">
+<h2><a id="why-is-emacs-so-slow-to-start-up" class="anchor" href="#why-is-emacs-so-slow-to-start-up">¶</a>Why is Emacs so slow to start up?</h2><div class="outline-text-2" id="text-org58024cc">
 <p>
 Is it actually slow with no config? Run <code>emacs -Q</code> to find out!
 </p>
@@ -15,7 +15,7 @@ So why is it so much slower with our configuration?
 </p>
 </div>
 
-<h2><a id="letrsquos-find-out-how-long-itrsquos-taking" class="anchor" href="#letrsquos-find-out-how-long-itrsquos-taking">¶</a>Let&rsquo;s find out how long it&rsquo;s taking!</h2><div class="outline-text-2" id="text-org64f428b">
+<h2><a id="letrsquos-find-out-how-long-itrsquos-taking" class="anchor" href="#letrsquos-find-out-how-long-itrsquos-taking">¶</a>Let&rsquo;s find out how long it&rsquo;s taking!</h2><div class="outline-text-2" id="text-orgdd6146d">
 <p>
 Add a function to <code>emacs-startup-hook</code> to print out the duration of Emacs startup:
 </p>
@@ -38,7 +38,7 @@ A helpful manual page is <a href="https://www.gnu.org/software/emacs/manual/html
 </p>
 </div>
 
-<h2><a id="the-most-important-tip-donrsquot-load-any-packages" class="anchor" href="#the-most-important-tip-donrsquot-load-any-packages">¶</a>The most important tip: don&rsquo;t load any packages!</h2><div class="outline-text-2" id="text-org314b98e">
+<h2><a id="the-most-important-tip-donrsquot-load-any-packages" class="anchor" href="#the-most-important-tip-donrsquot-load-any-packages">¶</a>The most important tip: don&rsquo;t load any packages!</h2><div class="outline-text-2" id="text-org1218fce">
 <p>
 <code>use-package</code> gives you a few different ways to defer package loading:
 </p>
@@ -71,7 +71,7 @@ Let&rsquo;s try it!
 <pre><span class="org-string">"fde"</span> '(lambda () (<span class="org-keyword">interactive</span>) (find-file (expand-file-name <span class="org-string">"~/.emacs.d/Emacs.org"</span>)))</pre>
 </div>
 
-<h2><a id="with-eval-after-load-can-be-useful" class="anchor" href="#with-eval-after-load-can-be-useful">¶</a>with-eval-after-load can be useful!</h2><div class="outline-text-2" id="text-org7aac7cb">
+<h2><a id="with-eval-after-load-can-be-useful" class="anchor" href="#with-eval-after-load-can-be-useful">¶</a>with-eval-after-load can be useful!</h2><div class="outline-text-2" id="text-org5f30d09">
 <p>
 <code>with-eval-after-load</code> is a macro that causes a section of code to be executed only after a particular package gets loaded.
 </p>
@@ -89,7 +89,7 @@ If you need to split up your configuration into multiple sections, this is one w
 </p>
 </div>
 
-<h2><a id="tweaking-the-garbage-collector" class="anchor" href="#tweaking-the-garbage-collector">¶</a>Tweaking the garbage collector</h2><div class="outline-text-2" id="text-org5ebd64e">
+<h2><a id="tweaking-the-garbage-collector" class="anchor" href="#tweaking-the-garbage-collector">¶</a>Tweaking the garbage collector</h2><div class="outline-text-2" id="text-orgf553265">
 <p>
 One other common performance trick is to reduce the number of times the garbage collector will run during the startup process.
 </p>

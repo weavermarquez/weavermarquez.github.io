@@ -1,4 +1,4 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Python Development Configuration - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Python Development Configuration</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/jPXIP46BnNA" allowfullscreen></iframe></div>
 </p>
@@ -7,7 +7,7 @@
 Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/dd9320769f3041ac1edca139496f14abe147d010/Emacs.org#python">here</a>.
 </p>
 
-<h2><a id="what-wersquoll-cover" class="anchor" href="#what-wersquoll-cover">¶</a>What we&rsquo;ll cover:</h2><div class="outline-text-2" id="text-orgb768c90">
+<h2><a id="what-wersquoll-cover" class="anchor" href="#what-wersquoll-cover">¶</a>What we&rsquo;ll cover:</h2><div class="outline-text-2" id="text-orgd875e11">
 <ul class="org-ul">
 <li>python-mode</li>
 <li>lsp-mode</li>
@@ -17,17 +17,17 @@ Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/
 </ul>
 </div>
 
-<h2><a id="our-example-project" class="anchor" href="#our-example-project">¶</a>Our example project</h2><div class="outline-text-2" id="text-org3af9c09">
+<h2><a id="our-example-project" class="anchor" href="#our-example-project">¶</a>Our example project</h2><div class="outline-text-2" id="text-org61a0eb5">
 <p>
 <a href="https://github.com/mikf/gallery-dl">https://github.com/mikf/gallery-dl</a>
 </p>
 </div>
 
-<h3><a id="installing-requirements" class="anchor" href="#installing-requirements">¶</a>Installing requirements</h3><div class="outline-text-3" id="text-org74e23d1">
+<h3><a id="installing-requirements" class="anchor" href="#installing-requirements">¶</a>Installing requirements</h3><div class="outline-text-3" id="text-org04e832b">
 <pre>pip install -r requirements.txt</pre>
 </div>
 
-<h2><a id="using-codepython-modecode" class="anchor" href="#using-codepython-modecode">¶</a>Using <code>python-mode</code></h2><div class="outline-text-2" id="text-org7214eaf">
+<h2><a id="using-codepython-modecode" class="anchor" href="#using-codepython-modecode">¶</a>Using <code>python-mode</code></h2><div class="outline-text-2" id="text-orgf8840e3">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">python-mode</span>
   <span class="org-builtin">:ensure</span> nil
   <span class="org-builtin">:custom</span>
@@ -44,7 +44,7 @@ Commands:
 </ul>
 </div>
 
-<h2><a id="setting-up-lsp-mode" class="anchor" href="#setting-up-lsp-mode">¶</a>Setting up lsp-mode</h2><h3><a id="installing-codepylscode" class="anchor" href="#installing-codepylscode">¶</a>Installing <code>pyls</code></h3><div class="outline-text-3" id="text-org1a761ac">
+<h2><a id="setting-up-lsp-mode" class="anchor" href="#setting-up-lsp-mode">¶</a>Setting up lsp-mode</h2><h3><a id="installing-codepylscode" class="anchor" href="#installing-codepylscode">¶</a>Installing <code>pyls</code></h3><div class="outline-text-3" id="text-orga0507fc">
 <p>
 <a href="https://emacs-lsp.github.io/lsp-mode/page/languages/">https://emacs-lsp.github.io/lsp-mode/page/languages/</a>
 </p>
@@ -56,7 +56,7 @@ Ensure that it&rsquo;s on the <code>PATH</code>!  If not, you may need to add <c
 </p>
 </div>
 
-<h3><a id="activating-lsp-mode" class="anchor" href="#activating-lsp-mode">¶</a>Activating lsp-mode</h3><div class="outline-text-3" id="text-org6985409">
+<h3><a id="activating-lsp-mode" class="anchor" href="#activating-lsp-mode">¶</a>Activating lsp-mode</h3><div class="outline-text-3" id="text-org6c13f1a">
 <p>
 We are starting with the <code>lsp-mode</code> configuration from &ldquo;Build Your Own IDE with lsp-mode&rdquo;, check that out for more details on lsp-mode!
 </p>
@@ -64,7 +64,7 @@ We are starting with the <code>lsp-mode</code> configuration from &ldquo;Build Y
 <pre><span class="org-builtin">:hook</span> (python-mode . lsp-deferred))</pre>
 </div>
 
-<h3><a id="completion-error" class="anchor" href="#completion-error">¶</a>Completion error!</h3><div class="outline-text-3" id="text-org6a9a99b">
+<h3><a id="completion-error" class="anchor" href="#completion-error">¶</a>Completion error!</h3><div class="outline-text-3" id="text-orgc61724a">
 <p>
 If you see an error complaining about <code>company-capf</code>, this may be a bug with lsp-mode.
 </p>
@@ -83,7 +83,7 @@ As a workaround, run <code>package-reinstall</code> to reinstall <code>lsp-mode<
 <h3><a id="code-formatting---codelsp-format-buffercode" class="anchor" href="#code-formatting---codelsp-format-buffercode">¶</a>Code formatting - <code>lsp-format-buffer</code></h3>
 <h3><a id="symbol-tree---codelsp-treemacs-symbolscode" class="anchor" href="#symbol-tree---codelsp-treemacs-symbolscode">¶</a>Symbol tree - <code>lsp-treemacs-symbols</code></h3>
 
-<h2><a id="running-unit-tests" class="anchor" href="#running-unit-tests">¶</a>Running unit tests</h2><div class="outline-text-2" id="text-orgbcecef0">
+<h2><a id="running-unit-tests" class="anchor" href="#running-unit-tests">¶</a>Running unit tests</h2><div class="outline-text-2" id="text-orga68a18f">
 <p>
 Using pytest:
 </p>
@@ -109,7 +109,7 @@ Induce a failure!
 </p>
 </div>
 
-<h2><a id="debugging" class="anchor" href="#debugging">¶</a>Debugging</h2><div class="outline-text-2" id="text-orgdedf93c">
+<h2><a id="debugging" class="anchor" href="#debugging">¶</a>Debugging</h2><div class="outline-text-2" id="text-org8e8f889">
 <p>
 I recommend watching &ldquo;Emacs IDE - How to Debug Your Code with dap-mode&rdquo; to learn more about the features!
 </p>
@@ -154,7 +154,7 @@ However, this still doesn&rsquo;t work correctly from within a file in the proje
 </p>
 </div>
 
-<h2><a id="virtual-environments" class="anchor" href="#virtual-environments">¶</a>Virtual Environments</h2><div class="outline-text-2" id="text-org6e6b356">
+<h2><a id="virtual-environments" class="anchor" href="#virtual-environments">¶</a>Virtual Environments</h2><div class="outline-text-2" id="text-orgc6c8c26">
 <p>
 This part is only necessary if you use <code>virtualenv</code> in your Python development workflow!
 </p>

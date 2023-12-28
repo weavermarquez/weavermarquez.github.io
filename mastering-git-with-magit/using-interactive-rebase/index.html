@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Clean Your Commits Like a Git Rebase Expert with Magit - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Clean Your Commits Like a Git Rebase Expert with Magit</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/zM7K1y4h6UQ" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org6abd53a">
+<h2><a id="intro" class="anchor" href="#intro">¶</a>Intro</h2><div class="outline-text-2" id="text-org1b73df7">
 <p>
 Have you ever made a mistake or created sloppy commits when checking in changes to a Git repository?
 </p>
@@ -17,7 +17,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="getting-started" class="anchor" href="#getting-started">¶</a>Getting Started</h2><div class="outline-text-2" id="text-orgbdb0aef">
+<h2><a id="getting-started" class="anchor" href="#getting-started">¶</a>Getting Started</h2><div class="outline-text-2" id="text-org1a12ed4">
 <p>
 Make sure you&rsquo;ve got Magit installed first, check out the first video in the series for more information:
 </p>
@@ -45,7 +45,7 @@ To make sure you&rsquo;re in the right branch when you clone this repository, us
 <pre>git clone https://github.com/SystemCrafters/filet-magit -b add-recipes</pre>
 </div>
 
-<h2><a id="reviewing-our-commits" class="anchor" href="#reviewing-our-commits">¶</a>Reviewing our commits</h2><div class="outline-text-2" id="text-org4a9f646">
+<h2><a id="reviewing-our-commits" class="anchor" href="#reviewing-our-commits">¶</a>Reviewing our commits</h2><div class="outline-text-2" id="text-org8d380fa">
 <p>
 Let&rsquo;s imagine that we&rsquo;re writing a cookbook package for Emacs.  We&rsquo;ve been working on a feature for adding new cookbook entries and we&rsquo;re just about ready to push those changes to the public repository.
 </p>
@@ -63,7 +63,7 @@ We can take a look at the &ldquo;Recent commits&rdquo; section to review what we
 </p>
 </div>
 
-<h2><a id="wersquove-got-some-work-to-do" class="anchor" href="#wersquove-got-some-work-to-do">¶</a>We&rsquo;ve got some work to do</h2><div class="outline-text-2" id="text-org3cc0a46">
+<h2><a id="wersquove-got-some-work-to-do" class="anchor" href="#wersquove-got-some-work-to-do">¶</a>We&rsquo;ve got some work to do</h2><div class="outline-text-2" id="text-org4f6f08b">
 <p>
 We&rsquo;re going to clean up these commits using a feature of Git called &ldquo;interactive rebase&rdquo;.
 </p>
@@ -81,7 +81,7 @@ And as usual, Magit makes it much easier and more efficient to perform rebase op
 </p>
 </div>
 
-<h2><a id="an-important-tip" class="anchor" href="#an-important-tip">¶</a>An important tip!</h2><div class="outline-text-2" id="text-org5daf8a0">
+<h2><a id="an-important-tip" class="anchor" href="#an-important-tip">¶</a>An important tip!</h2><div class="outline-text-2" id="text-org4fc4c7a">
 <p>
 Here&rsquo;s something I recommend before doing any rebase operation if you&rsquo;re not that familiar with it yet.
 </p>
@@ -99,7 +99,7 @@ Now that we have our backup branch, we can always get the original commits back 
 </p>
 </div>
 
-<h2><a id="rewording-commits" class="anchor" href="#rewording-commits">¶</a>Rewording commits</h2><div class="outline-text-2" id="text-orgf03a2c5">
+<h2><a id="rewording-commits" class="anchor" href="#rewording-commits">¶</a>Rewording commits</h2><div class="outline-text-2" id="text-orgb09a213">
 <p>
 You can reword any commit in your branch&rsquo;s history by performing an interactive rebase using Magit.
 </p>
@@ -117,13 +117,13 @@ You will now be given a commit message editing buffer to fix the wording of the 
 </p>
 </div>
 
-<h2><a id="you-just-changed-history" class="anchor" href="#you-just-changed-history">¶</a>You just changed history!</h2><div class="outline-text-2" id="text-org5accfa6">
+<h2><a id="you-just-changed-history" class="anchor" href="#you-just-changed-history">¶</a>You just changed history!</h2><div class="outline-text-2" id="text-orgd0dbf72">
 <p>
 Keep in mind that editing <b>any</b> commit in the history will cause <b>all following commits</b> to be recreated so they will all have a new commit hash!  This means that you will need to &ldquo;force push&rdquo; your changes to the remote repository if you have already pushed the branch there once before.
 </p>
 </div>
 
-<h2><a id="reordering-commits" class="anchor" href="#reordering-commits">¶</a>Reordering commits</h2><div class="outline-text-2" id="text-org570903f">
+<h2><a id="reordering-commits" class="anchor" href="#reordering-commits">¶</a>Reordering commits</h2><div class="outline-text-2" id="text-orgeb166ff">
 <p>
 The commit history you create can be seen as the story of the code&rsquo;s creation.  Sometimes it makes sense for a more recent change to be moved back before other changes to improve the narrative.
 </p>
@@ -142,7 +142,7 @@ You can reorder multiple commits in one interactive rebase operation!
 </p>
 </div>
 
-<h2><a id="dealing-with-conflicts-when-moving-commits" class="anchor" href="#dealing-with-conflicts-when-moving-commits">¶</a>Dealing with conflicts when moving commits</h2><div class="outline-text-2" id="text-org11d926a">
+<h2><a id="dealing-with-conflicts-when-moving-commits" class="anchor" href="#dealing-with-conflicts-when-moving-commits">¶</a>Dealing with conflicts when moving commits</h2><div class="outline-text-2" id="text-org30364df">
 <p>
 Now let&rsquo;s move another commit, but this time the move is going to create a conflict with the changes in the commit history.
 </p>
@@ -168,7 +168,7 @@ We&rsquo;ll also have to deal with another conflict!  Let&rsquo;s add the functi
 </p>
 </div>
 
-<h2><a id="editing-a-commit" class="anchor" href="#editing-a-commit">¶</a>Editing a commit</h2><div class="outline-text-2" id="text-org95fedc7">
+<h2><a id="editing-a-commit" class="anchor" href="#editing-a-commit">¶</a>Editing a commit</h2><div class="outline-text-2" id="text-org8036d55">
 <p>
 We&rsquo;ll need to make a tweak to the following commit to restore the use of the new <code>filet-new-recipe</code> in the <code>filet-add-recipe</code> command since we had to remove it when resolving the previous conflicts.
 </p>
@@ -186,7 +186,7 @@ In the <code>magit-status</code> screen press <code>r r</code> to complete the r
 </p>
 </div>
 
-<h2><a id="combining-commits" class="anchor" href="#combining-commits">¶</a>Combining commits</h2><div class="outline-text-2" id="text-org4960b97">
+<h2><a id="combining-commits" class="anchor" href="#combining-commits">¶</a>Combining commits</h2><div class="outline-text-2" id="text-org36fb1b5">
 <p>
 Now we&rsquo;re going to see how we can combine two commits together.  There are two ways to do this:
 </p>
@@ -205,7 +205,7 @@ We&rsquo;ll use <code>fixup</code> to combine the &ldquo;oops&rdquo; commit into
 </p>
 </div>
 
-<h2><a id="deleting-commits" class="anchor" href="#deleting-commits">¶</a>Deleting commits</h2><div class="outline-text-2" id="text-org1c34b40">
+<h2><a id="deleting-commits" class="anchor" href="#deleting-commits">¶</a>Deleting commits</h2><div class="outline-text-2" id="text-org1e2e0d6">
 <p>
 Sometimes you will make temporary commits that are only useful for debugging purposes or maybe diagnosing a test failure in your CI runs.
 </p>
@@ -219,7 +219,7 @@ Start a new interactive rebase at the commit that you want to delete.  We can pr
 </p>
 </div>
 
-<h2><a id="letrsquos-do-it-all-at-once" class="anchor" href="#letrsquos-do-it-all-at-once">¶</a>Let&rsquo;s do it all at once!</h2><div class="outline-text-2" id="text-orgad21cf4">
+<h2><a id="letrsquos-do-it-all-at-once" class="anchor" href="#letrsquos-do-it-all-at-once">¶</a>Let&rsquo;s do it all at once!</h2><div class="outline-text-2" id="text-org78d0c99">
 <p>
 Now that we know the whole flow, let&rsquo;s clean up the same commits all in one interactive rebase!
 </p>
@@ -245,7 +245,7 @@ Now let&rsquo;s start the interactive rebase process again and perform all the c
 </p>
 </div>
 
-<h2><a id="thatrsquos-it" class="anchor" href="#thatrsquos-it">¶</a>That&rsquo;s it!</h2><div class="outline-text-2" id="text-org949bc77">
+<h2><a id="thatrsquos-it" class="anchor" href="#thatrsquos-it">¶</a>That&rsquo;s it!</h2><div class="outline-text-2" id="text-org38ddac3">
 <p>
 Let me know in the comments if this video was helpful or if you have any questions and don&rsquo;t forget to click the &ldquo;Like&rdquo; button!
 </p>

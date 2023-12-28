@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Reading and Writing Buffers In Practice - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Reading and Writing Buffers In Practice</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/J7d2LmivyyM" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="why-learn-about-buffers" class="anchor" href="#why-learn-about-buffers">¶</a>Why learn about buffers?</h2><div class="outline-text-2" id="text-org64dae9b">
+<h2><a id="why-learn-about-buffers" class="anchor" href="#why-learn-about-buffers">¶</a>Why learn about buffers?</h2><div class="outline-text-2" id="text-org70db233">
 <p>
 You may think buffers are just for editing text files, but you can wield Emacs Lisp to do so much more:
 </p>
@@ -24,7 +24,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org79443ae">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org7fcfaba">
 <p>
 In this episode we&rsquo;re going to focus on the basic APIs for Emacs buffers and then show how to read and edit buffer contents.
 </p>
@@ -34,7 +34,7 @@ We&rsquo;re going to use a concrete example as the basis for everything we learn
 </p>
 </div>
 
-<h3><a id="our-project-dotcrafterel" class="anchor" href="#our-project-dotcrafterel">¶</a>Our project: dotcrafter.el</h3><div class="outline-text-3" id="text-org3b7b50a">
+<h3><a id="our-project-dotcrafterel" class="anchor" href="#our-project-dotcrafterel">¶</a>Our project: dotcrafter.el</h3><div class="outline-text-3" id="text-orgdb76700">
 <p>
 As we talked about in previous videos in this series, we are working on a dotfiles management package for Emacs.
 </p>
@@ -53,7 +53,7 @@ In this video, we&rsquo;ll update our dotfiles management package code to add th
 </ul>
 </div>
 
-<h3><a id="why" class="anchor" href="#why">¶</a>Why?</h3><div class="outline-text-3" id="text-org876633d">
+<h3><a id="why" class="anchor" href="#why">¶</a>Why?</h3><div class="outline-text-3" id="text-orga79dcc9">
 <p>
 The goal of this package is to manage configuration files that are generated from Org Mode code blocks.
 </p>
@@ -71,7 +71,7 @@ The code we will write today will automatically update the <code>.gitignore</cod
 </p>
 </div>
 
-<h2><a id="what-is-a-buffer" class="anchor" href="#what-is-a-buffer">¶</a>What is a buffer?</h2><div class="outline-text-2" id="text-org6fc0f4f">
+<h2><a id="what-is-a-buffer" class="anchor" href="#what-is-a-buffer">¶</a>What is a buffer?</h2><div class="outline-text-2" id="text-orgfdfe940">
 <p>
 In Emacs Lisp, a buffer is an object that contains text to be displayed, edited, or manipulated.  The content of buffer may not come from a file, it could be generated from within Emacs!
 </p>
@@ -89,7 +89,7 @@ As we learned in the video about variables, a buffer can have it&rsquo;s own set
 </p>
 </div>
 
-<h2><a id="getting-the-ldquocurrentrdquo-buffer" class="anchor" href="#getting-the-ldquocurrentrdquo-buffer">¶</a>Getting the &ldquo;current&rdquo; buffer</h2><div class="outline-text-2" id="text-orgfd20bfb">
+<h2><a id="getting-the-ldquocurrentrdquo-buffer" class="anchor" href="#getting-the-ldquocurrentrdquo-buffer">¶</a>Getting the &ldquo;current&rdquo; buffer</h2><div class="outline-text-2" id="text-orgfbc25ea">
 <p>
 Emacs&rsquo; buffer manipulation functions work on the current buffer.
 </p>
@@ -105,7 +105,7 @@ The current buffer in this case is not necessarily the one visible in the select
 </p>
 </div>
 
-<h2><a id="getting-a-buffer-by-name" class="anchor" href="#getting-a-buffer-by-name">¶</a>Getting a buffer by name</h2><div class="outline-text-2" id="text-orgfae8626">
+<h2><a id="getting-a-buffer-by-name" class="anchor" href="#getting-a-buffer-by-name">¶</a>Getting a buffer by name</h2><div class="outline-text-2" id="text-org71b38dc">
 <p>
 If you want to retrieve a buffer by its name, use <code>get-buffer</code>:
 </p>
@@ -123,7 +123,7 @@ You can now see this in the buffer list!
 </p>
 </div>
 
-<h2><a id="changing-the-current-buffer" class="anchor" href="#changing-the-current-buffer">¶</a>Changing the current buffer</h2><div class="outline-text-2" id="text-org1ede512">
+<h2><a id="changing-the-current-buffer" class="anchor" href="#changing-the-current-buffer">¶</a>Changing the current buffer</h2><div class="outline-text-2" id="text-org4466245">
 <p>
 You can change the current buffer with <code>set-buffer</code>.  This allows you to set the current buffer that the buffer manipulation functions will operate on:
 </p>
@@ -138,7 +138,7 @@ You can change the current buffer with <code>set-buffer</code>.  This allows you
   (current-buffer))</pre>
 </div>
 
-<h2><a id="changing-the-current-buffer-safely" class="anchor" href="#changing-the-current-buffer-safely">¶</a>Changing the current buffer safely!</h2><div class="outline-text-2" id="text-orged33b4e">
+<h2><a id="changing-the-current-buffer-safely" class="anchor" href="#changing-the-current-buffer-safely">¶</a>Changing the current buffer safely!</h2><div class="outline-text-2" id="text-orgee0e134">
 <p>
 However, this sets the current buffer until the current command in the command loop is finished, so it might affect other code that runs after yours!
 </p>
@@ -167,7 +167,7 @@ If you use <code>set-buffer</code> in your code, you almost always want to use <
 </p>
 </div>
 
-<h2><a id="working-with-file-buffers" class="anchor" href="#working-with-file-buffers">¶</a>Working with file buffers</h2><div class="outline-text-2" id="text-org66c157b">
+<h2><a id="working-with-file-buffers" class="anchor" href="#working-with-file-buffers">¶</a>Working with file buffers</h2><div class="outline-text-2" id="text-orgdf2ea01">
 <p>
 Most often in Emacs, you&rsquo;ll be working with buffers that contain text loaded from a file.  If Emacs created the buffer (using <code>find-file</code> or a similar function), you can use the <code>buffer-file-name</code> function to get full file path for the file that the buffer represents:
 </p>
@@ -187,7 +187,7 @@ You can also find a buffer that represents a particular file (or file path) usin
 </p>
 </div>
 
-<h2><a id="example-getting-the-buffers-for-our-configuration-org-files" class="anchor" href="#example-getting-the-buffers-for-our-configuration-org-files">¶</a>Example: Getting the buffers for our configuration Org files</h2><div class="outline-text-2" id="text-orgb8d5716">
+<h2><a id="example-getting-the-buffers-for-our-configuration-org-files" class="anchor" href="#example-getting-the-buffers-for-our-configuration-org-files">¶</a>Example: Getting the buffers for our configuration Org files</h2><div class="outline-text-2" id="text-orgd6ac931">
 <pre>(<span class="org-keyword">setq</span> dotcrafter-org-files '(<span class="org-string">"Emacs.org"</span> <span class="org-string">"Desktop.org"</span> <span class="org-string">"Systems.org"</span>))
 
 (<span class="org-keyword">dolist</span> (org-file dotcrafter-org-files)
@@ -196,7 +196,7 @@ You can also find a buffer that represents a particular file (or file path) usin
     (message <span class="org-string">"File: %s"</span> (buffer-file-name))))</pre>
 </div>
 
-<h2><a id="loading-a-file-into-a-buffer" class="anchor" href="#loading-a-file-into-a-buffer">¶</a>Loading a file into a buffer</h2><div class="outline-text-2" id="text-org504b749">
+<h2><a id="loading-a-file-into-a-buffer" class="anchor" href="#loading-a-file-into-a-buffer">¶</a>Loading a file into a buffer</h2><div class="outline-text-2" id="text-org6e346d6">
 <p>
 Emacs provides a function for &ldquo;visiting&rdquo; a file without displaying it, mainly for opening a file into a buffer.  This function is called <code>find-file-noselect</code>:
 </p>
@@ -216,7 +216,7 @@ A couple of interesting details:
 <pre>(find-file-noselect <span class="org-string">"Emacs-Lisp-01.org"</span> t)</pre>
 </div>
 
-<h2><a id="example-getting-or-creating-the-org-file-buffer" class="anchor" href="#example-getting-or-creating-the-org-file-buffer">¶</a>Example: Getting or creating the Org file buffer</h2><div class="outline-text-2" id="text-org96ce5e8">
+<h2><a id="example-getting-or-creating-the-org-file-buffer" class="anchor" href="#example-getting-or-creating-the-org-file-buffer">¶</a>Example: Getting or creating the Org file buffer</h2><div class="outline-text-2" id="text-org4f3986e">
 <p>
 We can use <code>find-file-noselect</code> to create a buffer for the file if it doesn&rsquo;t already exist:
 </p>
@@ -229,7 +229,7 @@ We can use <code>find-file-noselect</code> to create a buffer for the file if it
       (message <span class="org-string">"File: %s"</span> (buffer-file-name)))))</pre>
 </div>
 
-<h2><a id="whatrsquos-the-point" class="anchor" href="#whatrsquos-the-point">¶</a>What&rsquo;s the point?</h2><div class="outline-text-2" id="text-org68c611b">
+<h2><a id="whatrsquos-the-point" class="anchor" href="#whatrsquos-the-point">¶</a>What&rsquo;s the point?</h2><div class="outline-text-2" id="text-org55e2657">
 <p>
 The point of talking about all of this is so that we can talk about the point!
 </p>
@@ -260,7 +260,7 @@ You can also check the minimum and maximum point locations of the buffer using <
 </p>
 </div>
 
-<h2><a id="moving-the-point" class="anchor" href="#moving-the-point">¶</a>Moving the point</h2><div class="outline-text-2" id="text-org5417e2f">
+<h2><a id="moving-the-point" class="anchor" href="#moving-the-point">¶</a>Moving the point</h2><div class="outline-text-2" id="text-orgf70c485">
 <p>
 You can use the following motion commands to move the point:
 </p>
@@ -306,7 +306,7 @@ The cool thing about these functions is that they&rsquo;re the same ones you use
 </p>
 </div>
 
-<h2><a id="preserving-the-point" class="anchor" href="#preserving-the-point">¶</a>Preserving the point</h2><div class="outline-text-2" id="text-org9f9f9b6">
+<h2><a id="preserving-the-point" class="anchor" href="#preserving-the-point">¶</a>Preserving the point</h2><div class="outline-text-2" id="text-orga207f0f">
 <p>
 Similarly to setting the current buffer, you might want to preserve the current point location in a buffer before you move it for another purpose.  You can use the <code>save-excursion</code> special form for this purpose:
 </p>
@@ -320,7 +320,7 @@ This is useful when you need to do an operation in the current buffer which migh
 </p>
 </div>
 
-<h2><a id="examining-buffer-text" class="anchor" href="#examining-buffer-text">¶</a>Examining buffer text</h2><div class="outline-text-2" id="text-org7a93b86">
+<h2><a id="examining-buffer-text" class="anchor" href="#examining-buffer-text">¶</a>Examining buffer text</h2><div class="outline-text-2" id="text-org1bbc56b">
 <p>
 Now that we understand the point, we can talk about how to look at text in the buffer.  The simplest thing you can do is read the character at a location with <code>char-after</code>:
 </p>
@@ -337,7 +337,7 @@ You can also get a substring of text in the buffer between two points using <cod
 (buffer-substring-no-properties 9328 9349)</pre>
 </div>
 
-<h2><a id="the-thing" class="anchor" href="#the-thing">¶</a>The Thing</h2><div class="outline-text-2" id="text-orgb5a82db">
+<h2><a id="the-thing" class="anchor" href="#the-thing">¶</a>The Thing</h2><div class="outline-text-2" id="text-orgd520c43">
 <p>
 The <code>thing-at-point</code> function is very useful for grabbing the text at the point if it matches a particular type of &ldquo;thing&rdquo;:
 </p>
@@ -363,7 +363,7 @@ Try it on this: ~/Projects/Code/emacs-from-scratch/Emacs.org
 </p>
 </div>
 
-<h2><a id="searching-for-text" class="anchor" href="#searching-for-text">¶</a>Searching for text</h2><div class="outline-text-2" id="text-orgecc672f">
+<h2><a id="searching-for-text" class="anchor" href="#searching-for-text">¶</a>Searching for text</h2><div class="outline-text-2" id="text-orgdfcf644">
 <p>
 Sometimes it can be useful to search for text inside of the buffer and move the point to where the match was found.  You can use the <code>search-forward</code> and <code>search-backward</code> functions for this:
 </p>
@@ -392,7 +392,7 @@ There are other ways to search inside of buffers, including the use of regular e
 </p>
 </div>
 
-<h2><a id="example-finding-org-code-block-output-paths" class="anchor" href="#example-finding-org-code-block-output-paths">¶</a>Example: Finding Org code block output paths</h2><div class="outline-text-2" id="text-orgb2209f0">
+<h2><a id="example-finding-org-code-block-output-paths" class="anchor" href="#example-finding-org-code-block-output-paths">¶</a>Example: Finding Org code block output paths</h2><div class="outline-text-2" id="text-orgd479ec1">
 <p>
 Now we can finally do something useful in our code!  Let&rsquo;s write some Emacs Lisp to search for <code>:tangle</code> properties on Org source blocks so that we can extract the file path:
 </p>
@@ -426,7 +426,7 @@ Now we can finally do something useful in our code!  Let&rsquo;s write some Emac
   output-files)</pre>
 </div>
 
-<h2><a id="inserting-text" class="anchor" href="#inserting-text">¶</a>Inserting text</h2><div class="outline-text-2" id="text-org4012892">
+<h2><a id="inserting-text" class="anchor" href="#inserting-text">¶</a>Inserting text</h2><div class="outline-text-2" id="text-org135aabe">
 <p>
 You can insert text into the buffer at the current point using the <code>insert</code> and <code>insert-char</code> functions.  <code>insert</code> will insert the arbitrary list of strings or characters at point and <code>insert-char</code> will insert the specified character with an optional repeat count:
 </p>
@@ -442,7 +442,7 @@ You can insert text into the buffer at the current point using the <code>insert<
 </p>
 </div>
 
-<h2><a id="example-updating-the-gitignore-file" class="anchor" href="#example-updating-the-gitignore-file">¶</a>Example: Updating the .gitignore file</h2><div class="outline-text-2" id="text-org868e778">
+<h2><a id="example-updating-the-gitignore-file" class="anchor" href="#example-updating-the-gitignore-file">¶</a>Example: Updating the .gitignore file</h2><div class="outline-text-2" id="text-org7772c22">
 <pre>(<span class="org-keyword">defvar</span> <span class="org-variable-name">dotcrafter-gitignore-marker</span> <span class="org-string">"\n# -- Generated by dotcrafter.el! --\n\n"</span>
   <span class="org-doc">"The marker string to be placed in the .gitignore file of the</span>
 <span class="org-doc">dotfiles repo to indicate where the auto-generated list of ignored</span>
@@ -477,7 +477,7 @@ Notice that running this multiple times appends the list again and again!  We ne
 </p>
 </div>
 
-<h2><a id="deleting-text" class="anchor" href="#deleting-text">¶</a>Deleting text</h2><div class="outline-text-2" id="text-orgbd6fbf9">
+<h2><a id="deleting-text" class="anchor" href="#deleting-text">¶</a>Deleting text</h2><div class="outline-text-2" id="text-org0794314">
 <p>
 You can delete a region of text in a buffer using the <code>delete-region</code> function.  It takes two parameters, the <code>start</code> point and the <code>end</code> point.
 </p>
@@ -486,7 +486,7 @@ You can delete a region of text in a buffer using the <code>delete-region</code>
   (delete-region (point) (point-max)))</pre>
 </div>
 
-<h2><a id="saving-a-buffer" class="anchor" href="#saving-a-buffer">¶</a>Saving a buffer</h2><div class="outline-text-2" id="text-orgdc2f406">
+<h2><a id="saving-a-buffer" class="anchor" href="#saving-a-buffer">¶</a>Saving a buffer</h2><div class="outline-text-2" id="text-org8f86e89">
 <p>
 To save the contents of a buffer back to the file it is associated with, you can use the <code>save-buffer</code> function:
 </p>
@@ -494,7 +494,7 @@ To save the contents of a buffer back to the file it is associated with, you can
 <pre>(save-buffer)</pre>
 </div>
 
-<h2><a id="example-cleaning-up-and-saving-the-gitignore-file" class="anchor" href="#example-cleaning-up-and-saving-the-gitignore-file">¶</a>Example: Cleaning up and saving the .gitignore file</h2><div class="outline-text-2" id="text-orgf4667db">
+<h2><a id="example-cleaning-up-and-saving-the-gitignore-file" class="anchor" href="#example-cleaning-up-and-saving-the-gitignore-file">¶</a>Example: Cleaning up and saving the .gitignore file</h2><div class="outline-text-2" id="text-org587da5d">
 <p>
 Let&rsquo;s finish the job of automatically managing the <code>.gitignore</code> file by cleaning up its contents and saving it:
 </p>
@@ -527,13 +527,13 @@ Let&rsquo;s finish the job of automatically managing the <code>.gitignore</code>
           (save-buffer))))))</pre>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orge0bcaa9">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org3cecbc9">
 <p>
 In the next episode, we&rsquo;ll cover how to manage files and directories in Emacs Lisp.  We&rsquo;ll also extend <code>dotcrafter</code> to create symbolic links to their target locations in the home directory!
 </p>
 </div>
 
-<h2><a id="final-code" class="anchor" href="#final-code">¶</a>Final Code</h2><div class="outline-text-2" id="text-org5311b23">
+<h2><a id="final-code" class="anchor" href="#final-code">¶</a>Final Code</h2><div class="outline-text-2" id="text-org76a202d">
 <p>
 You can check out the final code <a href="https://github.com/daviwil/dotcrafter.el/blob/8d507eda31e08a789c38a5d729866eb4cda6abaf/dotcrafter.el">here</a> at the <code>dotcrafter.el</code> repository!
 </p>

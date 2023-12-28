@@ -7,7 +7,7 @@
 <generator>Emacs webfeeder.el</generator>
 <link>https://weavermarquez.github.io</link>
 <atom:link href="https://weavermarquez.github.io/rss/news.xml" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 19 Dec 2023 09:37:16 +0000</lastBuildDate>
+<lastBuildDate>Thu, 28 Dec 2023 00:37:04 +0000</lastBuildDate>
 <item>
   <title>Crafted Emacs Update</title>
   <description><![CDATA[<div id="content"> <p>
@@ -160,19 +160,19 @@ Over the last few days, I’ve been working hard to improve the overall experien
 After a lot of trial and error, I’ve finally figured out the right configuration!   <b>The bad news</b> is that people who already joined the SC Matrix channels will have to follow a couple of steps to join the new, better channels.   <b>New users who join today will not be affected!</b>
 </p>
 
- <h2> <a id="how-to-join-the-new-channels" class="anchor" href="#how-to-join-the-new-channels">¶</a>How to Join the New Channels</h2> <div class="outline-text-2" id="text-org1d5ffaf">
+ <h2> <a id="how-to-join-the-new-channels" class="anchor" href="#how-to-join-the-new-channels">¶</a>How to Join the New Channels</h2> <div class="outline-text-2" id="text-orga0a3411">
  <p>
 If you’re already joined to the Matrix channels, here’s how you can fix your setup:
 </p>
 </div>
 
- <h3> <a id="1-in-matrix-leave-both-the-systemcrafters-and-ldquoemacs---system-craftersrdquo-channels" class="anchor" href="#1-in-matrix-leave-both-the-systemcrafters-and-ldquoemacs---system-craftersrdquo-channels">¶</a>1. In Matrix, leave both the #systemcrafters and “Emacs - System Crafters” channels</h3> <div class="outline-text-3" id="text-org18c01bb">
+ <h3> <a id="1-in-matrix-leave-both-the-systemcrafters-and-ldquoemacs---system-craftersrdquo-channels" class="anchor" href="#1-in-matrix-leave-both-the-systemcrafters-and-ldquoemacs---system-craftersrdquo-channels">¶</a>1. In Matrix, leave both the #systemcrafters and “Emacs - System Crafters” channels</h3> <div class="outline-text-3" id="text-orgf8edbe6">
  <p>
 Unfortunately it’s necessary to leave these channels first otherwise your IRC presence will be tied to the old, deprecated room instead of the new room.  It will cause Matrix users in the new rooms to see you as an IRC user instead of a matrix user!
 </p>
 </div>
 
- <h3> <a id="2-join-the-new-channels" class="anchor" href="#2-join-the-new-channels">¶</a>2. Join the new channels</h3> <div class="outline-text-3" id="text-org7dce7c2">
+ <h3> <a id="2-join-the-new-channels" class="anchor" href="#2-join-the-new-channels">¶</a>2. Join the new channels</h3> <div class="outline-text-3" id="text-org2d4d719">
  <p>
 Here are the new channels to join, you can either take a look at the  <a href="https://matrix.to/#/%23systemcrafters-space:matrix.org">System Crafters Space</a> to join them (I have removed the old channels) or use these channel names to join directly:
 </p>
@@ -184,7 +184,7 @@ Joining these two channels will put you in the right place, and you’ll also ge
 </p>
 </div>
 
- <h3> <a id="3-tell-codeappservicecode-to-reconnect-your-irc-connection" class="anchor" href="#3-tell-codeappservicecode-to-reconnect-your-irc-connection">¶</a>3. Tell  <code>appservice</code> to reconnect your IRC connection</h3> <div class="outline-text-3" id="text-orga6c4bab">
+ <h3> <a id="3-tell-codeappservicecode-to-reconnect-your-irc-connection" class="anchor" href="#3-tell-codeappservicecode-to-reconnect-your-irc-connection">¶</a>3. Tell  <code>appservice</code> to reconnect your IRC connection</h3> <div class="outline-text-3" id="text-org69d1a99">
  <p>
 When you originally joined the #systemcrafters channel, an instant message with an account named  <code>appservice</code> showed up for you in Matrix.  Open that conversation and type in the following line as a message in the chat:
 </p>
@@ -196,7 +196,7 @@ This will cause your IRC persona to reconnect, hopefully putting you in the righ
 </p>
 </div>
 
- <h2> <a id="if-it-didnrsquot-work" class="anchor" href="#if-it-didnrsquot-work">¶</a>If it didn’t work?</h2> <div class="outline-text-2" id="text-org5c522cb">
+ <h2> <a id="if-it-didnrsquot-work" class="anchor" href="#if-it-didnrsquot-work">¶</a>If it didn’t work?</h2> <div class="outline-text-2" id="text-org7a0898b">
  <p>
 If these steps didn’t fix everything for you, please let me or one of the mods know in the Matrix chat!  There may be other steps that some users need to follow.  If all else fails, we may have to kick you from the old channel so that you can rejoin!
 </p>
@@ -228,7 +228,7 @@ At the time, Discord seemed to be the best option for creating a community chat 
 For these reasons (and probably more that I’m forgetting), I started thinking about how and when I’d move the System Crafters chat to a more appropriate home.  Over time I’ve considered IRC, XMPP, Matrix, RocketChat, Zulip, and more but I struggled to make a decision on which one I thought would be a sufficient replacement.
 </p>
 
- <h2> <a id="our-new-home-on-matrix-and-irc" class="anchor" href="#our-new-home-on-matrix-and-irc">¶</a>Our new home on Matrix and IRC</h2> <div class="outline-text-2" id="text-org833762c">
+ <h2> <a id="our-new-home-on-matrix-and-irc" class="anchor" href="#our-new-home-on-matrix-and-irc">¶</a>Our new home on Matrix and IRC</h2> <div class="outline-text-2" id="text-org8fde226">
  <p>
 Recently, I finally came to the conclusion that the best option is to use both Matrix and IRC to give you all the best experience and range of choice in clients and ways to join!
 </p>
@@ -258,7 +258,7 @@ I hope you’ll join us there soon!  It’s really easy to participate from with
 </p>
 </div>
 
- <h2> <a id="why-not-leave-the-discord-running" class="anchor" href="#why-not-leave-the-discord-running">¶</a>Why not leave the Discord running?</h2> <div class="outline-text-2" id="text-orgf8469b1">
+ <h2> <a id="why-not-leave-the-discord-running" class="anchor" href="#why-not-leave-the-discord-running">¶</a>Why not leave the Discord running?</h2> <div class="outline-text-2" id="text-org73a74cb">
  <p>
 Instead of having there be confusion about why the community is split across multiple chat services, I’ve decided that the Discord should be deactivated as part of this transition.
 </p>
@@ -272,7 +272,7 @@ Frankly, I’ve felt guilty over the last year for not being an active part of t
 </p>
 </div>
 
- <h2> <a id="thank-you-moderators" class="anchor" href="#thank-you-moderators">¶</a>Thank you, moderators!</h2> <div class="outline-text-2" id="text-org30a25ca">
+ <h2> <a id="thank-you-moderators" class="anchor" href="#thank-you-moderators">¶</a>Thank you, moderators!</h2> <div class="outline-text-2" id="text-org81c5ffe">
  <p>
 These fine folks have been moderating the System Crafters Discord over the last year while I haven’t been as active:
 </p>
@@ -286,7 +286,7 @@ Thank you all for helping me with the spammers and the bad actors who have showe
 </p>
 </div>
 
- <h2> <a id="please-let-me-know-your-thoughts" class="anchor" href="#please-let-me-know-your-thoughts">¶</a>Please let me know your thoughts!</h2> <div class="outline-text-2" id="text-org05ef35e">
+ <h2> <a id="please-let-me-know-your-thoughts" class="anchor" href="#please-let-me-know-your-thoughts">¶</a>Please let me know your thoughts!</h2> <div class="outline-text-2" id="text-orgcc64a75">
  <p>
 I know this change might come as a surprise to some since I haven’t mentioned it on the Discord until now.  I apologize for that!  I regret my extended absense on that platform, but I believe that making this change will be better for all of us.
 </p>
@@ -322,7 +322,7 @@ The new iteration of this site is meant to be the center of the System Crafters 
 Going forward, one major improvement will be the addition of  <i>comprehensive written guides</i> about the topics we discuss on the System Crafters channel like GNU Emacs, GNU Guix, and related tools.  These guides are currently in development, so make sure you subscribe to the  <a href="/newsletter">Newsletter</a> to be notified as they are released and updated.
 </p>
 
- <h2> <a id="what-changed" class="anchor" href="#what-changed">¶</a>What Changed?</h2> <div class="outline-text-2" id="text-orga57e4d4">
+ <h2> <a id="what-changed" class="anchor" href="#what-changed">¶</a>What Changed?</h2> <div class="outline-text-2" id="text-orgec2c58d">
  <p>
 On the surface the site may not look very different, so here’s a list of the important changes:
 </p>
@@ -347,7 +347,7 @@ I’m really proud of the new site and I hope you like it!  Feel free to send an
 </p>
 </div>
 
- <h2> <a id="stay-up-to-date" class="anchor" href="#stay-up-to-date">¶</a>Stay Up to Date!</h2> <div class="outline-text-2" id="text-orga9b25f4">
+ <h2> <a id="stay-up-to-date" class="anchor" href="#stay-up-to-date">¶</a>Stay Up to Date!</h2> <div class="outline-text-2" id="text-orgdf64d07">
  <p>
 With the new site design, we now finally have a single place where you can stay up to date on all news related to System Crafters and the community:
 </p>

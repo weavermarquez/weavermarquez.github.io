@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Creating a Custom Minor Mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Creating a Custom Minor Mode</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/JJqchO3fnds" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgbab2c1f">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-org2a6221b">
 <p>
 Today we&rsquo;re going to learn about Emacs&rsquo; concept of modes and then walk through some practical examples of creating a custom minor mode.
 </p>
@@ -21,7 +21,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="what-is-a-ldquomoderdquo" class="anchor" href="#what-is-a-ldquomoderdquo">¶</a>What is a &ldquo;mode&rdquo;?</h2><div class="outline-text-2" id="text-org7f07d39">
+<h2><a id="what-is-a-ldquomoderdquo" class="anchor" href="#what-is-a-ldquomoderdquo">¶</a>What is a &ldquo;mode&rdquo;?</h2><div class="outline-text-2" id="text-orgde44ee9">
 <p>
 Much of the user-facing functionality in Emacs is provided by <b>major</b> and <b>minor</b> modes.
 </p>
@@ -51,7 +51,7 @@ Any mode that is defined will have a command that enables or disables it which c
 (auto-revert-mode 1)</pre>
 </div>
 
-<h2><a id="writing-a-basic-minor-mode" class="anchor" href="#writing-a-basic-minor-mode">¶</a>Writing a basic minor mode</h2><div class="outline-text-2" id="text-orge1bdd74">
+<h2><a id="writing-a-basic-minor-mode" class="anchor" href="#writing-a-basic-minor-mode">¶</a>Writing a basic minor mode</h2><div class="outline-text-2" id="text-org9289b62">
 <p>
 A minor mode is basically a bit of Emacs Lisp code that conforms to a set of conventions on how minor modes should be defined.  Here are the high level things that a custom minor mode needs to work correctly in Emacs:
 </p>
@@ -81,7 +81,7 @@ Note that the mode command will have to check the mode variable to see if it is 
 </p>
 </div>
 
-<h2><a id="example-creating-a-simple-minor-mode-from-scratch" class="anchor" href="#example-creating-a-simple-minor-mode-from-scratch">¶</a>Example: Creating a simple minor mode from scratch</h2><div class="outline-text-2" id="text-org5aae78a">
+<h2><a id="example-creating-a-simple-minor-mode-from-scratch" class="anchor" href="#example-creating-a-simple-minor-mode-from-scratch">¶</a>Example: Creating a simple minor mode from scratch</h2><div class="outline-text-2" id="text-org4815a71">
 <p>
 Let&rsquo;s follow the conventions we talked about and write a simple minor mode from scratch!  Our minor mode, <code>dotcrafter-basic-mode</code>, will simply set a keymap that can be used when this mode is active and also update the mode line with the string &ldquo;dotcrafter&rdquo; to indicate its state.
 </p>
@@ -123,7 +123,7 @@ Note that this doesn&rsquo;t perfectly follow all of the conventions: minor mode
 </p>
 </div>
 
-<h2><a id="creating-a-hook" class="anchor" href="#creating-a-hook">¶</a>Creating a Hook</h2><div class="outline-text-2" id="text-orgebbf781">
+<h2><a id="creating-a-hook" class="anchor" href="#creating-a-hook">¶</a>Creating a Hook</h2><div class="outline-text-2" id="text-org1eded08">
 <p>
 One useful thing you might want to provide with your minor mode is a hook.  A hook is a variable that stores a list of functions to be invoked when <i>something</i> happens, like when a mode is activated.
 </p>
@@ -175,7 +175,7 @@ You can define as many hooks as you need for your minor mode!  It doesn&rsquo;t 
 </p>
 </div>
 
-<h2><a id="using-the-codedefine-minor-modecode-macro" class="anchor" href="#using-the-codedefine-minor-modecode-macro">¶</a>Using the <code>define-minor-mode</code> macro</h2><div class="outline-text-2" id="text-org6eb9371">
+<h2><a id="using-the-codedefine-minor-modecode-macro" class="anchor" href="#using-the-codedefine-minor-modecode-macro">¶</a>Using the <code>define-minor-mode</code> macro</h2><div class="outline-text-2" id="text-orgcc2323e">
 <p>
 Learning how to create your own minor mode from scratch is useful to show how simple they really are in practice, but once you understand it, you shouldn&rsquo;t have to do it that way every time.
 </p>
@@ -228,7 +228,7 @@ Let&rsquo;s take a look at the generated <code>dotcrafter-mode</code> command us
 </p>
 </div>
 
-<h2><a id="example-writing-real-behavior-for-codedotcrafter-modecode" class="anchor" href="#example-writing-real-behavior-for-codedotcrafter-modecode">¶</a>Example: Writing real behavior for <code>dotcrafter-mode</code></h2><div class="outline-text-2" id="text-org1cbd6a6">
+<h2><a id="example-writing-real-behavior-for-codedotcrafter-modecode" class="anchor" href="#example-writing-real-behavior-for-codedotcrafter-modecode">¶</a>Example: Writing real behavior for <code>dotcrafter-mode</code></h2><div class="outline-text-2" id="text-orgaf3d8f5">
 <p>
 Now let&rsquo;s take what we&rsquo;ve learned and set up <code>dotcrafter-mode</code> so that we will automatically tangle and update configuration target files for any Org Mode file that lives inside of our dotfiles folder.
 </p>
@@ -297,7 +297,7 @@ Things to try:
 </ul>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org5b4684b">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orga1925bf">
 <p>
 In the next episode, we&rsquo;ll learn how to write a custom major mode that provides a simple user interface for the <code>dotcrafter.el</code> package!
 </p>

@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>How to Create a Dotfiles Folder - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">How to Create a Dotfiles Folder</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/gibqkbdVbeY" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="letrsquos-create-a-dotfiles-folder" class="anchor" href="#letrsquos-create-a-dotfiles-folder">¶</a>Let&rsquo;s create a dotfiles folder!</h2><div class="outline-text-2" id="text-org8b5d06a">
+<h2><a id="letrsquos-create-a-dotfiles-folder" class="anchor" href="#letrsquos-create-a-dotfiles-folder">¶</a>Let&rsquo;s create a dotfiles folder!</h2><div class="outline-text-2" id="text-orgdcf27a9">
 <ul class="org-ul">
 <li>Create the folder in the right location</li>
 <li>Move some configuration files into it</li>
@@ -12,7 +12,7 @@
 </ul>
 </div>
 
-<h2><a id="create-a-folder-to-store-your-dotfiles" class="anchor" href="#create-a-folder-to-store-your-dotfiles">¶</a>Create a folder to store your dotfiles</h2><div class="outline-text-2" id="text-orga9dec18">
+<h2><a id="create-a-folder-to-store-your-dotfiles" class="anchor" href="#create-a-folder-to-store-your-dotfiles">¶</a>Create a folder to store your dotfiles</h2><div class="outline-text-2" id="text-org2b2a0e0">
 <p>
 I recommend creating this directory in the root of your home folder so that it&rsquo;s easier to use tools like GNU Stow:
 </p>
@@ -24,7 +24,7 @@ Now we have a fresh new folder ready to be populated with files!
 </p>
 </div>
 
-<h2><a id="move-some-of-your-existing-configuration-files-and-folders-into-it" class="anchor" href="#move-some-of-your-existing-configuration-files-and-folders-into-it">¶</a>Move some of your existing configuration files and folders into it</h2><div class="outline-text-2" id="text-orgca9aea3">
+<h2><a id="move-some-of-your-existing-configuration-files-and-folders-into-it" class="anchor" href="#move-some-of-your-existing-configuration-files-and-folders-into-it">¶</a>Move some of your existing configuration files and folders into it</h2><div class="outline-text-2" id="text-org50ac912">
 <p>
 Move the configuration files you care about to an equivalent file path in <code>~/.dotfiles</code>:
 </p>
@@ -43,7 +43,7 @@ On Windows this doesn&rsquo;t matter quite as much.
 </p>
 </div>
 
-<h2><a id="create-symbolic-links-to-the-original-config-file-locations" class="anchor" href="#create-symbolic-links-to-the-original-config-file-locations">¶</a>Create symbolic links to the original config file locations</h2><div class="outline-text-2" id="text-orgcd98689">
+<h2><a id="create-symbolic-links-to-the-original-config-file-locations" class="anchor" href="#create-symbolic-links-to-the-original-config-file-locations">¶</a>Create symbolic links to the original config file locations</h2><div class="outline-text-2" id="text-orgceb2ee4">
 <p>
 You can use the <code>ln</code> command on Linux and macOS to create symbolic links from a source file or directory to a new location:
 </p>
@@ -56,7 +56,7 @@ We&rsquo;ll use this to create links back into the home directory for all the co
 </p>
 </div>
 
-<h3><a id="for-windows-users" class="anchor" href="#for-windows-users">¶</a>For Windows users</h3><div class="outline-text-3" id="text-org45695d7">
+<h3><a id="for-windows-users" class="anchor" href="#for-windows-users">¶</a>For Windows users</h3><div class="outline-text-3" id="text-org7bca173">
 <p>
 On Windows, you can create a junction using <code>mklink</code>.  To create a link for an <b>individual file</b>, use <code>mklink /H</code>:
 </p>
@@ -75,7 +75,7 @@ To create a link for a directory, use <code>mklink /J</code>:
 </div>
 
 
-<h2><a id="the-downside-of-symbolic-links" class="anchor" href="#the-downside-of-symbolic-links">¶</a>The downside of symbolic links</h2><div class="outline-text-2" id="text-orgf9ca99c">
+<h2><a id="the-downside-of-symbolic-links" class="anchor" href="#the-downside-of-symbolic-links">¶</a>The downside of symbolic links</h2><div class="outline-text-2" id="text-orge55fa3b">
 <p>
 As you might imagine, it&rsquo;s tedious to create and manage symbolic links like this, especially when you are syncing them between machines.
 </p>
@@ -89,7 +89,7 @@ It&rsquo;s easier to use a tool meant for this purpose, we will talk about GNU S
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org11e5a17">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgd79a070">
 <p>
 Now that we have a dotfiles folder, the next step is to start managing it with Git!
 </p>

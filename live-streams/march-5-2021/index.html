@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Emacs Native Comp is going to change everything - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Emacs Native Comp is going to change everything</h1><p class="site-post-meta">March  5, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/i8OLg-f9EHk" allowfullscreen></iframe></div><div id="content">
-<h2><a id="emacs-native-comp-is-going-to-change-beverythingb" class="anchor" href="#emacs-native-comp-is-going-to-change-beverythingb">¶</a>Emacs Native Comp is going to change <b>everything</b></h2><h3><a id="what-is-it" class="anchor" href="#what-is-it">¶</a>What is it?</h3><div class="outline-text-3" id="text-orgb4d09c4">
+<h2><a id="emacs-native-comp-is-going-to-change-beverythingb" class="anchor" href="#emacs-native-comp-is-going-to-change-beverythingb">¶</a>Emacs Native Comp is going to change <b>everything</b></h2><h3><a id="what-is-it" class="anchor" href="#what-is-it">¶</a>What is it?</h3><div class="outline-text-3" id="text-org7725359">
 <p>
 This is a new development in Emacs where Emacs Lisp code can now be compiled directly to native machine code for pretty major performance and responsiveness gains.
 </p>
@@ -10,7 +10,7 @@ It uses a library called <code>libgccjit</code> to use the compiler mechanics of
 </p>
 </div>
 
-<h3><a id="how-do-i-get-it" class="anchor" href="#how-do-i-get-it">¶</a>How do I get it?</h3><div class="outline-text-3" id="text-orgec64219">
+<h3><a id="how-do-i-get-it" class="anchor" href="#how-do-i-get-it">¶</a>How do I get it?</h3><div class="outline-text-3" id="text-org43bf937">
 <p>
 If you clone the Emacs repository from Savannah, you can check out the <code>feature/native-comp</code> branch:
 </p>
@@ -38,7 +38,7 @@ If you&rsquo;re on Windows, this Reddit post can be helpful:
 </p>
 </div>
 
-<h3><a id="if-yoursquore-using-guixx2026" class="anchor" href="#if-yoursquore-using-guixx2026">¶</a>If you&rsquo;re using Guix&#x2026;</h3><div class="outline-text-3" id="text-org62699ad">
+<h3><a id="if-yoursquore-using-guixx2026" class="anchor" href="#if-yoursquore-using-guixx2026">¶</a>If you&rsquo;re using Guix&#x2026;</h3><div class="outline-text-3" id="text-orgbf334a7">
 <p>
 Use the <code>flat</code> repository!  There is an <code>emacs-native-comp</code> package there that will take care of everything for you.
 </p>
@@ -60,7 +60,7 @@ Use the <code>flat</code> repository!  There is an <code>emacs-native-comp</code
        %default-channels)</pre>
 </div>
 
-<h3><a id="benchmarks" class="anchor" href="#benchmarks">¶</a>Benchmarks</h3><div class="outline-text-3" id="text-orgbd72384">
+<h3><a id="benchmarks" class="anchor" href="#benchmarks">¶</a>Benchmarks</h3><div class="outline-text-3" id="text-org66cc39a">
 <p>
 Some benchmarking steps: <a href="https://github.com/shshkn/emacs.d/blob/master/docs/nativecomp.md">https://github.com/shshkn/emacs.d/blob/master/docs/nativecomp.md</a> (thanks elken!)
 </p>
@@ -118,7 +118,7 @@ Some benchmarking steps: <a href="https://github.com/shshkn/emacs.d/blob/master/
   (funcall dw/compiled-benchmark))</pre>
 </div>
 
-<h3><a id="when-is-it-coming" class="anchor" href="#when-is-it-coming">¶</a>When is it coming?</h3><div class="outline-text-3" id="text-orgc485754">
+<h3><a id="when-is-it-coming" class="anchor" href="#when-is-it-coming">¶</a>When is it coming?</h3><div class="outline-text-3" id="text-org46d3121">
 <p>
 A tweet from the native-comp creator, Andrea Corallo, yesterday:
 </p>
@@ -144,11 +144,11 @@ The <code>NEWS</code> file in the <code>feature/native-comp</code> branch has be
 </p>
 </div>
 
-<h3><a id="silencing-the-warnings" class="anchor" href="#silencing-the-warnings">¶</a>Silencing the warnings!</h3><div class="outline-text-3" id="text-orgce8c5de">
+<h3><a id="silencing-the-warnings" class="anchor" href="#silencing-the-warnings">¶</a>Silencing the warnings!</h3><div class="outline-text-3" id="text-org12ee627">
 <pre>(<span class="org-keyword">setq</span> comp-async-report-warnings-errors nil)</pre>
 </div>
 
-<h2><a id="trying-out-eglot-an-alternative-to-lsp-mode" class="anchor" href="#trying-out-eglot-an-alternative-to-lsp-mode">¶</a>Trying out Eglot, an alternative to lsp-mode</h2><div class="outline-text-2" id="text-org4aa285d">
+<h2><a id="trying-out-eglot-an-alternative-to-lsp-mode" class="anchor" href="#trying-out-eglot-an-alternative-to-lsp-mode">¶</a>Trying out Eglot, an alternative to lsp-mode</h2><div class="outline-text-2" id="text-org75214b7">
 <p>
 Eglot is another client for the Language Server Protocol in Emacs.
 </p>
@@ -162,7 +162,7 @@ How does it work? <a href="https://github.com/joaotavora/eglot#how-does-eglot-wo
 </p>
 </div>
 
-<h3><a id="setting-it-up" class="anchor" href="#setting-it-up">¶</a>Setting it up</h3><div class="outline-text-3" id="text-orgf7c1cf2">
+<h3><a id="setting-it-up" class="anchor" href="#setting-it-up">¶</a>Setting it up</h3><div class="outline-text-3" id="text-org5e3282f">
 <p>
 Make sure to disable all <code>lsp-mode</code> hooks first!
 </p>

@@ -1,11 +1,11 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Key Bindings and Evil - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Key Bindings and Evil</h1><p class="site-post-meta"></p><div id="content"><ul class="org-ul">
 <li><a href="https://youtu.be/xaZMwNELaJY">Watch the video</a> on YouTube!</li>
 <li>Check out the <a href="https://github.com/daviwil/emacs-from-scratch/tree/29e542c79632853d85124019e47506cc0571cd05">final code</a> on GitHub</li>
 <li>Episode 3 of the <a href="../">Emacs From Scratch</a> series</li>
 </ul>
 
-<h2><a id="notes-from-previous-streams" class="anchor" href="#notes-from-previous-streams">¶</a>Notes from previous streams</h2><div class="outline-text-2" id="text-org960fced">
+<h2><a id="notes-from-previous-streams" class="anchor" href="#notes-from-previous-streams">¶</a>Notes from previous streams</h2><div class="outline-text-2" id="text-orgb07c81e">
 <p>
 We need to update the <code>load-theme</code> call to avoid a prompt at startup, <code>(load-theme 'doom-dracula t)</code>
 </p>
@@ -15,13 +15,13 @@ Thanks to Kyle Sexton and Nathan Chen for pointing out that all-the-icons is nee
 </p>
 </div>
 
-<h2><a id="basic-key-bindings" class="anchor" href="#basic-key-bindings">¶</a>Basic Key Bindings</h2><div class="outline-text-2" id="text-org38c1cf4">
+<h2><a id="basic-key-bindings" class="anchor" href="#basic-key-bindings">¶</a>Basic Key Bindings</h2><div class="outline-text-2" id="text-orgd471ca7">
 <p>
 <code>define-key</code> and <code>global-set-key</code>
 </p>
 </div>
 
-<h2><a id="bindings-with-generalel" class="anchor" href="#bindings-with-generalel">¶</a>Bindings with general.el</h2><div class="outline-text-2" id="text-org649a43a">
+<h2><a id="bindings-with-generalel" class="anchor" href="#bindings-with-generalel">¶</a>Bindings with general.el</h2><div class="outline-text-2" id="text-org91574c6">
 <p>
 <a href="https://github.com/noctuid/general.el#general-examples">general.el examples</a>
 </p>
@@ -40,7 +40,7 @@ Thanks to Kyle Sexton and Nathan Chen for pointing out that all-the-icons is nee
   <span class="org-string">"tt"</span> '(counsel-load-theme <span class="org-builtin">:which-key</span> <span class="org-string">"choose theme"</span>))</pre>
 </div>
 
-<h2><a id="becoming-evil" class="anchor" href="#becoming-evil">¶</a>Becoming Evil</h2><div class="outline-text-2" id="text-org6c3acfb">
+<h2><a id="becoming-evil" class="anchor" href="#becoming-evil">¶</a>Becoming Evil</h2><div class="outline-text-2" id="text-org45b8340">
 <p>
 <a href="https://github.com/emacs-evil/evil">evil-mode</a> on GitHub
 <a href="https://github.com/emacs-evil/evil-collection">evil-collection</a> on GitHub
@@ -107,7 +107,7 @@ If we want to be hardcore&#x2026;
   (evil-global-set-key 'motion (kbd <span class="org-string">"&lt;up&gt;"</span>) 'rune/dont-arrow-me-bro)</pre>
 </div>
 
-<h2><a id="hydra" class="anchor" href="#hydra">¶</a>Hydra</h2><div class="outline-text-2" id="text-orgebc9399">
+<h2><a id="hydra" class="anchor" href="#hydra">¶</a>Hydra</h2><div class="outline-text-2" id="text-org90ba204">
 <p>
 <a href="https://github.com/abo-abo/hydra">Hydra</a> on GitHub
 </p>

@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:37 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Teach Emacs to Keep Your Folders Clean - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Teach Emacs to Keep Your Folders Clean</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/XZjyJG-sFZI" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="have-you-noticed-these-files-before" class="anchor" href="#have-you-noticed-these-files-before">¶</a>Have you noticed these files before?</h2><div class="outline-text-2" id="text-org021f304">
+<h2><a id="have-you-noticed-these-files-before" class="anchor" href="#have-you-noticed-these-files-before">¶</a>Have you noticed these files before?</h2><div class="outline-text-2" id="text-org5776559">
 <ul class="org-ul">
 <li><code>Emacs.org~</code></li>
 <li><code>#Emacs.org#</code></li>
@@ -30,7 +30,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="backup-files" class="anchor" href="#backup-files">¶</a>Backup Files</h2><div class="outline-text-2" id="text-orgc719bd8">
+<h2><a id="backup-files" class="anchor" href="#backup-files">¶</a>Backup Files</h2><div class="outline-text-2" id="text-org8763fd3">
 <p>
 Everyone sees these files, they get created when you edit a file and save it.  (This <a href="https://stackoverflow.com/questions/56915816/emacs-does-not-backup-files-in-git-repo/56916567#56916567">doesn&rsquo;t happen</a> in VC-controlled repos, though!)
 </p>
@@ -52,7 +52,7 @@ More info: <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Ba
 </p>
 </div>
 
-<h2><a id="auto-save-files" class="anchor" href="#auto-save-files">¶</a>Auto Save Files</h2><div class="outline-text-2" id="text-orgad476cd">
+<h2><a id="auto-save-files" class="anchor" href="#auto-save-files">¶</a>Auto Save Files</h2><div class="outline-text-2" id="text-org5959109">
 <p>
 <code>auto-save-mode</code> will create temporary files in the same folder as edited files: <code>#Emacs.org#</code>
 </p>
@@ -72,7 +72,7 @@ More info: <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Au
 </p>
 </div>
 
-<h2><a id="lock-files" class="anchor" href="#lock-files">¶</a>Lock Files</h2><div class="outline-text-2" id="text-orgb7a328f">
+<h2><a id="lock-files" class="anchor" href="#lock-files">¶</a>Lock Files</h2><div class="outline-text-2" id="text-org666e014">
 <p>
 These are the files that look like <code>.#Emacs.org</code>.  They appear when you have unsaved changes to a file in a buffer!
 </p>
@@ -92,7 +92,7 @@ More information: <a href="https://www.gnu.org/software/emacs/manual/html_node/e
 </p>
 </div>
 
-<h2><a id="files-created-by-packages" class="anchor" href="#files-created-by-packages">¶</a>Files created by packages</h2><div class="outline-text-2" id="text-orgcb1443f">
+<h2><a id="files-created-by-packages" class="anchor" href="#files-created-by-packages">¶</a>Files created by packages</h2><div class="outline-text-2" id="text-org50e052b">
 <p>
 Projectile, <code>lsp-mode</code>, and other packages create their own files to store variables and state!
 </p>
@@ -101,7 +101,7 @@ Projectile, <code>lsp-mode</code>, and other packages create their own files to 
       lsp-session-file (expand-file-name <span class="org-string">"tmp/.lsp-session-v1"</span> user-emacs-directory))</pre>
 </div>
 
-<h2><a id="an-easy-fix" class="anchor" href="#an-easy-fix">¶</a>An easy fix</h2><div class="outline-text-2" id="text-org904ed31">
+<h2><a id="an-easy-fix" class="anchor" href="#an-easy-fix">¶</a>An easy fix</h2><div class="outline-text-2" id="text-orge24fd0c">
 <p>
 Many files are created relative to <code>user-emacs-directory</code> already!  We can change it in our config:
 </p>
@@ -117,7 +117,7 @@ However, this isn&rsquo;t 100% reliable; you&rsquo;ll need to chase down the fil
 </p>
 </div>
 
-<h2><a id="no-littering" class="anchor" href="#no-littering">¶</a>No Littering!</h2><div class="outline-text-2" id="text-orgbf5f35f">
+<h2><a id="no-littering" class="anchor" href="#no-littering">¶</a>No Littering!</h2><div class="outline-text-2" id="text-orgc0a2018">
 <p>
 One community-maintained solution for this is the package <code>no-littering</code>:
 </p>

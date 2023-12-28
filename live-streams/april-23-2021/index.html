@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Lisp Compiler Progress • Live Lisp Hacking - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Lisp Compiler Progress • Live Lisp Hacking</h1><p class="site-post-meta">April 23, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/E-g3Ls1GRz4" allowfullscreen></iframe></div><div id="content">
-<h2><a id="mesche-progress-update" class="anchor" href="#mesche-progress-update">¶</a>Mesche Progress Update</h2><div class="outline-text-2" id="text-orgac7ce30">
+<h2><a id="mesche-progress-update" class="anchor" href="#mesche-progress-update">¶</a>Mesche Progress Update</h2><div class="outline-text-2" id="text-orgc66f233">
 <p>
 Last week I detailed my plans for creating a compiler toolchain for a new Lisp called Mesche.  Today I&rsquo;ll show some early progress on it and explain a bit of what I had to do to get this far!
 </p>
@@ -10,7 +10,7 @@ You can check out the code on Sourcehut: <a href="https://git.sr.ht/~mesche/comp
 </p>
 </div>
 
-<h3><a id="areas" class="anchor" href="#areas">¶</a>Areas</h3><div class="outline-text-3" id="text-orgcbfa0fc">
+<h3><a id="areas" class="anchor" href="#areas">¶</a>Areas</h3><div class="outline-text-3" id="text-orgba8447c">
 <ul class="org-ul">
 <li>Linker</li>
 <li>Assembler</li>
@@ -18,7 +18,7 @@ You can check out the code on Sourcehut: <a href="https://git.sr.ht/~mesche/comp
 </ul>
 </div>
 
-<h3><a id="challenges" class="anchor" href="#challenges">¶</a>Challenges</h3><div class="outline-text-3" id="text-orgb48a626">
+<h3><a id="challenges" class="anchor" href="#challenges">¶</a>Challenges</h3><div class="outline-text-3" id="text-orgab1f2d9">
 <ul class="org-ul">
 <li>Understanding the ELF format and generating it correctly</li>
 <li>x86 instruction encoding</li>
@@ -29,7 +29,7 @@ You can check out the code on Sourcehut: <a href="https://git.sr.ht/~mesche/comp
 </div>
 
 
-<h3><a id="next-steps" class="anchor" href="#next-steps">¶</a>Next steps</h3><div class="outline-text-3" id="text-orge89e5c7">
+<h3><a id="next-steps" class="anchor" href="#next-steps">¶</a>Next steps</h3><div class="outline-text-3" id="text-orgbb33c77">
 <ul class="org-ul">
 <li>Encoding (and decoding) more instructions</li>
 <li>Detecting instructions that use memory addresses, updating them</li>
@@ -37,7 +37,7 @@ You can check out the code on Sourcehut: <a href="https://git.sr.ht/~mesche/comp
 </ul>
 </div>
 
-<h3><a id="resources" class="anchor" href="#resources">¶</a>Resources</h3><div class="outline-text-3" id="text-orgf1edc33">
+<h3><a id="resources" class="anchor" href="#resources">¶</a>Resources</h3><div class="outline-text-3" id="text-orga8a4db4">
 <ul class="org-ul">
 <li><a href="http://ref.x86asm.net/">x86 Opcode Reference</a> (<a href="http://ref.x86asm.net/coder64-abc.html">coder64-abc</a>, <a href="http://ref.x86asm.net/geek64-abc.html">geek64-abc</a>)</li>
 <li><a href="https://wiki.osdev.org/X86-64_Instruction_Encoding#Usage">x86-64 Instruction Encoding</a> on osdev.org Wiki</li>
@@ -47,7 +47,7 @@ You can check out the code on Sourcehut: <a href="https://git.sr.ht/~mesche/comp
 </ul>
 </div>
 
-<h2><a id="lisp-live-hacking" class="anchor" href="#lisp-live-hacking">¶</a>Lisp Live Hacking</h2><div class="outline-text-2" id="text-org9e9fea8">
+<h2><a id="lisp-live-hacking" class="anchor" href="#lisp-live-hacking">¶</a>Lisp Live Hacking</h2><div class="outline-text-2" id="text-orgf565919">
 <p>
 Let&rsquo;s hack on a Lisp project!  To make things interesting, I&rsquo;ll let you choose:
 </p>

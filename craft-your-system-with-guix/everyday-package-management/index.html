@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Everyday Package Management with GNU Guix - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Everyday Package Management with GNU Guix</h1><p class="site-post-meta"></p><div class="video">  <iframe src="https://www.youtube.com/embed/Xy0YgnXFt1M" allowfullscreen></iframe></div><div id="content">
-<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgbfa3b85">
+<h2><a id="what-will-we-learn" class="anchor" href="#what-will-we-learn">¶</a>What will we learn?</h2><div class="outline-text-2" id="text-orgbbcab00">
 <p>
 In the last video I showed how you can install GNU Guix as an alternative package manager on your existing Linux distribution but I didn&rsquo;t go into much detail about how you can use it.
 </p>
@@ -18,7 +18,7 @@ If you find this guide helpful, please consider supporting System Crafters via t
 </div>
 </div>
 
-<h2><a id="searching-for-packages" class="anchor" href="#searching-for-packages">¶</a>Searching for Packages</h2><div class="outline-text-2" id="text-org99eae63">
+<h2><a id="searching-for-packages" class="anchor" href="#searching-for-packages">¶</a>Searching for Packages</h2><div class="outline-text-2" id="text-org212495a">
 <p>
 When you start using Guix, you&rsquo;ll probably want to figure out what packages are available to install.  Guix provides a search command that can be useful for this purpose:
 </p>
@@ -47,7 +47,7 @@ guix search ^sqlite$</pre>
 </p>
 </div>
 
-<h2><a id="installing-packages" class="anchor" href="#installing-packages">¶</a>Installing Packages</h2><div class="outline-text-2" id="text-orgf552927">
+<h2><a id="installing-packages" class="anchor" href="#installing-packages">¶</a>Installing Packages</h2><div class="outline-text-2" id="text-org8abeed2">
 <p>
 When you&rsquo;ve found a package that you&rsquo;d like to install, you can use the <code>guix install</code> command.  This command will install the specified package (or list of packages) into your default user profile.
 </p>
@@ -80,7 +80,7 @@ Typically the output named <code>out</code> is the default output.  In the case 
 </p>
 </div>
 
-<h2><a id="upgrading-packages" class="anchor" href="#upgrading-packages">¶</a>Upgrading Packages</h2><div class="outline-text-2" id="text-org84a77e0">
+<h2><a id="upgrading-packages" class="anchor" href="#upgrading-packages">¶</a>Upgrading Packages</h2><div class="outline-text-2" id="text-orgac7fd05">
 <p>
 After you&rsquo;ve installed a few packages, you will probably want to upgrade them to a newer version at some point.  Before you can upgrade, you&rsquo;ll have to sync the latest package definitions from the main Guix repository and any other package sources you might be using.  You can use the following command to do this:
 </p>
@@ -126,7 +126,7 @@ You can also upgrade individual packages by passing the package name to <code>gu
 </p>
 </div>
 
-<h2><a id="listing-installed-packages" class="anchor" href="#listing-installed-packages">¶</a>Listing Installed Packages</h2><div class="outline-text-2" id="text-org7d62d48">
+<h2><a id="listing-installed-packages" class="anchor" href="#listing-installed-packages">¶</a>Listing Installed Packages</h2><div class="outline-text-2" id="text-org5acb184">
 <p>
 To see a list of all the packages you&rsquo;ve installed you can run this command:
 </p>
@@ -143,7 +143,7 @@ clojure 1.10.0  out     /gnu/store/s8x9r7qgy5d0mapw9xsgf9xr3jz794zr-clojure-1.10
 sqlite  3.32.3  out     /gnu/store/g9gf1ndxryjc15mrjiy41w162lx8j6cv-sqlite-3.32.3</pre>
 </div>
 
-<h2><a id="removing-packages" class="anchor" href="#removing-packages">¶</a>Removing Packages</h2><div class="outline-text-2" id="text-org4909761">
+<h2><a id="removing-packages" class="anchor" href="#removing-packages">¶</a>Removing Packages</h2><div class="outline-text-2" id="text-org7bb9345">
 <p>
 You can remove any package you&rsquo;ve already installed using the following command:
 </p>
@@ -165,7 +165,7 @@ You&rsquo;re probably thinking &ldquo;well I don&rsquo;t want a bunch of unused 
 </p>
 </div>
 
-<h2><a id="rolling-back" class="anchor" href="#rolling-back">¶</a>Rolling Back</h2><div class="outline-text-2" id="text-org580f264">
+<h2><a id="rolling-back" class="anchor" href="#rolling-back">¶</a>Rolling Back</h2><div class="outline-text-2" id="text-org3b57ff9">
 <p>
 One of the great features of Guix is the ability to roll back to a previous configuration if something that you do breaks your system.  The package manager can even do this for the packages that you&rsquo;ve installed!
 </p>
@@ -211,7 +211,7 @@ Keep in mind that you may need to run a terminal instance with a new login shell
 </p>
 </div>
 
-<h2><a id="avoiding-package-compilation" class="anchor" href="#avoiding-package-compilation">¶</a>Avoiding Package Compilation</h2><div class="outline-text-2" id="text-org16d0079">
+<h2><a id="avoiding-package-compilation" class="anchor" href="#avoiding-package-compilation">¶</a>Avoiding Package Compilation</h2><div class="outline-text-2" id="text-org690bea5">
 <p>
 If Guix has been configured to download &ldquo;substitutes&rdquo; (usually it is) then the package you install may contained precompiled binaries that come from Guix&rsquo;s build servers.  However, sometimes the build servers won&rsquo;t have a build for your package yet, especially if it is a big one like <code>ungoogled-chromium</code> or <code>firefox</code>.
 </p>
@@ -242,7 +242,7 @@ If it says <code>0.0% substitutes available (0 out of 1)</code> then you might w
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org844b6d6">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-org4bbf97a">
 <p>
 In the next video, I&rsquo;m going to show you how you can use Guix &ldquo;channels&rdquo; to install packages that aren&rsquo;t a part of the main Guix package repository so that you can get software and drivers that aren&rsquo;t allowed there.
 </p>

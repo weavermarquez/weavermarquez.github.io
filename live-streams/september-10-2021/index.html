@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Emacs Package Potluck - Part 2 - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Emacs Package Potluck - Part 2</h1><p class="site-post-meta">September 10, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/ajm71wB7FTc" allowfullscreen></iframe></div><div id="content">
-<h2><a id="news" class="anchor" href="#news">¶</a>News</h2><div class="outline-text-2" id="text-org9773017">
+<h2><a id="news" class="anchor" href="#news">¶</a>News</h2><div class="outline-text-2" id="text-org9f9a5e6">
 <ul class="org-ul">
 <li>Tomorrow (Saturday the 11th) marks 1 year since the first Emacs From Scratch stream + 100 videos!</li>
 <li>Sunday Sep 12, 1pm Pacific / 8pm UTC, Emacs/<a href="https://www.nushell.sh/">Nushell</a> stream with <a href="https://www.youtube.com/channel/UCrW38UKhlPoApXiuKNghuig">Systems with JT</a></li>
@@ -8,13 +8,13 @@
 </ul>
 
 
-<div id="org16f30e8" class="figure">
+<div id="org5a2ef67" class="figure">
 <p><a href="~/Pictures/efs_1_year.png">~/Pictures/efs_1_year.png</a>
 </p>
 </div>
 </div>
 
-<h2><a id="channel-brainstorming" class="anchor" href="#channel-brainstorming">¶</a>Channel Brainstorming</h2><div class="outline-text-2" id="text-org86c287d">
+<h2><a id="channel-brainstorming" class="anchor" href="#channel-brainstorming">¶</a>Channel Brainstorming</h2><div class="outline-text-2" id="text-orgfd448ab">
 <ul class="org-ul">
 <li>Move Friday streams one hour earlier to 8am Pacific / 3pm UTC?</li>
 <li>Create a second channel for Hack Sessions?</li>
@@ -22,7 +22,7 @@
 </ul>
 </div>
 
-<h2><a id="emacs-package-potluck" class="anchor" href="#emacs-package-potluck">¶</a>Emacs Package Potluck</h2><div class="outline-text-2" id="text-orgd65edaf">
+<h2><a id="emacs-package-potluck" class="anchor" href="#emacs-package-potluck">¶</a>Emacs Package Potluck</h2><div class="outline-text-2" id="text-org09cb017">
 <p>
 Just like last time, let&rsquo;s try a bunch of Emacs packages.
 </p>
@@ -39,7 +39,7 @@ I want to try your package suggestions, they can be any of the following:
 </ul>
 </div>
 
-<h3><a id="suggestions" class="anchor" href="#suggestions">¶</a>Suggestions</h3><div class="outline-text-3" id="text-orgbd3a451">
+<h3><a id="suggestions" class="anchor" href="#suggestions">¶</a>Suggestions</h3><div class="outline-text-3" id="text-org575e5c5">
 <ul class="org-ul">
 <li>TitanOfOld: <a href="https://github.com/Malabarba/beacon">beacon</a></li>
 <li>Appenzell, garjola: <a href="https://github.com/alphapapa/ement.el">ement.el</a> (try it with <a href="https://wiki.systemcrafters.cc/community/chat-with-us/#matrix-bridge">System Crafters Matrix bridge</a>)</li>
@@ -61,7 +61,7 @@ I want to try your package suggestions, they can be any of the following:
 </ul>
 </div>
 
-<h3><a id="final-config" class="anchor" href="#final-config">¶</a>Final Config</h3><div class="outline-text-3" id="text-org0bb416e">
+<h3><a id="final-config" class="anchor" href="#final-config">¶</a>Final Config</h3><div class="outline-text-3" id="text-orgc0c12ba">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">beacon</span>
   <span class="org-builtin">:straight</span> t)
 
@@ -124,7 +124,7 @@ I want to try your package suggestions, they can be any of the following:
   (selectric-make-sound (expand-file-name <span class="org-string">"~/Downloads/notify.wav"</span>)))</pre>
 </div>
 
-<h3><a id="ashrazrsquos-random-package-picker" class="anchor" href="#ashrazrsquos-random-package-picker">¶</a>Ashraz&rsquo;s Random Package Picker</h3><div class="outline-text-3" id="text-orgb7f23f9">
+<h3><a id="ashrazrsquos-random-package-picker" class="anchor" href="#ashrazrsquos-random-package-picker">¶</a>Ashraz&rsquo;s Random Package Picker</h3><div class="outline-text-3" id="text-org70d5dac">
 <p>
 Ashraz offered up this little gem before the stream but I didn&rsquo;t get to use it (yet!):
 </p>

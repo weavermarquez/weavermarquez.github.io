@@ -1,4 +1,4 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Improving the EXWM Experience - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Improving the EXWM Experience</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/9gfKrrTtyOk" allowfullscreen></iframe></div>
 </p>
@@ -7,7 +7,7 @@
 Check out the final code <a href="https://github.com/daviwil/emacs-from-scratch/blob/2805904966dbd5810ee735e25c4b427014761be5/Desktop.org">here</a>.
 </p>
 
-<h2><a id="desktoporg" class="anchor" href="#desktoporg">¶</a>Desktop.org</h2><div class="outline-text-2" id="text-org5ab3449">
+<h2><a id="desktoporg" class="anchor" href="#desktoporg">¶</a>Desktop.org</h2><div class="outline-text-2" id="text-orgb0da7b7">
 <p>
 Take a look at new Desktop.org file.  We have to update auto-tangle hook to accomodate this:
 </p>
@@ -27,7 +27,7 @@ Only load desktop.el when EXWM is needed in <code>start-exwm.sh</code>:
 <pre><span class="org-keyword">exec</span> dbus-launch --exit-with-session emacs -mm --debug-init -l ~/.emacs.d/desktop.el</pre>
 </div>
 
-<h2><a id="configuring-exwm-after-load" class="anchor" href="#configuring-exwm-after-load">¶</a>Configuring EXWM after load</h2><div class="outline-text-2" id="text-org3ba9a96">
+<h2><a id="configuring-exwm-after-load" class="anchor" href="#configuring-exwm-after-load">¶</a>Configuring EXWM after load</h2><div class="outline-text-2" id="text-orgfcbcf28">
 <p>
 Use <code>exwm-init-hook</code>:
 </p>
@@ -54,7 +54,7 @@ In <code>use-package exwm</code>:
 (add-hook 'exwm-init-hook #'efs/after-exwm-init)</pre>
 </div>
 
-<h2><a id="setting-a-background-image" class="anchor" href="#setting-a-background-image">¶</a>Setting a background image</h2><div class="outline-text-2" id="text-orgf6f8bd2">
+<h2><a id="setting-a-background-image" class="anchor" href="#setting-a-background-image">¶</a>Setting a background image</h2><div class="outline-text-2" id="text-org9df33d0">
 <p>
 Install and run Compton:
 </p>
@@ -107,7 +107,7 @@ In start-exwm.sh:
 compton &amp;</pre>
 </div>
 
-<h2><a id="using-media-keys" class="anchor" href="#using-media-keys">¶</a>Using media keys</h2><div class="outline-text-2" id="text-org0d03fc2">
+<h2><a id="using-media-keys" class="anchor" href="#using-media-keys">¶</a>Using media keys</h2><div class="outline-text-2" id="text-org5638bfc">
 <p>
 Use the <code>desktop-environment</code> package!
 </p>
@@ -132,7 +132,7 @@ Make sure to install dependencies:
 <pre>sudo apt install scrot brightnessctl playerctl</pre>
 </div>
 
-<h2><a id="computer-status-and-configuration" class="anchor" href="#computer-status-and-configuration">¶</a>Computer status and configuration</h2><h3><a id="tray-apps" class="anchor" href="#tray-apps">¶</a>Tray apps</h3><div class="outline-text-3" id="text-org5a8ebdf">
+<h2><a id="computer-status-and-configuration" class="anchor" href="#computer-status-and-configuration">¶</a>Computer status and configuration</h2><h3><a id="tray-apps" class="anchor" href="#tray-apps">¶</a>Tray apps</h3><div class="outline-text-3" id="text-org6da7e8e">
 <p>
 Tray apps like blueman and pasystray:
 </p>
@@ -149,7 +149,7 @@ Make sure to add <code>exwm-systemtray-height</code> to make sure icons appear!
 <pre>(<span class="org-keyword">setq</span> exwm-systemtray-height 32)</pre>
 </div>
 
-<h3><a id="mode-line-status" class="anchor" href="#mode-line-status">¶</a>Mode line status</h3><div class="outline-text-3" id="text-orgc837d00">
+<h3><a id="mode-line-status" class="anchor" href="#mode-line-status">¶</a>Mode line status</h3><div class="outline-text-3" id="text-orgb162579">
 <p>
 Battery and time display:
 </p>
@@ -163,7 +163,7 @@ Battery and time display:
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Also take a look at display-time-format and format-time-string</span></pre>
 </div>
 
-<h2><a id="better-app-launcher" class="anchor" href="#better-app-launcher">¶</a>Better app launcher</h2><div class="outline-text-2" id="text-org099e8a2">
+<h2><a id="better-app-launcher" class="anchor" href="#better-app-launcher">¶</a>Better app launcher</h2><div class="outline-text-2" id="text-org13ddcd5">
 <p>
 Use <code>counsel-linux-app!</code>
 </p>
@@ -183,7 +183,7 @@ In your EXWM config:
 (exwm-input-set-key (kbd <span class="org-string">"s-f"</span>) 'exwm-layout-toggle-fullscreen)</pre>
 </div>
 
-<h2><a id="locking-the-screen" class="anchor" href="#locking-the-screen">¶</a>Locking the screen</h2><div class="outline-text-2" id="text-orgb70aebb">
+<h2><a id="locking-the-screen" class="anchor" href="#locking-the-screen">¶</a>Locking the screen</h2><div class="outline-text-2" id="text-orgc5a279e">
 <p>
 Use <code>slock</code> and <code>xss-lock</code>!
 </p>

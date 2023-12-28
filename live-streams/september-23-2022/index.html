@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Exploring the Metaobject Protocol - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Exploring the Metaobject Protocol</h1><p class="site-post-meta">September 23, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/ZKsvmkovXH0" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org45f3d92">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orga0dbde8">
 <ul class="org-ul">
 <li><p>
 The Guix Birthday Event was a great success!  Keep an eye out here for talk recordings, coming soon:
@@ -21,7 +21,7 @@ The Guix Birthday Event was a great success!  Keep an eye out here for talk reco
 </ul>
 </div>
 
-<h2><a id="exploring-the-metaobject-protocol" class="anchor" href="#exploring-the-metaobject-protocol">¶</a>Exploring the Metaobject Protocol</h2><div class="outline-text-2" id="text-org053a5cd">
+<h2><a id="exploring-the-metaobject-protocol" class="anchor" href="#exploring-the-metaobject-protocol">¶</a>Exploring the Metaobject Protocol</h2><div class="outline-text-2" id="text-orge64737f">
 <p>
 Today we&rsquo;ll take a look at the concept of a &ldquo;metaobject protocol&rdquo; from a high level and try to understand it by studying the implementation of Tiny CLOS, a minimal implementation of the metaobject protocol for Scheme.
 </p>
@@ -31,7 +31,7 @@ If you are interested to study this idea further, you can&rsquo;t beat the book 
 </p>
 </div>
 
-<h3><a id="what-is-it" class="anchor" href="#what-is-it">¶</a>What is it?</h3><div class="outline-text-3" id="text-org7b7944d">
+<h3><a id="what-is-it" class="anchor" href="#what-is-it">¶</a>What is it?</h3><div class="outline-text-3" id="text-org2553d40">
 <p>
 The metaobject &ldquo;protocol&rdquo; is a design pattern that enables a highly flexible object oriented system that goes beyond what you would normally expect from classes and methods in a programming language.
 </p>
@@ -50,7 +50,7 @@ The metaobject &ldquo;protocol&rdquo; is a design pattern that enables a highly 
 </p>
 </div>
 
-<h3><a id="why-should-you-be-interested" class="anchor" href="#why-should-you-be-interested">¶</a>Why should you be interested?</h3><div class="outline-text-3" id="text-orgde00a61">
+<h3><a id="why-should-you-be-interested" class="anchor" href="#why-should-you-be-interested">¶</a>Why should you be interested?</h3><div class="outline-text-3" id="text-org3f1ee47">
 <p>
 Because it&rsquo;s cool!
 </p>
@@ -96,7 +96,7 @@ Interesting aspects:
 </ul>
 </div>
 
-<h3><a id="why-am-i-interested-in-it" class="anchor" href="#why-am-i-interested-in-it">¶</a>Why am I interested in it?</h3><div class="outline-text-3" id="text-orgff0b038">
+<h3><a id="why-am-i-interested-in-it" class="anchor" href="#why-am-i-interested-in-it">¶</a>Why am I interested in it?</h3><div class="outline-text-3" id="text-org7aa8639">
 <p>
 Because I&rsquo;m implementing it for Mesche!
 </p>
@@ -117,7 +117,7 @@ I believe this feature will give Mesche an interesting advantage in hackability:
 </ul>
 </div>
 
-<h3><a id="letrsquos-dive-in" class="anchor" href="#letrsquos-dive-in">¶</a>Let&rsquo;s dive in!</h3><div class="outline-text-3" id="text-orgb31dec5">
+<h3><a id="letrsquos-dive-in" class="anchor" href="#letrsquos-dive-in">¶</a>Let&rsquo;s dive in!</h3><div class="outline-text-3" id="text-orgb82d790">
 <p>
 Now we&rsquo;ll take a look at the code for Tiny CLOS and see what we can make of it:
 </p>
@@ -135,7 +135,7 @@ We can also experiment with Guile&rsquo;s GOOPS some more to try out some of the
 </p>
 </div>
 
-<h3><a id="lisps-with-a-meta-object-protocol" class="anchor" href="#lisps-with-a-meta-object-protocol">¶</a>Lisps with a meta-object protocol</h3><div class="outline-text-3" id="text-org8454912">
+<h3><a id="lisps-with-a-meta-object-protocol" class="anchor" href="#lisps-with-a-meta-object-protocol">¶</a>Lisps with a meta-object protocol</h3><div class="outline-text-3" id="text-org43e7c82">
 <p>
 If you&rsquo;d like to try out a Lisp with a meta-object protocol, check these out:
 </p>

@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Improving the IRC Experience in ERC - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Improving the IRC Experience in ERC</h1><p class="site-post-meta">June  4, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/Qci8t_jpVGA" allowfullscreen></iframe></div><div id="content">
-<h2><a id="the-great-irc-experiment" class="anchor" href="#the-great-irc-experiment">¶</a>The Great IRC Experiment</h2><div class="outline-text-2" id="text-org0c79c3f">
+<h2><a id="the-great-irc-experiment" class="anchor" href="#the-great-irc-experiment">¶</a>The Great IRC Experiment</h2><div class="outline-text-2" id="text-org3ef2dc5">
 <ul class="org-ul">
 <li>About 40-50 people in the channel at any time</li>
 <li>We&rsquo;re now a registered community on Libera.Chat!</li>
@@ -22,7 +22,7 @@ I&rsquo;m experimenting with a ZNC bouncer for $5+ sponsors, looking for 5 peopl
 </p>
 </div>
 
-<h2><a id="improving-the-irc-experience-in-erc" class="anchor" href="#improving-the-irc-experience-in-erc">¶</a>Improving the IRC Experience in ERC</h2><h3><a id="improving-the-display-of-messages" class="anchor" href="#improving-the-display-of-messages">¶</a>Improving the display of messages</h3><div class="outline-text-3" id="text-org8d5ba1f">
+<h2><a id="improving-the-irc-experience-in-erc" class="anchor" href="#improving-the-irc-experience-in-erc">¶</a>Improving the IRC Experience in ERC</h2><h3><a id="improving-the-display-of-messages" class="anchor" href="#improving-the-display-of-messages">¶</a>Improving the display of messages</h3><div class="outline-text-3" id="text-org974d49a">
 <p>
 You can change how ERC displays messages with <code>erc-fill-mode</code>:
 </p>
@@ -32,7 +32,7 @@ You can change how ERC displays messages with <code>erc-fill-mode</code>:
       erc-fill-static-center 20)</pre>
 </div>
 
-<h3><a id="customizing-activity-tracking" class="anchor" href="#customizing-activity-tracking">¶</a>Customizing activity tracking</h3><div class="outline-text-3" id="text-orga6c112c">
+<h3><a id="customizing-activity-tracking" class="anchor" href="#customizing-activity-tracking">¶</a>Customizing activity tracking</h3><div class="outline-text-3" id="text-org0646e4e">
 <p>
 Mode line tracking of channels is useful but can be a little annoying:
 </p>
@@ -49,17 +49,17 @@ If you&rsquo;re using multiple frames, especially if you keep IRC buffers on a s
 <pre>(<span class="org-keyword">setq</span> erc-track-visibility nil) <span class="org-comment-delimiter">; </span><span class="org-comment">Only use the selected frame for visibility</span></pre>
 </div>
 
-<h3><a id="tracking-specific-keywords-or-people" class="anchor" href="#tracking-specific-keywords-or-people">¶</a>Tracking specific keywords or people</h3><div class="outline-text-3" id="text-org72e1bad">
+<h3><a id="tracking-specific-keywords-or-people" class="anchor" href="#tracking-specific-keywords-or-people">¶</a>Tracking specific keywords or people</h3><div class="outline-text-3" id="text-org8c06f41">
 <pre>(<span class="org-keyword">setq</span> erc-pals '(<span class="org-string">"shom_"</span> <span class="org-string">"masteroman"</span> <span class="org-string">"benoitj"</span>)
             erc-fools '(<span class="org-string">"daviwil-test"</span>)
             erc-keywords '(<span class="org-string">"guix"</span> <span class="org-string">"wiki"</span>))</pre>
 </div>
 
-<h3><a id="desktop-notifications-for-matchesmentions" class="anchor" href="#desktop-notifications-for-matchesmentions">¶</a>Desktop notifications for matches/mentions</h3><div class="outline-text-3" id="text-org34b74ce">
+<h3><a id="desktop-notifications-for-matchesmentions" class="anchor" href="#desktop-notifications-for-matchesmentions">¶</a>Desktop notifications for matches/mentions</h3><div class="outline-text-3" id="text-org396ec86">
 <pre>(add-to-list 'erc-modules 'notifications)</pre>
 </div>
 
-<h3><a id="uniquely-colorizing-nicknames-in-chat" class="anchor" href="#uniquely-colorizing-nicknames-in-chat">¶</a>Uniquely colorizing nicknames in chat</h3><div class="outline-text-3" id="text-org9695e91">
+<h3><a id="uniquely-colorizing-nicknames-in-chat" class="anchor" href="#uniquely-colorizing-nicknames-in-chat">¶</a>Uniquely colorizing nicknames in chat</h3><div class="outline-text-3" id="text-orgaba7050">
 <p>
 This makes it easier to recognize specific people at a glance!
 </p>
@@ -75,7 +75,7 @@ You might need to run <code>M-: (erc-update-modules)</code> after running this i
 </p>
 </div>
 
-<h3><a id="displaying-inline-images" class="anchor" href="#displaying-inline-images">¶</a>Displaying inline images</h3><div class="outline-text-3" id="text-org2288026">
+<h3><a id="displaying-inline-images" class="anchor" href="#displaying-inline-images">¶</a>Displaying inline images</h3><div class="outline-text-3" id="text-org13a2281">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">erc-image</span>
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:after</span> erc
@@ -96,7 +96,7 @@ Try it out in a chat (like in <code>/query NickServ</code>): <a href="https://up
 </p>
 </div>
 
-<h3><a id="displaying-emojis-in-messages" class="anchor" href="#displaying-emojis-in-messages">¶</a>Displaying emojis in messages</h3><div class="outline-text-3" id="text-org93d1758">
+<h3><a id="displaying-emojis-in-messages" class="anchor" href="#displaying-emojis-in-messages">¶</a>Displaying emojis in messages</h3><div class="outline-text-3" id="text-orgc0978bb">
 <p>
 Use emojify-mode:
 </p>
@@ -107,7 +107,7 @@ Use emojify-mode:
   <span class="org-builtin">:commands</span> emojify-mode)</pre>
 </div>
 
-<h3><a id="connecting-to-a-specific-server-with-a-keybinding" class="anchor" href="#connecting-to-a-specific-server-with-a-keybinding">¶</a>Connecting to a specific server with a keybinding</h3><div class="outline-text-3" id="text-orgbd4a20a">
+<h3><a id="connecting-to-a-specific-server-with-a-keybinding" class="anchor" href="#connecting-to-a-specific-server-with-a-keybinding">¶</a>Connecting to a specific server with a keybinding</h3><div class="outline-text-3" id="text-orgcde6a6d">
 <pre>(<span class="org-keyword">defun</span> <span class="org-function-name">my/connect-irc</span> ()
   (<span class="org-keyword">interactive</span>)
   (erc-tls
@@ -120,7 +120,7 @@ Use emojify-mode:
 (global-set-key (kbd <span class="org-string">"C-c c c"</span>) 'my/connect-irc)</pre>
 </div>
 
-<h3><a id="jumping-to-irc-buffers-easily" class="anchor" href="#jumping-to-irc-buffers-easily">¶</a>Jumping to IRC buffers easily</h3><div class="outline-text-3" id="text-org6c7fca8">
+<h3><a id="jumping-to-irc-buffers-easily" class="anchor" href="#jumping-to-irc-buffers-easily">¶</a>Jumping to IRC buffers easily</h3><div class="outline-text-3" id="text-orgc8d1faf">
 <p>
 Two commands are useful for this:
 </p>
@@ -133,7 +133,7 @@ Two commands are useful for this:
 <pre>(<span class="org-keyword">setq</span> erc-track-enable-keybindings t)</pre>
 </div>
 
-<h3><a id="automatically-logging-in" class="anchor" href="#automatically-logging-in">¶</a>Automatically logging in</h3><div class="outline-text-3" id="text-org33a5d25">
+<h3><a id="automatically-logging-in" class="anchor" href="#automatically-logging-in">¶</a>Automatically logging in</h3><div class="outline-text-3" id="text-org050dae3">
 <p>
 You&rsquo;ll need <code>auth-source</code> set up for this to work!  Check out the video I made about <a href="https://www.youtube.com/watch?v=nZ_T7Q49B8Y">storing your passwords in Emacs</a>.
 </p>
@@ -145,13 +145,13 @@ Setting this variable to <code>nil</code> will tell ERC that it should look up y
 <pre>(<span class="org-keyword">setq</span> erc-prompt-for-password nil)</pre>
 </div>
 
-<h3><a id="using-znc" class="anchor" href="#using-znc">¶</a>Using ZNC</h3><div class="outline-text-3" id="text-org284801e">
+<h3><a id="using-znc" class="anchor" href="#using-znc">¶</a>Using ZNC</h3><div class="outline-text-3" id="text-orgbf565ff">
 <p>
 <a href="https://github.com/sshirokov/ZNC.el">https://github.com/sshirokov/ZNC.el</a>
 </p>
 </div>
 
-<h2><a id="emacs-news" class="anchor" href="#emacs-news">¶</a>Emacs News</h2><div class="outline-text-2" id="text-orgbb5c4ab">
+<h2><a id="emacs-news" class="anchor" href="#emacs-news">¶</a>Emacs News</h2><div class="outline-text-2" id="text-org7bd0205">
 <ul class="org-ul">
 <li><a href="https://github.com/rougier/svg-lib">svg-lib</a></li>
 <li><a href="https://www.reddit.com/r/emacs/comments/noh7da/consult_08_and_marginalia_06_released_on_gnu_elpa/">Consult 0.8 and Marginalia 0.6 released to ELPA</a></li>
@@ -159,7 +159,7 @@ Setting this variable to <code>nil</code> will tell ERC that it should look up y
 </ul>
 </div>
 
-<h2><a id="next-week-on-the-stream" class="anchor" href="#next-week-on-the-stream">¶</a>Next week on the stream</h2><div class="outline-text-2" id="text-org73a14dc">
+<h2><a id="next-week-on-the-stream" class="anchor" href="#next-week-on-the-stream">¶</a>Next week on the stream</h2><div class="outline-text-2" id="text-orgda90a06">
 <p>
 We&rsquo;ll be doing another Dotfile Detective stream featuring a discussion with <a href="https://ambrevar.xyz">Ambrevar</a> about <a href="https://gitlab.com/ambrevar/dotfiles/">his dotfiles</a> and possibly other topics!
 </p>

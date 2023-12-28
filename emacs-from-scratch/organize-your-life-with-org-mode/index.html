@@ -1,11 +1,11 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Organize Your Life with Org Mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Organize Your Life with Org Mode</h1><p class="site-post-meta"></p><div id="content"><ul class="org-ul">
 <li><a href="https://youtu.be/PNE-mgkZ6HM">Watch the video</a> on YouTube!</li>
 <li>Check out the <a href="https://github.com/daviwil/emacs-from-scratch/tree/c55d0f5e309f7ed8ffa3c00bc35c75937a5184e4">final code</a> on GitHub</li>
 <li>Episode 6 of the <a href="../">Emacs From Scratch</a> series</li>
 </ul>
 
-<h2><a id="viewer-questions" class="anchor" href="#viewer-questions">¶</a>Viewer Questions</h2><div class="outline-text-2" id="text-org719193b">
+<h2><a id="viewer-questions" class="anchor" href="#viewer-questions">¶</a>Viewer Questions</h2><div class="outline-text-2" id="text-org8bff7c0">
 <p>
 From <b>Kristoffer Balintona</b>:
 </p>
@@ -31,7 +31,7 @@ Couple of questions about org:
 </ol>
 </div>
 
-<h2><a id="the-agenda" class="anchor" href="#the-agenda">¶</a>The Agenda</h2><div class="outline-text-2" id="text-org14e8de9">
+<h2><a id="the-agenda" class="anchor" href="#the-agenda">¶</a>The Agenda</h2><div class="outline-text-2" id="text-org15cba7f">
 <p>
 Run <code>org-agenda</code> to see possible agenda views.
 </p>
@@ -47,7 +47,7 @@ Run <code>org-agenda</code> to see possible agenda views.
 (<span class="org-keyword">setq</span> org-log-into-drawer t)</pre>
 </div>
 
-<h2><a id="scheduling-and-deadlines" class="anchor" href="#scheduling-and-deadlines">¶</a>Scheduling and Deadlines</h2><div class="outline-text-2" id="text-org856c981">
+<h2><a id="scheduling-and-deadlines" class="anchor" href="#scheduling-and-deadlines">¶</a>Scheduling and Deadlines</h2><div class="outline-text-2" id="text-org9f3b66c">
 <ul class="org-ul">
 <li><code>org-schedule</code></li>
 <li><code>org-deadline</code></li>
@@ -56,7 +56,7 @@ Run <code>org-agenda</code> to see possible agenda views.
 </ul>
 </div>
 
-<h2><a id="custom-todo-states-and-agendas" class="anchor" href="#custom-todo-states-and-agendas">¶</a>Custom TODO states and Agendas</h2><div class="outline-text-2" id="text-org3962889">
+<h2><a id="custom-todo-states-and-agendas" class="anchor" href="#custom-todo-states-and-agendas">¶</a>Custom TODO states and Agendas</h2><div class="outline-text-2" id="text-orgc46624e">
 <pre>(<span class="org-keyword">setq</span> org-todo-keywords
   '((sequence <span class="org-string">"TODO(t)"</span> <span class="org-string">"NEXT(n)"</span> <span class="org-string">"|"</span> <span class="org-string">"DONE(d!)"</span>)
     (sequence <span class="org-string">"BACKLOG(b)"</span> <span class="org-string">"PLAN(p)"</span> <span class="org-string">"READY(r)"</span> <span class="org-string">"ACTIVE(a)"</span> <span class="org-string">"REVIEW(v)"</span> <span class="org-string">"WAIT(w@/!)"</span> <span class="org-string">"HOLD(h)"</span> <span class="org-string">"|"</span> <span class="org-string">"COMPLETED(c)"</span> <span class="org-string">"CANC(k@)"</span>)))</pre>
@@ -115,7 +115,7 @@ Run <code>org-agenda</code> to see possible agenda views.
              (org-agenda-files org-agenda-files)))))))</pre>
 </div>
 
-<h2><a id="refiling" class="anchor" href="#refiling">¶</a>Refiling</h2><div class="outline-text-2" id="text-orgbf273fb">
+<h2><a id="refiling" class="anchor" href="#refiling">¶</a>Refiling</h2><div class="outline-text-2" id="text-org481e58c">
 <pre>(<span class="org-keyword">setq</span> org-refile-targets
       '((<span class="org-string">"Archive.org"</span> <span class="org-builtin">:maxlevel</span> . 1)))
 
@@ -123,7 +123,7 @@ Run <code>org-agenda</code> to see possible agenda views.
 (advice-add 'org-refile <span class="org-builtin">:after</span> 'org-save-all-org-buffers)</pre>
 </div>
 
-<h2><a id="capture-templates" class="anchor" href="#capture-templates">¶</a>Capture Templates</h2><div class="outline-text-2" id="text-org27e88c9">
+<h2><a id="capture-templates" class="anchor" href="#capture-templates">¶</a>Capture Templates</h2><div class="outline-text-2" id="text-org5592260">
 <ul class="org-ul">
 <li>Tasks</li>
 <li>Meeting notes</li>
@@ -172,7 +172,7 @@ Bindings straight to templates
   (<span class="org-keyword">lambda</span> () (<span class="org-keyword">interactive</span>) (org-capture nil <span class="org-string">"j"</span>)))</pre>
 </div>
 
-<h2><a id="habit-tracking" class="anchor" href="#habit-tracking">¶</a>Habit Tracking</h2><div class="outline-text-2" id="text-org7b50099">
+<h2><a id="habit-tracking" class="anchor" href="#habit-tracking">¶</a>Habit Tracking</h2><div class="outline-text-2" id="text-orgba8eb0c">
 <p>
 <a href="https://orgmode.org/manual/Tracking-your-habits.html">Org Mode Manual: Tracking Your Habits</a>
 </p>

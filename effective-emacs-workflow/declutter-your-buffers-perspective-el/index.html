@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Declutter Your Emacs Buffers with Perspective.el - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Declutter Your Emacs Buffers with Perspective.el</h1><p class="site-post-meta"></p><div id="content"><p>
 <a href="https://youtu.be/uyMdDzjQFMU">Watch the video</a> on YouTube!
 </p>
 
-<h2><a id="what-is-perspectiveel" class="anchor" href="#what-is-perspectiveel">¶</a>What is Perspective.el?</h2><div class="outline-text-2" id="text-org5c357ef">
+<h2><a id="what-is-perspectiveel" class="anchor" href="#what-is-perspectiveel">¶</a>What is Perspective.el?</h2><div class="outline-text-2" id="text-org97ea5eb">
 <p>
 There&rsquo;s a question I see pretty often in the <a href="http://systemcrafters.chat">System Crafters Discord</a>:
 </p>
@@ -29,7 +29,7 @@ There are other alternatives to this package that have a different take on the w
 </p>
 </div>
 
-<h2><a id="benefits-of-perspectiveel" class="anchor" href="#benefits-of-perspectiveel">¶</a>Benefits of perspective.el</h2><div class="outline-text-2" id="text-orgca7e111">
+<h2><a id="benefits-of-perspectiveel" class="anchor" href="#benefits-of-perspectiveel">¶</a>Benefits of perspective.el</h2><div class="outline-text-2" id="text-orgdb55cb5">
 <ul class="org-ul">
 <li>Each perspective keeps its own buffer list and window layout</li>
 <li>Perspectives are attached to specific frames</li>
@@ -43,7 +43,7 @@ I&rsquo;ve been using perspective.el for a few months now and it has become an i
 </p>
 </div>
 
-<h2><a id="basic-configuration" class="anchor" href="#basic-configuration">¶</a>Basic configuration</h2><div class="outline-text-2" id="text-org295786a">
+<h2><a id="basic-configuration" class="anchor" href="#basic-configuration">¶</a>Basic configuration</h2><div class="outline-text-2" id="text-orgb280462">
 <p>
 If you use <code>use-package</code> with <code>package.el</code>, you can copy the following Emacs Lisp into your <code>init.el</code> file and execute it for the first time with <code>C-M-x</code>.
 </p>
@@ -67,7 +67,7 @@ We&rsquo;ll try out perspective.el in a basic Emacs configuration so that we can
 </p>
 </div>
 
-<h2><a id="the-ldquomainrdquo-perspective" class="anchor" href="#the-ldquomainrdquo-perspective">¶</a>The &ldquo;main&rdquo; perspective</h2><div class="outline-text-2" id="text-org266b285">
+<h2><a id="the-ldquomainrdquo-perspective" class="anchor" href="#the-ldquomainrdquo-perspective">¶</a>The &ldquo;main&rdquo; perspective</h2><div class="outline-text-2" id="text-orgd3c7eb6">
 <p>
 By default, <code>perspective.el</code> will create a perspective called &ldquo;main&rdquo; in every frame that Emacs creates.  In the very first frame, all of Emacs&rsquo; starting buffers will be in the &ldquo;main&rdquo; perspective of that frame.
 </p>
@@ -85,7 +85,7 @@ Whenever you open a file or some other buffer inside of a perspective, the buffe
 </p>
 </div>
 
-<h2><a id="listing-buffers-in-the-perspective" class="anchor" href="#listing-buffers-in-the-perspective">¶</a>Listing buffers in the perspective</h2><div class="outline-text-2" id="text-org5612909">
+<h2><a id="listing-buffers-in-the-perspective" class="anchor" href="#listing-buffers-in-the-perspective">¶</a>Listing buffers in the perspective</h2><div class="outline-text-2" id="text-org4bbd3a9">
 <p>
 To list all buffers in the current perspective, use the normal <code>switch-to-buffer</code> command!  This should work great with Emacs&rsquo; built-in completion systems, Helm, and Vertico.
 </p>
@@ -101,7 +101,7 @@ You can also choose from all open buffers and automatically switch to the perspe
 </p>
 </div>
 
-<h2><a id="creating-a-perspective" class="anchor" href="#creating-a-perspective">¶</a>Creating a perspective</h2><div class="outline-text-2" id="text-orge7405d9">
+<h2><a id="creating-a-perspective" class="anchor" href="#creating-a-perspective">¶</a>Creating a perspective</h2><div class="outline-text-2" id="text-org7328529">
 <p>
 Having only one perspective isn&rsquo;t very useful, though, so let&rsquo;s create another!
 </p>
@@ -119,7 +119,7 @@ We can now list the buffers of this new perspective using <code>switch-to-buffer
 </p>
 </div>
 
-<h2><a id="switching-perspectives" class="anchor" href="#switching-perspectives">¶</a>Switching perspectives</h2><div class="outline-text-2" id="text-org83c7d80">
+<h2><a id="switching-perspectives" class="anchor" href="#switching-perspectives">¶</a>Switching perspectives</h2><div class="outline-text-2" id="text-org9cc9176">
 <p>
 You can select from a list of all perspectives for the current frame using the <code>persp-switch</code> command (<code>C-x x s</code>).
 </p>
@@ -142,7 +142,7 @@ You can also select between perspectives using the number row keys with <code>C-
 </p>
 </div>
 
-<h2><a id="adding-an-existing-buffer-to-a-perspective" class="anchor" href="#adding-an-existing-buffer-to-a-perspective">¶</a>Adding an existing buffer to a perspective</h2><div class="outline-text-2" id="text-org5704431">
+<h2><a id="adding-an-existing-buffer-to-a-perspective" class="anchor" href="#adding-an-existing-buffer-to-a-perspective">¶</a>Adding an existing buffer to a perspective</h2><div class="outline-text-2" id="text-org7713fbf">
 <p>
 Sometimes you&rsquo;ll end up in this situation: you open a file in a perspective and then realize that you should have opened it in a more appropriate perspective.
 </p>
@@ -158,13 +158,13 @@ There are a few ways to get that buffer into the desired perspective:
 </ul>
 </div>
 
-<h2><a id="removing-a-buffer-from-a-perspective" class="anchor" href="#removing-a-buffer-from-a-perspective">¶</a>Removing a buffer from a perspective</h2><div class="outline-text-2" id="text-org04a7423">
+<h2><a id="removing-a-buffer-from-a-perspective" class="anchor" href="#removing-a-buffer-from-a-perspective">¶</a>Removing a buffer from a perspective</h2><div class="outline-text-2" id="text-org87d832d">
 <p>
 If you want to remove a buffer from a perspective, you can use the <code>persp-remove</code> (<code>C-x x k</code>) command.  Once you select a buffer, it will only be removed from the current perspective.
 </p>
 </div>
 
-<h2><a id="killing-perspectives" class="anchor" href="#killing-perspectives">¶</a>Killing perspectives</h2><div class="outline-text-2" id="text-org22cbcc5">
+<h2><a id="killing-perspectives" class="anchor" href="#killing-perspectives">¶</a>Killing perspectives</h2><div class="outline-text-2" id="text-orgcd29b1c">
 <p>
 If you&rsquo;re done with a particular perspective, you can &ldquo;kill&rdquo; it using <code>persp-kill</code> (<code>C-x x c</code>).
 </p>
@@ -178,7 +178,7 @@ In a very recent commit a new command named <code>persp-kill-others</code> was a
 </p>
 </div>
 
-<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgfe73674">
+<h2><a id="whatrsquos-next" class="anchor" href="#whatrsquos-next">¶</a>What&rsquo;s next?</h2><div class="outline-text-2" id="text-orgaad28b8">
 <p>
 That was just a brief overview of the <code>perspective.el</code> package to get you started!  In future videos we&rsquo;ll cover more ways to customize the your perspective workflow and also how to integrate it with EXWM and Projectile!
 </p>

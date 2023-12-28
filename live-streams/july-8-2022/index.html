@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Configuring Rational Emacs with Guix Home - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Configuring Rational Emacs with Guix Home</h1><p class="site-post-meta">July  8, 2022</p><div class="video">  <iframe src="https://www.youtube.com/embed/qYqwEmdaOy0" allowfullscreen></iframe></div><div id="content">
-<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-org1f6aec5">
+<h2><a id="updates" class="anchor" href="#updates">¶</a>Updates</h2><div class="outline-text-2" id="text-orgadd86f4">
 <ul class="org-ul">
 <li>Still thinking about what the next SC video should be.  If you have a particular request, let me know!</li>
 <li>I&rsquo;ll be speaking at the Guix Birthday Event: <a href="https://guix.gnu.org/blog/2022/celebrating-10-years-of-guix-in-paris/">https://guix.gnu.org/blog/2022/celebrating-10-years-of-guix-in-paris/</a></li>
@@ -8,7 +8,7 @@
 </ul>
 </div>
 
-<h2><a id="configuring-rational-emacs-with-guix-home" class="anchor" href="#configuring-rational-emacs-with-guix-home">¶</a>Configuring Rational Emacs with Guix Home</h2><div class="outline-text-2" id="text-orgb7d6e59">
+<h2><a id="configuring-rational-emacs-with-guix-home" class="anchor" href="#configuring-rational-emacs-with-guix-home">¶</a>Configuring Rational Emacs with Guix Home</h2><div class="outline-text-2" id="text-org5e09c19">
 <p>
 Today we&rsquo;re going to try and combine two areas that are interesting to me: configuring Emacs and managing your dotfiles configuration with Guix Home.
 </p>
@@ -18,7 +18,7 @@ We&rsquo;ll attempt to make it possible to install and configure Rational Emacs 
 </p>
 </div>
 
-<h3><a id="why" class="anchor" href="#why">¶</a>Why?</h3><div class="outline-text-3" id="text-org1e8b198">
+<h3><a id="why" class="anchor" href="#why">¶</a>Why?</h3><div class="outline-text-3" id="text-orgbfd1703">
 <p>
 One of my goals with creating Rational Emacs was to make a base Emacs configuration that could be used both with and without Guix.
 </p>
@@ -47,7 +47,7 @@ If you want some more details on how you can use Guix to manage an Emacs configu
 </p>
 </div>
 
-<h3><a id="how" class="anchor" href="#how">¶</a>How?</h3><div class="outline-text-3" id="text-org59201a1">
+<h3><a id="how" class="anchor" href="#how">¶</a>How?</h3><div class="outline-text-3" id="text-org03701de">
 <p>
 I&rsquo;m not entirely sure yet what will be needed, but here&rsquo;s what we&rsquo;ll try to do:
 </p>
@@ -60,7 +60,7 @@ I&rsquo;m not entirely sure yet what will be needed, but here&rsquo;s what we&rs
 </ul>
 </div>
 
-<h2><a id="the-files" class="anchor" href="#the-files">¶</a>The files</h2><div class="outline-text-2" id="text-org7715177">
+<h2><a id="the-files" class="anchor" href="#the-files">¶</a>The files</h2><div class="outline-text-2" id="text-orgdcb9eb2">
 <p>
 <b>rational/home-config.scm</b>
 </p>

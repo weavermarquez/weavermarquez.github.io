@@ -1,6 +1,6 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Do we really need use-package in Emacs? - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Do we really need use-package in Emacs?</h1><p class="site-post-meta">July 16, 2021</p><div class="video">  <iframe src="https://www.youtube.com/embed/zWIByv8JOrg" allowfullscreen></iframe></div><div id="content">
-<h2><a id="do-we-really-need-use-package" class="anchor" href="#do-we-really-need-use-package">¶</a>Do we really need use-package?</h2><div class="outline-text-2" id="text-org5aedc50">
+<h2><a id="do-we-really-need-use-package" class="anchor" href="#do-we-really-need-use-package">¶</a>Do we really need use-package?</h2><div class="outline-text-2" id="text-org1b49b32">
 <p>
 <code>use-package</code> is a (very?) commonly used package for writing one&rsquo;s Emacs configuration in a more &ldquo;concise&rdquo; way.  It provides a macro called <code>use-package</code> which removes some boilerplate needed in Emacs configs.
 </p>
@@ -14,7 +14,7 @@ I&rsquo;ve been experimenting with a new configuration lately which doesn&rsquo;
 </p>
 </div>
 
-<h2><a id="the-value-of-use-package" class="anchor" href="#the-value-of-use-package">¶</a>The value of use-package</h2><div class="outline-text-2" id="text-org8b672ae">
+<h2><a id="the-value-of-use-package" class="anchor" href="#the-value-of-use-package">¶</a>The value of use-package</h2><div class="outline-text-2" id="text-org3a0d3b8">
 <p>
 <code>use-package</code> certainly provides some useful features:
 </p>
@@ -32,7 +32,7 @@ What else?
 </p>
 </div>
 
-<h2><a id="the-downsides-of-use-package" class="anchor" href="#the-downsides-of-use-package">¶</a>The downsides of use-package</h2><div class="outline-text-2" id="text-orgfdd021c">
+<h2><a id="the-downsides-of-use-package" class="anchor" href="#the-downsides-of-use-package">¶</a>The downsides of use-package</h2><div class="outline-text-2" id="text-orgc08fb4f">
 <p>
 In my opinion, there are a few downsides to using <code>use-package</code>, especially for new Emacs users:
 </p>
@@ -53,7 +53,7 @@ This conversation is mainly an exercise to make us think critically about what i
 </p>
 </div>
 
-<h2><a id="what-does-use-package-really-do" class="anchor" href="#what-does-use-package-really-do">¶</a>What does use-package really do?</h2><div class="outline-text-2" id="text-org11c5237">
+<h2><a id="what-does-use-package-really-do" class="anchor" href="#what-does-use-package-really-do">¶</a>What does use-package really do?</h2><div class="outline-text-2" id="text-org9628d4f">
 <p>
 I mentioned before that <code>use-package</code> is a macro, but what does that mean?
 </p>
@@ -71,7 +71,7 @@ We can use <code>M-x emacs-lisp-macroexpand</code> with the cursor before a macr
 </p>
 </div>
 
-<h3><a id="features-to-investigate" class="anchor" href="#features-to-investigate">¶</a>Features to investigate</h3><div class="outline-text-3" id="text-org1a80c44">
+<h3><a id="features-to-investigate" class="anchor" href="#features-to-investigate">¶</a>Features to investigate</h3><div class="outline-text-3" id="text-orge66ed82">
 <ul class="org-ul">
 <li><code>:ensure t</code></li>
 <li><code>:after</code></li>
@@ -85,7 +85,7 @@ We can use <code>M-x emacs-lisp-macroexpand</code> with the cursor before a macr
 </ul>
 </div>
 
-<h2><a id="what-would-we-need-in-emacs" class="anchor" href="#what-would-we-need-in-emacs">¶</a>What would we need in Emacs?</h2><div class="outline-text-2" id="text-orgf1b8f7a">
+<h2><a id="what-would-we-need-in-emacs" class="anchor" href="#what-would-we-need-in-emacs">¶</a>What would we need in Emacs?</h2><div class="outline-text-2" id="text-orgf463fb2">
 <p>
 I think that with some additional built-in helpers in Emacs, packages like <code>use-package</code> would be less necessary:
 </p>

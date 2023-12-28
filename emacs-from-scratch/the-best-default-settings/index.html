@@ -1,9 +1,9 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>The 6 Emacs Settings Every User Should Consider - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">The 6 Emacs Settings Every User Should Consider</h1><p class="site-post-meta"></p><div id="content"><p>
 <div class="video">  <iframe src="https://www.youtube.com/embed/51eSeqcaikM" allowfullscreen></iframe></div>
 </p>
 
-<h2><a id="emacs-has-a-lot-of-configuration-settings" class="anchor" href="#emacs-has-a-lot-of-configuration-settings">¶</a>Emacs has a lot of configuration settings!</h2><div class="outline-text-2" id="text-orgb296287">
+<h2><a id="emacs-has-a-lot-of-configuration-settings" class="anchor" href="#emacs-has-a-lot-of-configuration-settings">¶</a>Emacs has a lot of configuration settings!</h2><div class="outline-text-2" id="text-org889aa83">
 <p>
 It can be hard to find the really useful ones without reading through the whole Emacs manual.
 </p>
@@ -17,7 +17,7 @@ Please make sure to give this video a like 👍 if you learn something useful fr
 </p>
 </div>
 
-<h2><a id="remembering-recently-edited-files" class="anchor" href="#remembering-recently-edited-files">¶</a>Remembering recently edited files</h2><div class="outline-text-2" id="text-org972421d">
+<h2><a id="remembering-recently-edited-files" class="anchor" href="#remembering-recently-edited-files">¶</a>Remembering recently edited files</h2><div class="outline-text-2" id="text-org2bda2af">
 <p>
 When you do a lot of work with Emacs, you will probably want to get back to files you recently edited.  Instead of using <code>find-file</code> to go hunt those files down again, you can enable <code>recentf-mode</code> to have Emacs remember the files you edited most recently:
 </p>
@@ -29,7 +29,7 @@ After enabling this mode, you can use the <code>M-x recentf-open-files</code> co
 </p>
 </div>
 
-<h2><a id="remembering-minibuffer-prompt-history" class="anchor" href="#remembering-minibuffer-prompt-history">¶</a>Remembering minibuffer prompt history</h2><div class="outline-text-2" id="text-org030a0b2">
+<h2><a id="remembering-minibuffer-prompt-history" class="anchor" href="#remembering-minibuffer-prompt-history">¶</a>Remembering minibuffer prompt history</h2><div class="outline-text-2" id="text-orgfcbad88">
 <p>
 One thing you will do <i>a lot</i> in Emacs is enter text into minibuffer prompts.  Everything from <code>M-x</code>, <code>isearch</code>, the <code>describe-*</code> commands, and even the shell modes will receive a lot of input from you over time.
 </p>
@@ -51,7 +51,7 @@ I also like to set the <code>history-length</code> to a reasonable number to red
 (savehist-mode 1)</pre>
 </div>
 
-<h2><a id="remembering-the-last-place-you-visited-in-a-file" class="anchor" href="#remembering-the-last-place-you-visited-in-a-file">¶</a>Remembering the last place you visited in a file</h2><div class="outline-text-2" id="text-orga243d96">
+<h2><a id="remembering-the-last-place-you-visited-in-a-file" class="anchor" href="#remembering-the-last-place-you-visited-in-a-file">¶</a>Remembering the last place you visited in a file</h2><div class="outline-text-2" id="text-org7d4beb0">
 <p>
 Sometimes it&rsquo;s convenient for Emacs to remember the last location you were at when you visited a particular file.  The <code>save-place-mode</code> can help with that!
 </p>
@@ -68,7 +68,7 @@ Once you turn on this mode, Emacs will drop your cursor to the last visited loca
 </p>
 </div>
 
-<h2><a id="changing-the-location-of-the-ldquocustom-filerdquo" class="anchor" href="#changing-the-location-of-the-ldquocustom-filerdquo">¶</a>Changing the location of the &ldquo;custom file&rdquo;</h2><div class="outline-text-2" id="text-org7481c61">
+<h2><a id="changing-the-location-of-the-ldquocustom-filerdquo" class="anchor" href="#changing-the-location-of-the-ldquocustom-filerdquo">¶</a>Changing the location of the &ldquo;custom file&rdquo;</h2><div class="outline-text-2" id="text-org76b6da9">
 <p>
 If you&rsquo;re watching this channel, you&rsquo;re probably interested in writing your own Emacs configuration mostly by hand without using Emacs&rsquo; customization UI.  However, even if you avoid using the customization UI, some settings may cause customization variables to be added to your <code>init.el</code> file.
 </p>
@@ -86,7 +86,7 @@ Emacs can create a lot of file clutter in your configuration for various reasons
 </p>
 </div>
 
-<h2><a id="prevent-using-ui-dialogs-for-prompts" class="anchor" href="#prevent-using-ui-dialogs-for-prompts">¶</a>Prevent using UI dialogs for prompts</h2><div class="outline-text-2" id="text-org778017e">
+<h2><a id="prevent-using-ui-dialogs-for-prompts" class="anchor" href="#prevent-using-ui-dialogs-for-prompts">¶</a>Prevent using UI dialogs for prompts</h2><div class="outline-text-2" id="text-orgb0dcedc">
 <p>
 Emacs will show prompts to confirm many different types of actions, and for some of them it shows a graphical dialog box.  If you prefer to keep your Emacs workflow more keyboard-focused, you can turn off those dialog box prompts with this setting:
 </p>
@@ -95,7 +95,7 @@ Emacs will show prompts to confirm many different types of actions, and for some
 (<span class="org-keyword">setq</span> use-dialog-box nil)</pre>
 </div>
 
-<h2><a id="automatically-revert-buffers-for-changed-files" class="anchor" href="#automatically-revert-buffers-for-changed-files">¶</a>Automatically revert buffers for changed files</h2><div class="outline-text-2" id="text-org627085a">
+<h2><a id="automatically-revert-buffers-for-changed-files" class="anchor" href="#automatically-revert-buffers-for-changed-files">¶</a>Automatically revert buffers for changed files</h2><div class="outline-text-2" id="text-org9e36d36">
 <p>
 One thing that can be annoying about Emacs when you first start using it is that it doesn&rsquo;t automatically refresh file buffers when the file on disk has been changed outside of Emacs.  This can often happen when you&rsquo;re using tools that generate some kind of text file output that you need to read in an Emacs buffer.
 </p>
@@ -123,7 +123,7 @@ Check out <a href="https://www.youtube.com/watch?v=PMWwM8QJAtU">my video on Dire
 </p>
 </div>
 
-<h2><a id="what-are-your-must-have-default-settings" class="anchor" href="#what-are-your-must-have-default-settings">¶</a>What are your must-have default settings?</h2><div class="outline-text-2" id="text-org838acd0">
+<h2><a id="what-are-your-must-have-default-settings" class="anchor" href="#what-are-your-must-have-default-settings">¶</a>What are your must-have default settings?</h2><div class="outline-text-2" id="text-org5fc51dd">
 <p>
 Those are my must-have settings when building up a new Emacs configuration from scratch.  If you&rsquo;ve been using Emacs for a while, leave a comment below and let me know what I might have missed!
 </p>

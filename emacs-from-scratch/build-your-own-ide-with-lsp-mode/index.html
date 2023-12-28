@@ -1,4 +1,4 @@
-<!-- Generated from 310d701 on 2023-12-19 @ 09:37 with Emacs 27.2 (Org mode 9.4.4) -->
+<!-- Generated from dbca41c on 2023-12-28 @ 00:36 with Emacs 27.2 (Org mode 9.4.4) -->
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta author="System Crafters - David Wilson"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="icon" type="image/png" href="/img/favicon.png"/><link rel="alternative" type="application/rss+xml" title="System Crafters News" href="https://weavermarquez.github.io/rss/news.xml"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/iosevka-aile/iosevka-aile.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/fonts/jetbrains-mono/jetbrains-mono.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/code.css"/><link rel="stylesheet" href="https://weavermarquez.github.io/css/site.css"/><script defer="defer" data-domain="weavermarquez.github.io" src="https://plausible.io/js/plausible.js"></script><title>Build Your Own IDE with lsp-mode - System Crafters</title></head><body><header class="site-header"><div class="container"><div class="site-title"><img class="logo" src="https://weavermarquez.github.io/img/sc_logo.png" alt="System Crafters"/></div></div><div class="site-masthead"><div class="container"><nav class="nav"><a class="nav-link" href="/">Home</a> <a class="nav-link" href="/guides/">Guides</a> <a class="nav-link" href="/news/">News</a> <a class="nav-link" href="/community/">Community</a> <a class="nav-link" href="/">Home (2)</a> <a class="nav-link" href="/how-to-help/">How to Help</a></nav></div></div></header><div class="container"><div class="site-post"><h1 class="site-post-title">Build Your Own IDE with lsp-mode</h1><p class="site-post-meta"></p><div id="content"><ul class="org-ul">
 <li><a href="https://youtu.be/E-NAM9U5JYE">Watch the video</a> on YouTube!</li>
 <li>Check out the <a href="https://github.com/daviwil/emacs-from-scratch/tree/6d078217a41134cc667f969430d150c50d03f448">final code</a> on GitHub</li>
@@ -6,14 +6,14 @@
 <li>Episode 1 of the <a href="../../emacs-ide/">Emacs IDE</a> series</li>
 </ul>
 
-<h2><a id="what-is-lsp-mode" class="anchor" href="#what-is-lsp-mode">¶</a>What is lsp-mode?</h2><div class="outline-text-2" id="text-org5934ce9">
+<h2><a id="what-is-lsp-mode" class="anchor" href="#what-is-lsp-mode">¶</a>What is lsp-mode?</h2><div class="outline-text-2" id="text-org7165ac1">
 <ul class="org-ul">
 <li><a href="https://emacs-lsp.github.io/lsp-mode/">Documentation</a></li>
 <li><a href="https://emacs-lsp.github.io/lsp-mode/page/languages/">Supported language servers</a></li>
 </ul>
 </div>
 
-<h2><a id="initial-configuration" class="anchor" href="#initial-configuration">¶</a>Initial Configuration</h2><div class="outline-text-2" id="text-org00cbf90">
+<h2><a id="initial-configuration" class="anchor" href="#initial-configuration">¶</a>Initial Configuration</h2><div class="outline-text-2" id="text-org26ab9d0">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">lsp-mode</span>
   <span class="org-builtin">:commands</span> (lsp lsp-deferred)
   <span class="org-builtin">:init</span>
@@ -22,7 +22,7 @@
   (lsp-enable-which-key-integration t))</pre>
 </div>
 
-<h3><a id="basic-completions" class="anchor" href="#basic-completions">¶</a>Basic Completions</h3><div class="outline-text-3" id="text-org6974999">
+<h3><a id="basic-completions" class="anchor" href="#basic-completions">¶</a>Basic Completions</h3><div class="outline-text-3" id="text-org7d9aa73">
 <ul class="org-ul">
 <li><code>completion-at-point</code> for completions</li>
 <li>Signatures when writing methods (<code>C-n</code>, <code>C-p</code> to cycle signatures)</li>
@@ -31,20 +31,20 @@
 
 <h3><a id="hover" class="anchor" href="#hover">¶</a>Hover</h3>
 
-<h3><a id="find-definitions-and-references" class="anchor" href="#find-definitions-and-references">¶</a>Find Definitions and References</h3><div class="outline-text-3" id="text-orgb809b1c">
+<h3><a id="find-definitions-and-references" class="anchor" href="#find-definitions-and-references">¶</a>Find Definitions and References</h3><div class="outline-text-3" id="text-org8828c30">
 <ul class="org-ul">
 <li><code>lsp-find-definition</code>: <code>C-c l g r</code></li>
 <li><code>lsp-find-references</code>:  <code>C-c l g g</code></li>
 </ul>
 </div>
 
-<h3><a id="rename-symbol" class="anchor" href="#rename-symbol">¶</a>Rename Symbol</h3><div class="outline-text-3" id="text-orga808a42">
+<h3><a id="rename-symbol" class="anchor" href="#rename-symbol">¶</a>Rename Symbol</h3><div class="outline-text-3" id="text-org1ee07cb">
 <ul class="org-ul">
 <li><code>lsp-rename</code>: <code>C-c l r r</code></li>
 </ul>
 </div>
 
-<h3><a id="diagnostics" class="anchor" href="#diagnostics">¶</a>Diagnostics</h3><div class="outline-text-3" id="text-org5a4a962">
+<h3><a id="diagnostics" class="anchor" href="#diagnostics">¶</a>Diagnostics</h3><div class="outline-text-3" id="text-org9af928b">
 <ul class="org-ul">
 <li><code>flymake-show-diagnostics-buffer</code> to show diagnostics</li>
 </ul>
@@ -52,7 +52,7 @@
 
 <h3><a id="code-actions" class="anchor" href="#code-actions">¶</a>Code Actions</h3>
 
-<h3><a id="code-formatting" class="anchor" href="#code-formatting">¶</a>Code Formatting</h3><div class="outline-text-3" id="text-org90b0012">
+<h3><a id="code-formatting" class="anchor" href="#code-formatting">¶</a>Code Formatting</h3><div class="outline-text-3" id="text-org7aa9719">
 <ul class="org-ul">
 <li><code>lsp-format-buffer</code>: <code>C-c l =</code> ==</li>
 </ul>
@@ -62,7 +62,7 @@ Configure formatting options for some languages with <code>lsp-&lt;language&gt;-
 </p>
 </div>
 
-<h3><a id="header-breadcrumb" class="anchor" href="#header-breadcrumb">¶</a>Header Breadcrumb</h3><div class="outline-text-3" id="text-org4be96c6">
+<h3><a id="header-breadcrumb" class="anchor" href="#header-breadcrumb">¶</a>Header Breadcrumb</h3><div class="outline-text-3" id="text-org8df0bd6">
 <pre>(<span class="org-keyword">defun</span> <span class="org-function-name">efs/lsp-mode-setup</span> ()
   (<span class="org-keyword">setq</span> lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -70,7 +70,7 @@ Configure formatting options for some languages with <code>lsp-&lt;language&gt;-
   <span class="org-builtin">:hook</span> (lsp-mode . efs/lsp-mode-setup)</pre>
 </div>
 
-<h2><a id="better-completions-with-company-mode" class="anchor" href="#better-completions-with-company-mode">¶</a>Better Completions with company-mode</h2><div class="outline-text-2" id="text-org555b308">
+<h2><a id="better-completions-with-company-mode" class="anchor" href="#better-completions-with-company-mode">¶</a>Better Completions with company-mode</h2><div class="outline-text-2" id="text-org495f35a">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">company</span>
   <span class="org-builtin">:after</span> lsp-mode
   <span class="org-builtin">:hook</span> (prog-mode . company-mode)
@@ -86,7 +86,7 @@ Configure formatting options for some languages with <code>lsp-&lt;language&gt;-
   <span class="org-builtin">:hook</span> (company-mode . company-box-mode))</pre>
 </div>
 
-<h2><a id="more-ui-enhancements-lsp-ui-mode" class="anchor" href="#more-ui-enhancements-lsp-ui-mode">¶</a>More UI Enhancements lsp-ui-mode</h2><div class="outline-text-2" id="text-orgc19b347">
+<h2><a id="more-ui-enhancements-lsp-ui-mode" class="anchor" href="#more-ui-enhancements-lsp-ui-mode">¶</a>More UI Enhancements lsp-ui-mode</h2><div class="outline-text-2" id="text-orgedf1d85">
 <p>
 <a href="https://emacs-lsp.github.io/lsp-ui/">lsp-ui Documentation</a>
 </p>
@@ -95,7 +95,7 @@ Configure formatting options for some languages with <code>lsp-&lt;language&gt;-
   <span class="org-builtin">:hook</span> (lsp-mode . lsp-ui-mode))</pre>
 </div>
 
-<h3><a id="documentation" class="anchor" href="#documentation">¶</a>Documentation</h3><div class="outline-text-3" id="text-org3dc9b53">
+<h3><a id="documentation" class="anchor" href="#documentation">¶</a>Documentation</h3><div class="outline-text-3" id="text-orgd6fe82f">
 <ul class="org-ul">
 <li><code>lsp-ui-doc-focus-frame</code> to enter the documentation frame to navigate and search around</li>
 <li><code>lsp-ui-doc-unfocus-frame</code> to leave documentation frame</li>
@@ -104,7 +104,7 @@ Configure formatting options for some languages with <code>lsp-&lt;language&gt;-
 <pre>(<span class="org-keyword">setq</span> lsp-ui-doc-position 'bottom)</pre>
 </div>
 
-<h3><a id="sideline" class="anchor" href="#sideline">¶</a>Sideline</h3><div class="outline-text-3" id="text-orgde2aa81">
+<h3><a id="sideline" class="anchor" href="#sideline">¶</a>Sideline</h3><div class="outline-text-3" id="text-org6449e91">
 <p>
 <a href="https://emacs-lsp.github.io/lsp-ui/#lsp-ui-sideline">lsp-sideline configuration</a>
 </p>
@@ -113,13 +113,13 @@ Configure formatting options for some languages with <code>lsp-&lt;language&gt;-
 (<span class="org-keyword">setq</span> lsp-ui-sideline-show-hover nil)</pre>
 </div>
 
-<h3><a id="peek" class="anchor" href="#peek">¶</a>Peek</h3><div class="outline-text-3" id="text-org33a0d81">
+<h3><a id="peek" class="anchor" href="#peek">¶</a>Peek</h3><div class="outline-text-3" id="text-orgd13f1d4">
 <ul class="org-ul">
 <li><code>lsp-ui-peek-find-references</code> to show references inline (<code>M-n</code>, <code>M-p</code> to cycle)</li>
 </ul>
 </div>
 
-<h2><a id="lsp-treemacs" class="anchor" href="#lsp-treemacs">¶</a>lsp-treemacs</h2><div class="outline-text-2" id="text-org934de96">
+<h2><a id="lsp-treemacs" class="anchor" href="#lsp-treemacs">¶</a>lsp-treemacs</h2><div class="outline-text-2" id="text-orgfcb4196">
 <p>
 Provides an even nicer UI on top of lsp-mode using Treemacs
 </p>
@@ -134,11 +134,11 @@ Provides an even nicer UI on top of lsp-mode using Treemacs
   <span class="org-builtin">:after</span> lsp)</pre>
 </div>
 
-<h2><a id="quicker-symbol-searching-with-lsp-ivy" class="anchor" href="#quicker-symbol-searching-with-lsp-ivy">¶</a>Quicker symbol searching with lsp-ivy</h2><div class="outline-text-2" id="text-org904bf80">
+<h2><a id="quicker-symbol-searching-with-lsp-ivy" class="anchor" href="#quicker-symbol-searching-with-lsp-ivy">¶</a>Quicker symbol searching with lsp-ivy</h2><div class="outline-text-2" id="text-org6d7c3f9">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">lsp-ivy</span>)</pre>
 </div>
 
-<h2><a id="typescript" class="anchor" href="#typescript">¶</a>TypeScript</h2><div class="outline-text-2" id="text-orgbbeffa3">
+<h2><a id="typescript" class="anchor" href="#typescript">¶</a>TypeScript</h2><div class="outline-text-2" id="text-org82b2009">
 <pre>(<span class="org-keyword">use-package</span> <span class="org-constant">typescript-mode</span>
   <span class="org-builtin">:mode</span> <span class="org-string">"\\.ts\\'"</span>
   <span class="org-builtin">:hook</span> (typescript-mode . lsp-deferred)
@@ -152,13 +152,13 @@ Install the <code>typescript-language-server</code>:
 <pre>npm install -g typescript-language-server</pre>
 </div>
 
-<h2><a id="c" class="anchor" href="#c">¶</a>C</h2><div class="outline-text-2" id="text-orgc2b9a3b">
+<h2><a id="c" class="anchor" href="#c">¶</a>C</h2><div class="outline-text-2" id="text-orga6d64dc">
 <p>
 Install the <code>ccls</code> language server.
 </p>
 </div>
 
-<h2><a id="bonus-commenting-lines" class="anchor" href="#bonus-commenting-lines">¶</a>Bonus: Commenting lines</h2><div class="outline-text-2" id="text-org09157e2">
+<h2><a id="bonus-commenting-lines" class="anchor" href="#bonus-commenting-lines">¶</a>Bonus: Commenting lines</h2><div class="outline-text-2" id="text-org17ea868">
 <p>
 <code>M-;</code> does comment, but the behavior sometimes isn&rsquo;t exactly what you&rsquo;d expect.
 </p>
@@ -171,7 +171,7 @@ Install the <code>ccls</code> language server.
   <span class="org-builtin">:bind</span> (<span class="org-string">"M-/"</span> . evilnc-comment-or-uncomment-lines))</pre>
 </div>
 
-<h2><a id="therersquos-more-to-talk-about-later" class="anchor" href="#therersquos-more-to-talk-about-later">¶</a>There&rsquo;s more to talk about later!</h2><div class="outline-text-2" id="text-org9c2275c">
+<h2><a id="therersquos-more-to-talk-about-later" class="anchor" href="#therersquos-more-to-talk-about-later">¶</a>There&rsquo;s more to talk about later!</h2><div class="outline-text-2" id="text-orgec777a3">
 <ul class="org-ul">
 <li>dap-mode for debugging</li>
 <li>yasnippet</li>
